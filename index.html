@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>모니터링 허브 · 지금 상황판</title>
+<style>
+:root {
+  --bg: #0D1117;
+  --panel: #151B23;
+  --panel-deep: #11161D;
+  --line: #262E3A;
+  --line-strong: #3A4352;
+  --text: #E6EAF0;
+  --text-strong: #F2F4F7;
+  --text-2: #C9D1DC;
+  --text-3: #B4BDCA;
+  --muted: #A9B2C0;
+  --muted-2: #8B95A5;
+  --amber: #F0B429;
+  --amber-bg: #1A1408;
+  --amber-chip: #1E1708;
+  --amber-line: #5C4512;
+  --amber-line-strong: #8A6516;
+  --amber-text: #E3D6B8;
+  --amber-label: #C7A55A;
+  --amber-sub: #D9C28E;
+  --link: #9CC2FF;
+  --watch: #8FB8FF;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { color-scheme: dark; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: anywhere; }
+a { color: var(--link); }
+a:hover { color: #C7DCFF; }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+.mono { font-family: var(--mono); }
+.page { padding: 28px 24px 56px; }
+.wrap { max-width: 1360px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.top-title { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.kicker { margin: 0; font-size: 13px; font-weight: 500; color: var(--muted-2); }
+h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong); }
+.sub { margin: 0; font-size: 14px; color: var(--muted); }
+.top-chips { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
+.chip-setting { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 2px; min-height: 44px; padding: 8px 14px; border: 1px solid var(--amber-line-strong); border-radius: 8px; background: var(--amber-chip); color: var(--amber); cursor: pointer; text-align: left; }
+.chip-setting-title { font-size: 13px; font-weight: 700; }
+.chip-setting-sub { font-size: 12px; color: var(--amber-sub); }
+.chip-counts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; min-height: 44px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); font-size: 12px; color: var(--muted); }
+.chip-counts strong { font-family: var(--mono); font-weight: 600; color: var(--text-strong); }
+
+.banner { display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border: 1px solid var(--amber-line-strong); border-radius: 10px; background: #231907; color: #F3DEB0; font-size: 14px; line-height: 1.6; }
+.banner p { margin: 0; }
+
+.h-sec { margin: 0; font-size: 15px; font-weight: 600; color: var(--text-2); }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 12px; }
+.tile { display: flex; flex-direction: column; gap: 12px; padding: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.tile-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.tile-name { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-2); }
+.dot { flex: none; display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--c, #8B95A5); }
+.tile-last { font-size: 12px; color: var(--muted-2); }
+.tile h3 { margin: 0; font-size: 18px; line-height: 1.4; font-weight: 600; color: var(--text-strong); text-wrap: pretty; }
+.tile p.tile-body { margin: 0; font-size: 14px; line-height: 1.65; color: var(--text-3); text-wrap: pretty; }
+.tile.is-empty h3, .tile.is-empty p.tile-body { color: var(--muted-2); }
+.tile-foot { margin-top: auto; display: flex; gap: 18px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+.tile-foot strong { font-family: var(--mono); font-weight: 600; color: var(--text-strong); }
+
+.setting { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px 28px; padding: 18px 20px; background: var(--amber-bg); border: 1px solid var(--amber-line); border-radius: 10px; }
+.setting > div { display: flex; flex-direction: column; gap: 6px; }
+.setting h2 { margin: 0; font-size: 15px; font-weight: 700; color: var(--amber); }
+.setting p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--amber-text); }
+.setting p.label { font-size: 12px; font-weight: 600; color: var(--amber-label); }
+
+.main { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; }
+.panel { display: flex; flex-direction: column; gap: 14px; padding: 18px 20px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.feed { flex: 999 1 560px; min-width: 0; }
+.side { flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; }
+.panel-head h2 { margin: 0; font-size: 17px; font-weight: 700; color: var(--text-strong); }
+.panel-head p { margin: 0; font-size: 13px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line-strong); background: transparent; color: var(--text-2); font-size: 14px; font-weight: 500; cursor: pointer; }
+.chip[aria-pressed="true"] { border-color: var(--text); background: var(--text); color: var(--bg); font-weight: 600; }
+.quiet-toggle { align-self: flex-start; min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px dashed #4A5566; background: transparent; color: var(--text-2); font-size: 13px; cursor: pointer; }
+.quiet-toggle[aria-pressed="true"] { border-style: solid; border-color: var(--muted-2); background: #1F2630; color: var(--text); }
+.quiet-toggle:disabled { cursor: default; opacity: 0.7; }
+
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.item { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); }
+.item time { font-family: var(--mono); font-size: 13px; line-height: 22px; color: var(--muted); }
+.t-date { display: block; font-size: 11px; line-height: 16px; color: var(--muted-2); }
+.item-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.item-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.badge { display: inline-block; font-size: 12px; line-height: 18px; padding: 1px 8px; border-radius: 4px; font-weight: 600; }
+.k-new { background: var(--text); color: var(--bg); font-weight: 700; }
+.k-note { border: 1px solid var(--muted-2); color: #D5DBE3; }
+.k-base { border: 1px dashed var(--muted-2); color: #D5DBE3; }
+.k-set { border: 1px solid var(--amber); color: var(--amber); }
+.k-quiet { border: 1px solid var(--line-strong); color: var(--muted-2); font-weight: 500; }
+.cat { font-size: 13px; font-weight: 600; color: var(--c, var(--text-2)); }
+.evidence { font-size: 12px; color: var(--muted-2); }
+.item-text { margin: 0; font-size: 15px; line-height: 1.65; color: var(--text); text-wrap: pretty; }
+.item.is-quiet .item-text { font-size: 14px; color: var(--muted); }
+.item-links { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.linklike { padding: 0; border: 0; background: none; color: var(--link); font-size: 13px; text-align: left; cursor: pointer; }
+.linklike:hover { color: #C7DCFF; text-decoration: underline; }
+.src { font-size: 13px; color: var(--link); text-decoration: none; }
+.src:hover { text-decoration: underline; }
+.empty { margin: 0; padding: 14px 0; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+
+.ev-row { display: flex; flex-direction: column; gap: 6px; padding: 12px 8px; margin: 0 -8px; border-top: 1px solid var(--line); border-radius: 6px; }
+.ev-head { display: flex; align-items: flex-start; gap: 8px; }
+.ev-head .dot { margin-top: 5px; }
+.ev-head h3 { margin: 0; font-size: 14px; line-height: 1.45; font-weight: 600; color: var(--text-strong); }
+.ev-meta { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--muted); }
+.ev-latest { margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-3); text-wrap: pretty; }
+.ev-note { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+.ev-note b { font-weight: 600; color: var(--text-2); }
+.ev-more summary { width: fit-content; font-size: 12.5px; color: var(--link); cursor: pointer; }
+.ev-more[open] summary { margin-bottom: 6px; }
+.ev-more > div { display: flex; flex-direction: column; gap: 6px; }
+.s-progress { font-weight: 700; color: var(--amber); }
+.s-watch { font-weight: 600; color: var(--watch); }
+.s-wait { font-weight: 600; color: #D5DBE3; }
+.s-done { font-weight: 600; color: var(--muted-2); }
+
+.gaps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.gaps li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.55; color: var(--text-3); }
+.gaps svg { flex: none; margin-top: 2px; }
+.gaps strong { font-weight: 600; color: var(--text); }
+.gaps .cat { font-size: 12px; margin-right: 6px; }
+
+.rules { padding: 14px 20px; background: var(--panel-deep); border: 1px solid var(--line); border-radius: 10px; }
+.rules summary { min-height: 28px; font-size: 14px; font-weight: 600; color: var(--text-2); cursor: pointer; }
+.rules ul { margin: 12px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; line-height: 1.6; color: var(--text-3); }
+.rules p { margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+
+.foot { display: flex; flex-direction: column; gap: 6px; font-size: 12px; line-height: 1.6; color: var(--muted-2); }
+.foot p { margin: 0; }
+.foot details summary { cursor: pointer; }
+.foot ul { margin: 6px 0 0; padding-left: 18px; }
+
+.flash { animation: flash 1.8s ease-out; }
+@keyframes flash { from { background: rgba(240, 180, 41, 0.18); } to { background: transparent; } }
+@media (prefers-reduced-motion: reduce) {
+  .flash { animation: none; outline: 2px solid var(--amber); }
+}
+@media (max-width: 600px) {
+  .page { padding: 18px 14px 40px; }
+  h1 { font-size: 24px; }
+  .panel { padding: 16px; }
+  .item { grid-template-columns: 52px minmax(0, 1fr); gap: 10px; }
+  .chip { padding: 0 12px; font-size: 13px; }
+}
+@media(min-width:1200px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="wrap">
+
+<header class="top">
+  <div class="top-title">
+    <p class="kicker">공개 자료 모니터링 허브</p>
+    <h1>지금 상황판</h1>
+    <p class="sub" id="asof">데이터를 불러오는 중입니다.</p>
+  </div>
+  <div class="top-chips">
+    <button type="button" class="chip-setting" id="setting-chip" data-jump="setting" hidden>
+      <span class="chip-setting-title" id="setting-chip-title"></span>
+      <span class="chip-setting-sub" id="setting-chip-sub"></span>
+    </button>
+    <div class="chip-counts" id="counts" hidden></div>
+  </div>
+</header>
+
+<div class="banner" id="banner" role="status" hidden></div>
+
+<section aria-labelledby="status-h" style="display: flex; flex-direction: column; gap: 12px">
+  <h2 id="status-h" class="h-sec">범주별 지금 상황</h2>
+  <div class="tiles" id="tiles"></div>
+</section>
+
+<section class="setting" id="setting" aria-labelledby="setting-h" hidden></section>
+
+<div class="main">
+  <section class="panel feed" aria-labelledby="feed-h">
+    <div class="panel-head">
+      <h2 id="feed-h">새 소식</h2>
+      <p id="feed-summary"></p>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="범주로 거르기"></div>
+    <button type="button" class="quiet-toggle" id="quiet-toggle" aria-pressed="false"></button>
+    <ol class="list" id="feed"></ol>
+  </section>
+
+  <div class="side">
+    <section class="panel" aria-labelledby="ev-h" style="gap: 4px">
+      <div class="panel-head" style="padding-bottom: 8px">
+        <h2 id="ev-h">다음 확인</h2>
+        <p id="events-summary"></p>
+      </div>
+      <ul class="list" id="events"></ul>
+    </section>
+    <section class="panel" aria-labelledby="gap-h" style="gap: 10px">
+      <h2 id="gap-h" style="margin: 0; font-size: 15px; font-weight: 700; color: var(--text-strong)">확인하지 못한 자료</h2>
+      <ul class="gaps" id="gaps"></ul>
+    </section>
+  </div>
+</div>
+
+<details class="rules">
+  <summary>기록 원칙과 운영 규칙</summary>
+  <ul>
+    <li>공개 자료만 사용하고, 관측 시각과 조회 시각을 구분해서 기록합니다.</li>
+    <li>회사의 주장과 독립적으로 검증한 사실을 나눠서 적습니다.</li>
+    <li>출금 중단은 해킹 확정이 아니며, 복구 예정과 실제 복구를 구분합니다.</li>
+    <li>현재 단일 원장의 기록을 그대로 보여 주며, 사건 분리나 새 사실 분류를 임의로 만들지 않습니다.</li>
+    <li>X 계정 연구는 목적에 맞춰 고른 표본이며, 모든 게시물을 수집한 결과가 아닙니다.</li>
+  </ul>
+  <p id="rules-link" hidden></p>
+</details>
+
+<section style="margin:24px 0;padding:20px;border:1px solid #34404b;border-radius:12px"><h2>감시 단계와 일봉 판단 기준</h2><p>적색경보 · 주황경계 · 황색주의 · 평시관찰의 네 단계를 보존합니다. 현재 적색경보는 사용자 지정 감시 강도이며, 시스템 전반의 위기 확정을 의미하지 않습니다.</p><p>BTCUSD · CPTRA · USDT.D 일봉은 한국시간 오전 9시 종가를 기준으로 하루 한 번 판단합니다. 동일 피드·시간대·지표 설정과 확정봉을 확인해야 하며, 미확보 자료로 추세나 판단 결과를 만들지 않습니다.</p><p>이 공개 화면에는 새 차트 검증 결과나 차트 시계열이 연결되어 있지 않습니다. 차트 판단과 시간당 사건 감시는 구분합니다.</p></section><footer class="foot" id="foot"></footer>
+
+</div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const TZ = 'Asia/Seoul';
+  const REFRESH_MS = 10 * 60 * 1000;
+  const params = new URLSearchParams(location.search);
+  const fixedNow = null;
+  const now = () => (fixedNow ? new Date(fixedNow) : new Date());
+  const state = { data: null, cat: 'all', showQuiet: false, error: '' };
+
+  const KIND_CLASS = { '새 사실': 'k-new', '참고': 'k-note', '기준점': 'k-base', '감시 설정': 'k-set', '변화 없음': 'k-quiet' };
+  const KIND_RANK = { '새 사실': 0, '감시 설정': 1, '기준점': 2, '참고': 3, '변화 없음': 4 };
+  const STATUS_CLASS = { '진행 중': 's-progress', '관찰 중': 's-watch', '확인 대기': 's-wait', '해소': 's-done' };
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const safeColor = (v) => (/^#[0-9a-fA-F]{6}$/.test(v || '') ? v : '#8B95A5');
+  const safeUrl = (v) => (/^https?:\/\//i.test(v || '') ? v : '');
+  const anchorId = (key) => 'ev-' + String(key || '').toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
+
+  const fmt = new Intl.DateTimeFormat('ko-KR', {
+    timeZone: TZ, year: 'numeric', month: 'numeric', day: 'numeric', weekday: 'long',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  });
+  function kst(iso) {
+    const d = new Date(iso);
+    if (!iso || Number.isNaN(d.getTime())) return null;
+    const p = {};
+    for (const part of fmt.formatToParts(d)) p[part.type] = part.value;
+    return { y: p.year, m: Number(p.month), d: Number(p.day), wd: p.weekday, hm: `${p.hour}:${p.minute}` };
+  }
+  const sameDay = (a, b) => Boolean(a && b && a.y === b.y && a.m === b.m && a.d === b.d);
+  function timeHtml(iso, ref) {
+    const t = kst(iso);
+    if (!t) return '';
+    if (sameDay(t, kst(ref))) return esc(t.hm);
+    return `<span class="t-date">${t.m}/${t.d}</span>${esc(t.hm)}`;
+  }
+  function timeText(iso, ref) {
+    const t = kst(iso);
+    if (!t) return '';
+    return sameDay(t, kst(ref)) ? t.hm : `${t.m}월 ${t.d}일 ${t.hm}`;
+  }
+  function longDate(iso) {
+    const t = kst(iso);
+    return t ? `${t.m}월 ${t.d}일 ${t.wd} ${t.hm}` : '';
+  }
+  function duration(ms) {
+    const total = Math.max(0, Math.round(ms / 60000));
+    const h = Math.floor(total / 60);
+    const m = total % 60;
+    if (!h) return `${m}분`;
+    return m ? `${h}시간 ${m}분` : `${h}시간`;
+  }
+  const byWho = (by) => (by === '자동' ? '자동으로 정한' : '직접 지정한');
+
+  function categoryMap(d) {
+    return new Map((d.categories || []).map((c) => [c.key, c]));
+  }
+
+  function renderHeader(d, ref) {
+    $('asof').textContent = d.latestRunAt
+      ? `${longDate(d.latestRunAt)} 점검까지 반영했습니다.`
+      : '아직 정기 점검 기록이 없습니다.';
+
+    const chip = $('setting-chip');
+    if (d.setting) {
+      $('setting-chip-title').textContent = d.setting.title || `감시 강도 ${d.setting.level || ''}`.trim();
+      $('setting-chip-sub').textContent = `${timeText(d.setting.at, ref)} ${byWho(d.setting.by)} 감시 설정입니다`;
+      chip.hidden = false;
+    } else {
+      chip.hidden = true;
+    }
+
+    $('counts').innerHTML = `<span>조회 표본 <strong>${d.feed.length}개 기록</strong></span><span><strong>5개 범주</strong></span><span>전체 집계 아님</span>`;
+    $('counts').hidden = false;
+  }
+
+  function renderBanner(d) {
+    const lines = ['공개 상황판 · 저장된 조회 스냅샷 · 자동 갱신 미연결'];
+    if (d) lines.push(`원장 조회: ${longDate(d.generatedAt)} KST. 이후 변화는 반영되지 않았을 수 있습니다.`);
+    if (state.error) lines.push(state.error);
+    $('banner').innerHTML = lines.map(l=>`<p>${esc(l)}</p>`).join('');
+    $('banner').hidden = false;
+  }
+
+  function renderTiles(d, ref) {
+    $('tiles').innerHTML = (d.categories || []).map((c) => {
+      const empty = !c.headline && !c.body;
+      const headline = empty ? '상황 요약이 아직 없습니다' : c.headline;
+      const body = empty ? '다음 정기 점검에서 지금 상황 제목과 본문을 적으면 여기에 표시됩니다.' : c.body;
+      const last = c.lastCheckAt ? `마지막 확인 <span class="mono">${esc(timeText(c.lastCheckAt, ref))}</span>` : '점검 기록 없음';
+      return `
+        <article class="tile${empty ? ' is-empty' : ''}" style="--c:${safeColor(c.color)}">
+          <div class="tile-head">
+            <span class="tile-name"><span class="dot" aria-hidden="true"></span>${esc(c.name)}</span>
+            <span class="tile-last">${last}</span>
+          </div>
+          <h3>${esc(headline)}</h3>
+          <p class="tile-body">${esc(body)}</p>
+          <div class="tile-foot">
+            <span>비공개 원장 요약 · 원문 링크 제외</span>
+          </div>
+        </article>`;
+    }).join('');
+  }
+
+  function renderSetting(d, ref) {
+    const el = $('setting');
+    const s = d.setting;
+    if (!s) {
+      el.hidden = true;
+      el.innerHTML = '';
+      return;
+    }
+    const parts = [`
+      <div>
+        <h2 id="setting-h">감시 강도: ${esc(s.level || '지정 없음')}</h2>
+        <p>${esc(timeText(s.at, ref))}에 ${esc(byWho(s.by))} 감시 설정입니다. 시장 위험을 판정한 결과가 아닙니다.</p>
+      </div>`];
+    if (s.reason) parts.push(`<div><p class="label">근거${s.evidence ? ` (${esc(s.evidence)})` : ''}</p><p>${esc(s.reason)}</p></div>`);
+    if (s.next) parts.push(`<div><p class="label">다음 확인</p><p>${esc(s.next)}</p></div>`);
+    if (s.release) parts.push(`<div><p class="label">해제 조건</p><p>${esc(s.release)}</p></div>`);
+    el.innerHTML = parts.join('');
+    el.hidden = false;
+  }
+
+  function renderChips(d) {
+    const defs = [{ key: 'all', name: '전체' }].concat(d.categories || []);
+    $('chips').innerHTML = defs.map((c) => {
+      const n = c.key === 'all' ? (d.feed || []).length : (d.feed || []).filter((f) => f.category === c.key).length;
+      return `<button type="button" class="chip" data-cat="${esc(c.key)}" aria-pressed="${state.cat === c.key}">${esc(c.name)} ${n}</button>`;
+    }).join('');
+  }
+
+  function eventLinks(item, events) {
+    const links = [];
+    if (item.eventKey) {
+      const exists = events.some((e) => e.key === item.eventKey);
+      links.push(exists
+        ? `<button type="button" class="linklike" data-jump="${esc(anchorId(item.eventKey))}">사건 보기: ${esc(item.eventTitle)}</button>`
+        : `<span class="evidence">사건: ${esc(item.eventTitle)}</span>`);
+    }
+    const src = safeUrl(item.source);
+    if (src) links.push(`<a class="src" href="${esc(src)}" target="_blank" rel="noopener noreferrer">원장 기록 열기</a>`);
+    return links.length ? `<div class="item-links">${links.join('')}</div>` : '';
+  }
+
+  function renderFeed(d, cats, ref) {
+    const pick = (x) => state.cat === 'all' || x.category === state.cat;
+    const base = (d.feed || []).filter(pick);
+    const quiet = (d.quiet || []).filter(pick);
+    let items = base.map((x) => ({ ...x, isQuiet: false }));
+    if (state.showQuiet) {
+      items = items.concat(quiet.map((q) => ({ at: q.at, category: q.category, kind: '변화 없음', evidence: '', text: q.text, isQuiet: true })));
+    }
+    items.sort((a, b) => (a.at === b.at ? (KIND_RANK[a.kind] ?? 9) - (KIND_RANK[b.kind] ?? 9) : a.at < b.at ? 1 : -1));
+
+    const count = (kind) => base.filter((x) => x.kind === kind).length;
+    const parts = [`조회된 원장 기록 ${base.length}건`];
+    const extra = count('기준점') + count('감시 설정');
+    if (extra) parts.push(`기준점과 설정 ${extra}`);
+    if (state.showQuiet) parts.push(`변화 없음 ${quiet.length}`);
+    $('feed-summary').textContent = parts.join(' · ');
+
+    const toggle = $('quiet-toggle'); toggle.hidden = true;
+    toggle.setAttribute('aria-pressed', String(state.showQuiet));
+    toggle.disabled = !state.showQuiet && quiet.length === 0;
+    toggle.textContent = state.showQuiet
+      ? '변화 없는 점검 숨기기'
+      : quiet.length ? `변화 없는 점검 ${quiet.length}회도 보기` : '이 범주에는 변화 없는 점검이 없습니다';
+
+    const events = d.events || [];
+    $('feed').innerHTML = items.length
+      ? items.map((x) => {
+          const c = cats.get(x.category) || { name: x.category, color: '#8B95A5' };
+          return `
+            <li class="item${x.isQuiet ? ' is-quiet' : ''}">
+              <time datetime="${esc(x.at)}">${timeHtml(x.at, ref)}</time>
+              <div class="item-body">
+                <div class="item-meta">
+                  <span class="badge ${KIND_CLASS[x.kind] || 'k-note'}">${esc(x.kind)}</span>
+                  <span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span>
+                  ${x.evidence ? `<span class="evidence">${esc(x.evidence)}</span>` : ''}
+                </div>
+                <p class="item-text">${esc(x.text)}</p>
+                ${x.isQuiet ? '' : eventLinks(x, events)}
+              </div>
+            </li>`;
+        }).join('')
+      : `<li class="empty">최근 ${esc(d.windowHours || 24)}시간 동안 이 범주에는 새 소식이 없습니다.</li>`;
+  }
+
+  function renderEvents(d, cats, ref) {
+    $('events-summary').textContent = '범주별 최신 기록의 미확인 항목';
+    $('events').innerHTML = d.categories.map(c=>`<li class="ev-row"><div class="ev-head"><span class="dot" style="--c:${safeColor(c.color)}"></span><h3>${esc(c.name)}</h3></div><p class="ev-latest">${esc(c.unknown)}</p></li>`).join('');
+  }
+
+  function renderGaps(d, cats) {
+    const gaps = d.gaps || [];
+    const icon = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8B95A5" stroke-width="1.5"><circle cx="8" cy="8" r="6.25"></circle><path d="M3.6 12.4 12.4 3.6"></path></svg>';
+    $('gaps').innerHTML = gaps.length
+      ? gaps.map((g) => {
+          const c = cats.get(g.category) || { name: g.category, color: '#8B95A5' };
+          return `<li>${icon}<span><span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span><strong>${esc(g.label)}</strong>${g.text ? ` ${esc(g.text)}` : ''}</span></li>`;
+        }).join('')
+      : '<li>최근 점검에서 확인하지 못한 자료가 없습니다.</li>';
+  }
+
+  function renderFooter(d, ref) {
+    const links = d.links || {};
+    const rules = $('rules-link');
+    if (safeUrl(links.rules)) {
+      rules.innerHTML = `자세한 규칙: <a href="${esc(links.rules)}" target="_blank" rel="noopener noreferrer">운영 규칙 (노션)</a>`;
+      rules.hidden = false;
+    }
+    const lines = [`<p>화면 데이터 생성 ${esc(timeText(d.generatedAt, ref))} · 저장된 원장 요약을 공개용으로 정제한 화면입니다. 자동 갱신은 미연결이며 투자 권유가 아닙니다.</p>`];
+    if (safeUrl(links.ledger)) lines.push(`<p>원장: <a href="${esc(links.ledger)}" target="_blank" rel="noopener noreferrer">노션 모니터링 허브</a></p>`);
+    const warnings = d.warnings || [];
+    if (warnings.length) {
+      lines.push(`<details><summary>데이터 경고 ${warnings.length}건</summary><ul>${warnings.map((w) => `<li>${esc(w)}</li>`).join('')}</ul></details>`);
+    }
+    $('foot').innerHTML = lines.join('');
+  }
+
+  function render() {
+    const d = state.data;
+    if (!d) {
+      renderBanner(null);
+      return;
+    }
+    const cats = categoryMap(d);
+    const ref = d.latestRunAt || d.generatedAt;
+    if (state.cat !== 'all' && !cats.has(state.cat)) state.cat = 'all';
+    renderHeader(d, ref);
+    renderBanner(d);
+    renderTiles(d, ref);
+    renderSetting(d, ref);
+    renderChips(d);
+    renderFeed(d, cats, ref);
+    renderEvents(d, cats, ref);
+    renderGaps(d, cats);
+    renderFooter(d, ref);
+  }
+
+  function jumpTo(id) {
+    const target = document.getElementById(id);
+    if (!target) return;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    target.classList.remove('flash');
+    void target.offsetWidth;
+    target.classList.add('flash');
+    if (target.hasAttribute('tabindex')) target.focus({ preventScroll: true });
+  }
+
+  document.addEventListener('click', (event) => {
+    const el = event.target.closest('[data-cat], [data-jump], #quiet-toggle');
+    if (!el) return;
+    if (el.id === 'quiet-toggle') {
+      state.showQuiet = !state.showQuiet;
+      render();
+    } else if (el.dataset.cat) {
+      state.cat = el.dataset.cat;
+      render();
+    } else if (el.dataset.jump) {
+      jumpTo(el.dataset.jump);
+    }
+  });
+
+  state.data = {"generatedAt": "2026-11-03T15:23:00Z", "latestRunAt": "2026-11-03T15:20:00.000Z", "setting": {"title": "적색경보 · 사용자 지정", "level": "적색경보", "at": "2026-11-03T00:13:00Z", "by": "사용자", "reason": "기존 허브에 기록된 사용자 지정 감시 강도입니다.", "evidence": "사용자 지정"}, "warnings": ["저장된 최신 20개 기록의 공개 요약입니다. 최근 24시간 전체 집계가 아닙니다.", "원문 비공개 원장 링크는 제공하지 않습니다. 이 화면만으로 각 원문을 독립 검증할 수 없습니다.", "사건 수·새 사실 수를 추정하지 않았습니다. 네 원장으로의 이행은 아직 완료되지 않았습니다.", "조회 시점 스냅샷이며 이 화면의 자동 갱신은 연결되지 않았습니다."], "categories": [{"key": "macro", "name": "거시·크립토", "color": "#F2555A", "headline": "11/4 00:20 KST 관찰 — JOLTS 발표·Sonic 지연", "body": "15UTC 예정 회차를15:20UTC 관측. CMC 경보 기준 미달. JOLTS9월 발표·Coinbase Sonic 일부 지연 확인.", "lastCheckAt": "2026-11-03T15:20:00.000Z", "unknown": "Sonic 원인·해소, 신선한 현물/금리, JOLTS 시장반응. 일봉 재판정 없음."}, {"key": "election", "name": "미국 중간선거", "color": "#5B9BFF", "headline": "11/04 00시 선거 점검: Westchester 장비 문제 보도", "body": "Westchester 용지·스캐너 문제와 종이표 대체절차 보도. 공식 직접 공지는 접근 실패, 해킹·부정·투표중단으로 단정하지 않음. 법원 후속 변화 미확인.", "lastCheckAt": "2026-11-03T15:00:00.000Z", "unknown": "선관위 공식 원문, 영향 장소/표 수, 복구완료, 실제 개표 지연 확인. 최신 법원 전체 docket 미확인."}, {"key": "security", "name": "크립토 보안", "color": "#F0B429", "headline": "11/4 00시 보안 관찰 — Binance 초기조사 공개", "body": "Binance 다단계 침해·온체인 위임 차단 지연에 관한 초기조사 공식 공개. 현재 추가침해 또는 독립 최종검증으로 해석하지 않음.", "lastCheckAt": "2026-11-03T15:00:00.000Z", "unknown": "독립 보안검토·98%재충당 기준 정정·실제 추가 출금, GitBook 고객데이터 영향. 기존 사건 재경보 방지."}, {"key": "xr", "name": "X 계정 연구", "color": "#B197FC", "headline": "11/4 00시 — 원문 계승·확정 표현·자기경험 관찰", "body": "신규8URL. 미국개미 원문 논리 계승과 정치 예상 표현 강화, 미친개 사업 해석·자기경험 서사. 돈벌고영 표본 동일.", "lastCheckAt": "2026-11-03T15:00:00.000Z", "unknown": "선거 발언은 예상이지 결과 아님. 원수치·전체미디어·실제판매·게시자동화 미확인."}, {"key": "onchain", "name": "온체인 보안·자금흐름 추적", "color": "#50C4AE", "headline": "11/4 00:03 온체인 관찰 — 신규 중대 사실 미확인", "body": "Telegram /374·X 공개 표본은 기존 본문과 동일. Binance 초기조사 공시는 15UTC 보안 기록과 연결, 중복 경보 제외.", "lastCheckAt": "2026-11-03T15:03:00.000Z", "unknown": "귀속·금액 독립 검증과 새 게시·정정. X 전수 피드·Telegram 실시간 최신성 보장 없음."}], "feed": [{"at": "2026-11-03T15:20:00.000Z", "category": "macro", "kind": "원장 기록", "text": "15UTC 예정 회차를15:20UTC 관측. CMC 경보 기준 미달. JOLTS9월 발표·Coinbase Sonic 일부 지연 확인.", "title": "11/4 00:20 KST 관찰 — JOLTS 발표·Sonic 지연"}, {"at": "2026-11-03T15:03:00.000Z", "category": "onchain", "kind": "원장 기록", "text": "Telegram /374·X 공개 표본은 기존 본문과 동일. Binance 초기조사 공시는 15UTC 보안 기록과 연결, 중복 경보 제외.", "title": "11/4 00:03 온체인 관찰 — 신규 중대 사실 미확인"}, {"at": "2026-11-03T15:00:00.000Z", "category": "election", "kind": "원장 기록", "text": "Westchester 용지·스캐너 문제와 종이표 대체절차 보도. 공식 직접 공지는 접근 실패, 해킹·부정·투표중단으로 단정하지 않음. 법원 후속 변화 미확인.", "title": "11/04 00시 선거 점검: Westchester 장비 문제 보도"}, {"at": "2026-11-03T15:00:00.000Z", "category": "xr", "kind": "원장 기록", "text": "신규8URL. 미국개미 원문 논리 계승과 정치 예상 표현 강화, 미친개 사업 해석·자기경험 서사. 돈벌고영 표본 동일.", "title": "11/4 00시 — 원문 계승·확정 표현·자기경험 관찰"}, {"at": "2026-11-03T15:00:00.000Z", "category": "security", "kind": "원장 기록", "text": "Binance 다단계 침해·온체인 위임 차단 지연에 관한 초기조사 공식 공개. 현재 추가침해 또는 독립 최종검증으로 해석하지 않음.", "title": "11/4 00시 보안 관찰 — Binance 초기조사 공개"}, {"at": "2026-11-03T14:03:00.000Z", "category": "onchain", "kind": "원장 기록", "text": "Telegram /374·X 공개 표본은 13:03 대비 새 본문 사실 미확인. 기존 사건 및 14UTC 보안 기록과 중복 경보 없음.", "title": "11/3 23:03 온체인 관찰 — 신규 중대 사실 미확인"}, {"at": "2026-11-03T14:01:00.000Z", "category": "security", "kind": "원장 기록", "text": "GitBook Monitoring·고객데이터 조사 상태 및 Binance ETH/SOL 공개 재개 범위 동일. 과거 Troves 공식 조치 신규 열람은 현재 재개 증거와 분리.", "title": "11/3 23시 보안 관찰 — 기존 복구 범위 유지"}, {"at": "2026-11-03T14:00:00.000Z", "category": "election", "kind": "원장 기록", "text": "26-7303 공식 후속 명령: en banc 재심, 11/2 3인 패널 명령 취소. 새로 확인한 과거 날짜 문서. 상원 예측은 불변, 실제 결과 아님.", "title": "11/03 23시 선거 점검: 항소심 패널 명령 취소 확인"}, {"at": "2026-11-03T14:00:00.000Z", "category": "macro", "kind": "원장 기록", "text": "CMC 급락·페그 기준 미달. SOFR Nov2 3.95% 갱신, 전 관측일과 동일. 공식 운영 변화 미확인.", "title": "11/3 23:00 KST 관찰 — SOFR 새 관측일, 금리 동일"}, {"at": "2026-11-03T13:03:00.000Z", "category": "onchain", "kind": "원장 기록", "text": "Telegram /374·X 공개 표본은 12:03 대비 본문상 새 사실 미확인. GitBook 새 공식 고지는 보안 감시 기존 기록 참조.", "title": "11/3 22:03 온체인 관찰 — 신규 중대 사실 미확인"}, {"at": "2026-11-03T13:01:00.000Z", "category": "security", "kind": "원장 기록", "text": "GitBook이 인프라 일부 무단접근 발견·차단·예방 중단을 공식 고지. 현재 Monitoring, 앱·공개콘텐츠 온라인이어야 한다는 회사 설명.", "title": "GitBook — 인프라 무단접근 공식 확인·복구 모니터링"}, {"at": "2026-11-03T13:00:00.000Z", "category": "election", "kind": "원장 기록", "text": "추가 중대 운영 변화나 법원 결정을 확인하지 못함. 예측과 실제 결과 없음 상태 유지, 일부 조회 제한 지속.", "title": "11월 3일 22시: 운영·법원 후속 변화 점검"}, {"at": "2026-11-03T13:00:00.000Z", "category": "macro", "kind": "원장 기록", "text": "CMC 24시간 하락폭 축소, 급락·페그 기준 미달. 공식 운영·지연 거시자료 동일. VIX 시각 미확인.", "title": "11/3 22:00 KST 관찰 — 급락 기준 미달"}, {"at": "2026-11-03T13:00:00.000Z", "category": "security", "kind": "원장 기록", "text": "GitBook 자체 인프라 무단접근 확인·복구 모니터링 고지 추가. Binance ETH/SOL 공개 상태 동일; 다른 기존 사건 표본 변화 미확인.", "title": "11/3 22시 보안 관찰 — GitBook 공식 침해 고지"}, {"at": "2026-11-03T12:03:00.000Z", "category": "onchain", "kind": "원장 기록", "text": "Telegram /374와 X 공개 표본 본문·식별자 동일. 반응 수 변화만 제외하고 기존 EU·Binance 사건 재계수 없음.", "title": "11/3 21:03 온체인 관찰 — 신규 중대 사실 미확인"}, {"at": "2026-11-03T12:00:00.000Z", "category": "macro", "kind": "원장 기록", "text": "CMC 급락·페그 기준 미달. 공식 운영·지연 거시자료 동일. VIX 시각 검증 보류, DXY 원자료 갱신 없음.", "title": "11/3 21:00 KST 관찰 — 급락 기준 미달"}, {"at": "2026-11-03T12:00:00.000Z", "category": "election", "kind": "원장 기록", "text": "퀸스 지역언론의 실제 개시 보도를 확인. 전국 운영 확인은 아니며 법원 결정과 예측 상태는 변화 없음.", "title": "11월 3일 21시: 퀸스 투표 개시 보도 확인"}, {"at": "2026-11-03T12:00:00.000Z", "category": "security", "kind": "원장 기록", "text": "기존 출금·문서 복구 상태 유지. 오늘 기사 속 SAFU 이체와 Mercado 후속 이체 주장을 과거 원문으로 구분.", "title": "11/3 21시 보안 관찰 — 신규 침해·복구 변화 미확인"}, {"at": "2026-11-03T11:02:00.000Z", "category": "macro", "kind": "원장 기록", "text": "CMC24시간 하락폭 축소, 급락·페그 기준 미달. 공식 운영 및 지연 거시자료 동일. VIX시간대 검증 보류.", "title": "11/3 20:00 KST 관찰 — 급락 기준 미달"}, {"at": "2026-11-03T11:02:00.000Z", "category": "security", "kind": "원장 기록", "text": "주요 기존 사건 추가 변화 미확인. Chainalysis Nov2 예방적 일부 제품 중단 공시를 과거 기준점으로 보강.", "title": "11/3 20시 보안 관찰 — 기존 상태·과거 공시 보강"}], "gaps": [{"category": "macro", "label": "다음 확인", "text": "Sonic 원인·해소, 신선한 현물/금리, JOLTS 시장반응. 일봉 재판정 없음."}, {"category": "election", "label": "다음 확인", "text": "선관위 공식 원문, 영향 장소/표 수, 복구완료, 실제 개표 지연 확인. 최신 법원 전체 docket 미확인."}, {"category": "security", "label": "다음 확인", "text": "독립 보안검토·98%재충당 기준 정정·실제 추가 출금, GitBook 고객데이터 영향. 기존 사건 재경보 방지."}, {"category": "xr", "label": "다음 확인", "text": "선거 발언은 예상이지 결과 아님. 원수치·전체미디어·실제판매·게시자동화 미확인."}, {"category": "onchain", "label": "다음 확인", "text": "귀속·금액 독립 검증과 새 게시·정정. X 전수 피드·Telegram 실시간 최신성 보장 없음."}], "events": [], "quiet": [], "links": {}};
+  render();
+
+})();
+</script>
+</body>
+</html>
