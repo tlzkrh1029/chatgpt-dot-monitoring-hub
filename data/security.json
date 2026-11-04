@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T08:35:29.586Z",
-  "observedAt": "2026-11-04T08:35:07Z",
+  "publishedAt": "2026-11-04T10:27:07.491Z",
+  "observedAt": "2026-11-04T10:26:49Z",
   "checkStatus": "partial",
-  "headline": "11/4 17:35 보안 점검 — 기존 대응 유지·신규 중대 변화 미확인",
-  "body": "BitMart 공식 발언 원문과 공통 침해 경로는 여전히 미확인이다. 기존 주요 보안 대응을 재확인했고 Coinbase의 예정 마이그레이션 완료는 해킹 복구와 분리했다. Arbitrum의 과거 동결 조치도 새 회수로 재집계하지 않았다.",
+  "headline": "11/4 19:26 보안 점검 — 기존 대응 유지·BitMart 원문 확인 대기",
+  "body": "기존 주요 보안 대응과 유지보수 상태를 재확인했다. BitMart 관련 보도는 반복되지만 공식 원문과 공통 침해 경로 검증은 미완료다. BTCPay의 신고 주소 전체 내역을 확정 피해 총액으로 쓰지 않는다는 공식 유보도 확인했다. 이번 부분 점검에서 새 중대 피해·실제 회수·전면 복구는 확인하지 못했다.",
   "unknown": "BitMart 공식 확인 원문·사건 발생일·피해액·지갑 귀속·공통 침해 경로, Mercado 실제 회수·서비스 재개, 분석의 정확한 수정시각.",
   "gap": "공식 상태·공지와 공개 분석·제한된 검색을 확인했다. 일부 보도 본문 접근 실패, 전체 X 피드·모든 프로토콜·발행사별 동결 및 독립 온체인 재계산은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T10:26:49Z",
+      "kind": "부분 점검",
+      "title": "BitMart 원문 미확인 유지·피해 추산과 공식 확인 구분",
+      "text": "GitBook 복구 모니터링, Chainalysis 일부 제품 중단, Mercado 유지보수와 Coinbase Sonic 지연은 기존 상태다. BitMart 창업자 확인 보도의 재확산은 확인했지만 공식 발언 원문은 확보하지 못했다. BTCPay 공식 공지는 신고 주소의 전체 잔액·거래 이력을 확정 피해 총액으로 취급하지 말라고 명시한다.",
+      "evidence": "조회 11월 4일 10:26 UTC, 한국시간 19:26. Bitquery의 기존 추산은 분석자 판단으로 유지하며 추가 피해나 현재 회수액으로 바꾸지 않았다. 새 중대 침해·확정 피해 확대·실제 회수는 확인 범위에서 미확인이다. 보도 본문 접근 실패와 공식 발언·독립 온체인 검증의 공백이 남아 있다.",
+      "sources": [
+        "https://www.gitbookstatus.com/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://status.coinbase.com/",
+        "https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/",
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack"
+      ]
+    },
     {
       "at": "2026-11-04T08:35:07Z",
       "kind": "부분 점검",
