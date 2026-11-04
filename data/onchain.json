@@ -1,14 +1,27 @@
 {
   "schemaVersion": 1,
   "category": "onchain",
-  "publishedAt": "2026-11-04T17:17:45.477Z",
-  "observedAt": "2026-11-04T17:15:18Z",
+  "publishedAt": "2026-11-04T18:31:36.688Z",
+  "observedAt": "2026-11-04T18:30:39Z",
   "checkStatus": "partial",
-  "headline": "Arkéa 자료 재확인·새 확정 피해와 회수 미확인",
-  "body": "텔레그램 마지막 공개 글과 검색 수록 Arkéa 공시는 기존 내용이며, Bitquery 분석도 11월 4일 09:49 UTC 기준을 유지했다. 확인 범위에서 새로운 확정 피해·회수·정정을 찾지 못했다. 회사의 공격 인정과 특정 온체인 주소의 연결은 별개로 남긴다.",
-  "unknown": "정확한 피해액·공격 경로·은행 공시와 추적 주소의 사건 동일성·최신 잔액·실제 반환·독립 복구 검증.",
-  "gap": "텔레그램 공개 미리보기·분석 본문·검색 수록 회사 공시와 제한된 후속 검색만 부분 확인했다. X와 앞서 차단된 공시 직접 페이지는 재시도하지 않았다. 전체 편집 이력·미디어·최신 잔액·독립 온체인 재계산과 실제 반환은 미확인이다.",
+  "headline": "Arkéa 공급업체 경유 설명·Fortuneo 진입 부인",
+  "body": "Arkéa 후속 공시는 공급업체 플랫폼을 통한 공격과 자체 계정 사용을 설명하며 Fortuneo가 진입점이라는 보도를 부인했다. 1억 1,800만 유로의 정확한 피해액은 확인하지 않고 규모 수준만 인정했다. 일부 자금 차단과 회수 작업은 회사 설명이며 최종 손실·반환액은 미확인이다.",
+  "unknown": "공급업체와 세부 공격 경로, 특정 추적 주소와 은행 사고의 동일성, 최종 피해·차단·반환 금액, 최신 온체인 잔액 및 복구의 독립 검증.",
+  "gap": "텔레그램 공개 미리보기·분석 본문·검색 수록 회사 후속 공시를 부분 확인했다. 새 회사 페이지 직접 조회는 실패했고 이전 차단 공시 경로와 X는 재시도하지 않았다. 전체 편집 이력·미디어·최신 잔액·독립 온체인 재계산과 반환은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T18:30:39Z",
+      "kind": "공식 경로 정정",
+      "title": "Arkéa 공급업체 경유 설명·Fortuneo 진입 부인 및 일부 자금 차단",
+      "text": "Arkéa는 외부 공급업체 플랫폼을 통해 직접 공격받았고 Fortuneo가 진입점은 아니라고 밝혔다. 자체 계정에서 다른 은행으로 거래한 뒤 암호화폐로 전환했을 가능성을 설명하며 고객 계정 사용은 부인했다. 1억 1,800만 유로·1억 3,300만 달러의 정확액은 확인하지 않고 규모 수준만 인정했다. 일부 자금 차단·회수 작업 중이라는 설명은 최종 피해나 실제 반환 확정이 아니다.",
+      "evidence": "실제 조회 11월 4일18:29~18:30 UTC, 한국시간11월5일03:29~03:30. 회사와 배포대행 공식 공시의 검색 수록 본문을 대조했다. 회사 페이지 직접 조회는 실패했고 배포대행의18:00 표시·본문17h30은 시간대 미명시다. 특정 주소·거래소와의 연결 및 차단 금액은 제시되지 않아 기존 USDT 동결과 동일시하지 않는다. 텔레그램 마지막 글과 Bitquery09:49 UTC 분석은 기존 내용이며 과거 관찰을 보존한다.",
+      "sources": [
+        "https://www.cm-arkea.com/arkea/banque/assurances/pa_38386/fr/informations-complementaires-suite-a-l-attaque-dont-le-credit-mutuel-arkea-a-ete-victime",
+        "https://www.actusnews.com/fr/credit-mutuel-arkea/cp/2026/11/04/informations-complementaires-suite-a-l_attaque-dont-le-credit-mutuel-arkea-a-ete-victime",
+        "https://t.me/s/investigations",
+        "https://www.bitquery.io/investigations/eu-106m-crypto-theft"
+      ]
+    },
     {
       "at": "2026-11-04T17:15:18Z",
       "kind": "부분 점검",
