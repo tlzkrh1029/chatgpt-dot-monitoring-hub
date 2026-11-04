@@ -1,15 +1,24 @@
 #!/usr/bin/env node
 'use strict';
-/* Validates the parallel timeline data (병렬 타임라인 v3) in data/parallel (or the directory given):
- * index.json, every sessions/YYYY-MM-DD.json and notes/YYYY-MM-DD.json against the parallel-core.js
- * validators, file names against their dates, and that the index lists exactly the session files.
- * Exits 1 on any error; index fields that merely lag behind (notes added later) are warnings.
+/* Validates the parallel timeline data (병렬 타임라인 v3) in data/parallel, or in the directory given (for
+ * example a worktree of the data branch): index.json, every sessions/YYYY-MM-DD.json and notes/YYYY-MM-DD.json
+ * against the parallel-core.js validators, file names against their dates, and that the index lists exactly
+ * the session files. Exits 1 on any error; index fields that merely lag behind (notes added later) are warnings.
+ *
+ * --notes=warn reports invalid analyst notes as warnings instead of errors. The collect workflow gates on it:
+ * a notes typo must not stop price publication (the collector and the page both ignore notes they cannot
+ * validate), while index and session errors stay fatal. Without the flag (npm run validate) notes are strict.
+ *
+ * Usage: node scripts/validate-parallel.js [--notes=error|warn] [DIR]
  */
 const fs = require('node:fs');
 const path = require('node:path');
 const Core = require('../parallel-core.js');
 
 const DATED = /^(\d{4}-\d{2}-\d{2})\.json$/;
+const DEFAULT_DIR = path.join(__dirname, '..', 'data', 'parallel');
+const NOTES_MODES = ['error', 'warn'];
+const USAGE = 'Usage: node scripts/validate-parallel.js [--notes=error|warn] [DIR]';
 
 function jsonFiles(dir) {
   try {
@@ -20,20 +29,28 @@ function jsonFiles(dir) {
   }
 }
 
-/** Check a data directory; returns {errors, warnings, sessions, notes, index}. Never throws on bad data. */
-function validateDataDir(dir) {
+/**
+ * Check a data directory; returns {errors, warnings, notesErrors, sessions, notes, index}. Never throws on bad
+ * data. options.notes: 'error' (default) puts notes problems into errors, 'warn' into warnings; either way
+ * they are also listed in notesErrors.
+ */
+function validateDataDir(dir, options = {}) {
+  const notesMode = options.notes === undefined ? 'error' : options.notes;
+  if (!NOTES_MODES.includes(notesMode)) throw new Error(`notes mode must be ${NOTES_MODES.join(' or ')}`);
   const errors = [];
   const warnings = [];
+  const notesErrors = [];
   const read = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
   const sessionDates = new Set(); // every dated session file, valid or not
   const sessions = new Map();
   const notes = new Map();
   for (const [sub, validate, store] of [['sessions', Core.validateSession, sessions], ['notes', Core.validateNotes, notes]]) {
+    const problems = sub === 'notes' ? notesErrors : errors;
     for (const name of jsonFiles(path.join(dir, sub))) {
       const rel = `${sub}/${name}`;
       const m = DATED.exec(name);
       if (!m) {
-        errors.push(`${rel}: file name must be YYYY-MM-DD.json`);
+        problems.push(`${rel}: file name must be YYYY-MM-DD.json`);
         continue;
       }
       if (sub === 'sessions') sessionDates.add(m[1]);
@@ -42,7 +59,7 @@ function validateDataDir(dir) {
         if (obj.date !== m[1]) throw new Error(`date ${obj.date} does not match the file name`);
         store.set(m[1], obj);
       } catch (error) {
-        errors.push(`${rel}: ${error.message}`);
+        problems.push(`${rel}: ${error.message}`);
       }
     }
   }
@@ -86,30 +103,87 @@ function validateDataDir(dir) {
       if (note && (entry.title == null ? null : entry.title) !== title) warnings.push(`${q} title differs from the notes title`);
     }
   }
-  return { errors, warnings, sessions: sessions.size, notes: notes.size, index };
+  if (notesMode === 'warn') {
+    for (const problem of notesErrors) warnings.push(`${problem} (analyst notes: the page ignores this file until it is fixed)`);
+  } else {
+    errors.push(...notesErrors);
+  }
+  return { errors, warnings, notesErrors, sessions: sessions.size, notes: notes.size, index };
 }
 
-function main(argv = process.argv.slice(2)) {
-  const dir = path.resolve(argv[0] || path.join(__dirname, '..', 'data', 'parallel'));
+/** Command line -> {dir, notes, help}; throws on an unknown option or a second directory. */
+function parseArgs(argv) {
+  const out = { dir: null, notes: 'error', help: false };
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i];
+    if (arg === '--help' || arg === '-h') {
+      out.help = true;
+    } else if (arg === '--notes' || arg.startsWith('--notes=')) {
+      const value = arg === '--notes' ? argv[++i] : arg.slice('--notes='.length);
+      if (!NOTES_MODES.includes(value)) throw new Error(`--notes must be ${NOTES_MODES.join(' or ')}`);
+      out.notes = value;
+    } else if (arg.startsWith('-')) {
+      throw new Error(`unknown option ${arg}`);
+    } else if (out.dir === null) {
+      out.dir = arg;
+    } else {
+      throw new Error(`unexpected argument ${arg} (one directory at most)`);
+    }
+  }
+  return out;
+}
+
+/** GitHub Actions annotation text (workflow command escaping). */
+const annotation = (text) => String(text).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+
+/**
+ * CLI: 0 valid, 1 validation errors, 2 usage error. io (tests): {env, log, warn, error} replace process.env and
+ * the console methods.
+ */
+function main(argv = process.argv.slice(2), io = {}) {
+  const env = io.env || process.env;
+  const log = io.log || ((line) => console.log(line));
+  const warn = io.warn || ((line) => console.warn(line));
+  const fail = io.error || ((line) => console.error(line));
+  let args;
+  try {
+    args = parseArgs(argv);
+  } catch (error) {
+    fail(`validate-parallel: ${error.message}\n${USAGE}`);
+    return 2;
+  }
+  if (args.help) {
+    log(USAGE);
+    return 0;
+  }
+  const dir = path.resolve(args.dir || DEFAULT_DIR);
   let result;
   try {
-    result = validateDataDir(dir);
+    result = validateDataDir(dir, { notes: args.notes });
   } catch (error) {
-    console.error(`Parallel timeline validation failed: ${error.message}`);
+    fail(`Parallel timeline validation failed: ${error.message}`);
     return 1;
   }
-  for (const warning of result.warnings) console.warn(`warning: ${warning}`);
+  const inActions = env.GITHUB_ACTIONS === 'true';
+  for (const warning of result.warnings) {
+    warn(`warning: ${warning}`);
+  }
+  if (inActions && args.notes === 'warn') {
+    for (const problem of result.notesErrors) log(`::warning title=parallel notes::${annotation(problem)}`);
+  }
   if (result.errors.length) {
-    for (const error of result.errors) console.error(`error: ${error}`);
-    console.error(`Parallel timeline validation failed with ${result.errors.length} error(s).`);
+    for (const error of result.errors) fail(`error: ${error}`);
+    fail(`Parallel timeline validation failed with ${result.errors.length} error(s).`);
     return 1;
   }
   const latest = result.index && result.index.sessions[0];
-  console.log(`Validated parallel timeline: ${result.sessions} session file(s), ${result.notes} notes file(s)`
-    + `${latest ? `, latest ${latest.date}${latest.final ? ' (final)' : ''}` : ', no sessions collected yet'}.`);
+  const ignored = args.notes === 'warn' && result.notesErrors.length
+    ? `; ${result.notesErrors.length} invalid notes file(s) reported as warnings` : '';
+  log(`Validated parallel timeline: ${result.sessions} session file(s), ${result.notes} notes file(s)`
+    + `${latest ? `, latest ${latest.date}${latest.final ? ' (final)' : ''}` : ', no sessions collected yet'}${ignored}.`);
   return 0;
 }
 
 if (require.main === module) process.exitCode = main();
 
-module.exports = { validateDataDir, main };
+module.exports = { validateDataDir, parseArgs, main };

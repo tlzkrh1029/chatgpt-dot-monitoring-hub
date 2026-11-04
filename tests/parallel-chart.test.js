@@ -64,6 +64,32 @@ function syntheticSession() {
   });
 }
 
+// The synthetic day as a live session written at cut + 70 s: points after the cut dropped, final false.
+function liveSession(cut) {
+  const s = clone(syntheticSession());
+  s.final = false;
+  s.generatedAt = C.isoUtc(at(cut) + 70e3);
+  for (const x of s.series) {
+    x.points = x.points.filter((q) => Date.parse(q[0]) <= at(cut));
+    if (!x.points.length) x.status = 'missing';
+  }
+  return C.validateSession(s);
+}
+
+// Live at 11:00 after a Yahoo 429: kospi keeps its points up to 09:45 ('stale'), hsi has nothing ('error').
+function staleSession() {
+  const s = liveSession('11:00');
+  const kospi = s.series.find((x) => x.id === 'kospi');
+  kospi.points = kospi.points.filter((q) => Date.parse(q[0]) <= at('09:45'));
+  kospi.status = 'stale';
+  kospi.note = 'Yahoo 요청 제한(HTTP 429)';
+  const hsi = s.series.find((x) => x.id === 'hsi');
+  hsi.points = [];
+  hsi.status = 'error';
+  hsi.note = 'Yahoo 요청 제한(HTTP 429)';
+  return C.validateSession(s);
+}
+
 function syntheticNotes() {
   return C.validateNotes({
     schemaVersion: 3, kind: 'notes', date: DATE,
@@ -153,6 +179,28 @@ function assertWellFormed(svg) {
 const coords = (d) => [...d.matchAll(/[ML](-?[\d.]+) (-?[\d.]+)/g)].map((m) => [Number(m[1]), Number(m[2])]);
 const xOf = (layout, t) => layout.left + ((t - layout.start) / (layout.end - layout.start)) * (layout.right - layout.left);
 const near = (a, b, eps) => Math.abs(a - b) <= (eps == null ? 0.11 : eps);
+const pointsOf = (attr) => attr.trim().split(/\s+/).map((xy) => xy.split(',').map(Number));
+
+/** Numbered event markers: attributes, <title> text (unescaped), circle centre and the number drawn. */
+function markersOf(svg) {
+  return [...svg.matchAll(/<g class="pc-marker"([^>]*)><title>([^<]*)<\/title><circle cx="([\d.]+)" cy="([\d.]+)"[^>]*\/><text[^>]*>(\d+)<\/text><\/g>/g)]
+    .map((m) => ({ attrs: attrsOf(m[1]), title: unescapeXml(m[2]), cx: Number(m[3]), cy: Number(m[4]), n: m[5] }));
+}
+
+// Real fonts render up to ~7% wider than Chart.textWidth estimates; text that must stay in the image allows 8%.
+const SLACK = 1.08;
+
+// WCAG relative luminance and contrast ratio of #rrggbb colours; blend() mixes fg over bg at alpha.
+function luminance(hex) {
+  const v = hex.slice(1).match(/../g).map((h) => parseInt(h, 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+}
+const contrast = (a, b) => { const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+function blend(fg, bg, alpha) {
+  const f = fg.slice(1).match(/../g).map((h) => parseInt(h, 16));
+  const b = bg.slice(1).match(/../g).map((h) => parseInt(h, 16));
+  return `#${f.map((c, i) => Math.round(alpha * c + (1 - alpha) * b[i]).toString(16).padStart(2, '0')).join('')}`;
+}
 
 // ---------------------------------------------------------------- tests
 
@@ -216,6 +264,33 @@ test('escapes every text it draws and drops characters XML cannot carry', () => 
   assert.equal(byClass(svg, 'pc-subtitle')[0].text, '굵게 <u>밑줄</u>');
   const label = byClass(svg, 'pc-event-label').find((g) => g.attrs['data-event'] === 'ga');
   assert.equal(label.text, '<img src=x onerror=alert(1)>"quoted" & \'single\'');
+
+  // A crowded day: 12 hostile events 4 minutes apart switch to numbered markers with a key (regular and compact),
+  // so the key text, the marker titles and ids that try to close their attribute are escaped too.
+  const crowded = syntheticNotes();
+  crowded.events = Array.from({ length: 12 }, (_, i) => ({
+    id: `e${i}" onmouseover="x`, at: C.isoUtc(at('12:00') + i * 4 * MIN),
+    label: '<img src=x onerror=alert(1)>', sub: '"q" & <b>x</b>', kind: 'call' }));
+  C.validateNotes(crowded);
+  for (const opts of [{ width: 1200 }, { width: 1400, header: true }, { width: 390 }, { width: 390, theme: 'dark', header: true }]) {
+    const out = Chart.renderChart(session, crowded, opts).svg;
+    assertWellFormed(out);
+    for (const raw of ['<img', '<b>']) assert.ok(!out.includes(raw), `${raw} leaked at ${opts.width}`);
+    assert.doesNotMatch(out, /data-event="[^"]*"\s+onmouseover=/);
+    const key = byClass(out, 'pc-event-key');
+    assert.equal(key.length, 12, `key at ${opts.width}`);
+    key.forEach((k, i) => {
+      assert.equal(unescapeXml(k.attrs['data-event']), crowded.events[i].id);
+      assert.equal(k.text, `${i + 1}<img src=x onerror=alert(1)> "q" & <b>x</b>`);
+    });
+    const markers = markersOf(out);
+    assert.equal(markers.length, 12);
+    markers.forEach((m, i) => {
+      assert.equal(unescapeXml(m.attrs['data-event']), crowded.events[i].id);
+      assert.equal(m.title, `<img src=x onerror=alert(1)> "q" & <b>x</b> 12:${String(i * 4).padStart(2, '0')}`);
+    });
+    assert.ok(out.includes('<title>&lt;img src=x onerror=alert(1)&gt; &quot;q&quot; &amp; &lt;b&gt;x&lt;/b&gt; 12:00</title>'));
+  }
 });
 
 test('layout numbers are consistent: panels ordered, plot inside the width, window matches the notes', () => {
@@ -415,8 +490,11 @@ test('labels that cannot fit in three rows switch the strip to numbered markers 
     const { svg, layout } = Chart.renderChart(session, notes, { width, header: true });
     assertWellFormed(svg);
     assert.equal(byClass(svg, 'pc-event-label').length, 0);
-    const markers = byClass(svg, 'pc-marker');
-    assert.deepEqual(markers.map((m) => m.text), notes.events.map((_, i) => String(i + 1)));
+    const markers = markersOf(svg);
+    assert.equal(byClass(svg, 'pc-marker').length, notes.events.length);
+    assert.deepEqual(markers.map((m) => m.n), notes.events.map((_, i) => String(i + 1)));
+    // Each marker names its event on hover: '<label> <sub> HH:MM'.
+    assert.deepEqual(markers.map((m) => m.title), notes.events.map((e) => `${e.label} ${e.sub} ${C.kstTime(e.at)}`));
     const key = byClass(svg, 'pc-event-key');
     assert.deepEqual(key.map((k) => k.attrs['data-event']), notes.events.map((e) => e.id));
     assert.deepEqual(key.map((k) => k.text), notes.events.map((e, i) => `${i + 1}${e.label} ${e.sub}`));
@@ -443,16 +521,15 @@ test('compact mode numbers the events with circle markers and moves last values 
   assertWellFormed(svg);
   assert.equal(layout.compact, true);
   assert.equal(layout.right, 390 - 16);
-  const markers = byClass(svg, 'pc-marker');
+  const markers = markersOf(svg);
   const order = C.eventsInWindow(notes, C.displayWindow(session, notes)).map((e) => e.id);
+  assert.equal(byClass(svg, 'pc-marker').length, order.length);
   assert.deepEqual(markers.map((m) => m.attrs['data-event']), order);
-  assert.deepEqual(markers.map((m) => m.text), order.map((_, i) => String(i + 1)));
+  assert.deepEqual(markers.map((m) => m.n), order.map((_, i) => String(i + 1)));
   assert.deepEqual(markers.map((m) => m.attrs['data-n']), order.map((_, i) => String(i + 1)));
-  const circles = [...svg.matchAll(/<g class="pc-marker"[^>]*><circle cx="([\d.]+)"/g)].map((m) => Number(m[1]));
-  assert.ok(near(circles[0], xOf(layout, at('09:39'))));
-  assert.ok(near(circles[2], (xOf(layout, at('13:22')) + xOf(layout, at('13:37'))) / 2));
+  assert.ok(near(markers[0].cx, xOf(layout, at('09:39'))));
+  assert.ok(near(markers[2].cx, (xOf(layout, at('13:22')) + xOf(layout, at('13:37'))) / 2));
   assert.equal(byClass(svg, 'pc-event-label').length, 0);
-  for (const text of ['오소프(GA)', '상원 확정']) assert.ok(!svg.includes(text), `${text} drawn in compact mode`);
   assert.equal(byClass(svg, 'pc-end-label').length, 0);
   const legend = byClass(panelSlices(svg).indices, 'pc-legend-item').map((el) => el.text);
   assert.deepEqual(legend, ['코스피+0.5%', '니케이225−1.4%', '항셍+1.1%']);
@@ -478,10 +555,31 @@ test('right labels show label and last value, kept at least 17px apart with conn
   for (let i = 1; i < ys.length; i += 1) assert.ok(ys[i] - ys[i - 1] >= 16.85, `labels ${ys}`);
   const p = layout.panels[0];
   for (const y of ys) assert.ok(y > p.top && y < p.bottom + 12);
-  assert.ok(byClass(part, 'pc-connector').length >= 2);
-  for (const el of labels) {
-    assert.equal(Number(el.attrs.x), layout.right + 12);
+  // Every line ends at 15:30, 60 px before the right edge: dotted leaders, no separate connectors.
+  assert.equal(byClass(part, 'pc-leader').length, 5);
+  assert.equal(byClass(part, 'pc-connector').length, 0);
+  const swatches = byClass(part, 'pc-end-swatch');
+  labels.forEach((el, i) => {
+    // A 10 px swatch in the series colour at right + 12, then the text 4 px after it.
+    assert.equal(Number(el.attrs.x), layout.right + 26);
     assert.equal(el.attrs.fill, Chart.THEMES.light.text);
+    assert.equal(swatches[i].attrs['data-series'], el.attrs['data-series']);
+    assert.equal(swatches[i].attrs.stroke, p.series.find((s) => s.id === el.attrs['data-series']).color);
+    assert.deepEqual([Number(swatches[i].attrs.x1), Number(swatches[i].attrs.x2)], [layout.right + 12, layout.right + 22]);
+    assert.ok(near(Number(swatches[i].attrs.y1), Number(el.attrs.y) - 12 * 0.35, 0.11));
+  });
+  // A displaced label whose line ends at the right edge keeps the short connector from the plot edge.
+  session.series = session.series.filter((s) => s.panel !== 'indices').concat(
+    ['kospi', 'nikkei', 'taiex'].map((id, i) => series(id, [['09:00', 0], ['12:00', -1], ['16:00', 1 + i * 0.05]])));
+  C.validateSession(session);
+  const edge = Chart.renderChart(session, null, { width: 1200 });
+  const edgePart = panelSlices(edge.svg).indices;
+  assert.equal(byClass(edgePart, 'pc-leader').length, 0);
+  const connectors = byClass(edgePart, 'pc-connector');
+  assert.ok(connectors.length >= 2);
+  for (const c of connectors) {
+    const pts = pointsOf(c.attrs.points);
+    assert.deepEqual([pts[0][0], pts[1][0]], [edge.layout.right + 2, edge.layout.right + 9]);
   }
 });
 
@@ -627,4 +725,339 @@ test('rejects a session without a usable window and tolerates odd series', () =>
   assertWellFormed(svg);
   assert.deepEqual(layout.panels.find((p) => p.key === 'fx').series.map((s) => s.id), ['dxy', 'usdkrw', 'gold', 'extra']);
   assert.ok(!svg.includes('mystery'));
+});
+
+// ---------------------------------------------------------------- fix round 1
+
+test('opts.footer replaces the default footer in header mode, wrapped inside the image and escaped', () => {
+  const bell = String.fromCharCode(7);
+  const footer = '지수·종목은 전일 종가 대비, 선물·크립토·환율·금은 08:00 KST 대비 · 11/2 종가 기준: 니케이225·소프트뱅크·어드반테스트'
+    + ' · 출처: Yahoo Finance, Coin Metrics Community (CC BY-NC 4.0) · 최근 수집 실패로 이전 자료 표시: 코스피·SK하이닉스'
+    + ` · 수집 실패: 항셍 · 자료 생성 11:01 KST · <b>Claude</b> & "팀"${bell}`;
+  for (const opts of [{ width: 1400 }, { width: 1200, theme: 'dark' }, { width: 390 }]) {
+    const { svg, layout } = Chart.renderChart(syntheticSession(), syntheticNotes(), { ...opts, header: true, footer });
+    assertWellFormed(svg);
+    assert.ok(!svg.includes('<b>') && !svg.includes(bell));
+    const lines = byClass(svg, 'pc-footer');
+    assert.ok(lines.length >= 2, `${opts.width}: ${lines.length} lines`);
+    assert.equal(lines.map((l) => l.text).join(' '), footer.replace(bell, ''));
+    for (const l of lines) {
+      // Inside the image even when the real font runs 8% wider than the estimate.
+      const right = Number(l.attrs.x) + Chart.textWidth(l.text, Number(l.attrs['font-size'])) * SLACK;
+      assert.ok(right <= opts.width - 12 + 0.01, `${opts.width}: ${right} ${l.text}`);
+      assert.ok(Number(l.attrs.y) < layout.height);
+    }
+  }
+  const DEFAULT = '지수·종목은 전일 종가 대비, 선물·크립토·환율·금은 08:00 KST 대비 · 출처: Yahoo Finance, Coin Metrics (CC BY-NC 4.0)';
+  for (const odd of ['', '   ', null, 42, ['x']]) {
+    const { svg } = Chart.renderChart(syntheticSession(), null, { width: 1400, header: true, footer: odd });
+    assert.equal(byClass(svg, 'pc-footer').map((l) => l.text).join(' '), DEFAULT, JSON.stringify(odd));
+  }
+  // The page draws its caption itself: no footer without header, footer or not.
+  assert.equal(byClass(Chart.renderChart(syntheticSession(), null, { width: 1200, footer }).svg, 'pc-footer').length, 0);
+});
+
+test('a live session ends the title range at its newest data and says when the chart was drawn', () => {
+  const live = liveSession('11:00');
+  const notes = syntheticNotes();
+  const out = Chart.renderChart(live, notes, { width: 1400, header: true, now: at('11:03') });
+  assert.equal(byClass(out.svg, 'pc-title').map((t) => t.text).join(' '), '테스트 세션 (11/4 08:00~11:00 KST · 11:03 현재)');
+  assert.match(out.svg, /<title id="pchart-title">테스트 세션 \(11\/4 08:00~11:00 KST · 11:03 현재\)<\/title>/);
+  assert.match(out.svg, /<desc id="pchart-desc">11\/4 08:00~11:00 KST 마지막 값\. /);
+  // The axis still spans the display window.
+  assert.deepEqual([out.layout.start, out.layout.end], [at('08:00'), at('16:00')]);
+  // Without opts.now only the range changes.
+  assert.match(Chart.renderChart(live, notes, { width: 1200 }).svg, /<title id="pchart-title">테스트 세션 \(11\/4 08:00~11:00 KST\)<\/title>/);
+  // A live tick between grid times ends the range at its minute.
+  const tick = clone(live);
+  tick.series.find((x) => x.id === 'eth').points.push([iso('11:01'), 990, -1]);
+  assert.match(Chart.renderChart(C.validateSession(tick), notes, { width: 1200 }).svg, /\(11\/4 08:00~11:01 KST\)<\/title>/);
+  // Drawn on another KST date (a live session that never became final): the date goes with the time.
+  assert.match(Chart.renderChart(live, notes, { width: 1200, now: C.kstToUtcIso('2026-11-05', '09:12') }).svg,
+    /<title id="pchart-title">테스트 세션 \(11\/4 08:00~11:00 KST · 11\/5 09:12 현재\)<\/title>/);
+  // A final session keeps the display window, with or without now.
+  assert.match(Chart.renderChart(syntheticSession(), notes, { width: 1200, now: at('12:40') }).svg,
+    /<title id="pchart-title">테스트 세션 \(11\/4 08:00~16:00 KST\)<\/title>/);
+  // A live session without any data keeps the window range.
+  const empty = clone(live);
+  for (const x of empty.series) { x.points = []; x.status = 'missing'; }
+  assert.match(Chart.renderChart(C.validateSession(empty), null, { width: 1200, now: at('08:03') }).svg,
+    /<title id="pchart-title">시장 병렬 타임라인 \(11\/4 08:00~16:00 KST · 08:03 현재\)<\/title>/);
+  // On a phone the range and the as-of part each wrap as one unit.
+  const lines = byClass(Chart.renderChart(live, notes, { width: 390, header: true, now: at('11:03') }).svg, 'pc-title').map((t) => t.text);
+  assert.ok(lines.some((l) => l.includes('(11/4 08:00~11:00 KST')), lines.join(' | '));
+  assert.ok(lines.some((l) => l.includes('11:03 현재)')), lines.join(' | '));
+});
+
+test('the now line is labelled "HH:MM 현재" once, at the top of the first panel', () => {
+  const session = liveSession('12:30');
+  for (const opts of [{ width: 1200 }, { width: 1400, header: true, theme: 'dark' }, { width: 390 }]) {
+    const { svg, layout } = Chart.renderChart(session, null, { ...opts, now: at('12:40') });
+    const labels = byClass(svg, 'pc-now-label');
+    assert.equal(labels.length, 1, `${opts.width}`);
+    assert.equal(labels[0].text, '12:40 현재');
+    assert.equal(byClass(panelSlices(svg).indices, 'pc-now-label').length, 1);
+    const line = Number(byClass(svg, 'pc-now')[0].attrs.x1);
+    assert.ok(near(Number(labels[0].attrs.x), line + 5), `${labels[0].attrs.x} vs ${line}`);
+    assert.equal(labels[0].attrs['text-anchor'], undefined);
+    const p = layout.panels[0];
+    assert.ok(Number(labels[0].attrs.y) > p.top && Number(labels[0].attrs.y) < p.top + 16);
+    assert.equal(labels[0].attrs['paint-order'], 'stroke');
+    assert.equal(labels[0].attrs.stroke, Chart.THEMES[opts.theme || 'light'].bg);
+  }
+  // Near the right edge the label sits left of the line.
+  const late = Chart.renderChart(session, null, { width: 1200, now: at('15:55') }).svg;
+  const label = byClass(late, 'pc-now-label')[0];
+  assert.equal(label.text, '15:55 현재');
+  assert.equal(label.attrs['text-anchor'], 'end');
+  assert.ok(near(Number(label.attrs.x), Number(byClass(late, 'pc-now')[0].attrs.x1) - 5));
+  // No now line, no label.
+  for (const now of [null, at('17:00'), at('07:00')]) {
+    assert.equal(byClass(Chart.renderChart(session, null, { width: 1200, now }).svg, 'pc-now-label').length, 0);
+  }
+});
+
+test('right labels carry a swatch in the series colour; lines that end early get a dotted leader under the lines', () => {
+  const live = liveSession('11:00');
+  for (const theme of ['light', 'dark']) {
+    const { svg, layout } = Chart.renderChart(live, null, { width: 1200, theme, now: at('11:03') });
+    const slices = panelSlices(svg);
+    for (const p of layout.panels.filter((q) => !q.empty)) {
+      const part = slices[p.key];
+      const colors = new Map(p.series.map((s) => [s.id, s.color]));
+      const ends = new Map(byClass(part, 'pc-end').map((e) => [e.attrs['data-series'], [Number(e.attrs.cx), Number(e.attrs.cy)]]));
+      const labels = byClass(part, 'pc-end-label');
+      assert.deepEqual(labels.map((l) => l.attrs['data-series']).sort(), [...ends.keys()].sort());
+      for (const el of labels) {
+        const id = el.attrs['data-series'];
+        const mid = Number(el.attrs.y) - 12 * 0.35;
+        const swatch = byClass(part, 'pc-end-swatch').filter((x) => x.attrs['data-series'] === id);
+        assert.equal(swatch.length, 1, id);
+        assert.equal(swatch[0].attrs.stroke, colors.get(id));
+        assert.ok(near(Number(swatch[0].attrs.y1), mid) && swatch[0].attrs.y1 === swatch[0].attrs.y2);
+        const leader = byClass(part, 'pc-leader').filter((x) => x.attrs['data-series'] === id);
+        assert.equal(leader.length, 1, `${p.key} ${id}`);
+        assert.equal(leader[0].attrs.stroke, colors.get(id));
+        assert.equal(leader[0].attrs['stroke-dasharray'], '1 3');
+        const pts = pointsOf(leader[0].attrs.points);
+        const [ex, ey] = ends.get(id);
+        // From just after the end dot, along the last value to the plot edge, then to the swatch.
+        assert.ok(near(pts[0][0], ex + 5) && near(pts[0][1], ey), `${id} starts at ${pts[0]} (end ${ex},${ey})`);
+        assert.ok(near(pts[1][0], layout.right + 2) && near(pts[1][1], ey));
+        assert.ok(near(pts[2][0], layout.right + 9) && near(pts[2][1], mid));
+      }
+      // Leaders are drawn before (under) the series lines; no extra connectors.
+      assert.ok(part.indexOf('class="pc-leaders"') < part.indexOf('class="pc-lines"'));
+      assert.equal(byClass(part, 'pc-connector').length, 0);
+    }
+  }
+  // Final day at 1200 px (966 px for 8 hours): 15:30 ends are 60 px short and get a leader; 15:45 (30 px) and 16:00 do not.
+  const day = syntheticSession();
+  day.series[2] = series('hsi', [['10:30', 0.2], ['11:00', -0.2], ['15:45', 1.0]]);
+  C.validateSession(day);
+  const { svg } = Chart.renderChart(day, null, { width: 1200 });
+  assert.deepEqual(byClass(svg, 'pc-leader').map((l) => l.attrs['data-series']), ['kospi', 'nikkei', 'skhynix', 'samsung']);
+  assert.equal(byClass(svg, 'pc-end-swatch').length, 9);
+  // Compact mode has no right labels, so neither swatches nor leaders.
+  const compact = Chart.renderChart(live, null, { width: 390, now: at('11:03') }).svg;
+  for (const cls of ['pc-end-label', 'pc-end-swatch', 'pc-leader']) assert.equal(byClass(compact, cls).length, 0, cls);
+});
+
+test('stale and failed series are marked in the legend, the right labels and the summary', () => {
+  const session = staleSession();
+  const T = Chart.THEMES.light;
+  const { svg, layout } = Chart.renderChart(session, null, { width: 1200, now: at('11:03') });
+  assertWellFormed(svg);
+  const ind = panelSlices(svg).indices;
+  const legend = byClass(ind, 'pc-legend-item');
+  assert.deepEqual(legend.map((el) => el.text), ['코스피 · 09:45까지', '니케이225', '항셍 · 수집 실패']);
+  // The stale tail is muted; a failed series is muted and its sample line faded, like one without data.
+  assert.match(ind.slice(legend[0].index), /^<g class="pc-legend-item" data-series="kospi"><line [^>]*\/><text [^>]*><tspan fill="#3f4752">코스피<\/tspan><tspan fill="#69727e"> · 09:45까지<\/tspan><\/text>/);
+  assert.match(ind.slice(legend[2].index), /^<g class="pc-legend-item" data-series="hsi"><line [^>]*opacity="0.4"\/>/);
+  // Right labels: the stale one is muted and says when its data stops; the others keep the text colour.
+  const labels = byClass(ind, 'pc-end-label');
+  assert.deepEqual(labels.map((el) => el.text), ['코스피+0.2%(09:45)', '니케이225−2.4%']);
+  assert.deepEqual(labels.map((el) => el.attrs.fill), [T.muted, T.text]);
+  assert.match(ind, /<tspan>코스피<\/tspan><tspan dx="5">\+0\.2%<\/tspan><tspan dx="4">\(09:45\)<\/tspan>/);
+  // The stale line still has its swatch in the series colour and a leader from 09:45.
+  assert.equal(byClass(ind, 'pc-end-swatch').find((s) => s.attrs['data-series'] === 'kospi').attrs.stroke, layout.panels[0].series[0].color);
+  assert.ok(byClass(ind, 'pc-leader').some((l) => l.attrs['data-series'] === 'kospi'));
+  const desc = /<desc id="pchart-desc">([^<]*)<\/desc>/.exec(svg)[1];
+  assert.match(desc, /주식지수: 코스피 \+0\.2% \(09:45까지\), 니케이225 −2\.4%, 항셍 수집 실패\./);
+  assert.match(desc, /달러\/원 자료 없음/);
+  // Compact: the value is muted and followed by the time.
+  const compact = Chart.renderChart(session, null, { width: 390, now: at('11:03') }).svg;
+  const items = byClass(panelSlices(compact).indices, 'pc-legend-item');
+  assert.deepEqual(items.map((el) => el.text), ['코스피+0.2% · 09:45까지', '니케이225−2.4%', '항셍 · 수집 실패']);
+  assert.match(compact, /<tspan dx="4" font-weight="700" fill="#69727e">\+0\.2%<\/tspan><tspan fill="#69727e"> · 09:45까지<\/tspan>/);
+  // A stale series with no points in the display window: '수집 지연'.
+  const notes = syntheticNotes();
+  notes.display = { start: '10:00', end: '16:00' };
+  const narrow = Chart.renderChart(session, notes, { width: 1200, now: at('11:03') }).svg;
+  assert.equal(byClass(panelSlices(narrow).indices, 'pc-legend-item')[0].text, '코스피 · 수집 지연');
+  assert.match(/<desc id="pchart-desc">([^<]*)<\/desc>/.exec(narrow)[1], /코스피 수집 지연/);
+});
+
+test('a long right label (a stale series with its time) widens the right margin instead of being cut', () => {
+  const session = staleSession();
+  const hynix = session.series.find((x) => x.id === 'skhynix');
+  hynix.points = hynix.points.filter((q) => Date.parse(q[0]) <= at('09:45'));
+  hynix.status = 'stale';
+  C.validateSession(session);
+  for (const width of [1200, 1400]) {
+    const { svg, layout } = Chart.renderChart(session, null, { width, now: at('11:03') });
+    assert.ok(layout.right < width - 170 && layout.right >= width - 170 - 48, `right ${layout.right}`);
+    for (const el of byClass(svg, 'pc-end-label')) {
+      assert.ok(!el.text.includes('…'), el.text);
+      const tspans = [...svg.slice(el.index, svg.indexOf('</text>', el.index)).matchAll(/<tspan[^>]*>([^<]*)<\/tspan>/g)].map((m) => m[1]);
+      const w = Chart.textWidth(tspans[0], 12) + 5 + Chart.textWidth(tspans[1], 12) + (tspans[2] ? 4 + Chart.textWidth(tspans[2], 12) : 0);
+      assert.ok(Number(el.attrs.x) + w * SLACK <= width - 4 + 0.01, `${el.text} at ${el.attrs.x}`);
+    }
+    assert.ok(byClass(svg, 'pc-end-label').some((el) => el.text === 'SK하이닉스+0.6%(09:45)'));
+  }
+  // Ordinary labels keep the 170 px margin.
+  assert.equal(Chart.renderChart(syntheticSession(), null, { width: 1200 }).layout.right, 1200 - 170);
+  // The margin grows by 48 px at most; a label longer than that is shortened with an ellipsis, inside the image.
+  const odd = syntheticSession();
+  odd.series.push({ id: 'extra', panel: 'fx', label: '아주 긴 이름을 가진 추가 비교 계열 하나', points: [[iso('09:00'), 1, 0.5], [iso('15:00'), 1, 0.7]] });
+  const out = Chart.renderChart(odd, null, { width: 1200 });
+  assert.equal(out.layout.right, 1200 - 170 - 48);
+  const extra = byClass(out.svg, 'pc-end-label').find((el) => el.attrs['data-series'] === 'extra');
+  assert.ok(extra.text.startsWith('아주 긴') && extra.text.includes('…+0.7%'), extra.text);
+  const name = /<tspan>([^<]*)<\/tspan>/.exec(out.svg.slice(extra.index))[1];
+  assert.ok(Number(extra.attrs.x) + (Chart.textWidth(name, 12) + 5 + Chart.textWidth('+0.7%', 12)) * SLACK <= 1200 - 4 + 0.01);
+});
+
+test('a quiet panel keeps a minimum y span: ±0.5% for indices, AI and crypto, ±0.2% for FX', () => {
+  const quiet = C.validateSession({
+    schemaVersion: 3, kind: 'session', date: DATE, timezone: 'Asia/Seoul', window: C.sessionWindow(DATE), intervalMinutes: 15,
+    generatedAt: '2026-11-04T23:21:00Z', final: false, providers: clone(C.PROVIDERS),
+    series: [
+      series('nq', [['08:00', 0], ['08:15', 0.16]]), series('btc', [['08:00', 0], ['08:15', -0.1]]),
+      series('eth', [['08:00', 0], ['08:15', 0.05]]), series('usdkrw', [['08:00', 0], ['08:15', 0.04]]),
+      series('gold', [['08:00', 0], ['08:15', -0.02]]), series('skhynix', []),
+    ],
+  });
+  for (const width of [1200, 390]) {
+    const { layout } = Chart.renderChart(quiet, null, { width });
+    const P = Object.fromEntries(layout.panels.map((p) => [p.key, p]));
+    for (const key of ['indices', 'crypto']) assert.ok(P[key].yMin <= -0.5 && P[key].yMax >= 0.5 && P[key].yMax <= 1, `${key} [${P[key].yMin}, ${P[key].yMax}]`);
+    assert.ok(P.fx.yMin <= -0.2 && P.fx.yMax >= 0.2 && P.fx.yMax <= 0.5, `fx [${P.fx.yMin}, ${P.fx.yMax}]`);
+    assert.equal(P.ai.empty, true);
+  }
+  // The AI panel gets the same floor when it has data.
+  const ai = clone(quiet);
+  ai.series[5] = series('skhynix', [['09:00', 0.1], ['09:15', 0.12]]);
+  const P = Chart.renderChart(C.validateSession(ai), null, { width: 1200 }).layout.panels[1];
+  assert.ok(P.yMin <= -0.5 && P.yMax >= 0.5, `ai [${P.yMin}, ${P.yMax}]`);
+  // Big moves are not affected.
+  assert.deepEqual(Chart.renderChart(syntheticSession(), null, { width: 1200 }).layout.panels.map((p) => [p.yMin, p.yMax]),
+    [[-5, 2], [-6, 4], [-3, 1], [-1, 3]]);
+});
+
+test('right labels, the compact legend and the summary use the axis precision (at least one decimal)', () => {
+  const withFx = (lo, hi) => {
+    const s = syntheticSession();
+    s.series = s.series.filter((x) => x.panel !== 'fx').concat([
+      series('dxy', [['08:00', 0], ['11:00', lo], ['16:00', hi]]), series('gold', [['08:00', 0], ['12:00', 0.1], ['16:00', 0.423]])]);
+    return C.validateSession(s);
+  };
+  // Regular: a −1.0..+0.6 day puts FX on a 0.25 step, so its labels take two decimals; whole-number panels keep one.
+  const wide = Chart.renderChart(withFx(-1.0, 0.6), null, { width: 1200 }).svg;
+  const parts = panelSlices(wide);
+  assert.ok(byClass(parts.fx, 'pc-ytick').map((el) => el.text).includes('+0.25%'));
+  assert.deepEqual(byClass(parts.fx, 'pc-end-label').map((el) => el.text), ['달러지수+0.60%', '금 선물+0.42%']);
+  assert.deepEqual(byClass(parts.indices, 'pc-end-label').map((el) => el.text), ['코스피+0.5%', '니케이225−1.4%', '항셍+1.1%']);
+  assert.match(/<desc id="pchart-desc">([^<]*)<\/desc>/.exec(wide)[1], /달러·금: 달러지수 \+0\.60%, 금 선물 \+0\.42%/);
+  // Compact (shorter plot, fewer ticks): −0.55..+0.65 gives a 0.25 step there.
+  const phone = panelSlices(Chart.renderChart(withFx(-0.55, 0.65), null, { width: 390 }).svg);
+  assert.ok(byClass(phone.fx, 'pc-ytick').map((el) => el.text).includes('+0.25%'));
+  assert.deepEqual(byClass(phone.fx, 'pc-legend-item').map((el) => el.text), ['달러지수+0.65%', '금 선물+0.42%']);
+  assert.deepEqual(byClass(phone.indices, 'pc-legend-item').map((el) => el.text), ['코스피+0.5%', '니케이225−1.4%', '항셍+1.1%']);
+});
+
+test('compact mode keeps a numbered key under the markers and every marker has a title', () => {
+  const session = syntheticSession();
+  const notes = syntheticNotes();
+  for (const theme of ['light', 'dark']) {
+    const { svg, layout } = Chart.renderChart(session, notes, { width: 390, theme });
+    assertWellFormed(svg);
+    const markers = markersOf(svg);
+    assert.deepEqual(markers.map((m) => m.title),
+      ['오소프(GA) 수성 09:39', '쿠퍼(NC) 첫 플립 10:30', '상원 확정 트럼프 승복 13:22–13:37', '콜린스(ME) 14:37']);
+    const key = byClass(svg, 'pc-event-key');
+    assert.deepEqual(key.map((k) => k.text), ['1오소프(GA) 수성', '2쿠퍼(NC) 첫 플립', '3상원 확정 트럼프 승복', '4콜린스(ME)']);
+    assert.deepEqual(key.map((k) => k.attrs['data-event']), ['ga', 'nc', 'senate', 'collins']);
+    // Key items sit under the markers, above the first panel, inside the width (with room for a wider font).
+    const firstPanel = svg.indexOf('<g class="pc-panel"');
+    const items = [...svg.matchAll(/<g class="pc-event-key"[^>]*><circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"[^>]*\/><text x="([\d.]+)"[^>]*>([^<]*)<\/text>/g)]
+      .map((m) => ({ cy: Number(m[2]), x: Number(m[4]), text: unescapeXml(m[5]) }));
+    assert.equal(items.length, 4);
+    for (const it of items) {
+      assert.ok(it.cy > Math.max(...markers.map((m) => m.cy)), 'key under the markers');
+      assert.ok(it.cy + 8 < layout.panels[0].top, 'key above the first panel');
+      assert.ok(it.x + Chart.textWidth(it.text, 11) * SLACK <= 390 - 12 + 0.01, `${it.text} at ${it.x}`);
+    }
+    for (const k of key) assert.ok(k.index < firstPanel);
+    assert.equal(byClass(svg, 'pc-event-label').length, 0);
+  }
+  // A long key text is shortened to the phone width.
+  const long = syntheticNotes();
+  long.events[0].label = '아주 긴 사건 이름이 계속 이어지는 경우'.repeat(3);
+  const keyText = byClass(Chart.renderChart(session, long, { width: 320 }).svg, 'pc-event-key')[0].text;
+  assert.ok(keyText.endsWith('…') && Chart.textWidth(keyText.slice(1), 11) * SLACK <= 320 - 10 - 12 - 19 + 0.01, keyText);
+});
+
+test('event lines, marker rims and series colours keep 3:1 contrast on the chart background and the event band', () => {
+  assert.equal(Chart.THEMES.light.event, '#7a8390');
+  assert.equal(Chart.THEMES.light.markerLine, '#7a8390');
+  for (const theme of ['light', 'dark']) {
+    const T = Chart.THEMES[theme];
+    const band = blend(T.band, T.bg, T.bandOpacity);
+    for (const c of [T.event, T.markerLine, ...C.COLORS[theme]]) {
+      for (const b of [T.bg, band]) assert.ok(contrast(c, b) >= 3, `${theme} ${c} on ${b}: ${contrast(c, b).toFixed(2)}`);
+    }
+    assert.ok(contrast(T.markerLine, T.markerBg) >= 3, `${theme} marker rim`);
+    const { svg } = Chart.renderChart(syntheticSession(), syntheticNotes(), { width: 1200, theme });
+    for (const l of byClass(svg, 'pc-event-line')) assert.equal(l.attrs.stroke, T.event);
+    const markers = Chart.renderChart(syntheticSession(), syntheticNotes(), { width: 390, theme }).svg;
+    assert.match(markers, new RegExp(`<g class="pc-marker"[^>]*><title>[^<]*</title><circle [^>]*stroke="${T.markerLine}"`));
+  }
+});
+
+test('legend and key rows leave room for a font 8% wider than the estimate', () => {
+  // Phone width 390: rows end at 380 (legend) and 378 (key) and start at x 10. Find a second item that fits by the
+  // bare estimate but not with 8% more, and check that the chart moves it to a new row.
+  const second = (x, limit, widthOf) => {
+    for (let n = 1; n < 80; n += 1) {
+      const w = widthOf(n);
+      if (x + w.pre + w.text <= limit && x + w.pre + w.text * SLACK > limit) return n;
+    }
+    return assert.fail('no length found');
+  };
+  const session = syntheticSession();
+  const usdkrw = session.series.find((s) => s.id === 'usdkrw');
+  const dxy = session.series.find((s) => s.id === 'dxy');
+  dxy.points = [];
+  dxy.status = 'missing';
+  dxy.label = '달러지수';
+  // Legend item: 12 px sample + 6 px gap, then 'label · 자료 없음' at 11.5 px; items 12 px apart.
+  const x2 = 10 + 18 + Chart.textWidth('달러지수 · 자료 없음', 11.5) + 12;
+  const n = second(x2, 380, (k) => ({ pre: 18, text: Chart.textWidth(`${'가'.repeat(k)} · 자료 없음`, 11.5) }));
+  usdkrw.label = '가'.repeat(n);
+  C.validateSession(session);
+  const fx = panelSlices(Chart.renderChart(session, null, { width: 390 }).svg).fx;
+  const legend = byClass(fx, 'pc-legend-item');
+  const rowOf = (el) => Number(/<text x="[\d.]+" y="([\d.]+)"/.exec(fx.slice(el.index))[1]);
+  assert.deepEqual(legend.map((el) => el.attrs['data-series']), ['dxy', 'usdkrw', 'gold']);
+  assert.ok(rowOf(legend[1]) > rowOf(legend[0]), 'the second legend item moved to a new row');
+  // Key item: a 7 px circle (14 px) + 5 px gap, then the text at 11 px.
+  const notes = syntheticNotes();
+  notes.events = [{ id: 'a', at: iso('09:00'), label: '첫 사건', kind: 'call' }, { id: 'b', at: iso('12:00'), label: '', kind: 'call' }];
+  const k2 = 10 + 19 + Chart.textWidth('첫 사건', 11) + 12;
+  notes.events[1].label = '나'.repeat(second(k2, 378, (k) => ({ pre: 19, text: Chart.textWidth('나'.repeat(k), 11) })));
+  C.validateNotes(notes);
+  const key = [...Chart.renderChart(syntheticSession(), notes, { width: 390 }).svg.matchAll(/<g class="pc-event-key"[^>]*><circle cx="([\d.]+)" cy="([\d.]+)"/g)];
+  assert.equal(key.length, 2);
+  assert.ok(Number(key[1][2]) > Number(key[0][2]), 'the second key item moved to a new row');
 });

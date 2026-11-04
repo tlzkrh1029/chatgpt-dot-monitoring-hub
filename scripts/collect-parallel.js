@@ -6,18 +6,22 @@
  * and rebuilds data/parallel/index.json. Sources: Yahoo Finance chart API (15-minute bars, plus daily
  * bars for the previous close) and Coin Metrics Community ReferenceRateUSD for crypto (CC BY-NC 4.0).
  * Plain sequential requests with an honest User-Agent, at least 500 ms apart, one retry after 3 s on
- * 5xx/network errors and a full stop of Yahoo requests on HTTP 429. A failed series keeps the points
- * it already had for the same session; nothing is ever interpolated or invented.
+ * 5xx/network errors. Yahoo is not asked again in the same run after HTTP 429, an explicit refusal
+ * (401/403/451, a redirect, a 200 answer that is not JSON) or two requests in a row without an answer;
+ * a run within 30 minutes of a run that Yahoo refused outright sends Yahoo nothing, and no request starts
+ * after 6 minutes. A series that fails, or whose new answer lacks points it had before, keeps the points
+ * it already had for the same session; nothing is ever interpolated or invented. A run whose result
+ * differs from the stored file only in fetch times writes nothing.
  *
- * Usage: node scripts/collect-parallel.js [--date YYYY-MM-DD] [--start HH:MM] [--end HH:MM]
- *          [--data-dir DIR] [--now ISO] [--fixtures DIR] [--force] [--dry-run]
+ * Usage: node scripts/collect-parallel.js --help
  * Data contract: docs/parallel-timeline.md (schemaVersion 3).
  */
 const fs = require('node:fs');
 const path = require('node:path');
 const Core = require('../parallel-core.js');
 
-const USER_AGENT = 'chatgpt-dot-monitoring-hub/2.0 (+https://github.com/tlzkrh1029/chatgpt-dot-monitoring-hub)';
+const PRODUCT = 'chatgpt-dot-monitoring-hub/2.0';
+const UPSTREAM_REPOSITORY = 'tlzkrh1029/chatgpt-dot-monitoring-hub';
 const YAHOO_HOST = 'query1.finance.yahoo.com';
 const YAHOO_CHART_PATH = '/v8/finance/chart/';
 const COIN_METRICS_HOST = 'community-api.coinmetrics.io';
@@ -28,8 +32,16 @@ const MINUTE = 60e3;
 const BAR_SEC = 900; // 15-minute grid in seconds; Yahoo bar timestamps are bar starts
 const BAR_MS = BAR_SEC * 1000;
 const FINAL_AFTER_MS = 20 * MINUTE; // a session is final 20 minutes after its window end
-const THROTTLE_MS = 10 * MINUTE; // minimum gap between two collections of the same session
-const FIRST_VALUE_MS = 30 * MINUTE; // a "first observation" baseline must fall this close to the start
+const THROTTLE_MS = 10 * MINUTE; // --throttle: minimum gap between two collections of the same session
+const REPAIR_AFTER_MS = 60 * MINUTE; // a final file with stale/error series is collected again at most hourly
+// Repairs stop 8 hours after the window end (24:00 KST for the default window): a series that keeps failing
+// stays stale/error instead of costing requests on every heartbeat run all night; --force still repairs it.
+const REPAIR_UNTIL_MS = 8 * 60 * MINUTE;
+const BACKOFF_MS = 30 * MINUTE; // Yahoo is left alone this long after a run it refused outright
+const RUN_DEADLINE_MS = 6 * MINUTE; // no provider request starts later than this in one run
+const BACKLOG_MAX = 5; // earlier non-final sessions finalized by one unattended run
+const BACKLOG_MIN_LEFT_MS = 2 * MINUTE; // ... and only while this much of the run deadline is left
+const YAHOO_MAX_SILENT = 2; // Yahoo requests in a row without an answer (timeout/network) that stop Yahoo
 const YAHOO_GAP_MS = 500;
 const REQUEST_TIMEOUT_MS = 20000;
 const RETRY_DELAY_MS = 3000;
@@ -37,19 +49,46 @@ const CM_MAX_PAGES = 5;
 
 const NOTE_NO_DATA = '자료 없음(휴장 또는 개장 전)';
 const NOTE_RATE_LIMITED = 'Yahoo 요청 제한(HTTP 429)';
+const NOTE_REFUSED = 'Yahoo 접근 거부'; // followed by '(HTTP 403)' or '(JSON 아닌 응답)'
+const NOTE_SILENT = 'Yahoo 요청 중단(연속 응답 없음)';
+const NOTE_YAHOO_DEADLINE = 'Yahoo 요청 중단(수집 6분 초과)';
+const NOTE_CM_DEADLINE = 'Coin Metrics 요청 중단(수집 6분 초과)';
+const NOTE_BACKOFF = 'Yahoo 요청 보류(직전 회차 거부)';
+const NOTE_KEPT_EMPTY = '새 응답에 자료 없음 · 이전 자료 유지';
+const NOTE_KEPT_PARTIAL = '새 응답에 일부 자료 없음 · 이전 자료 유지';
+const NOTE_FILLED_START = '새 응답에 앞부분 없음 · 이전 자료로 보충';
+const NOTE_NO_BASELINE = '기준값 없음';
 const LABEL_PREV_CLOSE_FALLBACK = '전일 종가';
 const PROVIDER_NAMES = { yahoo: 'Yahoo', coinmetrics: 'Coin Metrics' };
 
 const USAGE = `Usage: node scripts/collect-parallel.js [options]
-  --date YYYY-MM-DD   KST session date (default: today's session; weekends are skipped unless set)
-  --start HH:MM       window start in KST (default 08:00)
-  --end HH:MM         window end in KST (default 16:00)
-  --data-dir DIR      output directory (default data/parallel)
+  --date YYYY-MM-DD   KST session date (default: today's session; weekends are skipped unless set;
+                      a date after today is refused). Without --date, earlier sessions that are still
+                      not final after their window ended are also collected once (at most ${BACKLOG_MAX}).
+  --start HH:MM       window start in KST (default 08:00, or the stored window of an existing file)
+  --end HH:MM         window end in KST (default 16:00, or the stored window of an existing file)
+  --replace-window    let --start/--end replace an existing file whose window differs
+                      (its stored points are not carried over)
+  --data-dir DIR      data directory (default data/parallel)
+  --overlay-dir DIR   another data directory (the data branch): each valid sessions/*.json there that is
+                      newer (generatedAt) than the copy in --data-dir, or has no copy, replaces it before
+                      collecting; notes are never read from it
   --now ISO           pretend the current time is ISO (tests and backfills)
   --fixtures DIR      read provider responses from files instead of the network
                       (Yahoo <sym>.intraday.json / <sym>.daily.json, Coin Metrics coinmetrics.json)
-  --force             collect even if the session is final or was collected less than 10 minutes ago
-  --dry-run           collect and print a summary without writing files`;
+  --throttle          skip a session collected less than 10 minutes ago (push-triggered runs)
+  --force             collect even if the session is final, waits for its hourly repair, or is throttled
+  --dry-run           collect and print a summary without writing files
+  --rebuild-index     rebuild index.json from the sessions and notes in --data-dir and exit (no requests;
+                      takes only --data-dir)`;
+
+/** A command-line mistake: main() reports it with exit code 2. */
+class UsageError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'UsageError';
+  }
+}
 
 // ---------------------------------------------------------------- small helpers
 
@@ -57,6 +96,21 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const isoSec = (ms) => Core.isoUtc(Math.floor(ms / 1000) * 1000);
 const isNum = (v) => typeof v === 'number' && Number.isFinite(v);
 const joinNotes = (...parts) => parts.filter((p) => typeof p === 'string' && p).join(' · ');
+const hasOwn = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
+
+/**
+ * User-Agent naming the repository that runs the collector: GITHUB_REPOSITORY (and GITHUB_SERVER_URL)
+ * when set, as in GitHub Actions, otherwise the upstream repository.
+ */
+function userAgent(env = process.env) {
+  const e = env || {};
+  const repo = typeof e.GITHUB_REPOSITORY === 'string' && /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(e.GITHUB_REPOSITORY)
+    ? e.GITHUB_REPOSITORY : null;
+  const serverText = typeof e.GITHUB_SERVER_URL === 'string' ? e.GITHUB_SERVER_URL.replace(/\/+$/, '') : '';
+  const server = repo && /^https:\/\/[A-Za-z0-9.-]+(:\d+)?$/.test(serverText) ? serverText : 'https://github.com';
+  return `${PRODUCT} (+${server}/${repo || UPSTREAM_REPOSITORY})`;
+}
+const USER_AGENT = userAgent({}); // the upstream form, used outside GitHub Actions
 
 /**
  * Positive finite price from a provider value (number or decimal string), else null.
@@ -89,6 +143,8 @@ function isWeekend(date) {
   return day === 0 || day === 6;
 }
 
+const windowText = (win) => `${Core.kstTime(win.start)}~${Core.kstTime(win.end)}`;
+
 // ---------------------------------------------------------------- Yahoo
 
 /** Trading periods flattened and sorted; each {start, end} (epoch s) knows whether it is the day's last. */
@@ -108,7 +164,8 @@ function tradingPeriods(raw) {
 
 /**
  * Normalize a Yahoo chart response into {gmtoffset, regularMarketTime, chartPreviousClose, periods, bars}.
- * bars: [{ts, open, close}] sorted by ts, prices cleaned (null when absent). Throws on an unusable shape.
+ * bars: [{ts, open, high, low, close, volume}] sorted by ts, prices cleaned (null when absent), volume a
+ * finite number or null. Throws on an unusable shape.
  */
 function parseYahooChart(json) {
   const chart = json && typeof json === 'object' ? json.chart : null;
@@ -120,12 +177,14 @@ function parseYahooChart(json) {
   const stamps = Array.isArray(result.timestamp) ? result.timestamp : [];
   const quotes = result.indicators && Array.isArray(result.indicators.quote) ? result.indicators.quote : [];
   const quote = quotes[0] && typeof quotes[0] === 'object' ? quotes[0] : {};
-  const open = Array.isArray(quote.open) ? quote.open : [];
-  const close = Array.isArray(quote.close) ? quote.close : [];
+  const list = (key) => (Array.isArray(quote[key]) ? quote[key] : []);
+  const [open, high, low, close, volume] = ['open', 'high', 'low', 'close', 'volume'].map(list);
   if (stamps.length && close.length !== stamps.length) throw new Error('quote.close does not match the timestamps');
   const bars = [];
   stamps.forEach((ts, i) => {
-    if (Number.isInteger(ts)) bars.push({ ts, open: cleanPrice(open[i]), close: cleanPrice(close[i]) });
+    if (!Number.isInteger(ts)) return;
+    bars.push({ ts, open: cleanPrice(open[i]), high: cleanPrice(high[i]), low: cleanPrice(low[i]),
+      close: cleanPrice(close[i]), volume: isNum(volume[i]) ? volume[i] : null });
   });
   bars.sort((a, b) => a.ts - b.ts);
   return {
@@ -171,14 +230,17 @@ function periodOf(periods, ts) {
 /**
  * Plot points [{t (ms), v}] from 15-minute bars inside the session window (spec 4.1):
  * 1. a non-aligned timestamp is a live tick -> (ts, close);
- * 2. the last bar of a day's final trading period stamped at/after the period end is the closing print
- *    -> (closeTime, close) once the session is over (closeTime = that KST day at closeKst, else period end);
- * 3. otherwise (ts, open) when the bar starts a contiguous run, then (bar end, close) where the bar end is
+ * 2. a bar starting at the series' lunch break (breakKst, e.g. Tokyo 11:30, Hong Kong 13:00 KST) is the
+ *    morning-close print -> (ts, close), never carried into the break;
+ * 3. the last bar of a day's final trading period stamped at/after the period end is the closing print
+ *    -> (closeTime, close) once the session is over, where closeTime is that KST day at closeKst (else the
+ *    period end) but never earlier than the bar itself: a print is only moved forward or kept in place;
+ * 4. otherwise (ts, open) when the bar starts a contiguous run, then (bar end, close) where the bar end is
  *    capped by now and, for the bar holding regularMarketTime, by that time.
  * Bars without a close are skipped; on equal times the later point wins.
  */
 function yahooPoints(chart, opts) {
-  const { window: win, nowMs, closeKst = null } = opts;
+  const { window: win, nowMs, closeKst = null, breakKst = null } = opts;
   const ws = Core.toMs(win.start);
   const we = Core.toMs(win.end);
   const { period1, period2 } = yahooRange(win, nowMs);
@@ -197,14 +259,19 @@ function yahooPoints(chart, opts) {
       put(ts, close);
       return;
     }
+    if (breakKst && Core.kstTime(ts * 1000) === breakKst) {
+      put(ts, close);
+      return;
+    }
     const next = bars[k + 1];
     const period = periodOf(chart.periods, ts);
     if (period && period.lastOfDay && ts >= period.end && (!next || periodOf(chart.periods, next.ts) !== period)) {
       const closeAt = closeKst
         ? Math.floor(Date.parse(Core.kstToUtcIso(Core.kstDate(ts * 1000), closeKst)) / 1000)
         : period.end;
-      if (nowSec >= closeAt) {
-        put(closeAt, close);
+      const at = Math.max(closeAt, ts);
+      if (nowSec >= at) {
+        put(at, close);
         return;
       }
     }
@@ -220,11 +287,19 @@ function yahooPoints(chart, opts) {
     .sort((a, b) => a.t - b.t);
 }
 
-/** Previous close from a daily chart: last non-null close whose exchange-local date is before `date`. */
+/** A flat zero-volume daily bar (open = high = low = close, volume 0): Yahoo's exchange-holiday placeholder. */
+function isPlaceholderBar(bar) {
+  return bar.volume === 0 && bar.open !== null && bar.open === bar.high && bar.high === bar.low && bar.low === bar.close;
+}
+
+/**
+ * Previous close from a daily chart: the last non-null close whose exchange-local date is before `date`,
+ * skipping holiday placeholder bars (which would otherwise name a day without trading).
+ */
 function dailyPrevClose(daily, date) {
   let best = null;
   for (const bar of daily.bars) {
-    if (bar.close === null) continue;
+    if (bar.close === null || isPlaceholderBar(bar)) continue;
     const local = new Date((bar.ts + daily.gmtoffset) * 1000).toISOString().slice(0, 10);
     if (local < date && (!best || bar.ts > best.ts)) best = { ts: bar.ts, local, value: bar.close };
   }
@@ -237,7 +312,8 @@ function dailyPrevClose(daily, date) {
  * Baseline {value, label} for a Yahoo series, or null.
  * prevClose: the daily chart's previous close ("M/D 종가"), else intraday meta.chartPreviousClose ("전일 종가").
  * windowStart: close of the bar starting 15 min before the window start ("08:00 KST"), else the open of the
- * bar starting at the window start ("08:00 KST 시가"), else the first point within 30 min ("첫 관측 HH:MM KST").
+ * bar starting at the window start ("08:00 KST 시가"), else the first point inside the window, however late
+ * ("첫 관측 HH:MM KST": Monday FX opens at 09:00 KST, DXY under US daylight time at 08:45 KST).
  */
 function yahooBaseline(chart, opts) {
   const { basis, window: win, points = [], daily = null } = opts;
@@ -248,13 +324,14 @@ function yahooBaseline(chart, opts) {
     return chart.chartPreviousClose ? { value: chart.chartPreviousClose, label: LABEL_PREV_CLOSE_FALLBACK } : null;
   }
   const ws = Core.toMs(win.start);
+  const we = Core.toMs(win.end);
   const startSec = Math.floor(ws / 1000);
   const hhmm = Core.kstTime(ws);
   const before = chart.bars.find((b) => b.ts === startSec - BAR_SEC && b.close !== null);
   if (before) return { value: before.close, label: `${hhmm} KST` };
   const at = chart.bars.find((b) => b.ts === startSec && b.open !== null);
   if (at) return { value: at.open, label: `${hhmm} KST 시가` };
-  const first = points.find((p) => p.t >= ws && p.t <= ws + FIRST_VALUE_MS);
+  const first = points.find((p) => p.t >= ws && p.t <= we);
   return first ? { value: first.v, label: `첫 관측 ${Core.kstTime(first.t)} KST` } : null;
 }
 
@@ -279,7 +356,7 @@ function coinMetricsUrl(assets, win, nowMs) {
  * Per-asset points and baseline from Coin Metrics rows (array, or a response object with .data).
  * Points: rows on exact 15-minute marks inside [window.start, min(window.end, now)] plus the newest row
  * when it is not on a mark (live tick). Baseline: the row at the window start ("08:00 KST"), else the
- * first row within 30 minutes ("첫 관측 HH:MM KST"), else null. Returns {asset: {points, baseline}}.
+ * first row inside the window ("첫 관측 HH:MM KST"). Returns {asset: {points, baseline}}.
  */
 function coinMetricsSeries(input, opts) {
   const { window: win, nowMs } = opts;
@@ -302,9 +379,9 @@ function coinMetricsSeries(input, opts) {
     const newest = list[list.length - 1];
     if (newest.t % BAR_MS !== 0) points.push(newest);
     const first = list[0];
-    let baseline = null;
-    if (first.t === ws) baseline = { value: first.v, label: `${Core.kstTime(ws)} KST` };
-    else if (first.t <= ws + FIRST_VALUE_MS) baseline = { value: first.v, label: `첫 관측 ${Core.kstTime(first.t)} KST` };
+    const baseline = first.t === ws
+      ? { value: first.v, label: `${Core.kstTime(ws)} KST` }
+      : { value: first.v, label: `첫 관측 ${Core.kstTime(first.t)} KST` };
     out[asset] = { points, baseline };
   }
   return out;
@@ -324,45 +401,88 @@ function validBaseline(b) {
   return Boolean(b) && isNum(b.value) && b.value > 0 && typeof b.label === 'string';
 }
 
-/** One session series from a collection result and the same series of the previous file (same window). */
+const isFirstObservation = (label) => typeof label === 'string' && label.startsWith('첫 관측');
+
+/** In-window points of a previous series that has a usable baseline, else []. */
+function previousPoints(prev, ws, we) {
+  if (!prev || !validBaseline(prev.baseline) || !Array.isArray(prev.points)) return [];
+  return prev.points.filter((p) => {
+    const t = Array.isArray(p) ? Date.parse(p[0]) : NaN;
+    return t >= ws && t <= we;
+  });
+}
+
+/** The previous series' points, baseline, source and fetch time, marked stale with `note`. */
+function keptSeries(head, prev, kept, source, note) {
+  const out = { ...head, baseline: { value: prev.baseline.value, label: prev.baseline.label },
+    source: copySource(prev.source || source), status: 'stale', note };
+  if (typeof prev.fetchedAt === 'string') out.fetchedAt = prev.fetchedAt;
+  out.points = kept.map((p) => [p[0], p[1], p[2]]);
+  return out;
+}
+
+/**
+ * One session series from a collection result and the same series of the previous file (same window).
+ * - The provider failed (or gave points without a baseline): the previous points are kept as 'stale',
+ *   else 'error' (a cached previous close of the same source survives).
+ * - The new answer has no points: the previous points are kept as 'stale' when there are any, otherwise
+ *   the series is 'missing' (holiday, not open yet).
+ * - Same source: previous points outside the new answer's time span are merged in (new values win at
+ *   every time the new answer covers) and every pct is recomputed against the chosen baseline; points
+ *   kept after the new answer's last point make the series 'stale' so a later run retries it.
+ * - Another source (fallback) that ends earlier than the previous points: the previous series is kept.
+ */
 function buildSeries(def, result, prev, ws, we) {
   const head = { id: def.id, panel: def.panel, label: def.label, basis: def.basis };
   const r = result || { source: def.sources[0], error: '수집 결과 없음' };
-  if (r.error) {
-    const kept = prev && validBaseline(prev.baseline) && Array.isArray(prev.points)
-      ? prev.points.filter((p) => {
-        const t = Date.parse(p[0]);
-        return t >= ws && t <= we;
-      })
-      : [];
-    if (kept.length) {
-      const out = { ...head, baseline: { value: prev.baseline.value, label: prev.baseline.label },
-        source: copySource(prev.source || r.source), status: 'stale', note: r.error };
-      if (typeof prev.fetchedAt === 'string') out.fetchedAt = prev.fetchedAt;
-      out.points = kept.map((p) => [p[0], p[1], p[2]]);
-      return out;
-    }
+  const kept = previousPoints(prev, ws, we);
+  const fresh = !r.error && Array.isArray(r.points) ? r.points : [];
+  const base = !r.error && validBaseline(r.baseline) ? r.baseline : null;
+  const failure = r.error || (fresh.length && !base ? joinNotes(r.note, NOTE_NO_BASELINE) : null);
+  if (failure) {
+    if (kept.length) return keptSeries(head, prev, kept, r.source, failure);
     const keepBase = prev && validBaseline(prev.baseline) && sameSource(prev.source, r.source);
     return { ...head,
       baseline: keepBase ? { value: prev.baseline.value, label: prev.baseline.label } : { value: null, label: '' },
-      source: copySource(r.source), status: 'error', note: r.error, points: [] };
+      source: copySource(r.source), status: 'error', note: failure, points: [] };
   }
-  const base = validBaseline(r.baseline) ? r.baseline : null;
-  const points = Array.isArray(r.points) ? r.points : [];
-  const out = { ...head,
-    baseline: base ? { value: base.value, label: base.label } : { value: null, label: '' },
-    source: copySource(r.source), status: 'ok', note: r.note || '' };
+  if (!fresh.length) {
+    if (kept.length) return keptSeries(head, prev, kept, r.source, joinNotes(r.note, NOTE_KEPT_EMPTY));
+    const out = { ...head,
+      baseline: base ? { value: base.value, label: base.label } : { value: null, label: '' },
+      source: copySource(r.source), status: 'missing', note: joinNotes(r.note, NOTE_NO_DATA) };
+    if (isNum(r.fetchedAt)) out.fetchedAt = isoSec(r.fetchedAt);
+    out.points = [];
+    return out;
+  }
+  let points = fresh.map((p) => ({ t: p.t, v: p.v }));
+  let baseline = base;
+  let status = 'ok';
+  let note = r.note || '';
+  if (kept.length) {
+    const first = points[0].t;
+    const last = points[points.length - 1].t;
+    if (!sameSource(prev.source, r.source)) {
+      if (last < Date.parse(kept[kept.length - 1][0])) {
+        return keptSeries(head, prev, kept, r.source, joinNotes(r.note, NOTE_KEPT_PARTIAL));
+      }
+    } else {
+      const asPoint = (p) => ({ t: Date.parse(p[0]), v: p[1] });
+      const before = kept.filter((p) => Date.parse(p[0]) < first).map(asPoint);
+      const after = kept.filter((p) => Date.parse(p[0]) > last).map(asPoint);
+      if (before.length || after.length) {
+        points = [...before, ...points, ...after];
+        // A first observation from an answer that lost its start is later than the stored baseline.
+        if (before.length && def.basis === 'windowStart' && isFirstObservation(base.label)) baseline = prev.baseline;
+        status = after.length ? 'stale' : 'ok';
+        note = joinNotes(r.note, after.length ? NOTE_KEPT_PARTIAL : NOTE_FILLED_START);
+      }
+    }
+  }
+  const out = { ...head, baseline: { value: baseline.value, label: baseline.label },
+    source: copySource(r.source), status, note };
   if (isNum(r.fetchedAt)) out.fetchedAt = isoSec(r.fetchedAt);
-  out.points = [];
-  if (!points.length) {
-    out.status = 'missing';
-    out.note = joinNotes(r.note, NOTE_NO_DATA);
-  } else if (!base) {
-    out.status = 'missing';
-    out.note = joinNotes(r.note, `기준값 없음(${Core.kstTime(ws)} KST 이후 30분 안에 관측 없음)`);
-  } else {
-    out.points = points.map((p) => [isoSec(p.t), p.v, Core.pctChange(p.v, base.value)]);
-  }
+  out.points = points.map((p) => [isoSec(p.t), p.v, Core.pctChange(p.v, baseline.value)]);
   return out;
 }
 
@@ -394,12 +514,30 @@ function buildSession(opts) {
   };
 }
 
+/** JSON text with object keys sorted, for content comparison. */
+function canonicalJson(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
+  if (value && typeof value === 'object') {
+    return `{${Object.keys(value).filter((k) => value[k] !== undefined).sort()
+      .map((k) => `${JSON.stringify(k)}:${canonicalJson(value[k])}`).join(',')}}`;
+  }
+  const s = JSON.stringify(value);
+  return s === undefined ? 'null' : s;
+}
+
+/** True when two session objects differ at most in generatedAt and the series' fetchedAt. */
+function sameSessionContent(a, b) {
+  const strip = (s) => ({ ...s, generatedAt: null,
+    series: Array.isArray(s.series) ? s.series.map((x) => (x && typeof x === 'object' ? { ...x, fetchedAt: null } : x)) : s.series });
+  return Boolean(a && b) && canonicalJson(strip(a)) === canonicalJson(strip(b));
+}
+
 /** Index object (spec 2.1) from session objects and notes keyed by date (object or Map). */
 function buildIndex(sessions, notesByDate, updatedAt) {
   const notesFor = (date) => {
     if (!notesByDate) return null;
     if (notesByDate instanceof Map) return notesByDate.get(date) || null;
-    return Object.prototype.hasOwnProperty.call(notesByDate, date) ? notesByDate[date] || null : null;
+    return hasOwn(notesByDate, date) ? notesByDate[date] || null : null;
   };
   const entries = (sessions || []).map((s) => {
     const notes = notesFor(s.date);
@@ -453,28 +591,63 @@ function defaultDate(nowMs, startHHMM) {
 }
 
 /**
- * Why this run should not collect ('final' | 'throttled'), or null.
- * final: the existing file is final, was generated 20+ minutes after its window end and has no
- * stale/error series; throttled: it was generated less than 10 minutes ago. --force overrides both.
+ * Why this run should not collect the existing file ('final' | 'repair-wait' | 'repair-closed' | 'throttled'), or null.
+ * final: the file is final (generated 20+ minutes after its window end) and has no stale/error series;
+ * repair-wait: a final file with a stale/error series that is less than 60 minutes old (it is collected
+ *   again once older; a result that differs only in fetch times writes nothing);
+ * repair-closed: a final file with a stale/error series more than 8 hours after its window end (it keeps
+ *   its honest stale/error statuses instead of being requested again on every later trigger);
+ * throttled (only with throttle: true, i.e. push-triggered runs): generated less than 10 minutes ago.
+ * --force overrides all four.
  */
 function shouldSkip(opts) {
-  const { existing, nowMs, force = false } = opts || {};
+  const { existing, nowMs, force = false, throttle = false } = opts || {};
   if (force || !existing) return null;
   const generated = Date.parse(existing.generatedAt);
   if (!Number.isFinite(generated)) return null;
+  const now = Core.toMs(nowMs);
   const end = Date.parse(existing.window && existing.window.end);
   const failed = (existing.series || []).some((s) => s && (s.status === 'stale' || s.status === 'error'));
-  if (existing.final === true && Number.isFinite(end) && generated >= end + FINAL_AFTER_MS && !failed) return 'final';
-  if (Core.toMs(nowMs) - generated < THROTTLE_MS) return 'throttled';
+  if (existing.final === true && Number.isFinite(end) && generated >= end + FINAL_AFTER_MS) {
+    if (!failed) return 'final';
+    if (now > end + REPAIR_UNTIL_MS) return 'repair-closed';
+    if (now - generated < REPAIR_AFTER_MS) return 'repair-wait';
+  }
+  if (throttle && now - generated < THROTTLE_MS) return 'throttled';
   return null;
+}
+
+const SKIP_TEXT = {
+  final: 'session is already final',
+  'repair-wait': 'final session with failed series was collected less than 60 minutes ago',
+  'repair-closed': 'final session keeps its failed series: repairs stop 8 hours after the window end (use --force)',
+  throttled: 'collected less than 10 minutes ago',
+};
+
+/** A Yahoo-sourced series note that records HTTP 429 or an explicit refusal. */
+function isRefusalNote(note) {
+  return typeof note === 'string' && (note.includes(NOTE_RATE_LIMITED) || note.includes(`${NOTE_REFUSED}(`));
+}
+
+/**
+ * Cross-run backoff: true when the existing file was generated less than 30 minutes ago and every
+ * Yahoo-sourced series in it carries the HTTP 429 / refusal note (Yahoo refused that run outright).
+ */
+function yahooBackoff(existing, nowMs) {
+  if (!existing || !Array.isArray(existing.series)) return false;
+  const age = Core.toMs(nowMs) - Date.parse(existing.generatedAt);
+  if (!(age >= 0 && age < BACKOFF_MS)) return false;
+  const yahoo = existing.series.filter((s) => s && s.source && s.source.provider === 'yahoo');
+  return yahoo.length > 0 && yahoo.every((s) => isRefusalNote(s.note));
 }
 
 // ---------------------------------------------------------------- requests
 
-/** Network transport: one GET with the honest User-Agent and a 20 s timeout -> {status, text}. */
+/** Network transport: one GET with the honest User-Agent, no redirects followed, 20 s timeout -> {status, text}. */
 async function httpTransport(url) {
   const response = await fetch(url, {
-    headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
+    headers: { 'User-Agent': userAgent(process.env), Accept: 'application/json' },
+    redirect: 'manual',
     signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
   return { status: response.status, text: await response.text() };
@@ -522,23 +695,58 @@ async function request(transport, url, sleep) {
 
 const failureText = (provider, res) => `${provider} ${res.status === 0 ? res.failure : `HTTP ${res.status}`}`;
 
-/** Sequential Yahoo client: >= 500 ms between requests, and no request at all after an HTTP 429. */
-function yahooClient(transport, sleep) {
+/** HTTP statuses that mean Yahoo refuses this client (a redirect is a consent or bot-check page). */
+const isRefusalStatus = (status) => status === 401 || status === 403 || status === 451 || (status >= 300 && status < 400);
+
+/** Run time budget: `deadline` on the `timer` clock (real elapsed time, independent of --now). */
+function makeBudget(timer = Date.now, ms = RUN_DEADLINE_MS) {
+  const deadline = timer() + ms;
+  return { timer, deadline, left: () => deadline - timer(), expired: () => timer() >= deadline };
+}
+
+/**
+ * Sequential Yahoo client: >= 500 ms between requests. It stops for the rest of the run (every later
+ * call answers with the reason, without a request) after HTTP 429, an explicit refusal (401/403/451,
+ * 3xx, a 200 answer that is not JSON), two requests in a row without an answer, or the run deadline.
+ * opts.backoff: start stopped (the previous run was refused less than 30 minutes ago).
+ * `stopped` is the reason text once stopped, else null.
+ */
+function yahooClient(transport, sleep, opts = {}) {
+  const budget = opts.budget || null;
+  let stopped = opts.backoff ? NOTE_BACKOFF : null;
   let sent = false;
-  let limited = false;
+  let silent = 0;
+  const stop = (note) => {
+    stopped = note;
+    return { error: note };
+  };
   return {
+    get stopped() {
+      return stopped;
+    },
     async chart(url) {
-      if (limited) return { error: NOTE_RATE_LIMITED };
+      if (stopped) return { error: stopped };
+      if (budget && budget.expired()) return stop(NOTE_YAHOO_DEADLINE);
       if (sent) await sleep(YAHOO_GAP_MS);
       sent = true;
       const res = await request(transport, url, sleep);
-      if (res.status === 429) {
-        limited = true;
-        return { error: NOTE_RATE_LIMITED };
+      if (res.status === 0) {
+        silent += 1;
+        if (silent >= YAHOO_MAX_SILENT) stopped = NOTE_SILENT;
+        return { error: failureText('Yahoo', res) };
       }
+      silent = 0;
+      if (res.status === 429) return stop(NOTE_RATE_LIMITED);
+      if (isRefusalStatus(res.status)) return stop(`${NOTE_REFUSED}(HTTP ${res.status})`);
       if (res.status !== 200) return { error: failureText('Yahoo', res) };
+      let json;
       try {
-        return { chart: parseYahooChart(JSON.parse(res.text)) };
+        json = JSON.parse(res.text);
+      } catch (error) {
+        return stop(`${NOTE_REFUSED}(JSON 아닌 응답)`);
+      }
+      try {
+        return { chart: parseYahooChart(json) };
       } catch (error) {
         return { error: 'Yahoo 응답 형식 오류' };
       }
@@ -546,12 +754,13 @@ function yahooClient(transport, sleep) {
   };
 }
 
-/** All Coin Metrics pages (same host only, at most 5) -> {rows, fetchedAt} | {error}. */
-async function fetchCoinMetrics(transport, sleep, url, clock) {
+/** All Coin Metrics pages (https, same host only, at most 5) -> {rows, fetchedAt} | {error}. */
+async function fetchCoinMetrics(transport, sleep, url, clock, budget = null) {
   const host = new URL(url).host;
   const rows = [];
   let next = url;
   for (let page = 0; next && page < CM_MAX_PAGES; page++) {
+    if (budget && budget.expired()) return { error: NOTE_CM_DEADLINE };
     const res = await request(transport, next, sleep);
     if (res.status !== 200) return { error: failureText('Coin Metrics', res) };
     let json;
@@ -588,7 +797,7 @@ async function fromYahoo(def, source, ctx) {
   if (intraday.error) return { id: def.id, source, error: intraday.error };
   const fetchedAt = clock();
   const chart = intraday.chart;
-  const points = yahooPoints(chart, { window: win, nowMs, closeKst: def.closeKst });
+  const points = yahooPoints(chart, { window: win, nowMs, closeKst: def.closeKst || null, breakKst: def.breakKst || null });
   let baseline;
   if (def.basis === 'prevClose') {
     baseline = cachedPrevClose(prev, source);
@@ -611,9 +820,12 @@ function fromCoinMetrics(def, source, cm) {
   return { id: def.id, source, fetchedAt: cm.fetchedAt, points: got.points, baseline: got.baseline, note: '' };
 }
 
-/** Fetch every catalog series in order (Coin Metrics first, then Yahoo sequentially) -> results. */
+/**
+ * Fetch every catalog series in order (Coin Metrics first, then Yahoo sequentially) -> results.
+ * opts.yahoo: a yahooClient shared by the run (else a new one); opts.budget: the run deadline.
+ */
 async function collectSeries(opts) {
-  const { date, window: win, nowMs, previous, transport, sleep, clock } = opts;
+  const { date, window: win, nowMs, previous, transport, sleep, clock, budget = null } = opts;
   const prevById = new Map(previous && Array.isArray(previous.series) ? previous.series.map((s) => [s.id, s]) : []);
   if (nowMs < Core.toMs(win.start)) {
     return Core.SERIES.map((def) => ({ id: def.id, source: def.sources[0], points: [], baseline: null, note: '' }));
@@ -624,12 +836,12 @@ async function collectSeries(opts) {
   }
   let cm = null;
   if (cmAssets.length) {
-    const got = await fetchCoinMetrics(transport, sleep, coinMetricsUrl(cmAssets, win, nowMs), clock);
+    const got = await fetchCoinMetrics(transport, sleep, coinMetricsUrl(cmAssets, win, nowMs), clock, budget);
     cm = got.error
       ? { error: got.error }
       : { series: coinMetricsSeries(got.rows, { window: win, nowMs }), fetchedAt: got.fetchedAt };
   }
-  const yahoo = yahooClient(transport, sleep);
+  const yahoo = opts.yahoo || yahooClient(transport, sleep, { budget });
   const results = [];
   for (const def of Core.SERIES) {
     const ctx = { yahoo, date, window: win, nowMs, prev: prevById.get(def.id) || null, clock };
@@ -663,22 +875,24 @@ function writeFileAtomic(file, text) {
   fs.renameSync(tmp, file);
 }
 
-/** Valid dated files (YYYY-MM-DD.json) of a directory; invalid ones are reported through warn and skipped. */
-function readDated(dir, validate, warn) {
-  let names;
+const sessionPath = (dataDir, date) => path.join(dataDir, 'sessions', `${date}.json`);
+
+function listDated(dir) {
   try {
-    names = fs.readdirSync(dir);
+    return fs.readdirSync(dir).filter((name) => /^\d{4}-\d{2}-\d{2}\.json$/.test(name)).sort();
   } catch (error) {
     if (error.code === 'ENOENT') return [];
     throw error;
   }
+}
+
+/** Valid dated files (YYYY-MM-DD.json) of a directory; invalid ones are reported through warn and skipped. */
+function readDated(dir, validate, warn) {
   const out = [];
-  for (const name of names.sort()) {
-    const m = /^(\d{4}-\d{2}-\d{2})\.json$/.exec(name);
-    if (!m) continue;
+  for (const name of listDated(dir)) {
     try {
       const obj = validate(JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8')));
-      if (obj.date !== m[1]) throw new Error(`date ${obj.date} does not match the file name`);
+      if (obj.date !== name.slice(0, 10)) throw new Error(`date ${obj.date} does not match the file name`);
       out.push(obj);
     } catch (error) {
       warn(`warning: ignoring ${path.join(path.basename(dir), name)}: ${error.message}`);
@@ -705,7 +919,10 @@ function readSessionFile(file, date, warn) {
   }
 }
 
-/** Rebuild index.json from the session and notes files; writes only when its content changes. */
+/**
+ * Rebuild index.json from the session and notes files; writes only when its content (apart from
+ * updatedAt) changes. updatedAtMs null: the newest session generatedAt (deterministic rebuilds).
+ */
 function syncIndex(dataDir, updatedAtMs, warn) {
   const sessions = readDated(path.join(dataDir, 'sessions'), Core.validateSession, warn);
   const notes = new Map(readDated(path.join(dataDir, 'notes'), Core.validateNotes, warn).map((n) => [n.date, n]));
@@ -716,7 +933,12 @@ function syncIndex(dataDir, updatedAtMs, warn) {
   } catch (error) {
     current = null;
   }
-  const next = buildIndex(sessions, notes, updatedAtMs);
+  let stamp = updatedAtMs;
+  if (stamp == null) {
+    const times = sessions.map((s) => Date.parse(s.generatedAt)).filter(Number.isFinite);
+    stamp = times.length ? Math.max(...times) : Date.now();
+  }
+  const next = buildIndex(sessions, notes, stamp);
   if (!current && !sessions.length) return { written: false, index: null };
   if (current && typeof current === 'object'
     && JSON.stringify({ ...current, updatedAt: null }) === JSON.stringify({ ...next, updatedAt: null })) {
@@ -724,6 +946,43 @@ function syncIndex(dataDir, updatedAtMs, warn) {
   }
   writeFileAtomic(file, serializeJson(next));
   return { written: true, index: next };
+}
+
+/**
+ * --overlay-dir: every valid <overlay>/sessions/YYYY-MM-DD.json whose generatedAt is newer than the copy
+ * in dataDir (or that has no valid copy there) replaces it, byte for byte, before anything is collected,
+ * so the run, the backlog and the rebuilt index all see the newest copy. Notes are never read from the
+ * overlay. In a dry run nothing is copied; the chosen sessions are returned in `pending` instead.
+ */
+function applyOverlay({ dataDir, overlayDir, dryRun, log }) {
+  const pending = new Map();
+  const copied = [];
+  if (!overlayDir) return { pending, copied };
+  const dir = path.join(path.resolve(overlayDir), 'sessions');
+  for (const name of listDated(dir)) {
+    const date = name.slice(0, 10);
+    let text;
+    let session;
+    try {
+      text = fs.readFileSync(path.join(dir, name), 'utf8');
+      session = Core.validateSession(JSON.parse(text));
+      if (session.date !== date) throw new Error(`date ${session.date} does not match the file name`);
+    } catch (error) {
+      log(`warning: ignoring overlay sessions/${name}: ${error.message}`);
+      continue;
+    }
+    const local = readSessionFile(sessionPath(dataDir, date), date, () => {});
+    if (local && !(Date.parse(session.generatedAt) > Date.parse(local.generatedAt))) continue;
+    if (dryRun) {
+      pending.set(date, session);
+    } else {
+      writeFileAtomic(sessionPath(dataDir, date), text);
+      copied.push(date);
+    }
+  }
+  if (copied.length) log(`Overlay: newer session files taken for ${copied.join(', ')}.`);
+  if (pending.size) log(`Overlay (dry run): newer session files would be taken for ${[...pending.keys()].join(', ')}.`);
+  return { pending, copied };
 }
 
 function summaryLine(s) {
@@ -736,62 +995,180 @@ function summaryLine(s) {
 // ---------------------------------------------------------------- run
 
 /**
- * Collect one session and refresh the index.
- * options: {date, start, end, dataDir, now, fixtures, force, dryRun, transport, sleep, clock, log}
- * Returns {status: 'written'|'skipped'|'dry-run', reason?, date, final, session?, index?}.
+ * Collect one session (ctx: the run context) -> {status: 'written'|'unchanged'|'skipped'|'dry-run',
+ * reason?, date, final, session?}. opts: {start, end, explicit, replaceWindow, force, throttle, backlog}.
+ * A backlog session is not written when Yahoo stopped during its collection (it is retried later).
+ */
+async function collectSession(ctx, date, opts) {
+  const { log, nowMs, clock, dataDir, dryRun, budget } = ctx;
+  const existing = ctx.readExisting(date);
+  let win;
+  if (opts.explicit || !existing) {
+    try {
+      win = Core.sessionWindow(date, opts.start || undefined, opts.end || undefined);
+    } catch (error) {
+      throw new UsageError(error.message);
+    }
+  } else {
+    win = { start: Core.isoUtc(Date.parse(existing.window.start)), end: Core.isoUtc(Date.parse(existing.window.end)) };
+  }
+  if (existing && !sameWindow(existing.window, win) && !opts.replaceWindow) {
+    throw new UsageError(`${date}: the stored session covers ${windowText(existing.window)} KST, not ${windowText(win)} KST; `
+      + 'pass --replace-window to replace it (its stored points are not carried over)');
+  }
+  if (nowMs < Date.parse(win.start)) {
+    log(`${date}: the window starts at ${Core.kstTime(win.start)} KST and has not started yet; nothing written.`);
+    return { status: 'skipped', reason: 'not-started', date, final: false };
+  }
+  const skip = shouldSkip({ existing, nowMs, force: opts.force, throttle: opts.throttle });
+  if (skip) {
+    log(`${date}: ${SKIP_TEXT[skip]}; skipping (use --force to collect anyway).`);
+    return { status: 'skipped', reason: skip, date, final: existing.final };
+  }
+  const previous = existing && sameWindow(existing.window, win) ? existing : null;
+  if (!ctx.yahoo) {
+    const backoff = yahooBackoff(previous, nowMs);
+    if (backoff) log(`Yahoo refused the run at ${Core.kstTime(previous.generatedAt)} KST; no Yahoo request until 30 minutes have passed.`);
+    ctx.yahoo = yahooClient(ctx.transport, ctx.sleep, { budget, backoff });
+  }
+  const stoppedBefore = ctx.yahoo.stopped;
+  log(`Collecting ${date} ${windowText(win)} KST (${win.start} .. ${win.end}), now ${isoSec(nowMs)}${ctx.fixtures ? `, fixtures ${ctx.fixtures}` : ''}`);
+  const results = await collectSeries({ date, window: win, nowMs, previous, transport: ctx.transport, sleep: ctx.sleep,
+    clock, budget, yahoo: ctx.yahoo });
+  const session = Core.validateSession(buildSession({ date, window: win, nowMs, generatedAt: clock(), results, previous }));
+  for (const s of session.series) log(summaryLine(s));
+  const withData = session.series.filter((s) => s.points.length).length;
+  if (dryRun) {
+    log(`Dry run: ${withData}/${session.series.length} series with data, final ${session.final}; nothing written.`);
+    return { status: 'dry-run', date, final: session.final, session };
+  }
+  if (opts.backlog && !stoppedBefore && ctx.yahoo.stopped) {
+    log(`${date}: not written, Yahoo stopped during the collection (${ctx.yahoo.stopped}); a later run finalizes it.`);
+    return { status: 'skipped', reason: 'provider-stopped', date, final: existing ? existing.final : false };
+  }
+  if (existing && sameSessionContent(existing, session)) {
+    log(`${date}: nothing changed since ${existing.generatedAt} apart from fetch times; nothing written.`);
+    return { status: 'unchanged', date, final: existing.final, session };
+  }
+  const file = sessionPath(dataDir, date);
+  writeFileAtomic(file, serializeJson(session));
+  const shown = path.relative(process.cwd(), file);
+  log(`Wrote ${!shown || shown.startsWith('..') ? file : shown}: ${withData}/${session.series.length} series with data, final ${session.final}.`);
+  return { status: 'written', date, final: session.final, session };
+}
+
+/** Sessions of the data directory (plus dry-run overlay copies), each validated. */
+function knownSessions(ctx) {
+  const byDate = new Map(readDated(path.join(ctx.dataDir, 'sessions'), Core.validateSession, () => {}).map((s) => [s.date, s]));
+  for (const [date, s] of ctx.pending) byDate.set(date, s);
+  return [...byDate.values()];
+}
+
+/**
+ * security-2: an unattended run also collects, once, the newest (at most 5) earlier sessions that are
+ * still not final although their window ended 20+ minutes ago, so a missed post-close run cannot leave
+ * a session "live" forever. Postponed while Yahoo is stopped or the run deadline is near.
+ */
+async function finalizeBacklog(ctx, mainDate) {
+  const { nowMs, log, budget } = ctx;
+  const due = knownSessions(ctx)
+    .filter((s) => s.date !== mainDate && s.final !== true && Date.parse(s.window.end) + FINAL_AFTER_MS <= nowMs)
+    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .slice(0, BACKLOG_MAX);
+  const out = [];
+  for (const s of due) {
+    if (ctx.yahoo && ctx.yahoo.stopped) {
+      log(`${s.date}: not final yet; finalizing it waits for a later run (${ctx.yahoo.stopped}).`);
+      break;
+    }
+    if (budget.left() < BACKLOG_MIN_LEFT_MS) {
+      log(`${s.date}: not final yet; finalizing it waits for a later run (run time budget).`);
+      break;
+    }
+    log(`${s.date}: earlier session is not final although its window ended; collecting it once more.`);
+    out.push(await collectSession(ctx, s.date, { explicit: false, force: false, throttle: ctx.throttle, backlog: true }));
+  }
+  return out;
+}
+
+/** --rebuild-index: index.json from the sessions and notes of dataDir (updatedAt = newest generatedAt). */
+function rebuildIndex(dataDir, log) {
+  const { written, index } = syncIndex(dataDir, null, log);
+  const count = index ? index.sessions.length : 0;
+  log(written ? `Rebuilt ${path.join(dataDir, 'index.json')}: ${count} sessions.`
+    : `index.json already lists the ${count} session files; nothing written.`);
+  return { status: written ? 'index-written' : 'index-unchanged', index, indexWritten: written };
+}
+
+/**
+ * Collect the session of --date (default: the current session) and refresh the index. Without --date,
+ * earlier non-final sessions are finalized as well (see finalizeBacklog).
+ * options: {date, start, end, dataDir, overlayDir, now, fixtures, force, throttle, replaceWindow, dryRun,
+ *   rebuildIndex, transport, sleep, clock, timer, log}
+ * Returns {status: 'written'|'unchanged'|'skipped'|'dry-run', reason?, date, final, session?, backlog: [...],
+ *   overlay: [dates copied], index, indexWritten}.
  */
 async function run(options = {}) {
   const o = options;
   const log = o.log || ((line) => console.log(line));
+  const dataDir = path.resolve(o.dataDir || DEFAULT_DATA_DIR);
+  if (o.rebuildIndex) return rebuildIndex(dataDir, log);
   const fixedNow = o.now == null ? null : Core.toMs(o.now);
   if (fixedNow !== null && !Number.isFinite(fixedNow)) throw new Error(`invalid now: ${o.now}`);
   const clock = o.clock || (() => (fixedNow === null ? Date.now() : fixedNow));
   const nowMs = clock();
-  const dataDir = path.resolve(o.dataDir || DEFAULT_DATA_DIR);
-  const sleep = o.sleep || (o.fixtures ? async () => {} : delay);
-  const transport = o.transport || (o.fixtures ? fixtureTransport(path.resolve(o.fixtures)) : httpTransport);
-  const refreshIndex = (ms) => (o.dryRun ? { written: false } : syncIndex(dataDir, ms, log));
+  const today = Core.kstDate(nowMs);
+  if (o.date && o.date > today) {
+    throw new UsageError(`--date ${o.date} is later than today (${today} KST); a session is collected only once its window has started`);
+  }
+  const dryRun = Boolean(o.dryRun);
+  const overlay = applyOverlay({ dataDir, overlayDir: o.overlayDir, dryRun, log });
+  const ctx = {
+    log, nowMs, clock, dataDir, dryRun,
+    fixtures: o.fixtures || null,
+    throttle: Boolean(o.throttle),
+    sleep: o.sleep || (o.fixtures ? async () => {} : delay),
+    transport: o.transport || (o.fixtures ? fixtureTransport(path.resolve(o.fixtures)) : httpTransport),
+    budget: makeBudget(o.timer || Date.now, RUN_DEADLINE_MS),
+    pending: overlay.pending,
+    yahoo: null,
+    readExisting: (date) => (overlay.pending.has(date) ? overlay.pending.get(date)
+      : readSessionFile(sessionPath(dataDir, date), date, log)),
+  };
 
+  let main = null;
   let date = o.date || null;
   if (!date) {
     date = defaultDate(nowMs, o.start);
     if (isWeekend(date)) {
-      log(`${date} is a weekend in KST; nothing to collect (pass --date to collect it anyway).`);
-      const { written } = refreshIndex(nowMs);
-      return { status: 'skipped', reason: 'weekend', date, final: false, indexWritten: written };
+      log(`${date} is a weekend in KST; nothing to collect for it (pass --date to collect it anyway).`);
+      main = { status: 'skipped', reason: 'weekend', date, final: false };
     }
   }
-  const win = Core.sessionWindow(date, o.start || undefined, o.end || undefined);
-  const sessionFile = path.join(dataDir, 'sessions', `${date}.json`);
-  const existing = readSessionFile(sessionFile, date, log);
-  const skip = shouldSkip({ existing, nowMs, force: Boolean(o.force) });
-  if (skip) {
-    log(`${date}: ${skip === 'final' ? 'session is already final' : 'collected less than 10 minutes ago'}; skipping (use --force to collect anyway).`);
-    const { written } = refreshIndex(nowMs);
-    return { status: 'skipped', reason: skip, date, final: existing.final, indexWritten: written };
+  if (!main) {
+    main = await collectSession(ctx, date, { start: o.start, end: o.end, explicit: o.start != null || o.end != null,
+      replaceWindow: Boolean(o.replaceWindow), force: Boolean(o.force), throttle: ctx.throttle });
   }
-  const previous = existing && sameWindow(existing.window, win) ? existing : null;
-  log(`Collecting ${date} ${Core.kstTime(win.start)}~${Core.kstTime(win.end)} KST (${win.start} .. ${win.end}), now ${isoSec(nowMs)}${o.fixtures ? `, fixtures ${o.fixtures}` : ''}`);
-  const results = await collectSeries({ date, window: win, nowMs, previous, transport, sleep, clock });
-  const session = Core.validateSession(buildSession({ date, window: win, nowMs, generatedAt: clock(), results, previous }));
-  for (const s of session.series) log(summaryLine(s));
-  const withData = session.series.filter((s) => s.points.length).length;
-  if (o.dryRun) {
-    log(`Dry run: ${withData}/${session.series.length} series with data, final ${session.final}; nothing written.`);
-    return { status: 'dry-run', date, final: session.final, session };
+  const backlog = o.date ? [] : await finalizeBacklog(ctx, date);
+  let index = { written: false, index: null };
+  if (!dryRun) {
+    const written = [main, ...backlog].filter((r) => r.status === 'written');
+    const stamp = written.length ? Math.max(...written.map((r) => Date.parse(r.session.generatedAt))) : nowMs;
+    index = syncIndex(dataDir, stamp, log);
+    if (index.written) log(`Index lists ${index.index.sessions.length} sessions.`);
   }
-  writeFileAtomic(sessionFile, serializeJson(session));
-  const { index } = syncIndex(dataDir, Date.parse(session.generatedAt), log);
-  const shown = path.relative(process.cwd(), sessionFile);
-  log(`Wrote ${!shown || shown.startsWith('..') ? sessionFile : shown}: ${withData}/${session.series.length} series with data, final ${session.final}; index lists ${index ? index.sessions.length : 0} sessions.`);
-  return { status: 'written', date, final: session.final, session, index };
+  return { ...main, backlog, overlay: overlay.copied, index: index.index, indexWritten: index.written };
 }
 
 // ---------------------------------------------------------------- CLI
 
 function parseArgs(argv) {
-  const out = { date: null, start: null, end: null, dataDir: null, now: null, fixtures: null, force: false, dryRun: false };
-  const valued = { '--date': 'date', '--start': 'start', '--end': 'end', '--data-dir': 'dataDir', '--now': 'now', '--fixtures': 'fixtures' };
+  const out = { date: null, start: null, end: null, dataDir: null, overlayDir: null, now: null, fixtures: null,
+    force: false, dryRun: false, throttle: false, replaceWindow: false, rebuildIndex: false };
+  const flags = { '--force': 'force', '--dry-run': 'dryRun', '--throttle': 'throttle', '--replace-window': 'replaceWindow',
+    '--rebuild-index': 'rebuildIndex' };
+  const valued = { '--date': 'date', '--start': 'start', '--end': 'end', '--data-dir': 'dataDir', '--overlay-dir': 'overlayDir',
+    '--now': 'now', '--fixtures': 'fixtures' };
   for (let i = 0; i < argv.length; i++) {
     let arg = argv[i];
     let value;
@@ -800,11 +1177,11 @@ function parseArgs(argv) {
       value = arg.slice(eq + 1);
       arg = arg.slice(0, eq);
     }
-    if ((arg === '--force' || arg === '--dry-run' || arg === '--help' || arg === '-h') && value === undefined) {
-      if (arg === '--force') out.force = true;
-      else if (arg === '--dry-run') out.dryRun = true;
-      else out.help = true;
-    } else if (Object.prototype.hasOwnProperty.call(valued, arg)) {
+    if ((arg === '--help' || arg === '-h') && value === undefined) {
+      out.help = true;
+    } else if (hasOwn(flags, arg) && value === undefined) {
+      out[flags[arg]] = true;
+    } else if (hasOwn(valued, arg)) {
       if (value === undefined) {
         value = argv[++i];
         if (value === undefined) throw new Error(`${arg} needs a value`);
@@ -819,6 +1196,12 @@ function parseArgs(argv) {
     if (out[key] !== null) Core.kstToUtcIso('2000-01-01', out[key]); // throws on a malformed time
   }
   if (out.now !== null && !Number.isFinite(Date.parse(out.now))) throw new Error(`--now: invalid time ${out.now}`);
+  if (out.rebuildIndex) {
+    const others = ['date', 'start', 'end', 'overlayDir', 'now', 'fixtures'].filter((k) => out[k] !== null)
+      .concat(['force', 'dryRun', 'throttle', 'replaceWindow'].filter((k) => out[k]));
+    if (others.length) throw new Error('--rebuild-index takes only --data-dir');
+  }
+  if (out.replaceWindow && out.start === null && out.end === null) throw new Error('--replace-window needs --start or --end');
   return out;
 }
 
@@ -842,14 +1225,25 @@ async function main(argv = process.argv.slice(2)) {
   }
   try {
     const result = await run(args);
-    if (process.env.GITHUB_ACTIONS === 'true' && result.session) {
-      for (const s of result.session.series) {
-        if (s.status === 'stale' || s.status === 'error') console.log(`::warning title=parallel ${s.id}::${s.status}: ${s.note}`);
+    if (args.rebuildIndex) return 0;
+    const all = [result, ...(result.backlog || [])];
+    if (process.env.GITHUB_ACTIONS === 'true') {
+      for (const r of all) {
+        if (!r.session) continue;
+        const title = r === result ? '' : ` ${r.date}`;
+        for (const s of r.session.series) {
+          if (s.status === 'stale' || s.status === 'error') console.log(`::warning title=parallel ${s.id}${title}::${s.status}: ${s.note}`);
+        }
       }
     }
-    writeGithubOutput({ date: result.date, final: String(Boolean(result.final)), status: result.status });
+    writeGithubOutput({ date: result.date, final: String(Boolean(result.final)), status: result.status,
+      written: all.filter((r) => r.status === 'written').map((r) => r.date).join(' ') });
     return 0;
   } catch (error) {
+    if (error instanceof UsageError) {
+      console.error(`collect-parallel: ${error.message}`);
+      return 2;
+    }
     console.error(`collect-parallel failed: ${error && error.stack ? error.stack : error}`);
     return 1;
   }
@@ -862,10 +1256,12 @@ if (require.main === module) {
 }
 
 module.exports = {
-  USER_AGENT, NOTE_NO_DATA, NOTE_RATE_LIMITED, LABEL_PREV_CLOSE_FALLBACK,
-  cleanPrice, sanitizeSymbol, parseYahooChart, tradingPeriods, periodOf, yahooRange, yahooIntradayUrl, yahooDailyUrl,
-  yahooPoints, yahooBaseline, dailyPrevClose, parseCmTime, coinMetricsUrl, coinMetricsSeries,
-  buildSeries, buildSession, buildIndex, serializeJson, defaultDate, isWeekend, shouldSkip,
-  httpTransport, fixtureTransport, request, yahooClient, fetchCoinMetrics, collectSeries, syncIndex,
-  parseArgs, run, main,
+  USER_AGENT, NOTE_NO_DATA, NOTE_RATE_LIMITED, NOTE_REFUSED, NOTE_SILENT, NOTE_YAHOO_DEADLINE, NOTE_CM_DEADLINE,
+  NOTE_BACKOFF, NOTE_KEPT_EMPTY, NOTE_KEPT_PARTIAL, NOTE_FILLED_START, NOTE_NO_BASELINE, LABEL_PREV_CLOSE_FALLBACK,
+  THROTTLE_MS, REPAIR_AFTER_MS, BACKOFF_MS, RUN_DEADLINE_MS, BACKLOG_MAX, UsageError,
+  userAgent, cleanPrice, sanitizeSymbol, parseYahooChart, tradingPeriods, periodOf, yahooRange, yahooIntradayUrl,
+  yahooDailyUrl, yahooPoints, yahooBaseline, isPlaceholderBar, dailyPrevClose, parseCmTime, coinMetricsUrl,
+  coinMetricsSeries, buildSeries, buildSession, sameSessionContent, buildIndex, serializeJson, defaultDate, isWeekend,
+  shouldSkip, yahooBackoff, httpTransport, fixtureTransport, request, makeBudget, yahooClient, fetchCoinMetrics,
+  collectSeries, syncIndex, applyOverlay, parseArgs, run, main,
 };

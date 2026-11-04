@@ -1,11 +1,17 @@
 /* Parallel timeline page (병렬 타임라인 v3).
- * Loads data/parallel/index.json, sessions/<date>.json and notes/<date>.json (on github.io the copy on
- * main at raw.githubusercontent.com first, then the same-origin Pages copy), validates them with
- * ParallelCore, draws the chart with ParallelChart and renders the analyst notes plus the automatic bullets.
- * Interaction: date select, theme toggle (saved in localStorage), crosshair and tooltip (pointer and
- * keyboard), PNG export, and polling every 5 minutes only while a non-final session is visible.
- * Never writes data. The HTML builders are pure functions exported as window.ParallelView
- * (module.exports in Node) so tests can call them without a DOM.
+ * Loads data/parallel/index.json, sessions/<date>.json and notes/<date>.json, validates them with ParallelCore,
+ * draws the chart with ParallelChart and renders the analyst notes plus the automatic bullets.
+ * Data bases on <owner>.github.io: the index and sessions come from the data branch (parallel-data) on
+ * raw.githubusercontent.com, then main there, then the same-origin Pages copy; notes (written on main) come from
+ * main first, then the data branch, then the same origin. Elsewhere only the same origin is read. A host that
+ * failed with a network error or a timeout is tried last for 10 minutes; a base with another one after it gets
+ * 5 s, the last one 15 s.
+ * Interaction: date select, theme toggle (saved in localStorage), crosshair and tooltip (pointer, and a keyboard
+ * slider for assistive technology), % / 가격 timetable toggle, PNG export. Polling: every 5 minutes while a
+ * non-final session is visible (until 24 h after its window end), plus a retry with backoff (30 s, 2 min, 5 min)
+ * after any failed request, also for final sessions. Containers are rewritten only when their HTML changes, so a
+ * refresh keeps keyboard focus. Never writes data. The HTML builders are pure functions exported as
+ * window.ParallelView (module.exports in Node) so tests can call them without a DOM.
  */
 (function (root, factory) {
   'use strict';
@@ -41,9 +47,24 @@
   }
 
   const MINUTE = 60000;
+  const HOUR = 60 * MINUTE;
   const POLL_MS = 5 * MINUTE;
-  const TIMEOUT_MS = 15000;
+  // Retry delays after a load with any failure (reset by a clean load); live sessions use at most POLL_MS.
+  const RETRY_MS = [30000, 2 * MINUTE, 5 * MINUTE];
+  const TIMEOUT_MS = 15000; // the last base of a request
+  const FAST_TIMEOUT_MS = 5000; // a base with another one after it
+  const HOST_DOWN_MS = 10 * MINUTE; // a host that failed with a network error or timeout is tried last this long
   const VISIBLE_RELOAD_GAP_MS = 30000;
+  // A non-final session is '갱신 지연' when its file is older than this or its window ended this long ago.
+  const LIVE_STALE_MS = 30 * MINUTE;
+  const LIVE_LATE_MS = HOUR;
+  // Polling of a non-final session stops this long after its window end (the collector gave up on it).
+  const POLL_STOP_MS = 24 * HOUR;
+  // Without ?date, a newest session still being collected with fewer series or less data than this is not
+  // the default view while an older final session exists.
+  const SPARSE_SERIES = 10;
+  const SPARSE_SPAN_MS = 30 * MINUTE;
+  const DATA_BRANCH = 'parallel-data';
   const THEME_KEY = 'parallel-theme';
   const SAME_ORIGIN_BASE = 'data/parallel/';
   const PNG_WIDTH = 1400;
@@ -58,7 +79,10 @@
   const STATUS_LABELS = { ok: '정상', stale: '이전 자료 유지', missing: '자료 없음', error: '수집 실패' };
   const PROVIDER_SHORT = { yahoo: 'Yahoo', coinmetrics: 'Coin Metrics' };
   const PANEL_SHORT = { indices: '주식지수', ai: 'AI·반도체', crypto: '크립토', fx: '달러·금' };
+  // Units of the timetable when it shows values instead of percentages.
+  const VALUE_UNITS = { indices: '지수 포인트', ai: '현지 통화 주가', crypto: 'USD 가격', fx: '지수·환율·금 USD' };
   const CIRCLED = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳';
+  const FOCUSABLE = 'a[href], button, summary, select, input, textarea, [tabindex]:not([tabindex="-1"])';
   const RANK = new Map(C.SERIES.map((s, i) => [s.id, i]));
 
   const esc = C.escapeHtml;
@@ -147,14 +171,31 @@
   const pctDigits = (panelKey) => (panelKey === 'fx' ? 2 : 1);
   const intervalOf = (session) => (session && Number.isInteger(session.intervalMinutes) && session.intervalMinutes > 0 ? session.intervalMinutes : 15);
 
+  /** Time (ms) of the newest point inside win over all series, -Infinity when there is none. */
+  function newestTime(session, win) {
+    let last = -Infinity;
+    for (const s of seriesList(session)) {
+      const pts = C.seriesView(s, win);
+      if (pts.length) last = Math.max(last, pts[pts.length - 1].t);
+    }
+    return last;
+  }
+
+  /** Time (ms) of the last point of a series in the whole file, NaN when it has none. */
+  function lastPointTime(series) {
+    const pts = C.seriesView(series, null);
+    return pts.length ? pts[pts.length - 1].t : NaN;
+  }
+
   // ---------------------------------------------------------------- data location
 
   /**
-   * Data base URLs in fetch order. On <owner>.github.io the copy on main at raw.githubusercontent.com comes
-   * first (fresher than the Pages build), then the same-origin copy; elsewhere only the same-origin copy.
+   * Data base URLs in fetch order. On <owner>.github.io the files come from raw.githubusercontent.com first
+   * (fresher than the Pages build): index and sessions ('data') from the data branch, then main; notes (written
+   * on main) from main, then the data branch. The same-origin copy is always last; elsewhere it is the only one.
    * The repo is the first path segment of a project page, or '<owner>.github.io' for a user page.
    */
-  function dataBases(loc) {
+  function dataBases(loc, kind) {
     const host = String((loc && loc.hostname) || '').toLowerCase();
     const suffix = '.github.io';
     if (!host.endsWith(suffix) || host.length === suffix.length) return [SAME_ORIGIN_BASE];
@@ -169,7 +210,32 @@
       return [SAME_ORIGIN_BASE];
     }
     if (!/^[a-z0-9-]+$/.test(owner) || !/^[A-Za-z0-9._-]+$/.test(repo) || /^\.+$/.test(repo)) return [SAME_ORIGIN_BASE];
-    return [`https://raw.githubusercontent.com/${owner}/${repo}/main/data/parallel/`, SAME_ORIGIN_BASE];
+    const raw = (branch) => `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/data/parallel/`;
+    const branches = kind === 'notes' ? ['main', DATA_BRANCH] : [DATA_BRANCH, 'main'];
+    return branches.map(raw).concat(SAME_ORIGIN_BASE);
+  }
+
+  /** Host of an absolute base ('' for the same-origin base). */
+  function baseHost(base) {
+    const m = /^https?:\/\/([^/?#]+)/i.exec(String(base));
+    return m ? m[1].toLowerCase() : '';
+  }
+
+  /** True when host failed with a network error or a timeout within HOST_DOWN_MS (down: Map host -> ms). */
+  function hostDown(down, host, now) {
+    const t = down && typeof down.get === 'function' ? down.get(host) : undefined;
+    return Number.isFinite(t) && now - t < HOST_DOWN_MS;
+  }
+
+  /** Bases in try order: those on a host that is down (hostDown) go last, otherwise in the given order. */
+  function orderBases(bases, down, now) {
+    const isDown = (b) => hostDown(down, baseHost(b), now);
+    return bases.filter((b) => !isDown(b)).concat(bases.filter(isDown));
+  }
+
+  /** Abort time for one base: short while another base remains, longer for the last one. */
+  function baseTimeout(isLast) {
+    return isLast ? TIMEOUT_MS : FAST_TIMEOUT_MS;
   }
 
   /** url + '?t=<minute bucket>' so caches are bypassed at most once a minute. */
@@ -188,20 +254,117 @@
     return value && ymd(value) ? value : null;
   }
 
+  // ---------------------------------------------------------------- default date and polling
+
+  /** An index entry of a session still being collected with fewer than SPARSE_SERIES series with data. */
+  function thinEntry(entry) {
+    return !!entry && entry.final !== true && Number.isInteger(entry.seriesWithData) && entry.seriesWithData < SPARSE_SERIES;
+  }
+
+  /** A session still being collected whose window holds fewer than SPARSE_SERIES series with data or under 30 minutes of data. */
+  function sparseSession(session, win) {
+    if (!session || session.final === true || !session.window) return false;
+    const w = win || C.displayWindow(session, null);
+    let count = 0;
+    let first = Infinity;
+    let last = -Infinity;
+    for (const s of seriesList(session)) {
+      const pts = C.seriesView(s, w);
+      if (!pts.length) continue;
+      count += 1;
+      first = Math.min(first, pts[0].t);
+      last = Math.max(last, pts[pts.length - 1].t);
+    }
+    return count < SPARSE_SERIES || !(last - first >= SPARSE_SPAN_MS);
+  }
+
+  /**
+   * Default dates from the index: the newest session, the newest final session before it when the newest is not
+   * final (shown instead while the newest is sparse), and whether the index already says the newest is thin.
+   */
+  function defaultDates(index) {
+    const list = index && Array.isArray(index.sessions) ? index.sessions.filter((e) => e && ymd(e.date)) : [];
+    if (!list.length) return { newest: null, older: null, thin: false };
+    const newest = list[0];
+    const older = newest.final === true ? null : list.find((e) => e.final === true && e.date < newest.date);
+    return { newest: newest.date, older: older ? older.date : null, thin: thinEntry(newest) };
+  }
+
+  /** True while a session should be polled: not final and at most POLL_STOP_MS after its window end. */
+  function pollsLive(session, now) {
+    if (!session || session.final === true) return false;
+    const end = C.toMs(session.window && session.window.end);
+    return !Number.isFinite(end) || !Number.isFinite(now) || now <= end + POLL_STOP_MS;
+  }
+
+  /** Delay before the next load, or null for none: retries after failures, else the live poll. */
+  function nextDelay(o) {
+    const x = o || {};
+    if (x.hidden) return null;
+    const live = pollsLive(x.session, x.now);
+    if (x.failures > 0) {
+      const step = RETRY_MS[Math.min(x.failures, RETRY_MS.length) - 1];
+      return live ? Math.min(step, POLL_MS) : step;
+    }
+    return live ? POLL_MS : null;
+  }
+
   // ---------------------------------------------------------------- header
 
-  /** Status pill: {state: loading|live|final|error, text}. */
+  /** Stale and failed series of a session (series objects). */
+  function seriesProblems(session) {
+    const stale = [];
+    const failed = [];
+    for (const s of seriesList(session)) {
+      if (s.status === 'stale') stale.push(s);
+      else if (s.status === 'error') failed.push(s);
+    }
+    return { stale, failed };
+  }
+
+  /** '코스피(09:45까지)' for a stale series (its label alone when it has no points). */
+  function staleName(series, refDate) {
+    const t = lastPointTime(series);
+    return Number.isFinite(t) ? `${series.label}(${clock(t, refDate)}까지)` : String(series.label);
+  }
+
+  /**
+   * Status pill: {state: loading|live|warn|stale|final|error, text}. input: {session, error, now (ms, default the
+   * clock)}. A non-final session whose file is over 30 minutes old, or whose window ended over an hour ago, is
+   * '갱신 지연 · M/D HH:MM'; stale and failed series add ' · 일부 지연 n' (or ' · 일부 수집 실패 n' when final).
+   */
   function statusInfo(input) {
     const o = input || {};
     if (o.error) return { state: 'error', text: o.session ? '수신 실패 · 마지막 정상 자료' : '수신 실패' };
-    if (!o.session) return { state: 'loading', text: '불러오는 중' };
-    if (o.session.final) return { state: 'final', text: '최종' };
-    const t = C.toMs(o.session.generatedAt);
-    return { state: 'live', text: Number.isFinite(t) ? `실시간 · ${C.kstTime(t)} 갱신` : '실시간' };
+    const s = o.session;
+    if (!s) return { state: 'loading', text: '불러오는 중' };
+    const now = Number.isFinite(o.now) ? o.now : Date.now();
+    const p = seriesProblems(s);
+    const n = p.stale.length + p.failed.length;
+    if (s.final) return n ? { state: 'warn', text: `최종 · 일부 수집 실패 ${n}` } : { state: 'final', text: '최종' };
+    const gen = C.toMs(s.generatedAt);
+    const end = C.toMs(s.window && s.window.end);
+    const tail = n ? ` · 일부 지연 ${n}` : '';
+    if ((Number.isFinite(gen) && now - gen > LIVE_STALE_MS) || (Number.isFinite(end) && now - end > LIVE_LATE_MS)) {
+      const when = Number.isFinite(gen) ? clock(gen, null) : '시각 미상';
+      return { state: 'stale', text: `갱신 지연 · ${when}${tail}` };
+    }
+    const text = Number.isFinite(gen) ? `실시간 · ${C.kstTime(gen)} 갱신` : '실시간';
+    return n ? { state: 'warn', text: `${text}${tail}` } : { state: 'live', text };
   }
 
   function statusText(input) {
     return statusInfo(input).text;
+  }
+
+  /** Pill tooltip: the failed requests, else the delayed and failed series. */
+  function statusTitle(session, error) {
+    if (error) return `최근 확인 실패: ${error}`;
+    const p = seriesProblems(session);
+    const parts = [];
+    if (p.stale.length) parts.push(`이전 자료 표시: ${p.stale.map((s) => staleName(s, session.date)).join('·')}`);
+    if (p.failed.length) parts.push(`수집 실패: ${p.failed.map((s) => s.label).join('·')}`);
+    return parts.join(' · ');
   }
 
   function titleText(notes) {
@@ -213,6 +376,17 @@
     if (!session || !session.window) return '';
     const win = C.displayWindow(session, notes || null);
     return `${longDate(session.date)} · ${C.kstTime(win.start)}–${C.kstTime(win.end)} KST · ${intervalOf(session)}분봉`;
+  }
+
+  /**
+   * The chart's subtitle line (what the dashed lines and the band are): notes.subtitle, else the chart default
+   * when events are drawn; '' without notes.
+   */
+  function subtitleText(session, notes) {
+    if (!notes) return '';
+    if (isText(notes.subtitle)) return stripMarks(notes.subtitle);
+    if (!session || !session.window) return '';
+    return C.eventsInWindow(notes, C.displayWindow(session, notes)).length ? `세로 점선 = 사건 시각 · ${intervalOf(session)}분봉` : '';
   }
 
   /**
@@ -231,9 +405,29 @@
     return options.map((o) => `<option value="${esc(o.date)}"${o.date === selected ? ' selected' : ''}>${esc(o.label)}</option>`).join('');
   }
 
-  function pngFileName(date, theme) {
+  /**
+   * The notice line of the default view while the newest session is sparse: '오늘(M/D) 세션 수집 중 · 보기', or for
+   * an earlier date (a session that was never completed) 'M/D(요일) 세션 자료 적음 · 보기'.
+   */
+  function pendingNoticeHtml(date, nowMs) {
+    const p = ymd(date);
+    if (!p) return '';
+    const today = Number.isFinite(nowMs) && C.kstDate(nowMs) === date;
+    const text = today ? `오늘(${p.m}/${p.d}) 세션 수집 중` : `${shortDate(date)} 세션 자료 적음`;
+    return `${esc(text)} · <a href="?date=${esc(date)}" data-date="${esc(date)}">보기</a>`;
+  }
+
+  /** Text of the notice shown when a session has no notes: absent (404) or failed to load or validate. */
+  function notesNotice(notesError) {
+    return notesError ? `분석 노트를 불러오지 못했습니다(${notesError}). 잠시 후 다시 시도합니다.` : '이 날짜의 분석 노트가 없습니다.';
+  }
+
+  /** 'parallel-timeline-20261104.png'; a session still being collected adds its KST generation time (-HHMM). */
+  function pngFileName(date, theme, session) {
     const day = ymd(date) ? date.replace(/-/g, '') : 'session';
-    return `parallel-timeline-${day}${theme === 'dark' ? '-dark' : ''}.png`;
+    const gen = session && session.final !== true ? C.toMs(session.generatedAt) : NaN;
+    const time = Number.isFinite(gen) ? `-${C.kstTime(gen).replace(':', '')}` : '';
+    return `parallel-timeline-${day}${time}${theme === 'dark' ? '-dark' : ''}.png`;
   }
 
   // ---------------------------------------------------------------- notes sections
@@ -246,13 +440,16 @@
     return notes && isText(notes.verdict) ? inline(notes.verdict) : '';
   }
 
-  /** Analyst observations first, then the automatic bullets, each tagged '자동'. */
-  function insightsHtml(notes, auto) {
+  /**
+   * Analyst observations first, then the automatic bullets, each tagged '자동'. basis (core.insightsBasis: the time
+   * basis of the automatic bullets and of the notes) is a muted line in front of the automatic bullets.
+   */
+  function insightsHtml(notes, auto, basis) {
     const items = textItems(notes && notes.observations).map((t) => `<li>${inline(t)}</li>`);
-    for (const it of Array.isArray(auto) ? auto : []) {
-      if (it && isText(it.text)) items.push(`<li class="is-auto"><span class="tag">자동</span>${esc(it.text)}</li>`);
-    }
-    return items.join('');
+    const autos = (Array.isArray(auto) ? auto : []).filter((it) => it && isText(it.text))
+      .map((it) => `<li class="is-auto"><span class="tag">자동</span>${esc(it.text)}</li>`);
+    if (autos.length && isText(basis)) items.push(`<li class="obs-basis">${esc(basis)}</li>`);
+    return items.concat(autos).join('');
   }
 
   /** Analyst sections as cards: <article><h3>heading</h3><ul>items</ul></article>. */
@@ -311,25 +508,36 @@
 
   // ---------------------------------------------------------------- timetable
 
-  function cellHtml(cell, row, digits) {
+  /** One cell: the percentage (or the value when prices is set); the other number and an earlier time go in the title. */
+  function cellHtml(cell, row, digits, prices) {
     if (!cell) return '<td class="na"><span aria-hidden="true">·</span><span class="sr-only">자료 없음</span></td>';
-    const pct = esc(C.formatPct(cell.p, digits));
+    const pct = C.formatPct(cell.p, digits);
     const value = C.formatValue(cell.v);
+    const shown = esc(prices ? value : pct);
+    const other = prices ? pct : value;
     if (row.kind === 'hour') {
-      const title = Number.isFinite(cell.t) && cell.t !== row.t ? `${C.kstTime(cell.t)} KST · ${value}` : value;
-      return `<td title="${esc(title)}">${pct}</td>`;
+      const title = Number.isFinite(cell.t) && cell.t !== row.t ? `${C.kstTime(cell.t)} KST · ${other}` : other;
+      return `<td title="${esc(title)}">${shown}</td>`;
     }
     const at = Number.isFinite(cell.t) ? C.kstTime(cell.t) : '';
-    const title = at ? `${at} KST · ${value}` : value;
-    return `<td title="${esc(title)}">${row.kind === 'min' ? `<strong>${pct}</strong>` : pct}${at ? `<span class="at">${at}</span>` : ''}</td>`;
+    const title = at ? `${at} KST · ${other}` : other;
+    return `<td title="${esc(title)}">${row.kind === 'min' ? `<strong>${shown}</strong>` : shown}${at ? `<span class="at">${at}</span>` : ''}</td>`;
   }
 
-  /** Hour-by-hour table of one panel (core.hourlyTable): hour rows, then the emphasized low row and the last row. */
-  function timetableHtml(session, panelKey, win) {
+  /**
+   * Hour-by-hour table of one panel (core.hourlyTable): hour rows, then the emphasized low row and the last row.
+   * opts.prices shows values instead of percentages. While a session is being collected, hours after its newest
+   * data are left out (they have not happened yet; a '·' cell is a real gap).
+   */
+  function timetableHtml(session, panelKey, win, opts) {
     if (!session) return '';
+    const prices = !!(opts && opts.prices);
     const w = win || C.displayWindow(session, null);
     const table = C.hourlyTable(session, panelKey, w);
     if (!table.columns.length) return '<p class="empty">이 패널에 표시할 계열이 없습니다.</p>';
+    const live = session.final !== true;
+    const until = live ? newestTime(session, w) : Infinity;
+    const rows = table.rows.filter((row) => row.kind !== 'hour' || row.t <= until);
     const panel = C.PANELS.find((p) => p.key === panelKey);
     const slots = colorSlots(session);
     const byId = new Map(seriesList(session).map((s) => [s.id, s]));
@@ -338,15 +546,35 @@
       const s = byId.get(col.id);
       const base = s && s.baseline && s.baseline.value != null
         ? ` title="${esc(`기준: ${s.baseline.label || ''} ${C.formatValue(s.baseline.value)}`.trim())}"` : '';
-      return `<th scope="col"${base}><span class="sw c${slots.has(col.id) ? slots.get(col.id) : 0}" aria-hidden="true"></span>${esc(col.label)}</th>`;
+      // A stale series (provider failed, older points kept) or a failed one says so under its name, as in the chart.
+      const last = s && s.status === 'stale' ? lastPointTime(s) : NaN;
+      let note = '';
+      if (s && s.status === 'error') note = '수집 실패';
+      else if (s && s.status === 'stale') note = Number.isFinite(last) ? `${clock(last, session.date)}까지` : '수집 지연';
+      return `<th scope="col"${base}><span class="sw c${slots.has(col.id) ? slots.get(col.id) : 0}" aria-hidden="true"></span>${esc(col.label)}`
+        + `${note ? `<span class="th-note">${esc(note)}</span>` : ''}</th>`;
     }).join('');
-    const body = table.rows.map((row) => {
+    const body = rows.map((row) => {
       const cls = row.kind === 'min' ? ' class="row-min"' : row.kind === 'last' ? ' class="row-last"' : '';
-      return `<tr${cls}><th scope="row" class="t-row">${esc(row.label)}</th>${row.cells.map((cell) => cellHtml(cell, row, digits)).join('')}</tr>`;
+      return `<tr${cls}><th scope="row" class="t-row">${esc(row.label)}</th>${row.cells.map((cell) => cellHtml(cell, row, digits, prices)).join('')}</tr>`;
     }).join('');
-    const caption = panel ? `${panel.label} ${panel.suffix} 시간표` : '시간표';
+    const name = panel ? `${panel.label} ${prices ? `값(${VALUE_UNITS[panelKey] || '원래 단위'})` : panel.suffix}` : '';
+    const upto = live && Number.isFinite(until) ? ` · ${C.kstTime(until)}까지` : '';
+    const caption = `${name ? `${name} ` : ''}시간표${upto}`;
     return `<table class="tt"><caption class="sr-only">${esc(caption)}</caption>`
       + `<thead><tr><th scope="col" class="t-row">시각</th>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  }
+
+  /** The line above the timetable: what the numbers are, and how far a session being collected goes. */
+  function tableBasisText(session, panelKey, win, prices) {
+    const panel = C.PANELS.find((p) => p.key === panelKey);
+    if (!panel) return '';
+    const parts = [prices ? `${panel.label} 값(${VALUE_UNITS[panelKey] || '원래 단위'})` : `${panel.label} ${panel.suffix}`];
+    if (session && session.final !== true && session.window) {
+      const t = newestTime(session, win || C.displayWindow(session, null));
+      if (Number.isFinite(t)) parts.push(`${C.kstTime(t)}까지`);
+    }
+    return parts.join(' · ');
   }
 
   // ---------------------------------------------------------------- caption and footer
@@ -387,16 +615,12 @@
     return out;
   }
 
+  /** '최근 수집 실패로 이전 자료 표시: 코스피(09:45까지) · 수집 실패: 항셍' ('' when every series is current). */
   function seriesIssues(session) {
-    const stale = [];
-    const failed = [];
-    for (const s of seriesList(session)) {
-      if (s.status === 'stale') stale.push(s.label);
-      else if (s.status === 'error') failed.push(s.label);
-    }
+    const p = seriesProblems(session);
     const parts = [];
-    if (stale.length) parts.push(`최근 수집 실패로 이전 자료 표시: ${stale.join('·')}`);
-    if (failed.length) parts.push(`수집 실패: ${failed.join('·')}`);
+    if (p.stale.length) parts.push(`최근 수집 실패로 이전 자료 표시: ${p.stale.map((s) => staleName(s, session.date)).join('·')}`);
+    if (p.failed.length) parts.push(`수집 실패: ${p.failed.map((s) => s.label).join('·')}`);
     return parts.join(' · ');
   }
 
@@ -411,6 +635,12 @@
     const generated = kstStamp(session.generatedAt, session.date);
     if (generated) parts.push(`자료 생성 ${generated}`);
     return parts.join(' · ');
+  }
+
+  /** Footer of the exported PNG: the notes author (as in the reference image), then the page caption. */
+  function pngFooter(session, notes) {
+    const author = notes && isText(notes.author) ? stripMarks(notes.author) : '';
+    return [author, captionText(session)].filter(Boolean).join(' · ');
   }
 
   function seriesTableHtml(session) {
@@ -489,15 +719,21 @@
   /** Default keyboard cursor: the grid time at or before the newest point in the window (window end without data). */
   function latestTime(session, win) {
     const w = win || C.displayWindow(session, null);
-    let last = -Infinity;
-    for (const s of seriesList(session)) {
-      const pts = C.seriesView(s, w);
-      if (pts.length) last = Math.max(last, pts[pts.length - 1].t);
-    }
+    const last = newestTime(session, w);
     if (!Number.isFinite(last)) return snapTime(session, w, w.end);
     const step = intervalOf(session) * MINUTE;
     const anchor = C.toMs(session.window.start);
     return snapTime(session, w, anchor + Math.floor((last - anchor) / step) * step);
+  }
+
+  /**
+   * ARIA values of the chart's time slider: minutes from the display window start (0..window length) and a short
+   * value text, e.g. {min: 0, max: 480, now: 255, text: '12:15 KST'}.
+   */
+  function sliderValues(win, t) {
+    const max = Math.max(0, Math.round((win.end - win.start) / MINUTE));
+    const at = Number.isFinite(t) ? Math.min(Math.max(t, win.start), win.end) : win.end;
+    return { min: 0, max, now: Math.round((at - win.start) / MINUTE), text: `${C.kstTime(at)} KST` };
   }
 
   /** Crosshair geometry in SVG units: x, one vertical segment per panel and a dot per series with a value at t. */
@@ -612,27 +848,34 @@
     const doc = win.document;
     const $ = (id) => doc.getElementById(id);
     const el = {
-      title: $('title'), meta: $('meta'), select: $('date-select'), status: $('status'), theme: $('theme-toggle'),
-      pngLight: $('png-light'), pngDark: $('png-dark'), note: $('tool-note'), noNotes: $('no-notes'),
-      headlineSec: $('headline-sec'), headline: $('headline'), box: $('chart-box'), chart: $('chart'), tip: $('tip'),
-      caption: $('chart-caption'), help: $('chart-help'), live: $('chart-live'), duo: $('duo'), obs: $('obs'), seg: $('panel-seg'),
-      basis: $('table-basis'), table: $('table'), sectionsSec: $('sections-sec'), sections: $('sections'),
-      watchSec: $('watch-sec'), watch: $('watch'), storySec: $('story-sec'), story: $('story'),
+      title: $('title'), meta: $('meta'), subtitle: $('subtitle'), select: $('date-select'), status: $('status'),
+      theme: $('theme-toggle'), pngLight: $('png-light'), pngDark: $('png-dark'), note: $('tool-note'),
+      pending: $('pending'), noNotes: $('no-notes'), headlineSec: $('headline-sec'), headline: $('headline'),
+      box: $('chart-box'), chart: $('chart'), slider: $('chart-slider'), tip: $('tip'), caption: $('chart-caption'),
+      help: $('chart-help'), live: $('chart-live'), duo: $('duo'), obs: $('obs'), seg: $('panel-seg'),
+      unit: $('unit-seg'), basis: $('table-basis'), table: $('table'), sectionsSec: $('sections-sec'),
+      sections: $('sections'), watchSec: $('watch-sec'), watch: $('watch'), storySec: $('story-sec'), story: $('story'),
       verdictSec: $('verdict-sec'), verdict: $('verdict'), eventsSec: $('events-sec'), events: $('events'), foot: $('foot'),
     };
     if (!el.chart || !el.box || !el.status) return;
 
     const state = {
-      bases: dataBases(win.location),
+      bases: { data: dataBases(win.location, 'data'), notes: dataBases(win.location, 'notes') },
+      down: new Map(), // host -> time of its last network failure or timeout
       index: null,
       session: null,
       notes: null,
+      notesError: '',
       date: dateParam(win.location.search),
+      pending: null, // newest session date while the default view shows an older final session
       error: '',
+      failures: 0,
       seq: 0,
       lastLoad: 0,
       timer: null,
+      urlBefore: null, // the URL before a date switch that has not loaded yet
       panel: C.PANELS[0].key,
+      prices: false,
       theme: doc.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark',
       layout: null,
       width: 0,
@@ -649,15 +892,52 @@
 
     // ------------------------------------------------ loading
 
-    async function getJson(name, now, optional) {
+    const describe = (error) => {
+      const name = error && error.name;
+      if (name === 'AbortError') return '응답 시간 초과';
+      if (name === 'SyntaxError') return 'JSON 형식 오류';
+      return (error && error.message) || '알 수 없는 오류';
+    };
+
+    /**
+     * JSON from the first base that answers 200. optional: null when the file is absent (every base answered 404,
+     * not counting bases on a host that was already down and failed again).
+     */
+    async function getJson(name, now, optional, kind) {
+      const all = state.bases[kind] || state.bases.data;
+      const left = all.slice();
       let lastError = null;
       let missing = 0;
-      for (const base of state.bases) {
+      let unreachable = 0;
+      while (left.length) {
+        const base = orderBases(left, state.down, Date.now())[0];
+        left.splice(left.indexOf(base), 1);
+        const host = baseHost(base);
+        const wasDown = hostDown(state.down, host, Date.now());
+        const markDown = () => {
+          if (wasDown) unreachable += 1;
+          state.down.set(host, Date.now());
+        };
         const ctrl = typeof win.AbortController === 'function' ? new win.AbortController() : null;
-        const timer = ctrl ? win.setTimeout(() => ctrl.abort(), TIMEOUT_MS) : null;
+        const timer = ctrl ? win.setTimeout(() => ctrl.abort(), baseTimeout(!left.length)) : null;
         try {
-          const res = await win.fetch(withMinute(base + name, now), { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined });
-          if (res.ok) return await res.json();
+          let res;
+          try {
+            res = await win.fetch(withMinute(base + name, now), { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined });
+          } catch (error) {
+            markDown();
+            // fetch() rejects with a TypeError ('Failed to fetch', 'Load failed', ...) when the request fails.
+            throw error && error.name === 'AbortError' ? error : new Error('네트워크 오류');
+          }
+          state.down.delete(host);
+          if (res.ok) {
+            try {
+              return await res.json();
+            } catch (error) {
+              if (error && error.name === 'AbortError') markDown();
+              throw error;
+            }
+          }
           if (res.status === 404) missing += 1;
           lastError = new Error(`HTTP ${res.status}`);
         } catch (error) {
@@ -666,11 +946,38 @@
           if (timer) win.clearTimeout(timer);
         }
       }
-      if (optional && missing === state.bases.length) return null;
+      if (optional && missing > 0 && missing + unreachable === all.length) return null;
       throw lastError || new Error('응답 없음');
     }
 
-    const describe = (error) => (error && error.name === 'AbortError' ? '응답 시간 초과' : (error && error.message) || '알 수 없는 오류');
+    /** {date, session, error}: one session file, validated. */
+    async function getSession(date, now) {
+      try {
+        const session = C.validateSession(await getJson(`sessions/${date}.json`, now, false, 'data'));
+        if (session.date !== date) throw new Error(`날짜 불일치(${session.date})`);
+        return { date, session, error: '' };
+      } catch (error) {
+        return { date, session: null, error: describe(error) };
+      }
+    }
+
+    /**
+     * The default view (no date chosen): the newest session; while it is still being collected with little data
+     * and an older final session exists, that final session, with result.pending = the newest date.
+     */
+    async function getDefault(index, now) {
+      const d = defaultDates(index);
+      if (!d.newest) return { date: null, session: null, error: '' };
+      if (!d.older) return getSession(d.newest, now);
+      let newest = null;
+      if (!d.thin) {
+        newest = await getSession(d.newest, now);
+        if (newest.session && !sparseSession(newest.session)) return newest;
+      }
+      const older = await getSession(d.older, now);
+      if (older.session) return Object.assign(older, { pending: d.newest });
+      return newest && newest.session ? newest : (newest || getSession(d.newest, now));
+    }
 
     async function load() {
       const seq = ++state.seq;
@@ -679,67 +986,88 @@
       const problems = [];
       let index = state.index;
       try {
-        index = C.validateIndex(await getJson('index.json', now, false));
+        index = C.validateIndex(await getJson('index.json', now, false, 'data'));
       } catch (error) {
         problems.push(`목록: ${describe(error)}`);
       }
       if (seq !== state.seq) return;
       state.index = index;
-      const date = state.date || (index && index.sessions.length ? index.sessions[0].date : null);
-      let session = null;
+      const requested = state.date;
+      let result = { date: null, session: null, error: '' };
+      if (requested) result = await getSession(requested, now);
+      else if (index && index.sessions.length) result = await getDefault(index, now);
+      if (seq !== state.seq) return;
+      const session = result.session;
+      const date = result.date;
+
+      // Notes: index.hasNotes can lag behind notes published after a session is final, so the file is requested
+      // at least once per date; later refreshes skip it while the index says none and the last answer was a 404.
       let notes = null;
       let notesOk = true;
       let keepNotes = false;
-      if (date) {
-        try {
-          session = C.validateSession(await getJson(`sessions/${date}.json`, now, false));
-          if (session.date !== date) throw new Error(`날짜 불일치(${session.date})`);
-        } catch (error) {
-          session = null;
-          problems.push(`세션: ${describe(error)}`);
-        }
-        if (seq !== state.seq) return;
-        // index.hasNotes can lag behind notes published after a session is final, so the notes file is
-        // requested at least once per date (404 = no notes); later refreshes skip it while the index says none.
+      let notesError = '';
+      if (session) {
         const entry = index ? index.sessions.find((s) => s.date === date) : null;
-        if (session && entry && entry.hasNotes === false && state.notesChecked.has(date)) {
+        if (entry && entry.hasNotes === false && state.notesChecked.has(date)) {
           keepNotes = true;
-        } else if (session) {
-          state.notesChecked.add(date);
+        } else {
           try {
-            const raw = await getJson(`notes/${date}.json`, now, true);
+            const raw = await getJson(`notes/${date}.json`, now, true, 'notes');
             notes = raw === null ? null : C.validateNotes(raw);
             if (notes && notes.date !== date) throw new Error(`날짜 불일치(${notes.date})`);
+            state.notesChecked.add(date);
           } catch (error) {
             notesOk = false;
             notes = null;
-            problems.push(`노트: ${describe(error)}`);
+            notesError = describe(error);
+            state.notesChecked.delete(date);
+            problems.push(`노트: ${notesError}`);
           }
           if (seq !== state.seq) return;
         }
-      } else if (!problems.length) {
-        problems.push('아직 수집된 날짜가 없습니다');
       }
+
+      let switchFailed = '';
       if (session) {
         const sameDate = state.session && state.session.date === session.date;
+        if (!requested) state.pending = result.pending || null;
         state.notes = notesOk && !keepNotes ? notes : (sameDate ? state.notes : null);
+        // The notice says why notes are missing only while none are shown; kept notes stay after a failed refresh.
+        if (notesOk) state.notesError = '';
+        else if (!state.notes) state.notesError = notesError;
         if (!sameDate) state.cursor = null;
         state.session = session;
         state.date = session.date;
-      } else if (state.session) {
-        state.date = state.session.date; // keep showing the last good session
+        state.urlBefore = null;
+      } else if (state.session && date && date !== state.session.date) {
+        // A requested switch failed: the picker and the URL go back to the date still shown.
+        switchFailed = `${shortDate(date)} 자료를 불러오지 못했습니다: ${result.error}`;
+        state.date = state.session.date;
+        state.optionsHtml = '';
+        if (state.urlBefore !== null) {
+          try {
+            win.history.replaceState(null, '', state.urlBefore);
+          } catch (error) { /* the URL stays as it was */ }
+          state.urlBefore = null;
+        }
+      } else if (result.error) {
+        problems.push(`세션: ${result.error}`);
+        if (state.session) state.date = state.session.date; // keep showing the last good session
+      } else if (!date && !problems.length) {
+        problems.push('아직 수집된 날짜가 없습니다');
       }
       state.error = problems.join(' · ');
+      state.failures = state.error ? state.failures + 1 : 0;
       renderAll();
+      if (switchFailed) toolNote(switchFailed);
       schedule();
     }
 
     function schedule() {
       win.clearTimeout(state.timer);
       state.timer = null;
-      if (doc.visibilityState === 'hidden') return;
-      if (state.session && state.session.final) return;
-      state.timer = win.setTimeout(load, POLL_MS);
+      const delay = nextDelay({ session: state.session, now: Date.now(), failures: state.failures, hidden: doc.visibilityState === 'hidden' });
+      if (delay !== null) state.timer = win.setTimeout(load, delay);
     }
 
     doc.addEventListener('visibilitychange', () => {
@@ -748,18 +1076,42 @@
         state.timer = null;
         return;
       }
-      if (state.session && state.session.final) return;
+      if (!state.failures && !pollsLive(state.session, Date.now())) return;
       if (Date.now() - state.lastLoad >= VISIBLE_RELOAD_GAP_MS) load();
       else schedule();
     });
 
     // ------------------------------------------------ rendering
 
+    // Containers are rewritten only when their HTML changes, so a refresh with the same content keeps keyboard
+    // focus; when it does change, focus moves to the element at the same position in the new content.
+    const written = new WeakMap();
+    function setHtml(box, html) {
+      if (!box || written.get(box) === html) return false;
+      const active = doc.activeElement;
+      let spot = -1;
+      if (active && active !== box && typeof box.contains === 'function' && box.contains(active)) {
+        spot = Array.prototype.indexOf.call(box.querySelectorAll(FOCUSABLE), active);
+      }
+      box.innerHTML = html;
+      written.set(box, html);
+      if (spot >= 0) {
+        const list = box.querySelectorAll(FOCUSABLE);
+        const next = list[Math.min(spot, list.length - 1)];
+        if (next && typeof next.focus === 'function') {
+          try {
+            next.focus({ preventScroll: true });
+          } catch (error) { /* focus is best effort */ }
+        }
+      }
+      return true;
+    }
+
     function renderStatus() {
-      const info = statusInfo({ session: state.session, error: state.error });
+      const info = statusInfo({ session: state.session, error: state.error, now: Date.now() });
       if (el.status.textContent !== info.text) el.status.textContent = info.text;
       el.status.setAttribute('data-state', info.state);
-      el.status.title = state.error ? `최근 확인 실패: ${state.error}` : '';
+      el.status.title = statusTitle(state.session, state.error);
     }
 
     function renderHeader() {
@@ -768,6 +1120,11 @@
       const title = titleText(n);
       el.title.textContent = title;
       el.meta.textContent = s ? metaText(s, n) : (state.error ? '자료를 불러오지 못했습니다.' : '자료를 불러오는 중입니다.');
+      if (el.subtitle) {
+        const sub = s ? subtitleText(s, n) : '';
+        el.subtitle.textContent = sub;
+        el.subtitle.hidden = !sub;
+      }
       doc.title = s ? `${title} · ${shortDate(s.date)} | 병렬 타임라인` : '병렬 타임라인 | 지금 상황판';
       const options = dateOptionsHtml(state.index, s ? s.date : state.date, n && n.title)
         || (state.error ? '<option>날짜 목록 없음</option>' : '<option>날짜 불러오는 중</option>');
@@ -779,6 +1136,21 @@
       const canExport = !!(s && chartApi()) && !state.exporting;
       el.pngLight.disabled = !canExport;
       el.pngDark.disabled = !canExport;
+    }
+
+    function updateSlider() {
+      if (!el.slider) return;
+      const s = state.session;
+      const ready = !!(s && state.layout);
+      el.slider.hidden = !ready;
+      el.slider.tabIndex = ready ? 0 : -1;
+      if (!ready) return;
+      const w = displayWin();
+      const v = sliderValues(w, state.cursor === null ? latestTime(s, w) : state.cursor);
+      el.slider.setAttribute('aria-valuemin', String(v.min));
+      el.slider.setAttribute('aria-valuemax', String(v.max));
+      el.slider.setAttribute('aria-valuenow', String(v.now));
+      el.slider.setAttribute('aria-valuetext', v.text);
     }
 
     function renderChart(force) {
@@ -793,13 +1165,15 @@
         el.chart.innerHTML = `<p class="chart-empty">${esc(msg)}</p>`;
         el.tip.hidden = true;
         el.help.hidden = true;
-        el.box.tabIndex = -1;
+        updateSlider();
         return;
       }
       el.help.hidden = false;
-      el.box.tabIndex = 0;
       const width = Math.floor(el.chart.clientWidth);
-      if (!width || (!force && width === state.width && state.layout)) return;
+      if (!width || (!force && width === state.width && state.layout)) {
+        updateSlider();
+        return;
+      }
       try {
         const out = api.renderChart(s, state.notes, { width, theme: state.theme, header: false, compact: width < 640, now: s.final ? null : Date.now() });
         el.chart.innerHTML = out.svg;
@@ -811,10 +1185,11 @@
         el.chart.innerHTML = '<p class="chart-empty">차트를 그리지 못했습니다.</p>';
       }
       drawCursor(state.tipPos);
+      updateSlider();
     }
 
     function setSection(section, box, html) {
-      box.innerHTML = html;
+      setHtml(box, html);
       section.hidden = !html;
     }
 
@@ -822,9 +1197,22 @@
       for (const b of el.seg.querySelectorAll('button[data-panel]')) {
         b.setAttribute('aria-pressed', String(b.getAttribute('data-panel') === state.panel));
       }
-      const panel = C.PANELS.find((p) => p.key === state.panel);
-      el.basis.textContent = panel ? `${panel.label} ${panel.suffix} · 칸에 올리면 가격이 나옵니다` : '';
-      el.table.innerHTML = state.session ? timetableHtml(state.session, state.panel, displayWin()) : '';
+      if (el.unit) {
+        for (const b of el.unit.querySelectorAll('button[data-unit]')) {
+          b.setAttribute('aria-pressed', String((b.getAttribute('data-unit') === 'price') === state.prices));
+        }
+      }
+      const s = state.session;
+      const w = s ? displayWin() : null;
+      el.basis.textContent = tableBasisText(s, state.panel, w, state.prices);
+      setHtml(el.table, s ? timetableHtml(s, state.panel, w, { prices: state.prices }) : '');
+    }
+
+    function renderPending() {
+      if (!el.pending) return;
+      const html = state.pending && (!state.session || state.pending !== state.session.date) ? pendingNoticeHtml(state.pending, Date.now()) : '';
+      setHtml(el.pending, html);
+      el.pending.hidden = !html;
     }
 
     function renderBody() {
@@ -832,6 +1220,8 @@
       const n = state.notes;
       el.duo.hidden = !s;
       el.noNotes.hidden = !s || !!n;
+      if (s && !n) el.noNotes.textContent = notesNotice(state.notesError);
+      renderPending();
       el.caption.textContent = s ? captionText(s) : '';
       if (el.caption.parentElement) el.caption.parentElement.hidden = !s;
       if (!s) {
@@ -840,13 +1230,15 @@
       } else {
         const w = displayWin();
         let auto = [];
+        let basis = '';
         try {
           auto = C.insights(s, n, w);
+          basis = typeof C.insightsBasis === 'function' ? C.insightsBasis(s, n, w) : '';
         } catch (error) {
           logError(error);
         }
         setSection(el.headlineSec, el.headline, headlineHtml(n));
-        el.obs.innerHTML = insightsHtml(n, auto) || '<li class="empty">아직 표시할 항목이 없습니다.</li>';
+        setHtml(el.obs, insightsHtml(n, auto, basis) || '<li class="empty">아직 표시할 항목이 없습니다.</li>');
         renderTable();
         setSection(el.sectionsSec, el.sections, sectionsHtml(n));
         setSection(el.watchSec, el.watch, watchHtml(n));
@@ -854,10 +1246,12 @@
         setSection(el.verdictSec, el.verdict, verdictHtml(n));
         setSection(el.eventsSec, el.events, eventsHtml(n, w));
       }
-      const open = !!(el.foot.querySelector('details') && el.foot.querySelector('details').open);
-      el.foot.innerHTML = footerHtml(s, n);
-      const details = el.foot.querySelector('details');
-      if (details && open) details.open = true;
+      const before = el.foot.querySelector('details');
+      const open = !!(before && before.open);
+      if (setHtml(el.foot, footerHtml(s, n)) && open) {
+        const details = el.foot.querySelector('details');
+        if (details) details.open = true;
+      }
     }
 
     function renderAll() {
@@ -943,6 +1337,7 @@
       state.cursor = null;
       state.tipPos = null;
       drawCursor(null);
+      updateSlider();
     }
 
     function setCursor(t, pos) {
@@ -953,6 +1348,7 @@
       }
       state.cursor = t;
       drawCursor(pos);
+      updateSlider();
     }
 
     function onPointer(ev) {
@@ -973,32 +1369,36 @@
       }, 250);
     }
 
+    // The keyboard control is a separate role="slider" element (the chart image keeps its own summary): screen
+    // readers switch to focus mode on a slider, so the arrow keys reach this handler.
+    const keyTarget = el.slider || el.box;
     el.box.addEventListener('pointerenter', (ev) => { if (ev.pointerType === 'mouse') state.hover = true; });
     el.box.addEventListener('pointermove', (ev) => { if (ev.pointerType !== 'touch' || ev.buttons) onPointer(ev); });
     el.box.addEventListener('pointerdown', onPointer);
     el.box.addEventListener('pointerleave', (ev) => {
       if (ev.pointerType !== 'mouse') return;
       state.hover = false;
-      if (doc.activeElement !== el.box) hideCursor();
+      if (doc.activeElement !== keyTarget) hideCursor();
     });
     doc.addEventListener('pointerdown', (ev) => { if (!el.box.contains(ev.target)) hideCursor(); });
-    el.box.addEventListener('focus', () => {
+    keyTarget.addEventListener('focus', () => {
       if (state.cursor === null && state.session && state.layout) {
         state.cursor = latestTime(state.session, displayWin());
         state.tipPos = null;
         drawCursor(null);
+        updateSlider();
         announce();
       }
     });
-    el.box.addEventListener('blur', () => { if (!state.hover) hideCursor(); });
-    el.box.addEventListener('keydown', (ev) => {
+    keyTarget.addEventListener('blur', () => { if (!state.hover) hideCursor(); });
+    keyTarget.addEventListener('keydown', (ev) => {
       if (!state.session || !state.layout) return;
       const w = displayWin();
       const step = intervalOf(state.session) * MINUTE;
       const current = state.cursor === null ? latestTime(state.session, w) : state.cursor;
       let t;
-      if (ev.key === 'ArrowRight') t = current + step;
-      else if (ev.key === 'ArrowLeft') t = current - step;
+      if (ev.key === 'ArrowRight' || ev.key === 'ArrowUp') t = current + step;
+      else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowDown') t = current - step;
       else if (ev.key === 'Home') t = w.start;
       else if (ev.key === 'End') t = w.end;
       else if (ev.key === 'Escape') {
@@ -1019,10 +1419,32 @@
       state.panel = b.getAttribute('data-panel');
       renderTable();
     });
+    if (el.unit) {
+      el.unit.addEventListener('click', (ev) => {
+        const b = ev.target.closest('button[data-unit]');
+        const prices = !!b && b.getAttribute('data-unit') === 'price';
+        if (!b || prices === state.prices) return;
+        state.prices = prices;
+        renderTable();
+      });
+    }
 
-    el.select.addEventListener('change', () => {
-      const d = el.select.value;
-      if (!ymd(d) || (state.session && d === state.session.date)) return;
+    let noteTimer = null;
+    function toolNote(text) {
+      win.clearTimeout(noteTimer);
+      el.note.textContent = text;
+      if (text) noteTimer = win.setTimeout(() => { el.note.textContent = ''; }, 6000);
+    }
+
+    /** Load another date chosen by the reader (select or notice link); the URL follows unless the load fails. */
+    function switchDate(d) {
+      if (!ymd(d)) return;
+      state.pending = null;
+      if (state.session && d === state.session.date && !state.urlBefore) {
+        renderPending();
+        return;
+      }
+      if (state.urlBefore === null) state.urlBefore = String(win.location.href);
       state.date = d;
       state.cursor = null;
       try {
@@ -1031,7 +1453,17 @@
         win.history.replaceState(null, '', url.toString());
       } catch (error) { /* the URL stays as it was */ }
       load();
-    });
+    }
+
+    el.select.addEventListener('change', () => switchDate(el.select.value));
+    if (el.pending) {
+      el.pending.addEventListener('click', (ev) => {
+        const a = ev.target && typeof ev.target.closest === 'function' ? ev.target.closest('a[data-date]') : null;
+        if (!a || ev.defaultPrevented || ev.button > 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+        ev.preventDefault();
+        switchDate(a.getAttribute('data-date'));
+      });
+    }
 
     function applyTheme() {
       doc.documentElement.setAttribute('data-theme', state.theme);
@@ -1047,13 +1479,6 @@
     });
     applyTheme();
 
-    let noteTimer = null;
-    function toolNote(text) {
-      win.clearTimeout(noteTimer);
-      el.note.textContent = text;
-      if (text) noteTimer = win.setTimeout(() => { el.note.textContent = ''; }, 6000);
-    }
-
     async function exportPng(theme, button) {
       const s = state.session;
       const api = chartApi();
@@ -1063,9 +1488,12 @@
       el.pngLight.disabled = true;
       el.pngDark.disabled = true;
       try {
-        const out = api.renderChart(s, state.notes, { width: PNG_WIDTH, theme, header: true, compact: false, now: s.final ? null : Date.now(), idPrefix: 'pchartpng' });
+        const out = api.renderChart(s, state.notes, {
+          width: PNG_WIDTH, theme, header: true, compact: false, now: s.final ? null : Date.now(), idPrefix: 'pchartpng',
+          footer: pngFooter(s, state.notes),
+        });
         const blob = await rasterize(win, out.svg, out.layout, PNG_SCALE);
-        const name = pngFileName(s.date, theme);
+        const name = pngFileName(s.date, theme, s);
         saveBlob(win, blob, name);
         toolNote(`PNG를 저장했습니다: ${name}`);
       } catch (error) {
@@ -1098,12 +1526,14 @@
 
   return {
     start,
-    dataBases, withMinute, dateParam,
-    statusInfo, statusText, titleText, metaText, dateOptionsHtml, pngFileName,
+    dataBases, baseHost, orderBases, baseTimeout, withMinute, dateParam,
+    thinEntry, sparseSession, defaultDates, pollsLive, nextDelay,
+    statusInfo, statusText, statusTitle, titleText, metaText, subtitleText, dateOptionsHtml, pendingNoticeHtml,
+    notesNotice, pngFileName, pngFooter,
     shortDate, longDate, safeUrl,
     headlineHtml, insightsHtml, sectionsHtml, watchHtml, storyHtml, verdictHtml, eventsHtml,
-    timetableHtml, captionText, baselineNotes, providerNames, footerHtml,
-    panelSeries, colorSlots, plotBounds, timeToX, xToTime, snapTime, latestTime, cursorMarks,
+    timetableHtml, tableBasisText, captionText, baselineNotes, providerNames, footerHtml,
+    panelSeries, colorSlots, plotBounds, timeToX, xToTime, snapTime, latestTime, sliderValues, cursorMarks,
     tooltipHtml, readoutText, svgSize,
   };
 });

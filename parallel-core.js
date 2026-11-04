@@ -41,21 +41,25 @@
 
   const yahoo = (symbol) => ({ provider: 'yahoo', symbol });
   const coinmetrics = (symbol) => ({ provider: 'coinmetrics', symbol });
-  const def = (id, panel, label, basis, sources, closeKst) =>
-    ({ id, panel, label, basis, sources, closeKst: closeKst || null });
+  const def = (id, panel, label, basis, sources, closeKst, breakKst) =>
+    ({ id, panel, label, basis, sources, closeKst: closeKst || null, breakKst: breakKst || null });
 
-  /** Series catalog in display order; sources are listed in priority order, closeKst is the official close print time. */
+  /**
+   * Series catalog in display order; sources are listed in priority order. closeKst is the official close print time and
+   * breakKst the KST start of the morning-close print bar before a lunch break (Tokyo 11:30, Hong Kong 13:00 = 12:00 HKT);
+   * both are null where they do not apply.
+   */
   const SERIES = deepFreeze([
     def('kospi', 'indices', '코스피', 'prevClose', [yahoo('^KS11')], '15:30'),
-    def('nikkei', 'indices', '니케이225', 'prevClose', [yahoo('^N225')], '15:30'),
+    def('nikkei', 'indices', '니케이225', 'prevClose', [yahoo('^N225')], '15:30', '11:30'),
     def('taiex', 'indices', '대만 가권', 'prevClose', [yahoo('^TWII')], '14:30'),
-    def('hsi', 'indices', '항셍', 'prevClose', [yahoo('^HSI')], '17:10'),
+    def('hsi', 'indices', '항셍', 'prevClose', [yahoo('^HSI')], '17:10', '13:00'),
     def('nq', 'indices', '나스닥100 선물', 'windowStart', [yahoo('NQ=F')]),
     def('skhynix', 'ai', 'SK하이닉스', 'prevClose', [yahoo('000660.KS')], '15:30'),
     def('samsung', 'ai', '삼성전자', 'prevClose', [yahoo('005930.KS')], '15:30'),
     def('tsmc', 'ai', 'TSMC', 'prevClose', [yahoo('2330.TW')], '14:30'),
-    def('softbank', 'ai', '소프트뱅크', 'prevClose', [yahoo('9984.T')], '15:30'),
-    def('advantest', 'ai', '어드반테스트', 'prevClose', [yahoo('6857.T')], '15:30'),
+    def('softbank', 'ai', '소프트뱅크', 'prevClose', [yahoo('9984.T')], '15:30', '11:30'),
+    def('advantest', 'ai', '어드반테스트', 'prevClose', [yahoo('6857.T')], '15:30', '11:30'),
     def('btc', 'crypto', 'BTC', 'windowStart', [coinmetrics('btc'), yahoo('BTC-USD')]),
     def('eth', 'crypto', 'ETH', 'windowStart', [coinmetrics('eth'), yahoo('ETH-USD')]),
     def('hype', 'crypto', 'HYPE', 'windowStart', [coinmetrics('hype'), yahoo('HYPE32196-USD')]),
@@ -67,9 +71,12 @@
     def('gold', 'fx', '금 선물', 'windowStart', [yahoo('GC=F')]),
   ]);
 
-  /** Line colors by index within a panel (5 max), per theme. */
+  /**
+   * Line colors by index within a panel (5 max), per theme. Each keeps at least 3:1 contrast (WCAG 1.4.11) on its chart
+   * background and on the event band: light #fcfcfd / #e3edfa, dark #0d1117. parallel.css --s0..--s4 mirror these.
+   */
   const COLORS = deepFreeze({
-    light: ['#2f74d0', '#e4632d', '#16a077', '#e0a106', '#de6fa8'],
+    light: ['#2f74d0', '#d4561f', '#11936d', '#a87b00', '#c2528c'],
     dark: ['#6aa6f5', '#f2875a', '#3fcb9d', '#f2c14a', '#f08cc0'],
   });
 
@@ -701,19 +708,33 @@
     return { top: desc.slice(0, nTop), bottom: desc.slice(desc.length - nBottom).reverse() };
   }
 
+  // Statuses whose points must not feed the automatic bullets: 'stale' points are frozen at an earlier time,
+  // 'error' series should have none at all.
+  const NOT_CURRENT = ['stale', 'error'];
+  const isUsable = (s) => isObj(s) && NOT_CURRENT.indexOf(s.status) < 0;
+
+  // Rows the automatic bullets are built from: usable series with points inside the window.
+  function insightRows(session, w) {
+    const rows = [];
+    for (const s of session.series) {
+      if (!isUsable(s)) continue;
+      const pts = seriesView(s, w);
+      if (pts.length) rows.push({ id: s.id, label: String(s.label), pts, st: statsOf(pts) });
+    }
+    return rows;
+  }
+
+  const sessionReady = (session) => !!session && Array.isArray(session.series) && isObj(session.window);
+
   /** Automatic factual bullets (Korean, at most 7) about bottoms, rebounds, recovery, drawdowns, laggards and last values. */
   function insights(session, notes, win) {
-    if (!session || !Array.isArray(session.series) || !isObj(session.window)) return [];
+    if (!sessionReady(session)) return [];
     const w = win ? normWin(win) : displayWindow(session, notes);
     const stepMs = (Number.isInteger(session.intervalMinutes) && session.intervalMinutes > 0 ? session.intervalMinutes : 15) * MINUTE;
     const anchor = Date.parse(session.window.start);
     const tol = 15 * MINUTE;
     const events = eventsInWindow(notes, w);
-    const rows = [];
-    for (const s of session.series) {
-      const pts = seriesView(s, w);
-      if (pts.length) rows.push({ label: String(s.label), pts, st: statsOf(pts) });
-    }
+    const rows = insightRows(session, w);
     const out = [];
     if (!rows.length) return out;
 
@@ -766,20 +787,38 @@
       }
       if (count >= 5 && (!rebound || sum / count > rebound.mean + 1e-12)) rebound = { t, mean: sum / count };
     }
-    if (rebound && rebound.mean > 0 && scaledAbs(rebound.mean, 1) > 0) {
+    // Only a mean rise that shows as at least +0.1p is a rebound; otherwise there is no bullet and rule 6 ignores it.
+    if (rebound && !(rebound.mean > 0 && scaledAbs(rebound.mean, 1) > 0)) rebound = null;
+    if (rebound) {
       const from = rebound.t - 30 * MINUTE;
       const labels = nearby(from, rebound.t);
       out.push({ kind: 'rebound',
         text: `가장 가파른 동반 반등: ${kstTime(from)}–${kstTime(rebound.t)} (평균 ${formatSignedPp(rebound.mean)}${labels.length ? ` · 이 구간 사건: ${labels.join(', ')}` : ''})` });
     }
 
-    // 3. Drawdown recovery (series that fell 1% or more): top and bottom by recovered share.
+    // 3. Drawdown recovery (series that fell 1% or more). Those back at or above the baseline are listed by last value
+    //    (up to 3, the rest counted); those still below it by recovered share, top and bottom up to 3 each. The share part
+    //    is skipped when its top and bottom round alike (any split would be arbitrary).
     const recovering = rows.filter((r) => r.st.recovery !== null && r.st.min.p <= -1);
-    if (recovering.length >= 2) {
-      const { top, bottom: low } = topBottom(recovering, (r) => r.st.recovery);
-      const item = (r) => `${r.label} ${roundInt(r.st.recovery * 100)}%`;
-      out.push({ kind: 'recovery', text: `낙폭 회복률 상위: ${top.map(item).join(' · ')} / 하위: ${low.map(item).join(' · ')}` });
+    const parts = [];
+    const above = recovering.filter((r) => r.st.recovery >= 1).sort((a, b) => b.st.last.p - a.st.last.p);
+    if (above.length) {
+      const shown = above.slice(0, 3).map((r) => `${r.label} ${formatPct(r.st.last.p)}`).join(' · ');
+      parts.push(`낙폭 전부 회복(기준선 위): ${shown}${above.length > 3 ? ` 외 ${above.length - 3}개` : ''}`);
     }
+    const below = recovering.filter((r) => r.st.recovery < 1);
+    // A series still below its baseline has not recovered 100%, so its share is never shown rounded up to 100%.
+    const share = (r) => Math.min(roundInt(r.st.recovery * 100), 99);
+    const shareItem = (r) => `${r.label} ${share(r)}%`;
+    if (below.length === 1) {
+      parts.push(`회복률(기준선 아래): ${shareItem(below[0])}`);
+    } else if (below.length > 1) {
+      const { top, bottom: low } = topBottom(below, (r) => r.st.recovery);
+      if (share(top[0]) !== share(low[0])) {
+        parts.push(`회복률(기준선 아래): 상위 ${top.map(shareItem).join(' · ')}, 하위 ${low.map(shareItem).join(' · ')}`);
+      }
+    }
+    if (parts.length) out.push({ kind: 'recovery', text: parts.join(' / ') });
 
     // 4. Deepest drawdowns: the three lowest minima.
     const deepest = rows.filter((r) => r.st.min.p < 0 && scaledAbs(r.st.min.p, 1) > 0)
@@ -796,9 +835,10 @@
         text: `기준선 아래로 거의 내려가지 않은 계열: ${firm.map((r) => `${r.label}(최저 ${formatPct(r.st.min.p)})`).join(' · ')}` });
     }
 
-    // 6. Late movers: largest 60-minute move (>= 1.0p) starting 45+ minutes after the bottom interval.
+    // 6. Late movers: largest 60-minute move (>= 1.0p) starting once the joint rebound of rule 2 is over, or, when no
+    //    rebound bullet ends after the bottom interval, 45+ minutes after that interval.
     if (bottom) {
-      const after = bottom.hi + 45 * MINUTE;
+      const after = rebound && rebound.t > bottom.hi ? rebound.t : bottom.hi + 45 * MINUTE;
       const late = [];
       for (const r of rows) {
         let move = null;
@@ -829,6 +869,37 @@
     return out.slice(0, 7);
   }
 
+  const CATALOG = new Map(SERIES.map((d) => [d.id, d]));
+
+  /**
+   * One muted Korean line on what the automatic bullets are measured at, for the page to show above them, e.g.
+   * '자동 항목은 차트 끝 기준(장 마감 계열은 종가). 분석 노트는 15:00 기준'. '장 마감 계열은 종가' appears when a shown series
+   * ends at its close print, '지연된 … 제외' when stale series were left out, and the notes time when notes.asOf is before
+   * the window end. '' when insights() has no series to work with.
+   */
+  function insightsBasis(session, notes, win) {
+    if (!sessionReady(session)) return '';
+    const w = win ? normWin(win) : displayWindow(session, notes);
+    const rows = insightRows(session, w);
+    if (!rows.length) return '';
+    const qualifiers = [];
+    const closed = rows.some((r) => {
+      const d = CATALOG.get(r.id);
+      return !!(d && d.closeKst) && r.st.last.t >= Date.parse(kstToUtcIso(kstDate(r.st.last.t), d.closeKst));
+    });
+    if (closed) qualifiers.push('장 마감 계열은 종가');
+    const left = session.series.filter((s) => isObj(s) && !isUsable(s) && seriesView(s, w).length).map((s) => String(s.label));
+    if (left.length) qualifiers.push(`지연된 ${left.length > 3 ? `${left.length}개 계열` : left.join('·')} 제외`);
+    let text = `자동 항목은 차트 끝 기준${qualifiers.length ? `(${qualifiers.join(', ')})` : ''}`;
+    const asOf = notes && isIsoUtc(notes.asOf) ? Date.parse(notes.asOf) : NaN;
+    if (asOf < w.end) {
+      const day = kstDate(asOf);
+      const date = day === session.date ? '' : `${Number(day.slice(5, 7))}/${Number(day.slice(8))} `;
+      text += `. 분석 노트는 ${date}${kstTime(asOf)} 기준`;
+    }
+    return text;
+  }
+
   return {
     PANELS, SERIES, COLORS, PROVIDERS, KST_OFFSET_MS, STATUSES, EVENT_KINDS,
     kstDate, kstTime, kstToUtcIso, sessionWindow, toMs, isoUtc,
@@ -836,6 +907,6 @@
     validateIndex, validateSession, validateNotes,
     displayWindow, seriesView, stats, valueAt, segments,
     niceTicks, layoutLabels,
-    insights, hourlyTable, eventsInWindow, renderInline, escapeHtml,
+    insights, insightsBasis, hourlyTable, eventsInWindow, renderInline, escapeHtml,
   };
 });

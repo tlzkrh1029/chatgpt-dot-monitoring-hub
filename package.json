@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "node --test tests/*.test.js",
+    "test:parallel": "node --test tests/parallel-*.test.js",
     "validate": "node scripts/validate-publication.js && node scripts/validate-parallel.js && node scripts/validate-election-results.js",
     "collect:parallel": "node scripts/collect-parallel.js",
     "verify:parallel-pages": "node scripts/request-parallel-pages-build.js"

@@ -1,9 +1,14 @@
 name: Update parallel market prices
 
-# 병렬 타임라인: collects the KST session (Yahoo Finance 15-minute bars, Coin Metrics Community reference
-# rates) every 15 minutes during 08:00-16:00 KST on weekdays, finalizes it after the close, and publishes
-# only data/parallel. The collector throttles itself (10 minutes) and skips sessions that are already final,
-# so extra runs from push events are cheap.
+# 병렬 타임라인: collects the KST session (Yahoo Finance 15-minute bars, Coin Metrics Community reference rates)
+# every 15 minutes during 08:00-16:00 KST on weekdays and finalizes it after the close.
+# - Live data is committed only to a data branch (parallel-data for main, parallel-data-<ref> for other
+#   branches): an orphan branch holding data/parallel/** (sessions, index.json, a mirror of notes/), so
+#   intraday commits never land on main or start Pages builds. The page reads it from raw.githubusercontent.com.
+# - A session is archived to the branch itself (main) once it is final; the public index is verified then.
+# - Publication is gated only by the parallel timeline's own tests and validator (invalid analyst notes only
+#   warn); the hub's other tests and validators never block it. The token reaches only the two push steps and
+#   the Pages check; the checkout keeps no credential, so the tests and the collector run without one.
 
 on:
   schedule:
@@ -13,14 +18,15 @@ on:
   push:
     branches: [main]
     paths:
-      - 'data/*.json'
+      - 'data/*.json'              # heartbeat: the hub's other writers push these during the day
+      - 'data/parallel/notes/**'   # analyst notes: refresh the index titles and the data branch's notes mirror
       - '.github/workflows/update-parallel-prices.yml'
       - 'scripts/collect-parallel.js'
       - 'parallel-core.js'
   workflow_dispatch:
     inputs:
       mode:
-        description: 'collect (writes data/parallel on the selected branch) or probe (read-only source check, any branch)'
+        description: 'collect (publishes to the data branch of the selected branch) or probe (read-only source check)'
         type: choice
         options: [collect, probe]
         default: collect
@@ -30,114 +36,301 @@ on:
         required: false
         default: ''
       start:
-        description: 'Window start HH:MM KST (empty: 08:00)'
+        description: 'Window start HH:MM KST (empty: 08:00, or the stored window)'
         type: string
         required: false
         default: ''
       end:
-        description: 'Window end HH:MM KST (empty: 16:00)'
+        description: 'Window end HH:MM KST (empty: 16:00, or the stored window)'
         type: string
         required: false
         default: ''
       force:
-        description: 'Collect even if the session is final or was collected less than 10 minutes ago'
+        description: 'Collect even if the session is final or was collected recently (providers may restate stored values)'
         type: boolean
-        default: true
+        default: false
+      replace_window:
+        description: 'With start/end: replace a stored session whose window differs (its stored points are dropped)'
+        type: boolean
+        default: false
 
 permissions:
-  contents: write
-  pages: write
-
-concurrency:
-  group: parallel-market-publisher-${{ inputs.mode || 'collect' }}
-  cancel-in-progress: false
+  contents: read
 
 jobs:
   probe:
-    if: inputs.mode == 'probe'
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'probe'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
       contents: read
+    concurrency:
+      group: parallel-timeline-probe
+      cancel-in-progress: false
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: '22'
-      - name: Probe sources without retries or impersonation
+      - name: Probe the sources (honest User-Agent, stops at the first refusal, no retries)
         run: node scripts/probe-parallel-sources.js probe-out
-      - name: Keep raw responses as a short-lived artifact (never committed)
+      - name: Keep the status report as a short-lived artifact (no response bodies)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: parallel-source-probe
-          path: probe-out
+          path: probe-out/report.json
           retention-days: 3
           if-no-files-found: warn
 
   collect:
-    if: inputs.mode != 'probe' && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
+    # Scheduled and push runs: main of this repository only (a fork does not collect under its name).
+    # Manual runs: any branch; a branch other than main publishes to its own data branch.
+    if: >-
+      startsWith(github.ref, 'refs/heads/') && (
+      (github.event_name == 'workflow_dispatch' && inputs.mode != 'probe') ||
+      (github.event_name != 'workflow_dispatch' && github.ref == 'refs/heads/main' &&
+      github.repository == 'tlzkrh1029/chatgpt-dot-monitoring-hub'))
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pages: write
+    concurrency:
+      # Manual runs queue apart from scheduled and push runs, so a cron or push run never cancels a pending
+      # manual run. Overlapping runs are reconciled by the push steps (newest generatedAt wins, no force).
+      group: ${{ github.event_name == 'workflow_dispatch' && 'parallel-timeline-manual' || 'parallel-timeline-auto' }}
+      cancel-in-progress: false
+    env:
+      # node -e "$PICK_NEWER_SESSIONS_JS" FROM TO [final]: copies each valid FROM/YYYY-MM-DD.json (with 'final':
+      # final sessions only) into TO unless TO holds a valid copy with the same or a newer generatedAt, so an
+      # overlapping slower run never replaces newer data. Prints the dates copied. Runs from the checkout root.
+      PICK_NEWER_SESSIONS_JS: |
+        const fs = require('node:fs');
+        const path = require('node:path');
+        const Core = require(path.resolve('parallel-core.js'));
+        const [from, to, only] = process.argv.slice(1);
+        const load = (file, date) => {
+          try {
+            const session = Core.validateSession(JSON.parse(fs.readFileSync(file, 'utf8')));
+            return session.date === date ? session : null;
+          } catch (_) {
+            return null;
+          }
+        };
+        fs.mkdirSync(to, { recursive: true });
+        const names = fs.existsSync(from) ? fs.readdirSync(from).filter((n) => /^\d{4}-\d{2}-\d{2}\.json$/.test(n)).sort() : [];
+        for (const name of names) {
+          const date = name.slice(0, 10);
+          const next = load(path.join(from, name), date);
+          if (!next || (only === 'final' && next.final !== true)) continue;
+          const prev = load(path.join(to, name), date);
+          if (prev && Date.parse(prev.generatedAt) >= Date.parse(next.generatedAt)) continue;
+          fs.copyFileSync(path.join(from, name), path.join(to, name));
+          console.log(date);
+        }
     steps:
-      - name: Check out the triggering branch
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Check out the triggering branch (no stored credentials)
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          ref: ${{ github.ref_name }}
-          fetch-depth: 0
+          ref: ${{ github.ref }}
+          fetch-depth: 0 # every branch, including the data branch
+          persist-credentials: false
       - name: Set up Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: '22'
+      - name: Test the parallel timeline code
+        env:
+          # Tests that read the live data/parallel files skip; validate-parallel checks those files below.
+          PARALLEL_SKIP_LIVE_DATA_TESTS: '1'
+        run: node --test tests/parallel-*.test.js
+      - name: Read the data branch
+        id: prepare
+        shell: bash
+        env:
+          REF_NAME: ${{ github.ref_name }}
+          LC_ALL: C.UTF-8 # one '-' per character outside [A-Za-z0-9._-]
+        run: |
+          set -euo pipefail
+          if [ "$REF_NAME" = main ]; then
+            data_branch=parallel-data
+          else
+            data_branch="parallel-data-${REF_NAME//[^A-Za-z0-9._-]/-}"
+          fi
+          git check-ref-format --branch "$data_branch" > /dev/null
+          overlay="$RUNNER_TEMP/parallel-overlay"
+          rm -rf "$overlay"
+          mkdir -p "$overlay"
+          # The checkout fetched every branch; only the sessions are read (notes always come from this branch).
+          if git rev-parse --verify --quiet "refs/remotes/origin/$data_branch^{commit}" > /dev/null \
+            && git cat-file -e "refs/remotes/origin/$data_branch:data/parallel/sessions" 2> /dev/null; then
+            git archive --format=tar "refs/remotes/origin/$data_branch" data/parallel/sessions | tar -x -C "$overlay"
+            echo "overlay_dir=$overlay/data/parallel" >> "$GITHUB_OUTPUT"
+            echo "Sessions of $data_branch at $(git rev-parse --short "refs/remotes/origin/$data_branch") are the overlay."
+          else
+            echo 'overlay_dir=' >> "$GITHUB_OUTPUT"
+            echo "No $data_branch branch yet; the first publish creates it."
+          fi
+          echo "data_branch=$data_branch" >> "$GITHUB_OUTPUT"
       - name: Collect the session (Yahoo Finance, Coin Metrics)
         id: collect
         shell: bash
         env:
+          EVENT_NAME: ${{ github.event_name }}
+          OVERLAY_DIR: ${{ steps.prepare.outputs.overlay_dir }}
           INPUT_DATE: ${{ inputs.date }}
           INPUT_START: ${{ inputs.start }}
           INPUT_END: ${{ inputs.end }}
           INPUT_FORCE: ${{ inputs.force }}
+          INPUT_REPLACE_WINDOW: ${{ inputs.replace_window }}
         run: |
+          set -euo pipefail
           args=()
+          if [ -n "$OVERLAY_DIR" ]; then args+=(--overlay-dir "$OVERLAY_DIR"); fi
+          # Push events (other writers, notes) only top up a session collected 10 or more minutes ago.
+          if [ "$EVENT_NAME" = push ]; then args+=(--throttle); fi
           if [ -n "$INPUT_DATE" ]; then args+=(--date "$INPUT_DATE"); fi
           if [ -n "$INPUT_START" ]; then args+=(--start "$INPUT_START"); fi
           if [ -n "$INPUT_END" ]; then args+=(--end "$INPUT_END"); fi
-          if [ "$INPUT_FORCE" = 'true' ]; then args+=(--force); fi
+          if [ "$INPUT_FORCE" = true ]; then args+=(--force); fi
+          if [ "$INPUT_REPLACE_WINDOW" = true ]; then args+=(--replace-window); fi
           node scripts/collect-parallel.js "${args[@]}"
-      - name: Test and validate before publication
-        run: |
-          npm test
-          npm run validate
-      - name: Publish only data/parallel without overwriting other writers
+      - name: Validate the collected data (invalid analyst notes only warn)
+        run: node scripts/validate-parallel.js --notes=warn
+      - name: Publish data/parallel to the data branch
+        id: publish
         shell: bash
         env:
-          BRANCH: ${{ github.ref_name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DATA_BRANCH: ${{ steps.prepare.outputs.data_branch }}
+          GIT_AUTHOR_NAME: 'github-actions[bot]'
+          GIT_AUTHOR_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+          GIT_COMMITTER_NAME: 'github-actions[bot]'
+          GIT_COMMITTER_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
         run: |
-          if [ -z "$(git status --porcelain -- data/parallel)" ]; then
-            echo 'No parallel data changes to publish.'
-            exit 0
-          fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A -- data/parallel
-          git commit -m "Update parallel timeline data ($(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') KST)"
+          set -euo pipefail
+          # The token reaches git through this step's environment only (not .git/config, not a command line).
+          basic=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$basic"
+          export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader" GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $basic"
+          src="$PWD/data/parallel"
+          dw="$RUNNER_TEMP/parallel-data-worktree"
+          stamp=$(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')
+          pushed=false
+          pending=false
           for attempt in 1 2 3; do
-            git fetch origin "$BRANCH"
-            if ! git rebase "origin/$BRANCH"; then
-              git rebase --abort
-              echo 'Rebase onto the latest branch failed; nothing was pushed.' >&2
+            # Each attempt starts again from the branch's latest commit: fetch, mirror, commit, push (never force).
+            rc=0
+            git ls-remote --exit-code --heads origin "refs/heads/$DATA_BRANCH" > /dev/null || rc=$?
+            rm -rf "$dw"
+            git worktree prune
+            if [ "$rc" -eq 0 ]; then
+              git fetch --quiet --no-tags origin "+refs/heads/$DATA_BRANCH:refs/remotes/origin/$DATA_BRANCH"
+              git worktree add --quiet --detach "$dw" "refs/remotes/origin/$DATA_BRANCH"
+            elif [ "$rc" -eq 2 ]; then
+              echo "Creating the $DATA_BRANCH branch (orphan: data/parallel only)."
+              git worktree add --quiet --detach "$dw" HEAD
+              git -C "$dw" switch --quiet --orphan "new-$DATA_BRANCH-$attempt"
+            else
+              echo "Could not read the $DATA_BRANCH branch (git ls-remote exit $rc)." >&2
               exit 1
             fi
-            npm run validate
-            if git push origin "HEAD:$BRANCH"; then
-              exit 0
+            mkdir -p "$dw/data/parallel"
+            node -e "$PICK_NEWER_SESSIONS_JS" "$src/sessions" "$dw/data/parallel/sessions" > /dev/null
+            rm -rf "$dw/data/parallel/notes"
+            if [ -d "$src/notes" ]; then cp -R "$src/notes" "$dw/data/parallel/notes"; fi
+            node scripts/collect-parallel.js --rebuild-index --data-dir "$dw/data/parallel"
+            node scripts/validate-parallel.js --notes=warn "$dw/data/parallel"
+            git -C "$dw" add -A -- data/parallel
+            if git -C "$dw" diff --cached --quiet; then
+              echo "The $DATA_BRANCH branch already holds this data."
+              pending=false
+              break
             fi
-            sleep $((attempt * 3))
+            pending=true
+            git -C "$dw" commit --quiet -m "Update parallel timeline data ($stamp KST)"
+            if git -C "$dw" push --quiet origin "HEAD:refs/heads/$DATA_BRANCH"; then
+              pushed=true
+              echo "Pushed $(git -C "$dw" rev-parse --short HEAD) to $DATA_BRANCH."
+              break
+            fi
+            echo "The push to $DATA_BRANCH was rejected (attempt $attempt); starting again from its latest commit." >&2
+            if [ "$attempt" -lt 3 ]; then sleep $((attempt * 5)); fi
           done
-          echo 'Parallel data was not pushed after 3 attempts; no force push was attempted.' >&2
-          exit 1
-      - name: Request the Pages build and verify the public index
-        if: github.ref == 'refs/heads/main' && (steps.collect.outputs.final == 'true' || github.event_name == 'workflow_dispatch')
+          echo "pushed=$pushed" >> "$GITHUB_OUTPUT"
+          if [ "$pending" = true ] && [ "$pushed" != true ]; then
+            echo 'The data branch was not updated after 3 attempts; no force push was attempted.' >&2
+            exit 1
+          fi
+      - name: Archive final sessions to the branch
+        id: archive
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REF_NAME: ${{ github.ref_name }}
+          GIT_AUTHOR_NAME: 'github-actions[bot]'
+          GIT_AUTHOR_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+          GIT_COMMITTER_NAME: 'github-actions[bot]'
+          GIT_COMMITTER_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+        run: |
+          set -euo pipefail
+          # The token reaches git through this step's environment only (not .git/config, not a command line).
+          basic=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$basic"
+          export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader" GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $basic"
+          src="$PWD/data/parallel"
+          aw="$RUNNER_TEMP/parallel-archive-worktree"
+          archived=false
+          pending=false
+          dates=''
+          for attempt in 1 2 3; do
+            # A clean worktree of the branch's latest commit: final sessions newer than its copies, then its index.
+            git fetch --quiet --no-tags origin "+refs/heads/$REF_NAME:refs/remotes/origin/$REF_NAME"
+            rm -rf "$aw"
+            git worktree prune
+            git worktree add --quiet --detach "$aw" "refs/remotes/origin/$REF_NAME"
+            dates=$(node -e "$PICK_NEWER_SESSIONS_JS" "$src/sessions" "$aw/data/parallel/sessions" final | paste -sd ' ' -)
+            node scripts/collect-parallel.js --rebuild-index --data-dir "$aw/data/parallel"
+            node scripts/validate-parallel.js --notes=warn "$aw/data/parallel"
+            git -C "$aw" add -A -- data/parallel
+            if git -C "$aw" diff --cached --quiet; then
+              echo "Nothing to archive on $REF_NAME."
+              pending=false
+              break
+            fi
+            pending=true
+            case "$dates" in
+              '') message='Refresh parallel timeline index' ;;
+              *' '*) message="Archive parallel timeline sessions ${dates// /, }" ;;
+              *) message="Archive parallel timeline session $dates" ;;
+            esac
+            git -C "$aw" commit --quiet -m "$message"
+            if git -C "$aw" push --quiet origin "HEAD:refs/heads/$REF_NAME"; then
+              archived=true
+              echo "$message: pushed $(git -C "$aw" rev-parse --short HEAD) to $REF_NAME."
+              break
+            fi
+            echo "The push to $REF_NAME was rejected (attempt $attempt); starting again from its latest commit." >&2
+            if [ "$attempt" -lt 3 ]; then sleep $((attempt * 5)); fi
+          done
+          {
+            echo "archived=$archived"
+            echo "dates=$dates"
+            echo "index_file=$aw/data/parallel/index.json"
+          } >> "$GITHUB_OUTPUT"
+          if [ "$pending" = true ] && [ "$archived" != true ]; then
+            echo "The archive was not pushed to $REF_NAME after 3 attempts; no force push was attempted." >&2
+            exit 1
+          fi
+      - name: Verify the public index after an archive (main of this repository)
+        id: pages
+        if: >-
+          steps.archive.outputs.archived == 'true' && github.ref == 'refs/heads/main' &&
+          github.repository == 'tlzkrh1029/chatgpt-dot-monitoring-hub'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/request-parallel-pages-build.js
+          INDEX_FILE: ${{ steps.archive.outputs.index_file }}
+        run: node scripts/request-parallel-pages-build.js "$INDEX_FILE"

@@ -72,7 +72,7 @@ npm run validate
 
 브라우저와 로컬 검증은 같은 public-data.js 계약을 사용합니다. 테스트는 성공 재수신, 시계 기반 지연, 통신/파싱/스키마 오류, 마지막 정상 자료 보존, 범주 격리, 시각 역행, 요청 중첩·시간 제한, 공개 URL 제한과 역사·설정 보존을 확인합니다.
 
-기존 main 브랜치 기반 GitHub Pages 배포를 사용합니다. 코드와 초기 자료를 한 커밋으로 게시하고 원격 SHA 및 실제 Pages 결과를 확인합니다. 이후 각 감시 파일 갱신으로 기존 Pages 배포가 수행됩니다. GitHub 배포·캐시 지연은 브라우저 폴링과 별개입니다. 별도 예약 GitHub Actions, 외부 서비스, 새 비밀값은 추가하지 않습니다.
+기존 main 브랜치 기반 GitHub Pages 배포를 사용합니다. 코드와 초기 자료를 한 커밋으로 게시하고 원격 SHA 및 실제 Pages 결과를 확인합니다. 이후 각 감시 파일 갱신으로 기존 Pages 배포가 수행됩니다. GitHub 배포·캐시 지연은 브라우저 폴링과 별개입니다. 병렬 타임라인 탭을 빼면 별도 예약 GitHub Actions, 외부 서비스, 새 비밀값은 추가하지 않습니다. 병렬 타임라인 탭은 전용 예약 워크플로(`.github/workflows/update-parallel-prices.yml`)로 Yahoo Finance와 Coin Metrics에서 시세를 수집하며, 이 작업도 새 비밀값 없이 기본 `GITHUB_TOKEN`만 씁니다(아래 "병렬 타임라인 탭" 참고).
 
 ?view=status, ?view=feed, ?view=checks는 선택적으로 한 영역만 보는 화면입니다. 기본 주소는 전체 상황판입니다.
 
@@ -88,9 +88,9 @@ npm run validate
 
 `parallel.html`은 기존 상황판과 분리된 시장 병렬 타임라인입니다. 주식지수, AI·반도체 종목, 크립토, 달러·금의 네 패널이 한 날짜의 08:00–16:00 KST를 같은 15분 시간축으로 보여 줍니다. 분석 노트가 있는 날은 사건선과 함께 한 줄, 세부, 읽기, 볼 것, 스토리텔링, 판정을 표시합니다.
 
-시세는 이 탭 전용 예약 Actions 작업(`update-parallel-prices.yml`)이 평일 08:07–16:52 KST에 15분마다 수집해 `data/parallel/`에 씁니다. 출처는 Yahoo Finance(개인 비상업 열람용)와 Coin Metrics Community(CC BY-NC 4.0)입니다. 분석 노트는 `data/parallel/notes/YYYY-MM-DD.json`에 따로 씁니다. 기존 다섯 범주의 파일·계약·감시 주기는 바꾸지 않으며, 새 비밀값도 필요하지 않습니다.
+시세는 이 탭 전용 예약 Actions 작업(`update-parallel-prices.yml`)이 평일 08:07–16:52 KST에 15분마다 수집합니다. 장중 자료는 자료 전용 브랜치 `parallel-data`에만 올리고, 마감이 확정된 세션만 main의 `data/parallel/`에 보관하므로, 장중 수집이 main의 커밋과 Pages 빌드를 늘리지 않습니다. 화면은 `parallel-data`의 자료를 raw.githubusercontent.com에서 먼저 읽습니다. 출처는 Yahoo Finance(개인 비상업 열람용)와 Coin Metrics Community(CC BY-NC 4.0)입니다. 분석 노트는 main의 `data/parallel/notes/YYYY-MM-DD.json`에 따로 씁니다. 기존 다섯 범주의 파일·계약·감시 주기는 바꾸지 않으며, 새 비밀값도 필요하지 않습니다.
 
-자료 형식, 수집 일정과 실패 처리, 노트 작성법, 수동 실행, 로컬 미리보기는 [docs/parallel-timeline.md](docs/parallel-timeline.md)에 있습니다. `npm test`와 `npm run validate`가 이 탭의 자료도 함께 점검합니다.
+이 워크플로는 이 탭의 테스트(`tests/parallel-*.test.js`)와 `scripts/validate-parallel.js`만으로 게시 여부를 정하므로, 다른 탭의 자료나 테스트는 시세 게시를 막지 않고 분석 노트의 오류는 경고로만 남습니다. `npm test`와 `npm run validate`도 이 탭의 코드와 자료를 함께 점검합니다. 자료 형식, 수집 일정과 실패 처리, 노트 작성법, 수동 실행, 로컬 미리보기는 [docs/parallel-timeline.md](docs/parallel-timeline.md)에 있습니다.
 
 ## 선거 결과 탭
 

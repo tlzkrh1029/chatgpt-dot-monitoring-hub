@@ -92,19 +92,49 @@ test('catalog constants follow the spec order and stay frozen', () => {
   for (const p of C.PANELS) assert.ok(C.SERIES.filter((s) => s.panel === p.key).length <= C.COLORS.light.length);
   const kospi = C.SERIES[0];
   assert.deepEqual(kospi, { id: 'kospi', panel: 'indices', label: '코스피', basis: 'prevClose',
-    sources: [{ provider: 'yahoo', symbol: '^KS11' }], closeKst: '15:30' });
+    sources: [{ provider: 'yahoo', symbol: '^KS11' }], closeKst: '15:30', breakKst: null });
   assert.deepEqual(C.SERIES.find((s) => s.id === 'hype').sources,
     [{ provider: 'coinmetrics', symbol: 'hype' }, { provider: 'yahoo', symbol: 'HYPE32196-USD' }]);
   assert.equal(C.SERIES.find((s) => s.id === 'nq').closeKst, null);
   assert.equal(C.SERIES.find((s) => s.id === 'taiex').closeKst, '14:30');
   assert.equal(C.SERIES.find((s) => s.id === 'hsi').closeKst, '17:10');
+  // Morning-close print bars before a lunch break: Tokyo 11:30, Hong Kong 12:00 HKT (13:00 KST); none elsewhere.
+  const breaks = Object.fromEntries(C.SERIES.filter((s) => s.breakKst !== null).map((s) => [s.id, s.breakKst]));
+  assert.deepEqual(breaks, { nikkei: '11:30', hsi: '13:00', softbank: '11:30', advantest: '11:30' });
+  for (const s of C.SERIES) assert.ok(Object.prototype.hasOwnProperty.call(s, 'breakKst'), `${s.id} has breakKst`);
   assert.equal(C.COLORS.light.length, 5);
+  assert.deepEqual(C.COLORS.light, ['#2f74d0', '#d4561f', '#11936d', '#a87b00', '#c2528c']);
   assert.equal(C.COLORS.dark[0], '#6aa6f5');
   assert.deepEqual(C.PROVIDERS.map((p) => p.id), ['yahoo', 'coinmetrics']);
   assert.equal(C.PROVIDERS[1].license, 'CC BY-NC 4.0');
   assert.equal(C.KST_OFFSET_MS, 9 * 3600e3);
   assert.ok(Object.isFrozen(C.SERIES) && Object.isFrozen(C.SERIES[0].sources[0]) && Object.isFrozen(C.PROVIDERS[0]));
   assert.throws(() => { C.SERIES[0].label = 'x'; }, TypeError);
+});
+
+// WCAG relative luminance and contrast ratio of two #rrggbb colours.
+function luminance(hex) {
+  const [r, g, b] = hex.slice(1).match(/../g).map((h) => parseInt(h, 16) / 255)
+    .map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+function contrast(a, b) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+test('series colours keep 3:1 contrast on the chart background and the event band in both themes', () => {
+  // Chart surfaces (parallel-chart.js THEMES): light background and band; dark background and its 16% band composite.
+  const surfaces = { light: ['#fcfcfd', '#e3edfa'], dark: ['#0d1117', '#1d283a'] };
+  for (const theme of ['light', 'dark']) {
+    for (const colour of C.COLORS[theme]) {
+      for (const surface of surfaces[theme]) {
+        const ratio = contrast(colour, surface);
+        assert.ok(ratio >= 3, `${theme} ${colour} on ${surface}: ${ratio.toFixed(2)}:1`);
+      }
+    }
+  }
+  assert.ok(contrast('#e0a106', '#fcfcfd') < 3, 'the check catches the old light gold (2.21:1)');
 });
 
 // ------------------------------------------------------------------ time
@@ -296,6 +326,8 @@ test('seriesView and stats work inside the display window', () => {
   assert.equal(st.recovery, 0.75);
   assert.equal(C.stats(s).recovery, 3, 'recovery beyond the baseline exceeds 1');
   assert.equal(C.stats(sv([['09:00', 0], ['09:15', -0.5], ['09:30', 0.2]])).recovery, null, 'shallow dips have no recovery');
+  const justDeeper = C.stats(sv([['09:00', 0], ['09:15', -0.51], ['09:30', 0.2]])).recovery;
+  assert.ok(Math.abs(justDeeper - 0.71 / 0.51) < 1e-9, `a dip just past -0.5 has a recovery (${justDeeper})`);
   assert.equal(C.stats(s, { start: at('11:00'), end: at('12:00') }), null);
   assert.equal(C.stats({ points: [] }), null);
 });
@@ -366,7 +398,8 @@ test('insights find the common bottom, the joint rebound and the late mover', ()
   assert.equal(text.bottom, '바닥 시각: 3/4개 계열이 12:45에 최저점 (이 구간 사건: TX)');
   assert.ok(!text.bottom.includes('하원 투영') && !text.bottom.includes('상원 확정'), 'only events within ±15 min of the bottom');
   assert.equal(text.rebound, '가장 가파른 동반 반등: 13:00–13:30 (평균 +1.0p · 이 구간 사건: TX, OH, 상원 확정)');
-  assert.equal(text.recovery, '낙폭 회복률 상위: 코스피 117% · BTC 105% / 하위: ETH 75% · SK하이닉스 80%');
+  assert.equal(text.recovery,
+    '낙폭 전부 회복(기준선 위): 코스피 +0.5% · BTC +0.1% / 회복률(기준선 아래): 상위 SK하이닉스 80%, 하위 ETH 75%');
   assert.equal(text.drawdown, '가장 깊은 낙폭: SK하이닉스 −5.0%(12:45) · 코스피 −3.0%(12:45) · BTC −2.0%(12:45)');
   assert.equal(text.resilient, '기준선 아래로 거의 내려가지 않은 계열: 항셍(최저 −0.2%) · 금 선물(최저 0.0%)');
   assert.equal(text.late, '금 선물: 14:30 이후 +1.5p (다른 자산 반등 이후 움직임)');
@@ -384,11 +417,195 @@ test('insights skip bullets whose inputs are insufficient', () => {
     'events without a usable label are not listed');
   session.series = session.series.filter((s) => ['kospi', 'hsi', 'usdkrw'].includes(s.id));
   const kinds = C.insights(session, null).map((b) => b.kind);
-  assert.deepEqual(kinds, ['drawdown', 'resilient', 'last'], 'no bottom (1 dip), rebound (<5 series), recovery (<2) or late bullet');
+  assert.deepEqual(kinds, ['recovery', 'drawdown', 'resilient', 'last'],
+    'no bottom (1 dip), rebound (<5 series) or late bullet; one recovered drawdown is enough for the recovery bullet');
+  assert.equal(C.insights(session, null)[0].text, '낙폭 전부 회복(기준선 위): 코스피 +0.5%');
   assert.deepEqual(C.insights({ ...session, series: [] }, null), []);
   const flat = syntheticSession();
   flat.series = flat.series.filter((s) => s.id === 'usdkrw');
   assert.deepEqual(C.insights(flat, null).map((b) => b.kind), ['drawdown']);
+});
+
+// ------------------------------------------------------------------ insights limits (table-driven)
+
+// A valid session holding the given series: [id, anchors] or [id, anchors, extra [hhmm, pct] points to insert].
+function sessionOf(list) {
+  const s = syntheticSession();
+  s.series = list.map(([id, anchors, extra]) => {
+    const out = series(id, anchors);
+    for (const [hhmm, p] of extra || []) {
+      const i = out.points.findIndex((q) => Date.parse(q[0]) > at(hhmm));
+      out.points.splice(i < 0 ? out.points.length : i, 0, [iso(hhmm), Number((1000 * (1 + p / 100)).toFixed(6)), p]);
+    }
+    return out;
+  });
+  return C.validateSession(s);
+}
+const textOf = (session, kind, notes) => {
+  const found = C.insights(session, notes || null).find((b) => b.kind === kind);
+  return found ? found.text : null;
+};
+const LATE = ' (다른 자산 반등 이후 움직임)';
+const flatLow = [['08:00', 0], ['12:00', -1], ['16:00', -1]]; // low at 12:00 (the earliest of equal lows), then flat
+const goldMove = (d) => ['gold', [['08:00', 0], ['12:45', 0], ['13:45', d], ['16:00', d]]]; // largest 60-min move from 12:45
+const moverFrom = (hhmm) => { // flat at -1 from 12:00, then +2p over the hour from hhmm
+  const end = `${String(Number(hhmm.slice(0, 2)) + 1).padStart(2, '0')}${hhmm.slice(2)}`;
+  return [['08:00', 0], ['12:00', -1], [hhmm, -1], [end, 1], ['16:00', 1]];
+};
+const lowAt = (hhmm, p) => [['08:00', 0], [hhmm, p], ['16:00', 0]];
+
+// [what is checked, series, bullet kind, expected text (null = no such bullet)]
+const LIMIT_CASES = [
+  // 1. Bottom: >= 60% of the lows of series down 0.5% or more, k counts every low inside the interval.
+  ['rule 1: 60% of 4 lows is 3, not 2', [['kospi', lowAt('10:00', -2)], ['nikkei', lowAt('10:00', -1.5)],
+    ['taiex', lowAt('12:00', -1)], ['hsi', lowAt('14:00', -1)]], 'bottom', '바닥 시각: 3/4개 계열이 10:00–12:00에 최저점'],
+  ['rule 1: 3 of 5 lows clustered', [['kospi', lowAt('12:45', -2)], ['nikkei', lowAt('12:45', -2)], ['taiex', lowAt('12:45', -2)],
+    ['hsi', lowAt('09:00', -1)], ['nq', lowAt('15:00', -1)]], 'bottom', '바닥 시각: 3/5개 계열이 12:45에 최저점'],
+  ['rule 1: only 2 of 5 clustered widens the interval to 3 lows', [['kospi', lowAt('12:45', -2)], ['nikkei', lowAt('12:45', -2)],
+    ['taiex', lowAt('11:00', -2)], ['hsi', lowAt('09:00', -1)], ['nq', lowAt('15:00', -1)]], 'bottom',
+  '바닥 시각: 3/5개 계열이 11:00–12:45에 최저점'],
+  ['rule 1: k counts all 4 lows, not the 3 needed', [['kospi', lowAt('12:45', -2)], ['nikkei', lowAt('12:45', -2)],
+    ['taiex', lowAt('12:45', -2)], ['hsi', lowAt('12:45', -1)], ['nq', lowAt('09:00', -1)]], 'bottom',
+  '바닥 시각: 4/5개 계열이 12:45에 최저점'],
+  ['rule 1: a dip of exactly -0.5 counts', [['kospi', lowAt('12:00', -2)], ['nikkei', lowAt('12:00', -2)],
+    ['taiex', lowAt('12:00', -0.5)]], 'bottom', '바닥 시각: 3/3개 계열이 12:00에 최저점'],
+  ['rule 1: a dip of -0.49 does not (2 dips are too few)', [['kospi', lowAt('12:00', -2)], ['nikkei', lowAt('12:00', -2)],
+    ['taiex', lowAt('12:00', -0.49)]], 'bottom', null],
+  // 2. Joint rebound needs 5 series.
+  ['rule 2: 5 series', ['kospi', 'nikkei', 'taiex', 'hsi', 'nq'].map((id) => [id, [['08:00', 0], ['13:00', -1], ['13:30', 0], ['16:00', 0]]]),
+    'rebound', '가장 가파른 동반 반등: 13:00–13:30 (평균 +1.0p)'],
+  ['rule 2: 4 series are too few', ['kospi', 'nikkei', 'taiex', 'hsi'].map((id) => [id, [['08:00', 0], ['13:00', -1], ['13:30', 0], ['16:00', 0]]]),
+    'rebound', null],
+  // 3. Recovery: only series down 1% or more.
+  ['rule 3: a -1.0 low counts, -0.99 does not', [['kospi', [['08:00', 0], ['10:00', -1], ['16:00', 0.5]]],
+    ['nikkei', [['08:00', 0], ['10:00', -0.99], ['16:00', 0.5]]]], 'recovery', '낙폭 전부 회복(기준선 위): 코스피 +0.5%'],
+  // 항셍 recovered the largest share (190%) but ends below 대만 가권 (+0.9% vs +1.2%): the recovered part ranks by last value.
+  ['rule 3: recovered by last value (3 shown, rest counted); below the baseline by share, never shown as 100%', [
+    ['kospi', [['08:00', 0], ['10:00', -2], ['16:00', 0.6]]], ['nikkei', [['08:00', 0], ['10:00', -3], ['16:00', -0.6]]],
+    ['taiex', [['08:00', 0], ['10:00', -2], ['16:00', 1.2]]], ['hsi', [['08:00', 0], ['10:00', -1], ['16:00', 0.9]]],
+    ['skhynix', [['08:00', 0], ['10:00', -4], ['16:00', -3]]], ['btc', [['08:00', 0], ['10:00', -2], ['16:00', 0.1]]],
+    ['eth', [['08:00', 0], ['10:00', -1], ['16:00', 0]]], ['zec', [['08:00', 0], ['10:00', -5], ['16:00', -0.025]]]], 'recovery',
+  '낙폭 전부 회복(기준선 위): 대만 가권 +1.2% · 항셍 +0.9% · 코스피 +0.6% 외 2개 / 회복률(기준선 아래): 상위 ZEC 99% · 니케이225 80%, 하위 SK하이닉스 25%'],
+  ['rule 3: one series below the baseline', [['kospi', [['08:00', 0], ['10:00', -3], ['16:00', -0.6]]],
+    ['hsi', [['08:00', 0], ['16:00', 0.4]]]], 'recovery', '회복률(기준선 아래): 코스피 80%'],
+  ['rule 3: shares that round alike (50%, 50%) are not split into top and bottom', [
+    ['kospi', [['08:00', 0], ['10:00', -2], ['16:00', -0.998]]], ['nikkei', [['08:00', 0], ['10:00', -2], ['16:00', -1.002]]]],
+  'recovery', null],
+  ['rule 3: ... and only the recovered part remains', [
+    ['kospi', [['08:00', 0], ['10:00', -2], ['16:00', -0.998]]], ['nikkei', [['08:00', 0], ['10:00', -2], ['16:00', -1.002]]],
+    ['taiex', [['08:00', 0], ['10:00', -2], ['16:00', 0.3]]]], 'recovery', '낙폭 전부 회복(기준선 위): 대만 가권 +0.3%'],
+  // 4. Deepest drawdowns skip lows that round to 0.0%.
+  ['rule 4: a low of -0.04 rounds to 0.0% and is left out', [['kospi', [['08:00', 0], ['10:00', -0.04], ['16:00', 0.3]]],
+    ['nikkei', [['08:00', 0], ['16:00', 0.2]]]], 'drawdown', null],
+  ['rule 4: a low of -0.05 shows as -0.1%', [['kospi', [['08:00', 0], ['10:00', -0.05], ['16:00', 0.3]]],
+    ['nikkei', [['08:00', 0], ['16:00', 0.2]]]], 'drawdown', '가장 깊은 낙폭: 코스피 −0.1%(10:00)'],
+  // 5. Resilient: low >= -0.6 and last >= +0.5.
+  ['rule 5: low -0.6 / last +0.5 qualify; low -0.61 or last +0.49 do not', [
+    ['kospi', [['08:00', 0], ['10:00', -0.6], ['16:00', 0.5]]], ['nikkei', [['08:00', 0], ['10:00', -0.61], ['16:00', 1]]],
+    ['taiex', [['08:00', 0], ['10:00', -0.3], ['16:00', 0.49]]], ['hsi', [['08:00', 0], ['10:00', -0.3], ['16:00', 0.5]]]],
+  'resilient', '기준선 아래로 거의 내려가지 않은 계열: 코스피(최저 −0.6%) · 항셍(최저 −0.3%)'],
+  // 6. Late movers without a rebound bullet (4 series): a move of 1.0p or more starting 45+ min after the bottom interval.
+  ['rule 6: a move starting 45 min after the bottom counts', [['kospi', flatLow], ['nikkei', flatLow], ['taiex', flatLow], goldMove(2)],
+    'late', `금 선물: 12:45 이후 +2.0p${LATE}`],
+  ['rule 6: 44 min after the bottom (lows at 12:01) is too early', [['kospi', flatLow, [['12:01', -1.2]]],
+    ['nikkei', flatLow, [['12:01', -1.2]]], ['taiex', flatLow, [['12:01', -1.2]]], goldMove(2)], 'late', null],
+  ['rule 6: a 1.0p move counts', [['kospi', flatLow], ['nikkei', flatLow], ['taiex', flatLow], goldMove(1)],
+    'late', `금 선물: 12:45 이후 +1.0p${LATE}`],
+  ['rule 6: a 0.99p move does not', [['kospi', flatLow], ['nikkei', flatLow], ['taiex', flatLow], goldMove(0.99)], 'late', null],
+  ['rule 6: four late movers keep the three latest, listed in time order', [['kospi', moverFrom('13:00')],
+    ['nikkei', moverFrom('13:15')], ['taiex', moverFrom('13:30')], ['hsi', moverFrom('13:45')]], 'late',
+  `니케이225: 13:15 이후 +2.0p · 대만 가권: 13:30 이후 +2.0p · 항셍: 13:45 이후 +2.0p${LATE}`],
+];
+
+test('insights rules hold their limits (table-driven)', async (t) => {
+  for (const [name, list, kind, expected] of LIMIT_CASES) {
+    await t.test(name, () => assert.equal(textOf(sessionOf(list), kind), expected));
+  }
+});
+
+test('a steadily falling day has no rebound and no recovery bullet', () => {
+  // Five series falling at a constant rate from 09:00 to 15:00: every 30-minute mean change is negative.
+  const falling = (slope) => [['09:00', slope], ['15:00', slope * 7]];
+  const session = sessionOf([['kospi', falling(-0.5)], ['nikkei', falling(-0.45)], ['taiex', falling(-0.4)],
+    ['hsi', falling(-0.3)], ['skhynix', falling(-0.6)]]);
+  const bullets = C.insights(session, null);
+  assert.deepEqual(bullets.map((b) => b.kind), ['bottom', 'drawdown', 'last']);
+  assert.equal(bullets[0].text, '바닥 시각: 5/5개 계열이 15:00에 최저점');
+  assert.ok(bullets.every((b) => !b.text.includes('반등') && !b.text.includes('회복')), 'nothing claims a rebound or recovery');
+});
+
+test('late movers are measured from the end of the joint rebound', () => {
+  // Five series bottom at 12:00 and jump between 13:30 and 14:00 (the rebound bullet). Gold's +1.5p hour (13:00–14:00)
+  // overlaps the rebound, so it is no longer a late mover (the old rule counted any start from 12:45). BTC's -1.2p hour
+  // starts at 14:15, after the rebound ended.
+  const dip = [['08:00', 0], ['12:00', -2], ['13:30', -2], ['14:00', 0], ['16:00', 0]];
+  const session = sessionOf([['kospi', dip], ['nikkei', dip], ['taiex', dip], ['hsi', dip], ['skhynix', dip],
+    ['gold', [['08:00', 0], ['13:00', 0], ['14:00', 1.5], ['16:00', 1.5]]],
+    ['btc', [['08:00', 0], ['14:15', 0], ['15:15', -1.2], ['16:00', -1.2]]]]);
+  assert.equal(textOf(session, 'rebound'), '가장 가파른 동반 반등: 13:30–14:00 (평균 +1.5p)');
+  assert.equal(textOf(session, 'late'), `BTC: 14:15 이후 −1.2p${LATE}`);
+  // A rebound that ended before the common bottom is not the reference: the 45-minute rule applies instead.
+  const early = [['08:00', 0], ['09:00', 0], ['09:30', 2], ['12:00', -1], ['16:00', -1]];
+  const before = sessionOf([['kospi', early], ['nikkei', early], ['taiex', early], ['hsi', early], ['skhynix', early],
+    ['gold', [['08:00', 0], ['10:00', 0], ['11:00', 1.5], ['16:00', 1.5]]]]);
+  assert.equal(textOf(before, 'rebound'), '가장 가파른 동반 반등: 09:00–09:30 (평균 +1.7p)');
+  assert.equal(textOf(before, 'bottom'), '바닥 시각: 5/5개 계열이 12:00에 최저점');
+  assert.equal(textOf(before, 'late'), null, 'gold moved at 10:00, after the early rebound but before the bottom');
+});
+
+test('insights leave out stale and failed series', () => {
+  const notes = syntheticNotes();
+  const session = syntheticSession();
+  // KOSPI stopped updating at 10:00 (Yahoo 429): its frozen last value must not be ranked against fresh ones.
+  const kospi = session.series.find((s) => s.id === 'kospi');
+  kospi.status = 'stale';
+  kospi.note = 'Yahoo 요청 제한(HTTP 429)';
+  kospi.points = kospi.points.filter((p) => Date.parse(p[0]) <= at('10:00'));
+  C.validateSession(session);
+  const bullets = C.insights(session, notes);
+  assert.ok(bullets.length > 0);
+  for (const b of bullets) assert.ok(!b.text.includes('코스피'), b.text);
+  assert.equal(bullets.find((b) => b.kind === 'bottom').text, '바닥 시각: 2/3개 계열이 12:45에 최저점 (이 구간 사건: TX)');
+  // An 'error' series has no points in a valid file; should one carry points anyway, it is still left out.
+  const broken = syntheticSession();
+  broken.series.find((s) => s.id === 'gold').status = 'error';
+  const brokenText = C.insights(broken, notes).map((b) => b.text).join('\n');
+  assert.ok(!brokenText.includes('금 선물'), brokenText);
+  // 'ok' and 'missing' series are used as before.
+  const fresh = syntheticSession();
+  fresh.series.push({ id: 'nikkei', panel: 'indices', label: '니케이225', basis: 'prevClose', baseline: { value: null, label: '' },
+    source: { provider: 'yahoo', symbol: '^N225' }, status: 'missing', note: '자료 없음(휴장 또는 개장 전)', points: [] });
+  assert.deepEqual(C.insights(fresh, notes), C.insights(syntheticSession(), notes));
+});
+
+test('insightsBasis states the time basis of the automatic bullets', () => {
+  const session = syntheticSession(); // KOSPI and SK hynix end at their 15:30 close print
+  const notes = { ...syntheticNotes(), asOf: iso('15:00') };
+  assert.equal(C.insightsBasis(session, notes), '자동 항목은 차트 끝 기준(장 마감 계열은 종가). 분석 노트는 15:00 기준');
+  assert.equal(C.insightsBasis(session, notes, C.displayWindow(session, notes)), C.insightsBasis(session, notes));
+  assert.equal(C.insightsBasis(session, { ...notes, asOf: iso('16:00') }), '자동 항목은 차트 끝 기준(장 마감 계열은 종가)',
+    'notes written at the chart end need no time');
+  assert.equal(C.insightsBasis(session, null), '자동 항목은 차트 끝 기준(장 마감 계열은 종가)');
+  assert.equal(C.insightsBasis(session, { ...notes, asOf: 'soon' }), '자동 항목은 차트 끝 기준(장 마감 계열은 종가)');
+  assert.equal(C.insightsBasis(session, { ...notes, asOf: '2026-11-03T12:00:00Z' }),
+    '자동 항목은 차트 끝 기준(장 마감 계열은 종가). 분석 노트는 11/3 21:00 기준', 'notes from another day carry the date');
+  // A morning window holds no close print.
+  const morning = { start: at('08:00'), end: at('12:00') };
+  assert.equal(C.insightsBasis(session, notes, morning), '자동 항목은 차트 끝 기준');
+  assert.equal(C.insightsBasis(session, { ...notes, asOf: iso('11:00') }, morning), '자동 항목은 차트 끝 기준. 분석 노트는 11:00 기준');
+  // Stale series are named (up to 3) as left out.
+  const stale = syntheticSession();
+  stale.series.find((s) => s.id === 'kospi').status = 'stale';
+  assert.equal(C.insightsBasis(stale, notes), '자동 항목은 차트 끝 기준(장 마감 계열은 종가, 지연된 코스피 제외). 분석 노트는 15:00 기준');
+  for (const id of ['hsi', 'skhynix', 'gold']) stale.series.find((s) => s.id === id).status = 'stale';
+  assert.equal(C.insightsBasis(stale, null), '자동 항목은 차트 끝 기준(지연된 4개 계열 제외)',
+    'with KOSPI and SK hynix left out no close print is shown');
+  // Nothing to say without usable series.
+  assert.equal(C.insightsBasis({ ...session, series: [] }, notes), '');
+  assert.equal(C.insightsBasis(null, notes), '');
+  for (const text of [C.insightsBasis(session, notes), C.insightsBasis(stale, notes)]) {
+    assert.ok(!text.includes('\u2014') && !text.includes('-'), text);
+  }
 });
 
 // ------------------------------------------------------------------ validation

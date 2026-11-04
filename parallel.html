@@ -25,6 +25,7 @@
     <p class="kicker">공개 자료 모니터링 허브 / 독립 탭</p>
     <h1 id="title">시장 병렬 타임라인</h1>
     <p class="sub" id="meta">자료를 불러오는 중입니다.</p>
+    <p class="sub chart-sub" id="subtitle" hidden></p>
   </div>
   <div class="toolbar">
     <select class="select" id="date-select" aria-label="날짜 선택" disabled><option>날짜 불러오는 중</option></select>
@@ -42,6 +43,7 @@
 
 <main class="main" id="main" tabindex="-1">
   <noscript><p class="notice">이 화면은 자바스크립트가 켜져 있어야 표시됩니다.</p></noscript>
+  <p class="notice notice-pending" id="pending" hidden></p>
   <p class="notice" id="no-notes" hidden>이 날짜의 분석 노트가 없습니다.</p>
 
   <section class="card headline" id="headline-sec" aria-labelledby="h-headline" hidden>
@@ -52,8 +54,10 @@
   <section class="card chart-card" aria-labelledby="h-chart">
     <h2 class="sr-only" id="h-chart">병렬 차트</h2>
     <figure class="chart-fig">
-      <div class="chart-box" id="chart-box" tabindex="0" role="group" aria-label="병렬 차트: 시각별 값 보기" aria-describedby="chart-help">
+      <div class="chart-box" id="chart-box">
         <div class="chart" id="chart"><p class="chart-empty">자료를 불러오는 중입니다.</p></div>
+        <div class="chart-slider" id="chart-slider" role="slider" tabindex="-1" aria-label="병렬 차트: 시각별 값 보기" aria-describedby="chart-help"
+          aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="자료 없음" hidden></div>
         <div class="tip" id="tip" aria-hidden="true" hidden></div>
       </div>
       <figcaption class="caption"><span id="chart-caption"></span><span class="hint" id="chart-help">차트 위에 올리거나 누르면 그 시각의 값이 나옵니다. 차트에 초점을 두고 ← → 키로 15분씩, Home·End 키로 처음과 끝으로 이동합니다.</span></figcaption>
@@ -71,7 +75,13 @@
         <h2 id="h-table">시간표</h2>
         <div class="seg" id="panel-seg" role="group" aria-label="시간표 패널"></div>
       </div>
-      <p class="basis" id="table-basis"></p>
+      <div class="table-tools">
+        <p class="basis" id="table-basis"></p>
+        <div class="seg seg-unit" id="unit-seg" role="group" aria-label="시간표 값">
+          <button type="button" data-unit="pct" aria-pressed="true" aria-label="등락률(%)">%</button>
+          <button type="button" data-unit="price" aria-pressed="false">가격</button>
+        </div>
+      </div>
       <div class="table-wrap" id="table"></div>
     </section>
   </div>

@@ -1,11 +1,17 @@
 /* Parallel timeline chart (병렬 타임라인 v3).
  * renderChart(session, notes, opts) -> {svg, layout}
+ * opts: {width=1200, theme='light'|'dark', header=false, compact=(width<640), now=null, idPrefix='pchart', footer}
  * Four stacked panels (PANELS order) share one KST time axis: panel title + legend, y gridlines at nice
- * ticks, dashed event lines and light-blue bands, series lines with end dots and collision-free right
- * labels, hour labels and the date line under the last panel. The SVG is self-contained (xmlns, explicit
- * size and viewBox, inline font stack, explicit fills, background rect) so it can be shown inline or
- * rasterized to PNG. layout gives the plot geometry so the page can map pointer x to time.
- * Depends only on ParallelCore. Deterministic: no clock reads and no randomness; every text is escaped.
+ * ticks (with a minimum span per panel), dashed event lines and light-blue bands, series lines with end dots
+ * and collision-free right labels (series-coloured swatch; dotted leader from a line that ends early), hour
+ * labels and the date line under the last panel. Events are numbered markers with a key when their labels
+ * do not fit (always in compact mode). Stale and failed series are marked in the legend and right labels.
+ * A live session (final false) ends its title range at the newest data time and labels the 'now' line.
+ * header=true adds the title, subtitle and a footer (opts.footer, else the default basis and sources).
+ * The SVG is self-contained (xmlns, explicit size and viewBox, inline font stack, explicit fills, background
+ * rect) so it can be shown inline or rasterized to PNG. layout gives the plot geometry so the page can map
+ * pointer x to time. Depends only on ParallelCore. Deterministic: no clock reads and no randomness (the
+ * caller passes opts.now); every text is escaped.
  */
 (function (root, factory) {
   'use strict';
@@ -25,15 +31,31 @@
   const DEFAULT_TITLE = '시장 병렬 타임라인';
   const FOOTER = '지수·종목은 전일 종가 대비, 선물·크립토·환율·금은 08:00 KST 대비 · 출처: Yahoo Finance, Coin Metrics (CC BY-NC 4.0)';
   const NO_DATA = '자료 없음';
+  const FAILED = '수집 실패';
+  const DELAYED = '수집 지연';
+  const NOW_WORD = '현재';
   const MAX_EVENT_ROWS = 3;
+  // A right label gets a dotted leader from its line end when the line stops at least this far before the plot's right edge.
+  const LEADER_MIN_PX = 40;
+  // Most the right margin grows past SIZES.right to fit a long right label (e.g. a stale series with its time).
+  const RIGHT_GROW_MAX = 48;
+  // textWidth() is an estimate; real fonts measured up to ~7% wider (Chromium fallback fonts). Text that has to stay
+  // inside the image (header, footer, legend and key rows, right labels) is laid out as if this much wider.
+  const FIT_SLACK = 1.08;
+  // Smallest half-span of a panel's y axis around 0 (percent), so a quiet morning does not blow noise up to full height.
+  const MIN_HALF_SPAN = Object.freeze({ indices: 0.5, ai: 0.5, crypto: 0.5, fx: 0.2 });
+  const DEFAULT_HALF_SPAN = 0.5;
 
-  /** Theme tokens. Dark follows the hub palette (index.html); light follows the reference chart. */
+  /**
+   * Theme tokens. Dark follows the hub palette (index.html); light follows the reference chart. Event lines and marker
+   * rims keep at least 3:1 contrast (WCAG 1.4.11) on the background and on the event band.
+   */
   const THEMES = Object.freeze({
     light: Object.freeze({
       bg: '#fcfcfd', title: '#15191f', text: '#1f2329', text2: '#3f4752', muted: '#69727e', faint: '#9aa2ad',
-      grid: '#eceef1', axis: '#c4cad2', zero: '#949ba6', event: '#8c95a1',
+      grid: '#eceef1', axis: '#c4cad2', zero: '#949ba6', event: '#7a8390',
       band: '#e3edfa', bandOpacity: 1,
-      markerBg: '#ffffff', markerLine: '#8c95a1', markerText: '#2f3640',
+      markerBg: '#ffffff', markerLine: '#7a8390', markerText: '#2f3640',
       future: '#0b1320', futureOpacity: 0.035,
     }),
     dark: Object.freeze({
@@ -56,7 +78,7 @@
       legendItemGap: 18, plotGap: 16,
       plotH: 230, emptyH: 90, panelGap: 34,
       tickSize: 12, tickGap: 8, hourSize: 12, hourGap: 19, dateGap: 19, footSize: 12, footGap: 26, footLine: 17,
-      rightSize: 12, rightPad: 12,
+      rightSize: 12, rightPad: 12, swatch: 10, swatchGap: 4, nowSize: 11,
     }),
     compact: Object.freeze({
       left: 34, right: 16, contentPad: 10, padTop: 12, padBottom: 12,
@@ -67,7 +89,7 @@
       legendItemGap: 12, plotGap: 13,
       plotH: 170, emptyH: 90, panelGap: 26,
       tickSize: 10.5, tickGap: 5, hourSize: 10.5, hourGap: 16, dateGap: 16, footSize: 11, footGap: 22, footLine: 15,
-      rightSize: 11, rightPad: 8,
+      rightSize: 11, rightPad: 8, swatch: 10, swatchGap: 4, nowSize: 10,
     }),
   });
 
@@ -186,10 +208,14 @@
     return Core.formatPct(value, decimals);
   }
 
-  /** Y domain: every point in the window plus 0, padded by 6%, widened to the nice tick extent. */
-  function yScaleFor(series, plotH) {
-    let lo = 0;
-    let hi = 0;
+  /**
+   * Y domain: every point in the window plus [-minHalf, +minHalf] (so 0 is always in it), padded by 6%, widened to the
+   * nice tick extent. decimals = the digits the tick labels need.
+   */
+  function yScaleFor(series, plotH, minHalf) {
+    const half = Number.isFinite(minHalf) && minHalf > 0 ? minHalf : 0;
+    let lo = -half;
+    let hi = half;
     for (const s of series) {
       for (const q of s.pts) {
         if (q.p < lo) lo = q.p;
@@ -225,10 +251,15 @@
       compact: typeof o.compact === 'boolean' ? o.compact : width < COMPACT_BELOW,
       now: Number.isFinite(now) ? now : null,
       prefix: typeof o.idPrefix === 'string' && /^[A-Za-z][\w-]{0,40}$/.test(o.idPrefix) ? o.idPrefix : 'pchart',
+      // Footer text for header mode (the page passes its caption: basis, baseline exceptions, sources, problems, time).
+      footer: typeof o.footer === 'string' ? clean(o.footer) : '',
     };
   }
 
-  /** Panels in PANELS order with their series (catalog order, colors by index within the panel). */
+  /**
+   * Panels in PANELS order with their series (catalog order, colors by index within the panel). Each series carries
+   * its status: stale = provider failed in the latest run and older points are shown; failed = status 'error'.
+   */
   function buildPanels(session, win, theme) {
     const rank = new Map(Core.SERIES.map((s, i) => [s.id, i]));
     const catalog = new Map(Core.SERIES.map((s) => [s.id, s]));
@@ -246,7 +277,10 @@
         const pts = Core.seriesView(x.s, win);
         const known = catalog.get(x.s.id);
         const label = clean(x.s.label) || (known ? known.label : clean(x.s.id)) || '?';
-        return { id: clean(x.s.id), label, color: palette[k % palette.length], pts, last: pts.length ? pts[pts.length - 1] : null };
+        return {
+          id: clean(x.s.id), label, color: palette[k % palette.length], pts, last: pts.length ? pts[pts.length - 1] : null,
+          stale: x.s.status === 'stale', failed: x.s.status === 'error',
+        };
       });
       return { key: P.key, title: P.label, suffix: P.suffix, series, hasData: series.some((s) => s.pts.length > 0) };
     });
@@ -260,11 +294,26 @@
       const a = clamp(at, win.start, win.end);
       const b = band ? clamp(endRaw, win.start, win.end) : a;
       return {
-        n: i + 1, id: e.id == null ? '' : clean(e.id), band, a, b,
+        n: i + 1, id: e.id == null ? '' : clean(e.id), band, a, b, at, end: band ? endRaw : null,
         aEdge: band && at >= win.start, bEdge: band && endRaw <= win.end,
         label: clean(e.label), sub: clean(e.sub),
       };
     });
+  }
+
+  /** Legend suffix: when a stale series stops, a failed or delayed series, or a series without points. */
+  function legendTail(s, stamp) {
+    if (s.failed) return ` · ${FAILED}`;
+    if (s.stale) return s.last ? ` · ${stamp(s.last.t)}까지` : ` · ${DELAYED}`;
+    return s.pts.length ? '' : ` · ${NO_DATA}`;
+  }
+
+  /** Right label parts after the name: the last value at the axis precision and, for a stale series, '(HH:MM)'. */
+  function endParts(s, decimals, stamp, size) {
+    const value = Core.formatPct(s.last.p, decimals);
+    const when = s.stale ? `(${stamp(s.last.t)})` : '';
+    // Width after the name: dx 5 + value (+ dx 4 + time).
+    return { value, when, width: 5 + textWidth(value, size) + (when ? 4 + textWidth(when, size) : 0) };
   }
 
   // Greedy rows: each box goes to the lowest row where it overlaps nothing (gap included), shifted right
@@ -335,10 +384,20 @@
       throw new TypeError('renderChart: the session window is invalid');
     }
     const span = win.end - win.start;
+    const sessionDate = typeof session.date === 'string' ? clean(session.date) : Core.kstDate(win.start);
+    const md = /^\d{4}-(\d{2})-(\d{2})$/.exec(sessionDate);
+    // KST 'HH:MM', with 'M/D ' in front when the instant falls on another KST date than the session.
+    const stamp = (t) => {
+      const day = /^\d{4}-(\d{2})-(\d{2})$/.exec(Core.kstDate(t));
+      return `${day && day[0] !== sessionDate ? `${+day[1]}/${+day[2]} ` : ''}${Core.kstTime(t)}`;
+    };
     const panels = buildPanels(session, win, o.theme);
     for (const p of panels) {
       p.plotH = p.hasData ? S.plotH : S.emptyH;
-      p.scale = p.hasData ? yScaleFor(p.series, p.plotH) : null;
+      const minHalf = Object.prototype.hasOwnProperty.call(MIN_HALF_SPAN, p.key) ? MIN_HALF_SPAN[p.key] : DEFAULT_HALF_SPAN;
+      p.scale = p.hasData ? yScaleFor(p.series, p.plotH, minHalf) : null;
+      // Right labels, the compact legend and the summary use the axis precision (at least 1 decimal).
+      p.decimals = p.scale ? Math.max(1, p.scale.decimals) : 1;
     }
 
     // Horizontal frame: the left margin grows when the widest y label needs it.
@@ -347,18 +406,41 @@
       if (p.scale) for (const t of p.scale.ticks) labelW = Math.max(labelW, textWidth(tickText(t, p.scale.decimals), S.tickSize));
     }
     const left = Math.round(Math.max(S.left, labelW + S.tickGap + 6));
-    const right = W - S.right;
+    // The right margin (regular mode) grows, by RIGHT_GROW_MAX at most, when the longest right label needs it.
+    let rightW = S.right;
+    if (!o.compact) {
+      for (const p of panels) {
+        for (const s of p.series) {
+          if (!s.last) continue;
+          const need = S.rightPad + S.swatch + S.swatchGap
+            + (textWidth(s.label, S.rightSize) + endParts(s, p.decimals, stamp, S.rightSize).width) * FIT_SLACK + 4;
+          if (need > rightW) rightW = need;
+        }
+      }
+      rightW = Math.min(Math.ceil(rightW), S.right + RIGHT_GROW_MAX);
+    }
+    const right = W - rightW;
     const plotW = right - left;
     const xOf = (t) => left + ((t - win.start) / span) * plotW;
     const contentX = o.compact ? S.contentPad : left;
     const contentW = W - contentX - 12;
+    // Width that wrapped header and footer lines are fitted to.
+    const wrapW = contentW / FIT_SLACK;
 
-    const sessionDate = typeof session.date === 'string' ? clean(session.date) : Core.kstDate(win.start);
-    const md = /^\d{4}-(\d{2})-(\d{2})$/.exec(sessionDate);
-    const rangeText = `${md ? `${+md[1]}/${+md[2]} ` : ''}${Core.kstTime(win.start)}~${Core.kstTime(win.end)} KST`;
-    const titleText = `${clean(notes && notes.title) || DEFAULT_TITLE} (${rangeText})`;
-    // The date-range unit wraps as one word (no-break spaces).
-    const titleWrapText = `${clean(notes && notes.title) || DEFAULT_TITLE} (${rangeText.replace(/ /g, ' ')})`;
+    // A live session (final is not true) ends the range at its newest data time and adds 'HH:MM 현재' (opts.now),
+    // so an exported image says when it was taken and how far the data goes.
+    const live = session.final !== true;
+    let newest = -Infinity;
+    for (const p of panels) for (const s of p.series) if (s.last && s.last.t > newest) newest = s.last.t;
+    const rangeEnd = live && Number.isFinite(newest) && newest < win.end ? newest : win.end;
+    const rangeText = `${md ? `${+md[1]}/${+md[2]} ` : ''}${Core.kstTime(win.start)}`
+      + `${rangeEnd > win.start ? `~${Core.kstTime(rangeEnd)}` : ''} KST`;
+    const asOfText = live && o.now !== null ? `${stamp(o.now)} ${NOW_WORD}` : '';
+    const titleBase = clean(notes && notes.title) || DEFAULT_TITLE;
+    const titleText = `${titleBase} (${rangeText}${asOfText ? ` · ${asOfText}` : ''})`;
+    // The date-range unit and the as-of unit each wrap as one word (no-break spaces).
+    const nb = (text) => text.replace(/ /g, '\u00a0');
+    const titleWrapText = `${titleBase} (${nb(rangeText)}${asOfText ? ` ·\u00a0${nb(asOfText)}` : ''})`;
     const interval = Number.isInteger(session.intervalMinutes) && session.intervalMinutes > 0 ? session.intervalMinutes : 15;
     const subText = clean(notes && notes.subtitle) || `세로 점선 = 사건 시각 · ${interval}분봉`;
 
@@ -367,13 +449,13 @@
 
     // Header: title, subtitle.
     if (o.header) {
-      const titleLines = wrap(titleWrapText, contentW, S.titleSize, true);
+      const titleLines = wrap(titleWrapText, wrapW, S.titleSize, true);
       titleLines.forEach((line, i) => {
-        out.push(textEl(contentX, y + S.titleSize * 0.82 + i * S.titleLine, esc(line.replace(/ /g, ' ')),
+        out.push(textEl(contentX, y + S.titleSize * 0.82 + i * S.titleLine, esc(line.replace(/\u00a0/g, ' ')),
           ` class="pc-title" font-size="${S.titleSize}" font-weight="700" fill="${T.title}"`));
       });
       y += S.titleSize * 0.82 + (titleLines.length - 1) * S.titleLine + 6;
-      const subLines = wrap(subText, contentW, S.subSize, false);
+      const subLines = wrap(subText, wrapW, S.subSize, false);
       subLines.forEach((line, i) => {
         out.push(textEl(contentX, y + S.subSize + i * S.subLine, esc(line),
           ` class="pc-subtitle" font-size="${S.subSize}" fill="${T.muted}"`));
@@ -382,9 +464,10 @@
     }
 
     // Event strip above the first panel: two-line labels staggered in up to 3 rows. Compact mode draws
-    // numbered markers instead; so does regular mode when the labels cannot fit without overlapping,
-    // and then a key under the markers lists the labels.
+    // numbered markers instead; so does regular mode when the labels cannot fit without overlapping.
+    // Markers always come with a key under them that lists the labels, and each marker has a <title>.
     const marks = eventMarks(Core.eventsInWindow(notes || null, win), win);
+    const markTitle = (m) => [m.label, m.sub, m.band ? `${stamp(m.at)}–${stamp(m.end)}` : stamp(m.at)].filter(Boolean).join(' ');
     if (marks.length) {
       let markers = o.compact;
       let boxes;
@@ -417,7 +500,8 @@
         const rowBottom = stripBottom - box.row * rowH;
         const id = box.m.id ? ` data-event="${esc(box.m.id)}"` : '';
         if (markers) {
-          out.push(`<g class="pc-marker"${id} data-n="${box.m.n}">${marker(box.m.n, box.cx, rowBottom - rowH / 2, S.markerR)}</g>`);
+          out.push(`<g class="pc-marker"${id} data-n="${box.m.n}"><title>${esc(markTitle(box.m))}</title>`
+            + `${marker(box.m.n, box.cx, rowBottom - rowH / 2, S.markerR)}</g>`);
           continue;
         }
         const base2 = rowBottom - 6;
@@ -426,15 +510,17 @@
           ` font-size="${S.eventSize}" text-anchor="middle" fill="${T.muted}"`)).join('')}</g>`);
       }
       y = stripBottom + S.stripGap;
-      if (markers && !o.compact) {
-        // Key: "(n) label sub" items wrapped across the width.
+      if (markers) {
+        // Key: "(n) label sub" items wrapped across the width (phones included: the numbers alone say nothing).
         const r = S.markerR - 1;
+        const maxText = Math.max(40, Math.min(320, (W - 12 - contentX - (2 * r + 5)) / FIT_SLACK));
         let x = contentX;
         let rowTop = y;
         marks.forEach((m, i) => {
-          const text = fit(m.sub ? `${m.label} ${m.sub}` : m.label, 320, S.eventSize, false);
-          const w = 2 * r + 5 + textWidth(text, S.eventSize);
-          if (i > 0 && x + w > W - 12) { x = contentX; rowTop += S.keyRow; }
+          const text = fit(m.sub ? `${m.label} ${m.sub}` : m.label, maxText, S.eventSize, false);
+          const tw = textWidth(text, S.eventSize);
+          const w = 2 * r + 5 + tw;
+          if (i > 0 && x + 2 * r + 5 + tw * FIT_SLACK > W - 12) { x = contentX; rowTop += S.keyRow; }
           const id = m.id ? ` data-event="${esc(m.id)}"` : '';
           out.push(`<g class="pc-event-key"${id} data-n="${m.n}">${marker(m.n, x + r, rowTop + r, r)}`
             + `${textEl(x + 2 * r + 5, rowTop + r + S.eventSize * 0.36, esc(text), ` font-size="${S.eventSize}" fill="${T.muted}"`)}</g>`);
@@ -465,25 +551,28 @@
         + `<tspan dx="6" font-size="${S.panelSuffix}" fill="${T.muted}">${esc(p.suffix)}</tspan>`,
         ' class="pc-panel-title"'));
 
-      // Legend: sample line + label; compact adds the last value; series without points are muted.
+      // Legend: sample line + label; compact adds the last value (at the axis precision). A stale series says until
+      // when it has data (' · 09:45까지', value muted), a failed one ' · 수집 실패'; series without points are muted.
       let legendY = titleY + S.legendGap;
       if (p.series.length) {
         let x = contentX;
         const maxX = W - 10;
         const items = p.series.map((s) => {
-          const value = o.compact && s.last ? Core.formatPct(s.last.p) : '';
+          const value = o.compact && s.last ? Core.formatPct(s.last.p, p.decimals) : '';
           const label = fit(s.label, contentW * 0.8, S.legendSize, false);
-          const tail = s.pts.length ? '' : ` · ${NO_DATA}`;
+          const tail = legendTail(s, stamp);
           const w = S.legendSample + 6 + textWidth(label + tail, S.legendSize) + (value ? 4 + textWidth(value, S.legendSize, true) : 0);
           return { s, label, value, tail, w };
         });
         out.push('<g class="pc-legend">');
         items.forEach((it, i) => {
-          if (i > 0 && x + it.w > maxX) { x = contentX; legendY += S.legendRow; }
+          if (i > 0 && x + it.w * FIT_SLACK > maxX) { x = contentX; legendY += S.legendRow; }
           const ly = legendY - S.legendSize * 0.34;
           const faded = it.s.pts.length ? '' : ' opacity="0.4"';
           const body = it.s.pts.length
-            ? `<tspan fill="${T.text2}">${esc(it.label)}</tspan>${it.value ? `<tspan dx="4" font-weight="700" fill="${T.text}">${esc(it.value)}</tspan>` : ''}`
+            ? `<tspan fill="${T.text2}">${esc(it.label)}</tspan>`
+              + (it.value ? `<tspan dx="4" font-weight="700" fill="${it.s.stale ? T.muted : T.text}">${esc(it.value)}</tspan>` : '')
+              + (it.tail ? `<tspan fill="${T.muted}">${esc(it.tail)}</tspan>` : '')
             : `<tspan fill="${T.muted}">${esc(it.label + it.tail)}</tspan>`;
           out.push(`<g class="pc-legend-item" data-series="${esc(it.s.id)}">`
             + `<line x1="${num(x)}" y1="${num(ly)}" x2="${num(x + S.legendSample)}" y2="${num(ly)}" stroke="${it.s.color}" stroke-width="2.6" stroke-linecap="round"${faded}/>`
@@ -535,14 +624,38 @@
         }
       }
       out.push('</g>');
-      if (futureFrom !== null) {
-        const fx = crisp(xOf(futureFrom));
+      const fx = futureFrom === null ? null : crisp(xOf(futureFrom));
+      if (fx !== null) {
         out.push(`<rect class="pc-future" x="${num(fx)}" y="${top}" width="${num(right - fx)}" height="${p.plotH}" fill="${T.future}" fill-opacity="${T.futureOpacity}"/>`);
         out.push(vline(fx, top, bottom, T.faint, ' class="pc-now"'));
       }
 
-      // Series: dashed gap connectors and solid runs; first series drawn last (on top).
+      // Right labels (regular mode) at the last values, kept apart by layoutLabels. A line that ends at least
+      // LEADER_MIN_PX before the right edge (every line of a live session, a market that closed early, a stale series)
+      // gets a faint dotted leader in its colour along its last value to the label; it is drawn under the lines.
       const withData = p.series.filter((s) => s.pts.length);
+      const lx = right + S.rightPad;
+      let ends = [];
+      if (sc && !o.compact && withData.length) {
+        const placed = Core.layoutLabels(withData.map((s, i) => ({ key: i, y: yOf(s.last.p) })),
+          { minGap: 17, top: top + 2, bottom: bottom - 2 });
+        ends = withData.map((s, i) => {
+          const x0 = xOf(s.last.t);
+          const y0 = yOf(s.last.p);
+          return { s, x0, y0, y1: placed.has(i) ? placed.get(i) : y0, leader: x0 < right - LEADER_MIN_PX };
+        });
+      }
+      if (ends.some((e) => e.leader)) {
+        out.push('<g class="pc-leaders" fill="none">');
+        for (const e of ends) {
+          if (!e.leader) continue;
+          out.push(`<polyline class="pc-leader" data-series="${esc(e.s.id)}" points="${num(e.x0 + 5)},${num(e.y0)} ${num(right + 2)},${num(e.y0)} ${num(lx - 3)},${num(e.y1)}"`
+            + ` stroke="${e.s.color}" stroke-width="1" stroke-dasharray="1 3" opacity="0.75"/>`);
+        }
+        out.push('</g>');
+      }
+
+      // Series: dashed gap connectors and solid runs; first series drawn last (on top).
       if (sc) {
         out.push('<g class="pc-lines" fill="none" stroke-linejoin="round" stroke-linecap="round">');
         for (let k = withData.length - 1; k >= 0; k -= 1) {
@@ -570,25 +683,33 @@
           ` class="pc-empty" font-size="13" text-anchor="middle" fill="${T.muted}"`));
       }
 
-      // Right labels at the last values, kept apart by layoutLabels.
-      if (!o.compact && withData.length) {
-        const placed = Core.layoutLabels(withData.map((s, i) => ({ key: i, y: yOf(s.last.p) })),
-          { minGap: 17, top: top + 2, bottom: bottom - 2 });
-        const lx = right + S.rightPad;
+      // The 'now' line is labelled once, at the top of the first panel: right of the line, or left of it near the edge.
+      if (fx !== null && index === 0) {
+        const text = `${stamp(futureFrom)} ${NOW_WORD}`;
+        const after = fx + 5 + textWidth(text, S.nowSize) * FIT_SLACK <= right - 2;
+        out.push(textEl(after ? fx + 5 : fx - 5, top + S.nowSize + 2, esc(text),
+          ` class="pc-now-label" font-size="${S.nowSize}"${after ? '' : ' text-anchor="end"'} fill="${T.muted}"`
+          + ` stroke="${T.bg}" stroke-width="3" stroke-linejoin="round" paint-order="stroke"`));
+      }
+
+      // Right labels: a swatch in the series colour, then 'label value'. A stale series is muted and says when its
+      // data stops: '코스피 +0.8% (09:45)'. A label moved by layoutLabels without a leader gets a short connector.
+      if (ends.length) {
+        const tx = lx + S.swatch + S.swatchGap;
         out.push('<g class="pc-end-labels">');
-        withData.forEach((s, i) => {
-          const y0 = yOf(s.last.p);
-          const y1 = placed.has(i) ? placed.get(i) : y0;
-          const value = Core.formatPct(s.last.p);
-          const room = W - lx - 6 - textWidth(` ${value}`, S.rightSize);
-          const label = fit(s.label, Math.max(room, 24), S.rightSize, false);
-          if (Math.abs(y1 - y0) > 3) {
-            out.push(`<polyline class="pc-connector" points="${num(right + 2)},${num(y0)} ${num(lx - 3)},${num(y1)}" fill="none" stroke="${s.color}" stroke-width="1" opacity="0.8"/>`);
+        for (const e of ends) {
+          const s = e.s;
+          const { value, when, width } = endParts(s, p.decimals, stamp, S.rightSize);
+          const label = fit(s.label, Math.max((W - 4 - tx) / FIT_SLACK - width, 24), S.rightSize, false);
+          if (!e.leader && Math.abs(e.y1 - e.y0) > 3) {
+            out.push(`<polyline class="pc-connector" data-series="${esc(s.id)}" points="${num(right + 2)},${num(e.y0)} ${num(lx - 3)},${num(e.y1)}" fill="none" stroke="${s.color}" stroke-width="1" opacity="0.8"/>`);
           }
-          out.push(textEl(lx, y1 + S.rightSize * 0.35,
-            `<tspan>${esc(label)}</tspan><tspan dx="5">${esc(value)}</tspan>`,
-            ` class="pc-end-label" data-series="${esc(s.id)}" font-size="${S.rightSize}" fill="${T.text}"`));
-        });
+          out.push(`<line class="pc-end-swatch" data-series="${esc(s.id)}" x1="${num(lx)}" y1="${num(e.y1)}" x2="${num(lx + S.swatch)}" y2="${num(e.y1)}"`
+            + ` stroke="${s.color}" stroke-width="2.6" stroke-linecap="round"/>`);
+          out.push(textEl(tx, e.y1 + S.rightSize * 0.35,
+            `<tspan>${esc(label)}</tspan><tspan dx="5">${esc(value)}</tspan>${when ? `<tspan dx="4">${esc(when)}</tspan>` : ''}`,
+            ` class="pc-end-label" data-series="${esc(s.id)}" font-size="${S.rightSize}" fill="${s.stale ? T.muted : T.text}"`));
+        }
         out.push('</g>');
       }
 
@@ -618,15 +739,17 @@
         yMin: sc ? sc.min : null, yMax: sc ? sc.max : null, empty: !sc,
         series: p.series.map((s) => ({ id: s.id, color: s.color })),
       });
-      desc.push(`${p.title}: ${p.series.length
-        ? p.series.map((s) => `${s.label} ${s.last ? Core.formatPct(s.last.p) : NO_DATA}`).join(', ')
-        : NO_DATA}`);
+      const said = (s) => {
+        if (s.last) return `${Core.formatPct(s.last.p, p.decimals)}${s.stale ? ` (${stamp(s.last.t)}까지)` : ''}`;
+        return legendTail(s, stamp).replace(/^ · /, '');
+      };
+      desc.push(`${p.title}: ${p.series.length ? p.series.map((s) => `${s.label} ${said(s)}`).join(', ') : NO_DATA}`);
       y = isLast ? panelEnd : bottom + S.panelGap;
     });
 
-    // Footer: basis and sources (header mode only; the page shows them in its caption).
+    // Footer (header mode only; the page shows its caption instead): opts.footer, else the default basis and sources.
     if (o.header) {
-      const lines = wrap(FOOTER, contentW, S.footSize, false);
+      const lines = wrap(o.footer || FOOTER, wrapW, S.footSize, false);
       lines.forEach((line, i) => {
         out.push(textEl(contentX, y + S.footGap + i * S.footLine, esc(line),
           ` class="pc-footer" font-size="${S.footSize}" fill="${T.muted}"`));
