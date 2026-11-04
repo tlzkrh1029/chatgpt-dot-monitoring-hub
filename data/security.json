@@ -1,14 +1,37 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T05:34:23.048Z",
-  "observedAt": "2026-11-04T05:34:04Z",
+  "publishedAt": "2026-11-04T06:32:03.322Z",
+  "observedAt": "2026-11-04T06:31:28Z",
   "checkStatus": "partial",
-  "headline": "11/4 14:34 보안 점검 — 기존 대응 유지·재개 공지와 완료 구분",
-  "body": "GitBook·BTCPay·Chainalysis 기존 대응과 Mercado 유지보수 표시는 유지됐다. Binance 추가 자산 순차 재개 공지를 확인했지만 목록 전체의 실제 출금 완료·전면 복구는 미확인이다. 제한된 공식 자료 점검에서 새 중대 침해·추가 피해·실제 회수는 확인하지 못했다.",
-  "unknown": "Binance 독립 보안검토 및 전면 출금 복구, Mercado 영상 전체 내용과 실제 서비스 재개, Circle Cronos 장애 시작·수정시각, 추가 피해·회수의 독립 검증.",
-  "gap": "공식 공지·상태 페이지와 제한된 공개 검색을 확인했다. 전체 X 피드·영상 전사·모든 프로토콜과 브리지·관리키 사고를 전수 점검하지 못했다. THOR·PancakeSwap·Troves 최신 상태와 독립 온체인 재계산은 미확인이다.",
+  "headline": "11/4 15:31 보안 점검 — BitMart 연관 분석 검증 중",
+  "body": "Bitquery 분석에서 Mercado 공격 주소와 BitMart 연관 지갑 유출의 연결 단서를 확인했다. 공식 원문 확인과 독립 온체인 검증은 미완료이므로 동일 공격조직·공통 공급망 침해를 확정하지 않는다. Mercado 유출·동결 분석 수치의 갱신도 과거 기준 자료로 구분했다. 기존 GitBook·Chainalysis 대응과 Mercado 유지보수는 유지됐다.",
+  "unknown": "BitMart 공식 확인 원문·사건 발생일·피해액·지갑 귀속·공통 침해 경로, Mercado 실제 회수·서비스 재개, 분석의 정확한 수정시각.",
+  "gap": "공식 상태·공지와 공개 분석·제한된 검색을 확인했다. 일부 보도 본문 접근 실패, 전체 X 피드·모든 프로토콜·발행사별 동결 및 독립 온체인 재계산은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T06:31:28Z",
+      "kind": "조사 단서",
+      "title": "BitMart 연관 지갑 유출 분석·공식 확인 대기",
+      "text": "Bitquery의 11월 3일 기준 분석은 Mercado 공격 주소로 BitMart 연관 지갑에서 약 39만 1천 달러가 유출됐다고 설명한다. 일부 지갑의 소유 귀속은 라벨과 과거 상호 거래에 기초한 추론이다. 분석은 같은 주소 연결을 제시하지만 공통 공급업체 침해는 확인하지 않았다.",
+      "evidence": "조회 11월 4일 06:31 UTC, 한국시간 15:31. 작성자 분석이며 독립 온체인 재계산은 미완료다. 창업자가 침해를 확인했다는 보도 검색 단서는 있으나 원문 발언을 검증하지 못했다. 분석 본문의 BitMart 확인문 미발견 설명과 날짜 차이도 남아 있어 사건 발생일·피해액·귀속을 공식 확정하지 않는다.",
+      "sources": [
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack"
+      ]
+    },
+    {
+      "at": "2026-11-04T06:31:28Z",
+      "kind": "부분 점검",
+      "title": "기존 대응 유지·Mercado 분석 수정과 실제 회수를 구분",
+      "text": "GitBook 복구 모니터링, Chainalysis 일부 제품 중단, Mercado 유지보수 표시는 유지됐다. Bitquery Mercado 분석은 유출 약 4,860만 달러·동결 약 1,140만 달러로 표시되며 이전 열람의 4,850만 달러·동결 730만 달러와 다르다. 이는 11월 3일 기준 작성자 분석 갱신이며 이번 시간대의 신규 유출이나 고객 반환 완료를 뜻하지 않는다.",
+      "evidence": "조회 11월 4일 06:30~06:31 UTC, 한국시간 15:30~15:31. 금액은 분석자의 거래 시점 평가와 분류다. 동결·회수·보상은 별개이며 발행사별 조치의 독립 재검증과 분석의 정확한 수정시각은 미확인이다. 검색 결과에는 이전 분석 수치도 남아 있어 최신 본문과 구분한다.",
+      "sources": [
+        "https://www.gitbookstatus.com/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack"
+      ]
+    },
     {
       "at": "2026-11-04T05:34:04Z",
       "kind": "부분 점검",
