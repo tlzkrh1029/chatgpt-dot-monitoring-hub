@@ -1,14 +1,36 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T10:51:45.906Z",
-  "observedAt": "2026-11-04T10:51:28Z",
+  "publishedAt": "2026-11-04T12:07:49.785Z",
+  "observedAt": "2026-11-04T12:07:14Z",
   "checkStatus": "partial",
-  "headline": "11/4 19:51 보안 점검 — GitHub발 동기화 장애 추가",
-  "body": "GitBook에 GitHub발 동기화 장애가 추가됐다. 공식 운영 장애 공지이며 새 보안 침해와는 구분한다. 기존 Chainalysis 대응·Mercado 유지보수 상태는 유지됐다. Liquid 준비금 복구 보도는 공식 최신 원문·현재 준비금의 독립 확인을 완료하지 못해 확정 회수로 기록하지 않았다.",
-  "unknown": "BitMart 공식 발언·공통 침해 경로, Liquid 최신 준비금 복구 원문·독립 검증·직접 출금 재개, GitHub 장애가 개별 배포에 미친 영향.",
-  "gap": "공식 상태와 기존 공지·제한된 검색을 확인했다. Liquid 최신 보도의 본문 접근 실패와 공식 원문 확보 공백이 남아 있다. 전체 X 피드·모든 프로토콜·독립 온체인 재계산은 미확인이다.",
+  "headline": "11/4 21:07 보안 점검 — GitHub 장애 해소·Mercado 분석 갱신",
+  "body": "GitHub는 기존 운영 장애 해소를 공지했지만 GitBook 동기화 공지는 아직 유지된다. Mercado 동결 추산 증가와 자금 이동은 분석자 보고로 기록했고 확정 반환으로 취급하지 않았다. Chainalysis 일부 제품 중단과 Coinbase Sonic 지연은 유지됐다.",
+  "unknown": "Mercado 추가 동결의 발행사 확인·독립 온체인 검증, BitMart 발언 원문·지갑 귀속·공통 침해 경로, Liquid 준비금 복구의 최신 공식 원문·독립 검증, 개별 하위 서비스의 복구 완료.",
+  "gap": "공식 상태·기존 공지·제한된 검색만 확인했다. 공개 탐색기와 GitHub 직접 사건 페이지 조회가 실패했다. 전체 X 피드·모든 프로토콜·온체인 거래별 재계산은 미완료다.",
   "feed": [
+    {
+      "at": "2026-11-04T12:07:14Z",
+      "kind": "운영 복구",
+      "title": "GitHub 장애 해소 공지·하위 서비스 확인은 별도",
+      "text": "GitHub는 기존 Git 작업·이슈·풀리퀘스트·API·Actions 장애를 해소했다고 공지했다. GitBook의 Git 동기화 장애 표시는 아직 유지된다. 개별 사이트 배포나 동기화 완료를 자동으로 뜻하지 않으며 새 보안 침해와는 구분한다.",
+      "evidence": "조회 11월 4일 12:07 UTC, 한국시간 21:07. GitHub 공식 해소 시각은 11:50 UTC, 한국시간 20:50. API·Git·이슈·풀리퀘스트 완화 11:30 UTC, Actions 완화 11:43 UTC. 직접 사건 페이지 조회는 실패했지만 공식 상태 첫 화면의 사건 이력을 확인했다.",
+      "sources": [
+        "https://www.githubstatus.com/",
+        "https://www.gitbookstatus.com/"
+      ]
+    },
+    {
+      "at": "2026-11-04T12:07:14Z",
+      "kind": "분석 갱신",
+      "title": "Mercado 동결 추산 갱신·독립 검증 미완료",
+      "text": "Bitquery는 Mercado 관련 동결 추산을 1,140만 달러에서 1,180만 달러로 갱신했다. 약 40만 달러 상당 EURC의 추가 동결과 토큰 매각을 보고했다. 동결은 피해자 반환이 아니며 공식 발행사 확인·독립 재계산은 미완료다. BitMart 연관 지갑 귀속과 공통 침해 경로도 미확인이다.",
+      "evidence": "분석 원자료 기준은 11월 4일 10:02~10:08 UTC, 한국시간 19:02~19:08. EURC 동결은 분석자 기준 00:55 UTC. 분석자의 3~4일 토큰 매각 추산 1,190만 달러는 새 피해액이 아니다. 조회 12:06~12:07 UTC. 공개 탐색기 조회 실패로 거래별 독립 검증을 완료하지 못했다. Mercado 공식 상태는 유지보수다.",
+      "sources": [
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack",
+        "https://status.mercadobitcoin.com.br/"
+      ]
+    },
     {
       "at": "2026-11-04T10:51:28Z",
       "kind": "운영 장애",
