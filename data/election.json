@@ -1,14 +1,32 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T20:46:40.454Z",
-  "observedAt": "2026-11-04T20:46:40.453Z",
+  "publishedAt": "2026-11-04T21:02:36.297Z",
+  "observedAt": "2026-11-04T21:02:15.061Z",
   "checkStatus": "partial",
-  "headline": "11/5 05:46KST: 의석 합계 유지, 확인 범위 내 새 중대 변화 없음",
-  "body": "DDHQ 하원249D·152R·상원54D·44R·주지사28D·20R 유지. Maine2구 공화3902표 우세는 미판정이며 다른 주요 미판정 경합 선두도 유지된다. 새 중대 판단은 확인하지 못했고 공식 인증·전국 전수 확인은 미완료다.",
-  "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "headline": "06:02 KST 부분 확인: 하원 공화152·153 표시 불일치",
+  "body": "11월5일 06:00–06:02 KST 조회. DDHQ 하원 본문과 상원 교차표는 민주249·공화153, 주지사 교차표는 민주249·공화152로 다르다. 직전249·152에서 공화1석 증가 표시가 있으나 이번 하원18개 표본에서 해당 새 판정을 식별하지 못했다. 상원54·44와 주지사28·20은 동일하다. 상원35·주지사36개를 요청해70개를 읽었고 Oregon 주지사는 실패했다. 읽은 경합의 신규 당선 판단·철회는 확인되지 않았다. Maine2 LePage3902표, Alaska 상원 Peltola626표, Mississippi 상원 Colom1864표, Kansas 주지사 Holscher5606표 우세는 미판정 상태를 유지한다.",
+  "unknown": "하원 추가1석의 개별 판정 및 합계 불일치 원인, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T21:02:15.061Z",
+      "kind": "부분 확인",
+      "title": "하원 공화 152·153 표시 불일치, 추가 1석 개별 미확인",
+      "text": "11월5일 06:00–06:02 KST 조회. DDHQ 하원 본문과 상원 교차표는 민주249·공화153, 주지사 교차표는 민주249·공화152로 다르다. 직전249·152에서 공화1석 증가 표시가 있으나 이번 하원18개 표본에서 해당 새 판정을 식별하지 못했다. 상원54·44와 주지사28·20은 동일하다. 상원35·주지사36개를 요청해70개를 읽었고 Oregon 주지사는 실패했다. 읽은 경합의 신규 당선 판단·철회는 확인되지 않았다. Maine2 LePage3902표, Alaska 상원 Peltola626표, Mississippi 상원 Colom1864표, Kansas 주지사 Holscher5606표 우세는 미판정 상태를 유지한다.",
+      "timeBasis": "observation",
+      "evidence": "조회는 21:00–21:02 UTC. Maine·Michigan·Colorado·Illinois 상원과 Iowa·Michigan·Vermont·Illinois·Pennsylvania 주지사에서 득표 또는 자료시각 갱신을 확인했으나 기존 DDHQ 판정은 같다. 공식 인증과 언론 판단은 별개다. Alaska 공식 결과는502, Mississippi 공식 결과 목록에는2026년3월 예비선거만 표시돼 본선 집계를 대조하지 못했다. 하원435개와 남은 표 종류·지역·전국 법정절차·주민투표는 전수 확인하지 못했다. 다음에는 하원 추가1석 개별 판단과 합계 불일치, 미판정 경합 및 공식 집계를 대조한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T20:46:40.453Z",
       "kind": "부분 재확인",
