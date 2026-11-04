@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T14:16:56.386Z",
-  "observedAt": "2026-11-04T14:16:28.005Z",
+  "publishedAt": "2026-11-04T14:32:00.304Z",
+  "observedAt": "2026-11-04T14:31:39.289Z",
   "checkStatus": "partial",
-  "headline": "11/4 23:16KST: 주요 판단 유지·일부 집계 감소 원인 미확인",
-  "body": "DDHQ 상원35·주지사36개 중70개 원문을 확인했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R과 확인 가능한 당선 판단은 유지됐다. Arkansas 상원 제3후보 및 총계가1,789표 줄었으나 원인은 미확인이다. 언론 판단이며 공식 인증 결과가 아니다.",
+  "headline": "11/4 23:31KST: 일부 개표 증가·DDHQ 주요 판단 유지",
+  "body": "Texas·Maine·New Jersey 상원과 Texas 주지사 집계가 늘었지만 확인 가능한 당선 판단은 유지됐다. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R이다. 일부 원자료 및 공식 대조가 미완료이며 언론 판단은 공식 인증이 아니다.",
   "unknown": "Arkansas 집계 감소 원인 및 공식 수치 대조, Oregon 주지사 DDHQ 원문, 주요 미판정 경합의 최신 공식 집계, 전국 법원·재검표·인증·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 접근 실패, Arkansas 공식 집계 사이트 본문 미표시. 하원435개 개별·카운티 하위 및 전국 법원·재검표·인증·주민투표 전수 확인 미완료. 시장 수치는 확인하지 않았다. 별도 게시 제한: 선거 결과 탭의 스냅샷 저장이 거절되어 이전 저장 자료를 유지한다. 이는 원자료 관찰 실패와 별개다.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 접근 실패. Arkansas 집계 감소 원인 및 주요 미판정 경합 공식 대조 미완료. 하원435개 개별·카운티 하위 및 전국 법원·재검표·인증·주민투표 전수 확인 미완료. 시장 수치는 확인하지 않았다. 별도 게시 제한: 선거 결과 탭의 스냅샷 저장이 거절되어 이전 저장 자료를 유지한다. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T14:31:39.289Z",
+      "kind": "부분 관찰",
+      "title": "14:30 점검: 일부 개표 증가·당선 판단 유지",
+      "text": "상원35·주지사36개 DDHQ 원문 중70개를 확인했다. Texas 상원 Talarico5,403,211표·Paxton4,214,852표, Maine 상원 Jackson355,760표·Collins304,727표, New Jersey 상원 Booker1,781,641표·Murphy1,012,949표로 집계가 늘었다. Texas 주지사 Hinojosa5,185,873표·Abbott4,461,302표로 증가했다. 확인 가능한 기존 당선 판단과 하원241D·149R, 상원54D·44R, 주지사27D·20R은 유지된다.",
+      "evidence": "실제 조회11월4일14:30–14:31UTC/23:30–23:31KST. Texas 상원·주지사 집계09:10EST=14:10UTC, Maine 상원09:08EST=14:08UTC, New Jersey 상원08:53EST=13:53UTC. Maine 예상 집계율89%, New Jersey93%, Texas는95% 초과 표기이며 공식 확정 비율이 아니다. AZ05·MI04 미판정 및 표수 유지. Arkansas 이전 집계 감소는 추가 변화·공식 설명 미확인. Oregon 주지사 원문은 접근 실패했다. 언론 당선 판단은 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-jersey-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T14:16:28.005Z",
       "kind": "부분 관찰",
