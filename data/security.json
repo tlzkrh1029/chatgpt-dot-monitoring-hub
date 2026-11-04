@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T14:08:32.723Z",
-  "observedAt": "2026-11-04T14:08:02Z",
+  "publishedAt": "2026-11-04T15:15:37.741Z",
+  "observedAt": "2026-11-04T15:15:07Z",
   "checkStatus": "partial",
-  "headline": "11/4 23:08 보안 점검 — Liquid 원문 근거 보완·직접 출금 제한",
-  "body": "Liquid 관련 SideSwap의 과거 공식 공지를 확보했다. 준비금 복구 주장과 Federation 직접 출금 제한을 구분하며 현재 준비금의 독립 검증은 미완료다. GitBook 정상 운영·보안사고 해소 공지, Mercado 유지보수와 기존 분석 추산, Chainalysis 기존 대응은 유지됐다. 확인 범위에서 새 중대 침해·추가 확정 회수는 확인하지 못했다.",
-  "unknown": "Liquid 현재 준비금·유통량의 독립 검증과 Federation 직접 출금 재개, BitMart 발언 원문·지갑 귀속·공통 침해 경로, Mercado 동결의 독립 검증, GitBook 사후보고서.",
-  "gap": "공식 공지·상태·일부 분석과 검색만 확인했다. 탐색기 페이지는 수치를 읽지 못했고 전체 X 피드·모든 프로토콜과 거래별 독립 온체인 재계산은 미완료다.",
+  "headline": "11/5 00:15 보안 점검 — 기존 대응 유지·새 확정 변화 미확인",
+  "body": "공식 상태와 기존 사고 공지를 재확인했다. GitBook 정상 운영, Mercado 유지보수, Chainalysis 일부 제품 중단과 Coinbase Sonic 지연은 유지됐다. Arkéa 공시는 기존 온체인 기록과 대조해 중복 사건으로 세지 않았다. 확인 범위에서 새 중대 침해·실제 추가 회수는 확인하지 못했다.",
+  "unknown": "Arkéa 정확한 피해액·공시와 추적 주소의 동일성, Liquid 현재 준비금의 독립 검증과 직접 출금 재개, BitMart 원문·공통 침해 경로, GitBook 상세 사후보고서.",
+  "gap": "공식 상태·기존 공지·일부 분석과 검색만 확인했다. 전체 X 피드·모든 프로토콜·독립 온체인 재계산은 미완료다. 이전 접근 제한이 확인된 자료는 우회하거나 재시도하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T15:15:07Z",
+      "kind": "부분 점검",
+      "title": "기존 보안 대응 재확인·새 확정 변화 미확인",
+      "text": "GitBook 정상 운영과 사고 해소 공지, Mercado 유지보수 및 기존 동결 분석, Chainalysis 일부 제품 중단, Coinbase Sonic 지연은 기존 상태다. 이미 기록된 은행 사이버공격 공시와 자금추적 주장은 별도 온체인 기록과 대조해 신규 사건으로 중복 계산하지 않았다.",
+      "evidence": "조회 11월 4일 15:14~15:15 UTC, 한국시간 11월 5일 00:14~00:15. GitBook 사후보고서·새 Binance 복구 공시·추가 확정 회수는 확인 범위에서 찾지 못했다. 검색 부재는 사건 부재가 아니며 은행 피해액 관련 후속 보도는 원자료 확인 전 확정값으로 쓰지 않는다.",
+      "sources": [
+        "https://www.gitbookstatus.com/",
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.coinbase.com/"
+      ]
+    },
     {
       "at": "2026-11-04T14:08:02Z",
       "kind": "근거 보완",
