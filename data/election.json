@@ -1,14 +1,66 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T06:45:37.124Z",
-  "observedAt": "2026-11-04T06:44:43Z",
+  "publishedAt": "2026-11-04T08:08:34.165Z",
+  "observedAt": "2026-11-04T08:07:54Z",
   "checkStatus": "partial",
-  "headline": "15:44 KST: DDHQ 상원54·44, 하원232·141, 주지사27·20",
-  "body": "메인 Jackson·미시간 El-Sayed·네브래스카 Ricketts 등의 새 언론 판단을 확인했다. 주지사 Tennessee·Nebraska·New Hampshire 및 하원 WI01·PA01 판단도 추가했다. 미시시피 상원 격차는3182표로 줄었고 알래스카 상원은298표 차이다. 언론 판단·진행 집계와 공식 인증은 구분한다.",
-  "unknown": "미집계 표 종류·지역, 전국 공식 인증·재검표, 일부 호출표시 불일치 및 시장반응 인과는 미확인.",
-  "gap": "상원35·주지사36 목록 및71개 개별경주 조회 중 Oregon 주지사 실패. Hawaii·TX23·SC01 호출과 개별페이지 대조 미완료. Maine·Michigan 공식 접근 실패, 카운티 내부 페이지·하원 전수·전국 운영사고 및 법원 후속 확인 미완료.",
+  "headline": "17:07 KST: 알래스카 상원 선두 변경, 하원238·146",
+  "body": "DDHQ 알래스카 상원은 Sullivan2589표 선두로 바뀌었고 미시시피 Colom 격차는2169표로 줄었다. 상원54·44와 주지사27·20은 유지, 하원은238·146으로 증가했다. MT01·OH10·TX09 판단을 추가하고 Hawaii 및 TX23·SC01의 이전 호출 표시 누락을 보완했다. 진행 집계·언론 판단과 공식 인증을 구분한다.",
+  "unknown": "알래스카 독립 수치·남은 표, 미시시피 최종 결과, Nevada 실제 개표 상태, 전국 인증·재검표·운영사고와 시장 인과는 미확인.",
+  "gap": "Oregon 주지사 조회 실패, Alaska 공식502·시간초과, Nevada 공식 자동 접근 금지로 중단. 카운티 내부 페이지·하원435석·주민투표·법원 및 전국 공식 교차검증 미완료.",
   "feed": [
+    {
+      "at": "2026-11-04T08:07:54Z",
+      "kind": "경합지 변화",
+      "title": "알래스카 상원 관측 선두 Sullivan으로 변경, 미시시피 격차 축소",
+      "text": "DDHQ 알래스카 상원02:20 EST(07:20 UTC·16:20 KST) 집계는 Sullivan97407 대 Peltola94818,48.78% 대47.48%다. 이전 Peltola298표 선두에서 Sullivan2589표 선두로 바뀌었다. 미시시피02:01 EST(07:01 UTC) Colom461370 대 Hyde-Smith459201로2169표 차이, 이전3182표에서 줄었다. 둘 다 당선 판단이 표시되지 않았다.",
+      "evidence": "조회08:06 UTC(17:06 KST). 알래스카66%, 미시시피>95%는 DDHQ 보고 비율이고 남은 표 종류·지역은 미확인. 알래스카 공식 결과502 및 안내페이지 시간초과로 독립 수치 검증 실패. 정확한 선두 교체 시각과 최종 결과를 확정하지 않는다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T08:07:54Z",
+      "kind": "당선 판단",
+      "title": "하원238·146, MT01·OH10·TX09 판단 추가",
+      "text": "08:06 UTC(17:06 KST) DDHQ 하원은 민주238·공화146,교체32·1석으로 이전232·141에서 증가했다. MT01 Sam Forstag02:04 EST(07:04 UTC·16:04 KST), OH10 Kristina Knickerbocker01:47 EST(06:47 UTC·15:47 KST), TX09 Leticia Gutierrez02:20 EST(07:20 UTC·16:20 KST) 판단을 개별 페이지에서 확인했다. 상원54·44 및 주지사27·20은 유지됐다.",
+      "evidence": "언론 판단이며 공식 인증 아님. 이전 미일치였던 TX23 Katy Stout01:41 EST와 SC01 Nancy Lacore01:39 EST 호출도 개별 표시로 보완했다. 지금 새 호출로 취급하지 않는다. 실제 조회08:07 UTC. 전체 추가 의석별 발표시각·공식 집계 및 하원435석 전수 대조는 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/montana-us-house-1-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/ohio-us-house-10-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-9-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-23-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/south-carolina-us-house-1-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
+    {
+      "at": "2026-11-04T08:07:54Z",
+      "kind": "누락 보완",
+      "title": "하와이 Green 판단 표시와 공식 집계 대조",
+      "text": "DDHQ Hawaii 주지사 Joshua Green 판단은01:30 EST(06:30 UTC·15:30 KST)로 확인됐다. 이전 호출 미표시를 보완한 과거 판단이다. 공식 주 전체 Report2와 DDHQ의 Green227046·Cordery75978표가 일치한다. 공식73.5%·24.6%는 무효·빈표를 포함한 분모이고 DDHQ74.93%·25.07%와 혼용하지 않는다.",
+      "evidence": "조회08:07 UTC. 공식 Report2 인쇄시각은11월3일21:02:44이나 문서 시간대 표시가 없어 UTC 변환을 유보한다. 빈표5375·과다기표387를 별도로 표시한다. 일반 집계 보고서이지 인증 결과가 아니다. DDHQ 집계 갱신02:16 EST(07:16 UTC).",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/hawaii-governor-general-election",
+        "https://elections.hawaii.gov/wp-content/results/2026%20General/histatewide.pdf"
+      ]
+    },
+    {
+      "at": "2026-11-04T08:07:54Z",
+      "kind": "확인 범위",
+      "title": "상원35·주지사36 점검, Nevada·Oregon 확인 제한 지속",
+      "text": "08:06–08:07 UTC에 DDHQ 상원35개·주지사36개 목록과71개 개별 경주를 재조회했다. Oregon 주지사 개별 조회는 계속 실패했다. Nevada 주지사 DDHQ는0표·결과대기 표시이고 공식 결과 사이트는 자동 접근 금지 안내로 중단했다. 이를 실제 무득표·개표 중단·보안사고라고 판단하지 않는다.",
+      "evidence": "Kansas 주지사는02:37 EST 집계 Holscher546533 대 Masterson540636,5897표 차이로 판단 미표시다. 목록은 확인했으나 카운티·타운십 내부 모든 페이지, 주민투표·재검표·법원·전국 운영사고·공식 인증 및 시장반응 전수 검증은 미완료. 자료누락은 변화 없음이나 정상으로 분류하지 않는다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T06:44:43Z",
       "kind": "당선 판단",
