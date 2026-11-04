@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T17:32:31.016Z",
-  "observedAt": "2026-11-04T17:32:04.640Z",
+  "publishedAt": "2026-11-04T17:47:59.024Z",
+  "observedAt": "2026-11-04T17:47:32.135Z",
   "checkStatus": "partial",
-  "headline": "11/5 02:32KST: 하원 추가2석 MI07·MI10 판단 근거 확인",
-  "body": "DDHQ 하원249D·150R 유지. 이전 추가2석 미식별을 Michigan7구 Lawrence·10구 Hines의 개별 판단으로 보완했다. 판단시각은 한국시간01:47·01:48이며 지금 새 발표나 공식 인증은 아니다. 상원54D·44R·주지사28D·20R 유지.",
-  "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 02:47KST: 하원 공화150·151 표시 불일치 확인",
+  "body": "DDHQ 하원 본문249D·151R과 다른 총괄 요약249D·150R이 다르며 추가1석 개별 판단은 미식별이다. 상원54D·44R·주지사28D·20R 유지. Maine2구 공화4278표·Kansas 주지사 민주5551표 우세는 미판정이며 공식 인증이 아니다.",
+  "unknown": "하원 공화150·151 불일치·추가 판단, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502. 하원 공화150·151 불일치·추가 판단 미해소. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T17:47:32.135Z",
+      "kind": "개표 관찰·합계 대조",
+      "title": "하원 공화150·151 표시 차이, 추가 판단 미확인",
+      "text": "DDHQ 하원 본문은249D·151R, 상원·주지사 페이지의 하원 요약은249D·150R이다. 공화 추가1석의 개별 판단은 이번 표본과 호출목록에서 식별하지 못해 확정 변화로 단정하지 않는다. 기존 MI07·MI10 민주 판단은 앞선 기록으로 보존한다. 상원54D·44R·주지사28D·20R 유지. Maine2구 LePage162751 대 Dunlap158473로 공화4278표 우세, Kansas 주지사 Holscher546591 대 Masterson541040로 민주5551표 우세이며 둘 다 미판정이다.",
+      "evidence": "실제조회11월4일17:46–17:47UTC·한국시간11월5일02:46–02:47. Maine2구 갱신12:35EST=17:35UTC·다음날02:35KST, Kansas12:28EST=17:28UTC·다음날02:28KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원11개 개별 표본·총괄 목록 점검,435개 전수 아님. Kansas·Nebraska·Massachusetts·Alabama 상원 및 Nebraska 주지사 표수 증가, 기존 판단 유지. Texas 주지사는 갱신시각만 변경. Alaska 공식502, Mississippi 공식2026총선 수치 미확인. 언론 판단과 공식 인증 및 미집계 표 분포는 구분한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T17:32:04.640Z",
       "kind": "개별 판단·누락 보완",
