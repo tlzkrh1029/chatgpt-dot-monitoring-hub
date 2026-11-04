@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T16:16:37.028Z",
-  "observedAt": "2026-11-04T16:16:37.026Z",
+  "publishedAt": "2026-11-04T16:32:20.616Z",
+  "observedAt": "2026-11-04T16:31:47.419Z",
   "checkStatus": "partial",
-  "headline": "11/5 01:16KST: 하원244D·247D 공급원 내 불일치",
-  "body": "DDHQ 하원 전용 본문은244D·150R, 다른 페이지 요약은247D·150R로 다르다. 이전247D를 현재 확정 합계로 쓰지 않으며 실제3석 판단 철회도 미확인이다. 민주당 지배권 판단 및 NC13·NV02 개별 판단은 유지된다. 상원54D·44R, 주지사28D·20R이다.",
-  "unknown": "DDHQ 하원244D·247D 불일치의 수정시각·원인·개별 대응, NC09 목록·원문 판단 차이, 주요 경합 공식대조, Oregon 주지사 원문.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 하원 합계244D·247D 및 NC09 목록·개별판단 불일치 미해소. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수 및 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 01:31KST: 하원247D·150R 일치·추가6석 확인",
+  "body": "DDHQ 하원 본문과 다른 페이지의 합계가247D·150R로 일치했다. NC09·NC14·NC06·NJ02를 추가 확인해 기존 NC13·NV02와 민주 증가6석을 개별 대응했다. 상원54D·44R, 주지사28D·20R이다. 이전 불일치 원인은 미확인이며 공식 인증 결과가 아니다.",
+  "unknown": "이전 DDHQ 합계 불일치 원인, Mississippi·Alaska·Maine2구 공식 집계 대조, Oregon 주지사 원문, 전국 법원·재검표·인증·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수 및 시장수치 확인 미완료. 이전 합계 불일치의 원인·수정 설명은 미확인. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T16:31:47.419Z",
+      "kind": "불일치 해소",
+      "title": "하원247D·150R 일치·민주 증가6석 개별 확인",
+      "text": "DDHQ 하원 전용 본문과 다른 페이지 요약이247D·150R로 일치했다. 새로 NC09 Richard Ojeda, NC14 LaKesha Womack, NC06 Cyril Jefferson, NJ02 Zack Mullock의 개별 당선 판단을 확인해 앞서 확인한 NC13·NV02와 함께 민주 증가6석을 대응했다. 이전244·247 불일치 기록은 보존하며 수정 원인을 추정하지 않는다. Mississippi 상원 Colom465,564표·Hyde-Smith463,579표로 민주 우세가745표에서1,985표로 늘었지만 미판정이다.",
+      "evidence": "실제 조회11월4일16:30–16:31UTC/11월5일01:30–01:31KST. NC09판단10:47EST=15:47UTC, NC14 10:50EST=15:50UTC, NC06 10:52EST=15:52UTC, NJ02 10:59EST=15:59UTC. Mississippi 집계11:14EST=16:14UTC. DDHQ 상원54D·44R·주지사28D·20R 유지. Alaska 상원507표·Maine2구2,384표 선두 격차 미판정 유지. 상원35·주지사36개 중70개 확인·Oregon 실패. 언론 당선 판단은 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-9-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-14-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-6-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-jersey-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T16:16:37.026Z",
       "kind": "집계 정정·불일치",
