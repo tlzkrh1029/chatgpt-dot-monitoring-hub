@@ -165,7 +165,7 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
   .item { grid-template-columns: 52px minmax(0, 1fr); gap: 10px; }
   .chip { padding: 0 12px; font-size: 13px; }
 }
-@media(min-width:1200px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1200px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
 /* Embed views (?view=status | feed | checks). Without ?view= the full page is unchanged. */
 html[data-view] .page { padding-top: 16px; padding-bottom: 20px; }
@@ -212,6 +212,16 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 .refresh-reserve { visibility: hidden; user-select: none; }
 .refresh-status[data-state="warning"], .refresh-status[data-state="error"] { color: var(--amber); }
 .refresh-status[data-state="success"] { color: #50C4AE; }
+.tile-source { display: flex; flex-direction: column; gap: 8px; }
+.tile-source + .tile-source { padding-top: 14px; border-top: 1px solid var(--line); }
+.source-label { margin: 0; font-size: 12px; font-weight: 600; color: var(--amber-sub); }
+.tile-source .tile-foot { margin-top: 0; }
+.related-heading { margin: 0 0 10px; color: var(--text-2); font-size: 13px; }
+.related-history { margin-top: 12px; }
+.related-history > summary { padding: 8px 0; color: var(--link); font-size: 13px; cursor: pointer; }
+.related-history .item { padding-bottom: 0; }
+.source-check + .source-check { margin-top: 10px; }
+.source-check .source-label { margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -281,7 +291,8 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
     <li>공개 자료만 사용하고, 관측 시각과 조회 시각을 구분해서 기록합니다.</li>
     <li>회사의 주장과 독립적으로 검증한 사실을 나눠서 적습니다.</li>
     <li>출금 중단은 해킹 확정이 아니며, 복구 예정과 실제 복구를 구분합니다.</li>
-    <li>다섯 범주의 공개 요약과 기존 기록을 함께 표시하며, 게시 시각과 실제 관찰 시각을 구분합니다.</li>
+    <li>네 범주의 공개 요약과 기존 기록을 함께 표시하며, 보안의 사건·복구와 자금 추적은 각각의 관찰 시각으로 구분합니다.</li>
+    <li>보안의 관련 기록은 함께 접어 표시합니다. 기록을 삭제하거나 피해·회수 금액을 합산하지 않으며, 여러 사건을 다룬 종합 관찰은 별도로 표시합니다.</li>
     <li>X 계정 연구는 목적에 맞춰 고른 표본이며, 모든 게시물을 수집한 결과가 아닙니다.</li>
   </ul>
   <p id="rules-link" hidden></p>
@@ -295,6 +306,7 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 <script src="public-data.js?v=20261104-security-label"></script>
 <script src="refresh-client.js"></script>
 <script src="manual-refresh.js?v=20261104-manual-refresh"></script>
+<script src="display-data.js?v=20261104-four-categories"></script>
 <script>
 (() => {
   'use strict';
@@ -351,7 +363,7 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
   const byWho = (by) => (by === '자동' ? '자동으로 정한' : '직접 지정한');
 
   function categoryMap(d) {
-    return new Map((d.categories || []).map((c) => [c.key, c]));
+    return new Map(MonitorView.categories(d).flatMap(c => c.members.map(member => [member.key, c])));
   }
 
   function renderHeader(d, ref) {
@@ -366,7 +378,7 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
       chip.hidden = true;
     }
 
-    $('counts').innerHTML = `<span>조회 표본 <strong>${d.feed.length}개 기록</strong></span><span><strong>5개 범주</strong></span><span>전체 집계 아님</span>`;
+    $('counts').innerHTML = `<span>조회 표본 <strong>${d.feed.length}개 기록</strong></span><span><strong>${MonitorView.categories(d).length}개 범주</strong></span><span>전체 집계 아님</span>`;
     $('counts').hidden = false;
   }
 
@@ -390,9 +402,12 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
     const lines = ['GitHub Pages 공개 상황판 · 60초마다 게시 파일 확인'];
     if (!d) lines.push(state.baseError || '자료를 불러오는 중입니다.');
     else {
-      const delayed = d.categories.filter(c => categoryHealth(c).warning).map(c => c.name);
+      const delayed = d.categories.filter(c => categoryHealth(c).warning).map(c => {
+        const group = categoryMap(d).get(c.key);
+        return MonitorView.subtype(c.key) ? `${group.name} / ${MonitorView.subtype(c.key)}` : group.name;
+      });
       if (delayed.length) lines.push(`지연·부분 확인·수신 실패: ${delayed.join(', ')}. 범주별 실제 관찰 시각을 확인해 주세요.`);
-      else lines.push('다섯 범주 모두 설정한 관찰 주기 안에 있습니다.');
+      else lines.push('네 범주의 다섯 감시 모두 설정한 관찰 주기 안에 있습니다.');
       if (state.baseError) lines.push(state.baseError);
       if (state.lastLoadedAt) lines.push(`브라우저 정상 수신 ${longDate(state.lastLoadedAt)} KST. 원문 점검·배포 완료 시각과 다릅니다.`);
       if (state.lastFetchAt) lines.push(`최근 파일 확인 시도 ${longDate(state.lastFetchAt)} KST.`);
@@ -413,17 +428,15 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
   }
 
   function renderTiles(d, ref) {
-    $('tiles').innerHTML = (d.categories || []).map((c) => {
+    const sourceHtml = (c) => {
       const empty = !c.headline && !c.body;
       const headline = empty ? '상황 요약이 아직 없습니다' : c.headline;
       const body = empty ? '다음 정기 점검에서 지금 상황 제목과 본문을 적으면 여기에 표시됩니다.' : c.body;
       const last = c.lastCheckAt ? `실제 관찰 <span class="mono">${esc(timeText(c.lastCheckAt, ref))} KST</span>` : '점검 기록 없음';
       return `
-        <article class="tile${empty ? ' is-empty' : ''}" style="--c:${safeColor(c.color)}">
-          <div class="tile-head">
-            <span class="tile-name"><span class="dot" aria-hidden="true"></span>${esc(c.name)}</span>
-            <span class="tile-last">${last}</span>
-          </div>
+        <div class="tile-source${empty ? ' is-empty' : ''}" data-source="${esc(c.key)}">
+          ${MonitorView.subtype(c.key) ? `<p class="source-label">${esc(MonitorView.subtype(c.key))}</p>` : ''}
+          <span class="tile-last">${last}</span>
           <h3>${esc(headline)}</h3>
           <p class="tile-body">${esc(body)}</p>
           <div class="tile-foot">
@@ -431,8 +444,13 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
             <span class="health" data-health="${esc(c.key)}"></span>
             ${c.gap ? `<span class="tile-gap">${esc(c.gap)}</span>` : ''}
           </div>
-        </article>`;
-    }).join('');
+        </div>`;
+    };
+    $('tiles').innerHTML = MonitorView.categories(d).map(c => `
+      <article class="tile" data-category="${esc(c.key)}" style="--c:${safeColor(c.color)}">
+        <div class="tile-head"><span class="tile-name"><span class="dot" aria-hidden="true"></span>${esc(c.name)}</span></div>
+        ${c.members.map(sourceHtml).join('')}
+      </article>`).join('');
   }
 
   function renderSetting(d, ref) {
@@ -456,9 +474,9 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
   }
 
   function renderChips(d) {
-    const defs = [{ key: 'all', name: '전체' }].concat(d.categories || []);
+    const defs = [{ key: 'all', name: '전체' }].concat(MonitorView.categories(d));
     $('chips').innerHTML = defs.map((c) => {
-      const n = c.key === 'all' ? (d.feed || []).length : (d.feed || []).filter((f) => f.category === c.key).length;
+      const n = (d.feed || []).filter(f => MonitorView.matches(f, c.key)).length;
       return `<button type="button" class="chip" data-cat="${esc(c.key)}" aria-pressed="${state.cat === c.key}">${esc(c.name)} ${n}</button>`;
     }).join('');
   }
@@ -470,7 +488,7 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
   }
 
   function renderFeed(d, cats, ref) {
-    const pick = (x) => state.cat === 'all' || x.category === state.cat;
+    const pick = (x) => MonitorView.matches(x, state.cat);
     const base = (d.feed || []).filter(pick);
     const quiet = (d.quiet || []).filter(pick);
     let items = base.map((x) => ({ ...x, isQuiet: false }));
@@ -480,7 +498,8 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
     items.sort((a, b) => Date.parse(b.at) - Date.parse(a.at) || (KIND_RANK[a.kind] ?? 9) - (KIND_RANK[b.kind] ?? 9));
 
     const count = (kind) => base.filter((x) => x.kind === kind).length;
-    const parts = [`공개 기록 ${base.length}건`];
+    const groups = MonitorView.groupFeed(items);
+    const parts = [`원본 기록 ${base.length}건`, `표시 ${groups.length}개 항목 · 관련 이력 묶음 포함`];
     const extra = count('기준점') + count('감시 설정');
     if (extra) parts.push(`기준점과 설정 ${extra}`);
     if (state.showQuiet) parts.push(`변화 없음 ${quiet.length}`);
@@ -493,39 +512,44 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
       ? '변화 없는 점검 숨기기'
       : quiet.length ? `변화 없는 점검 ${quiet.length}회도 보기` : '이 범주에는 변화 없는 점검이 없습니다';
 
-    const events = d.events || [];
-    $('feed').innerHTML = items.length
-      ? items.map((x) => {
+    const recordHtml = (x) => {
           const c = cats.get(x.category) || { name: x.category, color: '#8B95A5' };
           return `
-            <li class="item${x.isQuiet ? ' is-quiet' : ''}">
+            <div class="item${x.isQuiet ? ' is-quiet' : ''}" data-record-category="${esc(x.category)}">
               <time datetime="${esc(x.at)}">${timeHtml(x.at, ref)}<span class="time-basis">${x.timeBasis === 'notification' ? '알림 전달 시각' : '관찰 시각'} · KST</span></time>
               <div class="item-body">
                 <div class="item-meta">
                   <span class="badge ${KIND_CLASS[x.kind] || 'k-note'}">${esc(x.kind)}</span>
                   <span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span>
+                  ${MonitorView.subtype(x.category) ? `<span class="source-label">${esc(MonitorView.subtype(x.category))}</span>` : ''}
                   ${x.evidence ? `<span class="evidence">${esc(x.evidence)}</span>` : ''}
                 </div>
                 ${x.title ? `<h3 class="item-title">${esc(x.title)}</h3>` : ''}<p class="item-text">${esc(x.text)}</p>
-                ${x.isQuiet ? '' : eventLinks(x, events)}
+                ${x.isQuiet ? '' : eventLinks(x)}
               </div>
-            </li>`;
+            </div>`;
+    };
+    $('feed').innerHTML = groups.length
+      ? groups.map(g => {
+          const [latest, ...history] = g.records;
+          return `<li class="feed-group">${history.length ? `<p class="related-heading">${esc(g.label)} 관련 기록 · ${g.records.length}건</p>` : ''}
+            ${recordHtml(latest)}
+            ${history.length ? `<details class="related-history" data-group="${esc(g.key)}"><summary>관련 이력 ${history.length}건 펼치기 · 시각·출처 보존</summary>${history.map(recordHtml).join('')}</details>` : ''}</li>`;
         }).join('')
       : '<li class="empty">이 범주에 표시할 공개 기록이 없습니다.</li>';
   }
 
   function renderEvents(d, cats, ref) {
     $('events-summary').textContent = '범주별 최신 기록의 미확인 항목';
-    $('events').innerHTML = d.categories.map(c=>`<li class="ev-row"><div class="ev-head"><span class="dot" style="--c:${safeColor(c.color)}"></span><h3>${esc(c.name)}</h3></div><p class="ev-latest">${esc(c.unknown)}</p></li>`).join('');
+    $('events').innerHTML = MonitorView.categories(d).map(c=>`<li class="ev-row"><div class="ev-head"><span class="dot" style="--c:${safeColor(c.color)}"></span><h3>${esc(c.name)}</h3></div>${c.members.map(m => `<div class="source-check">${MonitorView.subtype(m.key) ? `<p class="source-label">${esc(MonitorView.subtype(m.key))}</p>` : ''}<p class="ev-latest">${esc(m.unknown)}</p></div>`).join('')}</li>`).join('');
   }
 
   function renderGaps(d, cats) {
     const gaps = d.gaps || [];
     const icon = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8B95A5" stroke-width="1.5"><circle cx="8" cy="8" r="6.25"></circle><path d="M3.6 12.4 12.4 3.6"></path></svg>';
     $('gaps').innerHTML = gaps.length
-      ? gaps.map((g) => {
-          const c = cats.get(g.category) || { name: g.category, color: '#8B95A5' };
-          return `<li>${icon}<span><span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span><strong>${esc(g.label)}</strong>${g.text ? ` ${esc(g.text)}` : ''}</span></li>`;
+      ? MonitorView.categories(d).filter(c => gaps.some(g => MonitorView.matches(g, c.key))).map((c) => {
+          return `<li>${icon}<div><span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span>${gaps.filter(g => MonitorView.matches(g, c.key)).map(g => `<div class="source-check">${MonitorView.subtype(g.category) ? `<p class="source-label">${esc(MonitorView.subtype(g.category))}</p>` : ''}<strong>${esc(g.label)}</strong>${g.text ? ` ${esc(g.text)}` : ''}</div>`).join('')}</div></li>`;
         }).join('')
       : '<li>최근 점검에서 확인하지 못한 자료가 없습니다.</li>';
   }
@@ -546,11 +570,14 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
     }
     const cats = categoryMap(d);
     const ref = now().toISOString();
+    state.cat = MonitorView.displayKey(state.cat);
     if (state.cat !== 'all' && !cats.has(state.cat)) state.cat = 'all';
     const focus = document.activeElement;
     const focusCat = focus?.dataset?.cat;
     const focusId = focus?.id;
     const focusUrl = focus?.tagName === 'A' ? focus.getAttribute('href') : null;
+    const focusGroup = focus?.tagName === 'SUMMARY' ? focus.parentElement?.dataset?.group : null;
+    const openGroups = Array.from(document.querySelectorAll('[data-group][open]')).map(el => el.dataset.group);
     const focusSummary = focus?.tagName === 'SUMMARY' ? focus.closest('footer') ? 'foot' : 'rules' : null;
     const openRules = document.querySelector('.rules')?.open;
     const openWarnings = $('foot').querySelector('details')?.open;
@@ -562,12 +589,14 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
     renderEvents(d, cats, ref);
     renderGaps(d, cats);
     renderFooter(d, ref);
+    openGroups.forEach(key => document.querySelector(`[data-group="${key}"]`)?.setAttribute('open', ''));
     if (openWarnings) $('foot').querySelector('details')?.setAttribute('open', '');
     if (openRules) document.querySelector('.rules').open = true;
     renderBanner(d);
     const nextFocus = focusCat ? document.querySelector(`[data-cat="${focusCat}"]`)
       : focusId ? $(focusId)
       : focusUrl ? Array.from(document.querySelectorAll('a[href]')).find(a => a.getAttribute('href') === focusUrl)
+      : focusGroup ? document.querySelector(`[data-group="${focusGroup}"] > summary`)
       : focusSummary === 'foot' ? $('foot').querySelector('summary')
       : focusSummary === 'rules' ? document.querySelector('.rules summary') : null;
     if (nextFocus && nextFocus !== document.activeElement && focus !== document.body) nextFocus.focus({ preventScroll: true });
@@ -627,4 +656,5 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 </script>
 </body>
 </html>
+
 
