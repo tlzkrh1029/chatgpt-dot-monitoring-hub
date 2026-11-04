@@ -1,14 +1,38 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T07:34:51.157Z",
-  "observedAt": "2026-11-04T07:34:34Z",
+  "publishedAt": "2026-11-04T08:35:29.586Z",
+  "observedAt": "2026-11-04T08:35:07Z",
   "checkStatus": "partial",
-  "headline": "11/4 16:34 보안 점검 — BitMart 공식 원문 여전히 미확인",
-  "body": "BitMart 연관 지갑의 기존 분석과 Mercado 피해·동결 수치는 유지됐다. 창업자 확인 보도의 원문 발언을 확보하지 못해 공식 확인으로 바꾸지 않았다. 기존 주요 보안 대응과 운영 상태를 부분 재확인했으며 새 중대 피해·실제 회수·전면 복구는 확인하지 못했다.",
+  "headline": "11/4 17:35 보안 점검 — 기존 대응 유지·신규 중대 변화 미확인",
+  "body": "BitMart 공식 발언 원문과 공통 침해 경로는 여전히 미확인이다. 기존 주요 보안 대응을 재확인했고 Coinbase의 예정 마이그레이션 완료는 해킹 복구와 분리했다. Arbitrum의 과거 동결 조치도 새 회수로 재집계하지 않았다.",
   "unknown": "BitMart 공식 확인 원문·사건 발생일·피해액·지갑 귀속·공통 침해 경로, Mercado 실제 회수·서비스 재개, 분석의 정확한 수정시각.",
   "gap": "공식 상태·공지와 공개 분석·제한된 검색을 확인했다. 일부 보도 본문 접근 실패, 전체 X 피드·모든 프로토콜·발행사별 동결 및 독립 온체인 재계산은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T08:35:07Z",
+      "kind": "부분 점검",
+      "title": "기존 보안 대응 유지·예정 유지보수 완료는 해킹 복구와 구분",
+      "text": "GitBook·Chainalysis 대응과 Mercado 유지보수는 유지됐다. BitMart 연관 지갑 분석도 기존 자료이며 공식 발언 원문은 미확인이다. Coinbase AERO·VELO 예정 마이그레이션은 완료 표시로 바뀌었지만 Sonic 지연은 조사 중이다. 예정 작업 완료를 해킹 자금 회수나 전면 보안 복구로 분류하지 않는다.",
+      "evidence": "조회 11월 4일 08:34~08:35 UTC, 한국시간 17:34~17:35. Coinbase 완료 표시 시각은 11월 4일 00:00 PST로 UTC 08:00, 한국시간 17:00이다. 거래별 서비스 동작을 시험하지 않았으며 회사 상태 공지 확인 수준이다. BitMart 보도 반복은 독립 검증이 아니고 발생일·공통 침해 경로는 미확인이다.",
+      "sources": [
+        "https://www.gitbookstatus.com/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack",
+        "https://status.coinbase.com/"
+      ]
+    },
+    {
+      "at": "2026-11-04T08:35:07Z",
+      "kind": "과거 근거 확인",
+      "title": "Arbitrum 동결 공지는 과거 조치·고객 반환과 구분",
+      "text": "Arbitrum 공식 포럼의 10월 30일 공지는 Binance 사고 관련 8,425 ETH와 74,559,805.2 ARB를 통제 주소로 옮겨 동결했다고 설명한다. 이는 이번에 발생한 새 회수가 아니라 과거 조치이며 후속 이동에는 거버넌스 투표가 필요하다고 명시돼 있다.",
+      "evidence": "공지가 명시한 실행시각은 10월 30일 08:08 HKT, UTC 00:08, 한국시간 09:08이다. 이번 조회는 11월 4일 08:35 UTC다. 현재 잔액·후속 거버넌스 실행·고객 반환을 독립 검증하지 않았고 USD 재평가액은 새 회수액으로 합산하지 않는다.",
+      "sources": [
+        "https://forum.arbitrum.foundation/t/security-council-emergency-action-30-10-2026/31625"
+      ]
+    },
     {
       "at": "2026-11-04T07:34:34Z",
       "kind": "부분 점검",
