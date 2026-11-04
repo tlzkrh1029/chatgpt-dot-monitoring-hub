@@ -134,7 +134,10 @@ test('security and onchain publications update independently inside the same fou
     .map(key => [`data/${key}.json`, read(`data/${key}.json`)])]);
   const failures = new Set();
   const calls = [];
-  const controller = createController({ now: () => NOW, fetchImpl: async url => {
+  // Real publisher files continue to advance. Synthetic follow-ups must be newer
+  // than every loaded observation/publication, rather than fixed historical times.
+  let clock = Math.max(NOW, ...Array.from(payloads.values(), value => Date.parse(value.publishedAt || value.generatedAt)));
+  const controller = createController({ now: () => clock, fetchImpl: async url => {
     const file = url.split('?')[0]; calls.push(file);
     if (failures.has(file)) throw new Error('offline');
     return { ok: true, json: async () => structuredClone(payloads.get(file)) };
@@ -148,14 +151,16 @@ test('security and onchain publications update independently inside the same fou
     update.feed.push({ at, kind: '참고', title: headline, text: 'Public follow-up.', evidence: 'Partial source check', sources: ['https://t.me/investigations/375'] });
     payloads.set(`data/${key}.json`, update);
   };
-  advance('onchain', '2026-11-04T04:00:00Z', 'Updated investigator report');
+  clock += 60000;
+  advance('onchain', new Date(clock).toISOString(), 'Updated investigator report');
   failures.add('data/security.json');
   const second = await controller.refresh();
   assert.deepEqual(member(second, 'security'), member(first, 'security'));
   assert.equal(member(second, 'onchain').headline, 'Updated investigator report');
   assert.ok(second.statuses.security.error);
   assert.equal(second.statuses.onchain.error, '');
-  advance('security', '2026-11-04T04:05:00Z', 'Updated operator recovery report');
+  clock += 60000;
+  advance('security', new Date(clock).toISOString(), 'Updated operator recovery report');
   failures.delete('data/security.json'); failures.add('data/onchain.json');
   const third = await controller.refresh();
   assert.equal(member(third, 'security').headline, 'Updated operator recovery report');
