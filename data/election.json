@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T20:16:53.326Z",
-  "observedAt": "2026-11-04T20:16:53.325Z",
+  "publishedAt": "2026-11-04T20:31:50.282Z",
+  "observedAt": "2026-11-04T20:31:50.281Z",
   "checkStatus": "partial",
-  "headline": "11/5 05:16KST: 의석 합계 유지, 확인 범위 내 새 중대 변화 없음",
-  "body": "DDHQ 하원249D·152R·상원54D·44R·주지사28D·20R 유지. Kansas 주지사 민주5606표 우세는 미판정이며 다른 주요 미판정 경합 선두도 유지된다. 새 중대 판단은 확인하지 못했고 공식 인증·전국 전수 확인은 미완료다.",
+  "headline": "11/5 05:31KST: 의석 합계 유지, 확인 범위 내 새 중대 변화 없음",
+  "body": "DDHQ 하원249D·152R·상원54D·44R·주지사28D·20R 유지. Colorado3 공화1379표 우세는 미판정이며 다른 주요 미판정 경합 선두도 유지된다. 새 중대 판단은 확인하지 못했고 공식 인증·전국 전수 확인은 미완료다.",
   "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T20:31:50.281Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계 유지, Colorado3 미판정 격차 소폭 확대",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Colorado3구 Hurd147308 대 Romero145929로 공화1379표 우세, 직전1266표보다113표 늘었으나 미판정이다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5606표·Maine2구 공화3727표 우세도 미판정 유지. 확인 범위에서 새 중대 판단·선두 역전은 확인하지 못했다.",
+      "evidence": "실제조회11월4일20:30–20:31UTC·한국시간11월5일05:30–05:31. Colorado3 자료15:11EST=20:11UTC·다음날05:11KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원8개 표본·총괄 목록 점검,435개 전수 아님. Maine·Colorado·Illinois·New Jersey 상원과 Wisconsin·Connecticut·Maine·Minnesota·Nebraska·Vermont·Illinois·Maryland·Pennsylvania 주지사 집계 증가에도 기존 판단 유지. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 원자료 집계와 실제 조회시각을 구분하며 공식 인증·남은 표 분포·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T20:16:53.325Z",
       "kind": "부분 재확인",
