@@ -1,14 +1,28 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T15:17:31.070Z",
-  "observedAt": "2026-11-04T15:17:11.555Z",
+  "publishedAt": "2026-11-04T15:32:09.799Z",
+  "observedAt": "2026-11-04T15:31:39.789Z",
   "checkStatus": "partial",
-  "headline": "11/5 00:17KST: 일부 집계 증가·주요 판단 유지",
-  "body": "Texas 상원과 Maine·Michigan·Pennsylvania 주지사 집계가 증가했지만 확인 가능한 당선 판단과 정당 합계는 유지됐다. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R이다. 주요 미판정 경합 공식 대조·전국 법정 절차 확인은 미완료다.",
-  "unknown": "Arkansas 집계 감소 원인 및 공식 수치 대조, Oregon 주지사 DDHQ 원문, 주요 미판정 경합의 최신 공식 집계, 전국 법원·재검표·인증·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 접근 실패, Alaska 공식 결과502. Mississippi 출처별 격차·집계시점 차이 미해소. 하원435개·카운티 하위·전국 법원·재검표·인증·주민투표 전수 확인 미완료. 시장 수치 미확인. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 저장 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 00:31KST: Alaska 상원 민주 재역전·Maine2구 공화 선두",
+  "body": "DDHQ Alaska 상원은 Peltola507표 우세로 재역전했고 Maine 하원2구는 LePage865표 우세다. 둘 다 미판정·부분 집계이며 공식 대조 미완료다. 상원54D·44R과 주지사27D·20R은 유지된다. 하원 합계는 DDHQ 페이지 간 공화149·150석 불일치로 추가 확인이 필요하다.",
+  "unknown": "Alaska·Maine2구 공식 집계 대조, DDHQ 하원 공화149·150석 불일치, Oregon 주지사 원문, 전국 법원·재검표·인증·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패·Alaska 공식502. Maine2구 공식 대조 및 하원합계 페이지 간 불일치 해소 미완료. 하원435개·하위지역·전국 법정절차·주민투표 전수 확인 및 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T15:31:39.789Z",
+      "kind": "선두 변화",
+      "title": "Alaska 상원 Peltola 재역전·Maine 2구 공화 선두",
+      "text": "DDHQ Alaska 상원은 Peltola102,578표48.15%·Sullivan102,071표47.91%로 민주 후보가507표 앞선다. 이전 Sullivan1,796표 우세에서 다시 역전했지만 예상 집계70%·미판정이다. Maine 하원2구는 이전 목록 민주0.1%p 우세에서 LePage152,262표49.54%·Dunlap151,397표49.25%로 공화 후보865표 우세를 확인했다. 예상 집계87%·미판정이며 득표 분모에는 빈 표도 포함돼 있다. 어느 선두도 당선 판단·인증 결과가 아니다.",
+      "evidence": "실제 조회11월4일15:30–15:31UTC/11월5일00:30–00:31KST. Alaska 원자료10:18EST=15:18UTC/11월5일00:18KST, Maine2구09:49EST=14:49UTC/11월4일23:49KST. Alaska 공식 결과 재조회502, Maine2구 공식 대조 미완료. DDHQ 상원54D·44R·주지사27D·20R 유지. 하원 본문241D·149R과 다른 DDHQ 페이지 상단241D·150R이 달라 신규 공화 의석 증가를 확정하지 않는다. Oregon 주지사 원문 실패. 상원35·주지사36개 중70개 확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
     {
       "at": "2026-11-04T15:17:11.555Z",
       "kind": "부분 관찰",
