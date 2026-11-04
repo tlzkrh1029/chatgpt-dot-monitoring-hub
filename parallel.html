@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>시장·선거 병렬 타임라인 | 지금 상황판</title>
+  <link rel="stylesheet" href="parallel.css">
+</head>
+<body>
+<main class="page">
+  <header class="top">
+    <div><p class="eyebrow">공개 자료 모니터링 허브 / 독립 탭</p><h1>시장·선거 병렬 타임라인</h1><p class="sub">같은 시간축에서 네 시장의 움직임을 비교합니다.</p></div>
+    <a href="./" class="back">기존 상황판으로</a>
+  </header>
+  <nav class="page-tabs" aria-label="상황판 화면"><a href="./">기존 상황판</a><a href="parallel.html" aria-current="page">병렬 타임라인</a></nav>
+
+  <section class="notice" aria-labelledby="coverage-title"><h2 id="coverage-title">시계열 공급 확인 중</h2><p id="coverage-text">자료의 실제 시각과 공개 이용 조건을 확인하기 전에는 시세를 표시하지 않습니다.</p></section>
+  <div class="toolbar">
+    <div><span class="label">게시자료 확인 간격</span><select id="poll-minutes" aria-label="게시자료 확인 간격"><option value="5">5분</option><option value="10" selected>10분</option><option value="15">15분</option></select><button id="refresh" type="button">지금 확인</button></div>
+    <p class="hint">파일 재수신과 실제 시세 갱신은 별개입니다. 백그라운드 수집 주기를 바꾸지 않습니다.</p>
+  </div>
+  <p id="fetch-status" class="status" role="status" aria-live="polite">게시자료를 확인하는 중입니다.</p>
+
+  <section class="panel chart-section" aria-labelledby="chart-title">
+    <div class="section-head"><div><p class="eyebrow" id="dataset-mode">공개 데이터</p><h2 id="chart-title">공통 시간축 · 네 패널</h2><p id="chart-period" class="hint"></p></div><span class="badge">선 그래프 · 등락률 %</span></div>
+    <p id="chart-note" class="hint">계열별 기준과 마지막 값의 시각을 확인하세요. 빈 구간을 보간하지 않습니다. 마지막 값의 회색 점선은 라벨 연결선이며 시세 궤적이 아닙니다.</p>
+    <div id="chart-scroll" class="chart-scroll" tabindex="0" aria-label="병렬 차트. 작은 화면에서는 가로로 스크롤할 수 있습니다."><div id="chart"></div></div>
+    <p id="event-note" class="hint"></p>
+  </section>
+
+  <section class="panel" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">계열별 자료 상태</h2><span class="hint">시각은 KST · 원자료 시각과 확인 시각 구분</span></div><div class="table-scroll"><table><thead><tr><th scope="col">계열 / 기준</th><th scope="col">공급·거래 상태</th><th scope="col">마지막 관측값</th><th scope="col">원자료 / 확인 시각</th><th scope="col">공백·이용 조건</th></tr></thead><tbody id="series-table"></tbody></table></div></section>
+
+  <section class="panel" aria-labelledby="events-title"><div class="section-head"><h2 id="events-title">선거 사건과 시각 근거</h2><span class="hint">예측 · 언론 당선 판단 · 공식 인증을 구분</span></div><p class="hint">원출처로 실제 시각이 확인된 사건만 차트의 수직 점선으로 표시합니다. 함께 움직였다는 사실만으로 인과를 확정하지 않습니다.</p><ol id="events" class="event-list"></ol></section>
+
+  <section class="panel" aria-labelledby="story-title"><div class="section-head"><h2 id="story-title">시간순 이야기</h2><span class="hint">이야기 → 출처 → 해석 → 판정 → 다음 관찰점</span></div><div id="stories"></div></section>
+
+  <details class="panel import-panel"><summary>역사적 참조 CSV를 이 브라우저에서 열기</summary><p class="hint">참조는 독립 검증되지 않은 역사적 자료입니다. 선택한 파일과 숫자는 서버로 전송하지 않으며 공개 데이터에 합치지 않습니다. 사건 CSV의 시각은 차트 사건선으로 사용하지 않습니다.</p><form id="reference-form"><label>시장 CSV <input type="file" id="prices-file" accept=".csv,text/csv" required></label><label>사건 CSV <input type="file" id="events-file" accept=".csv,text/csv" required></label><div><button type="submit">로컬 참조 보기</button><button type="button" id="clear-reference" hidden>공개 자료로 돌아가기</button></div></form><p id="import-status" class="status" role="status" aria-live="polite"></p></details>
+
+  <footer><p>15분 기준 격자를 사용하며 실제 관측 시각은 다를 수 있습니다. 자료는 등락률 선 그래프이며 OHLC가 아닙니다. 각 선의 비교 기준·거래시간·지연은 서로 다를 수 있습니다.</p><p>원자료 공급, 이용 권한, 실제 갱신이 확인된 계열에만 자동 수집을 연결합니다. 현재 새 수집 서비스나 유료 구독은 설정하지 않았습니다.</p></footer>
+</main>
+<script src="public-data.js"></script>
+<script src="parallel-data.js"></script>
+<script src="parallel-refresh.js"></script>
+<script src="parallel-view.js"></script>
+</body>
+</html>

@@ -222,6 +222,10 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 .related-history .item { padding-bottom: 0; }
 .source-check + .source-check { margin-top: 10px; }
 .source-check .source-label { margin-bottom: 4px; }
+.page-tabs { display:flex; gap:8px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+.page-tabs a { padding:7px 16px; min-height:44px; text-decoration:none; border-radius:6px; border:1px solid transparent; }
+.page-tabs a[aria-current] { background:#25334a; border-color:#526c93; color:#deebff; }
+html[data-view] .page-tabs { display:none; }
 </style>
 </head>
 <body>
@@ -249,6 +253,8 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
     <p class="refresh-status" id="refresh-status" role="status" aria-live="polite" aria-atomic="true"></p>
   </div>
 </header>
+
+<nav class="page-tabs" aria-label="상황판 화면"><a href="./" aria-current="page">기존 상황판</a><a href="parallel.html">병렬 타임라인</a></nav>
 
 <div class="banner" id="banner" role="status" hidden></div>
 
