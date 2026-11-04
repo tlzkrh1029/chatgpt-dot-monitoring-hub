@@ -1,14 +1,73 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T05:35:24.262Z",
-  "observedAt": "2026-11-04T05:34:39Z",
+  "publishedAt": "2026-11-04T06:45:37.124Z",
+  "observedAt": "2026-11-04T06:44:43Z",
   "checkStatus": "partial",
-  "headline": "14:34 KST 확인: 하원 판단220·126, 네브래스카 상원 선두 변경",
-  "body": "DDHQ 상원52·40·주지사26·17은 유지되고 하원 판단은220·126으로 증가했다. 미네소타 상원·주지사와 버몬트 주지사 판단 표시를 보완했다. 네브래스카 상원은 Ricketts 선두로 바뀌었고 공식 비공식 집계로 현재 선두를 교차 확인했다. 언론 당선 판단과 공식 인증은 다르다.",
-  "unknown": "미집계 표 종류·지역, 실제 역전 시각, 전체 공식 인증·재검표, 모든 하원 경주의 개별 판단 및 시장 인과는 미확인.",
-  "gap": "상원35·주지사36 경주를 재조회했으나 오리건 주지사 개별 페이지 실패. MO02 호출 목록과 개별 페이지, ME02 선두 표시의 갱신 차이가 남아 있다. 카운티 내부 페이지 전수·전국 공식 교차검증은 미완료.",
+  "headline": "15:44 KST: DDHQ 상원54·44, 하원232·141, 주지사27·20",
+  "body": "메인 Jackson·미시간 El-Sayed·네브래스카 Ricketts 등의 새 언론 판단을 확인했다. 주지사 Tennessee·Nebraska·New Hampshire 및 하원 WI01·PA01 판단도 추가했다. 미시시피 상원 격차는3182표로 줄었고 알래스카 상원은298표 차이다. 언론 판단·진행 집계와 공식 인증은 구분한다.",
+  "unknown": "미집계 표 종류·지역, 전국 공식 인증·재검표, 일부 호출표시 불일치 및 시장반응 인과는 미확인.",
+  "gap": "상원35·주지사36 목록 및71개 개별경주 조회 중 Oregon 주지사 실패. Hawaii·TX23·SC01 호출과 개별페이지 대조 미완료. Maine·Michigan 공식 접근 실패, 카운티 내부 페이지·하원 전수·전국 운영사고 및 법원 후속 확인 미완료.",
   "feed": [
+    {
+      "at": "2026-11-04T06:44:43Z",
+      "kind": "당선 판단",
+      "title": "DDHQ 상원54·44: 메인·미시간·네브래스카 등 판단 추가",
+      "text": "DDHQ 상원 본문은 민주54·공화44로 이전52·40에서 증가했고 민주당 교체는7석이다. 메인 Troy Jackson01:10 EST, 미시간 Abdul El-Sayed01:15 EST, 네브래스카 Pete Ricketts01:34 EST 판단을 개별 페이지에서 확인했다. 각각06:10·06:15·06:34 UTC 및15:10·15:15·15:34 KST다. 루이지애나 Letlow00:32 EST, 몬태나 Alme01:13 EST, 아이다호 Risch00:30 EST 판단도 추가 확인했다.",
+      "evidence": "조회06:42–06:44 UTC. 언론 판단이며 인증 아님. Maine 공식 결과 접근403, Michigan 공식 집계 접근 실패. Nebraska 공식 비공식06:30 UTC 집계는 Ricketts289873 대 Osborn268313, 완전462/1322·부분552/1322투표구로 현재 선두를 교차 확인한다. DDHQ82%와 공식34.95% 완전보고 투표구 비율은 분모가 달라 비교하지 않는다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nebraska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/louisiana-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/montana-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/idaho-us-senate-general-election",
+        "https://electionresults.nebraska.gov/resultsSW.aspx?map=CTY&type=SW"
+      ]
+    },
+    {
+      "at": "2026-11-04T06:44:43Z",
+      "kind": "당선 판단",
+      "title": "주지사27·20 집계, 테네시·네브래스카·뉴햄프셔 판단 확인",
+      "text": "DDHQ01:41 EST(06:41 UTC·15:41 KST) 주지사 집계는 민주27·공화20, 기존 유지6·8명과 이번 판단21·12명을 포함한다. 개별 페이지에서 Tennessee Marsha Blackburn00:35 EST(05:35 UTC), Nebraska Jim Pillen01:03 EST(06:03 UTC), New Hampshire Kelly Ayotte01:06 EST(06:06 UTC) 판단을 새 확인했다. 한국시간은 각각14:35·15:03·15:06이다.",
+      "evidence": "조회06:43 UTC. 기존 주지사26·17에서 변했으나 모든 증가분을 개별 호출과 완전히 대조하지 못했다. Hawaii는 집계255437표·Green77.10%이나 개별 호출 미표시, AP 승리 보도는 검색 단서만 확인하고 본문 접근 실패. Oregon 개별 조회 실패. 전체 공식 인증 아님.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/tennessee-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nebraska-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-hampshire-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/hawaii-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T06:44:43Z",
+      "kind": "개표 변화",
+      "title": "하원232·141 및 WI01·PA01 민주당 판단",
+      "text": "06:44 UTC(15:44 KST) DDHQ 하원 본문은 민주232·공화141, 교체30·1석이다. 이전220·126에서 늘었으며 기존 민주당 지배권 판단과 구분한다. WI01 Mitchell Berman01:05 EST(06:05 UTC·15:05 KST), PA01 Bob Harvie00:59 EST(05:59 UTC·14:59 KST) 개별 판단을 확인했다. MO02 Fred Wellman00:19 EST(05:19 UTC) 판단 표시는 앞선 누락을 보완한다.",
+      "evidence": "초기06:42조회 하원본문228·140과 타 범주 사이드바231·141은 다른 스냅샷이다. 최종 확인본문232·141을 사용했다. TX23·SC01의 호출목록은 판단을 표시하지만 개별페이지가 더 오래되어 정확한 호출시각·일치 확인을 유보한다. 예측 모델 좌석수 및 공식 인증과 구분.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/wisconsin-us-house-1-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/pennsylvania-us-house-1-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/missouri-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-23-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/south-carolina-us-house-1-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T06:44:43Z",
+      "kind": "경합지 관찰",
+      "title": "미시시피 상원 격차 축소, 알래스카 상원 초박빙",
+      "text": "미시시피 DDHQ Colom 선두는 이전14024표에서3182표로 축소됐다.01:15 EST(06:15 UTC) 집계460005 대 Hyde-Smith456823,49.12% 대48.78%이며 판단표시가 없다. 알래스카 상원01:34 EST(06:34 UTC)는 Peltola79017 대 Sullivan78719로298표 차이,48.27% 대48.09%다. 두 경주를 확정 의석에 넣지 않는다.",
+      "evidence": "조회06:43 UTC. DDHQ 표시 미시시피>95%, 알래스카54%는 해당 예상투표 보고 비율로 취급하고 남은 표 종류·지역 및 정확한 최종분모는 미확인이다. 공식 독립 수치 교차검증은 미완료. 상원35·주지사36 목록과71개 개별경주를 조회했으나 Oregon 실패, 카운티 내부 모든 페이지·하원435석·운영사고·재검표·인증은 전수 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
     {
       "at": "2026-11-04T05:34:39Z",
       "kind": "개표 관찰",
