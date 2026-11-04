@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T18:17:39.947Z",
-  "observedAt": "2026-11-04T18:17:39.946Z",
+  "publishedAt": "2026-11-04T18:32:43.942Z",
+  "observedAt": "2026-11-04T18:32:43.942Z",
   "checkStatus": "partial",
-  "headline": "11/5 03:17KST: 하원 공화 추가1석 TX38 판단 근거 확인",
-  "body": "DDHQ 하원249D·151R 유지. 이전 미식별 공화 추가1석을 Texas38구 Bonck의 개별 판단으로 보완했다. 판단은 한국시간02:29이며 지금 새 발표나 공식 인증은 아니다. 상원54D·44R·주지사28D·20R 유지. Maine2구 공화3645표 우세는 미판정이다.",
-  "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 03:32KST: 하원 공화151·152 표시 불일치",
+  "body": "DDHQ 하원 본문249D·151R과 다른 총괄 요약249D·152R이 다르며 새 공화 추가1석 개별 판단은 미확인이다. 앞선 TX38 판단은 유지된다. 상원54D·44R·주지사28D·20R 유지. Mississippi 민주1864표 우세는 미판정이다.",
+  "unknown": "하원 공화151·152 불일치와 새 개별 판단, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 하원 공화151·152 불일치 및 새 개별 판단 미확인. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T18:32:43.942Z",
+      "kind": "개표 관찰·합계 대조",
+      "title": "하원 공화151·152 표시 차이, 새 개별 판단 미확인",
+      "text": "DDHQ 하원 본문249D·151R과 상원·주지사 페이지의 하원 요약249D·152R이 다르다. 새 공화 추가1석 개별 판단은 미확인이므로 최신 합계를 확정하지 않는다. 앞선 TX38 Bonck 및 MI07·MI10 판단은 개별 재확인했다. 상원54D·44R·주지사28D·20R 유지. Mississippi 상원 Colom466351 대 Hyde-Smith464487로 민주1864표 우세, 직전1881표보다17표 줄었지만 미판정이다. Maine2구 공화3645표·Kansas 주지사 민주5575표 우세도 미판정 유지.",
+      "evidence": "실제조회11월4일18:31–18:32UTC·한국시간11월5일03:31–03:32. Mississippi 자료13:14EST=18:14UTC·다음날03:14KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원10개 개별 표본·총괄 목록 점검,435개 전수 아님. Maine 상원·주지사, Wisconsin 주지사 표수 증가에도 기존 판단 유지. Kentucky 상원·California 주지사·Arizona2구는 표시시각만 바뀌고 표수 동일. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포와 공식 인증은 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-38-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T18:17:39.946Z",
       "kind": "개별 판단·누락 보완",
