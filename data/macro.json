@@ -1,14 +1,55 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-04T02:09:12Z",
-  "observedAt": "2026-11-03T15:20:00.000Z",
+  "publishedAt": "2026-11-04T02:49:49.158Z",
+  "observedAt": "2026-11-04T02:48:42Z",
   "checkStatus": "partial",
-  "headline": "11/4 00:20 KST 관찰 — JOLTS 발표·Sonic 지연",
-  "body": "15UTC 예정 회차를15:20UTC 관측. CMC 경보 기준 미달. JOLTS9월 발표·Coinbase Sonic 일부 지연 확인.",
-  "unknown": "Sonic 원인·해소, 신선한 현물/금리, JOLTS 시장반응. 일봉 재판정 없음.",
-  "gap": "기존 공개 기록의 이관입니다. 이후 새 점검 결과는 아직 수신하지 않았습니다.",
+  "headline": "11/4 11:48 KST 점검 — 급락·페그 기준 미달, 일부 거시자료 지연",
+  "body": "BTC·ETH와 주요 스테이블코인 집계에서 숫자 경보 후보는 없었다. 기존 Circle Noble 해결 및 Coinbase Sonic 지연 상태를 재확인했다. 신용·단기자금시장 공식 수치는 지연된 관측값이며, 현재 시장 전체가 정상이라는 뜻은 아니다.",
+  "unknown": "현재 선물·동시점 국채금리·에너지·지정학 전체 범위, HTX 사용자 차트 설정과 일봉 조건 검증은 미완료. 선거와 가격 변화의 인과는 확인하지 않았다.",
+  "gap": "지연 현물·VIX·DXY와 과거 날짜의 FRED 수치를 실시간 스트레스로 간주하지 않았다. CMC 파생 단위 모순은 제외했으며 독립 가격 확인 및 지속성 검증을 수행하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T02:48:42Z",
+      "kind": "정기 관찰",
+      "title": "11/4 11:48 KST — 급락·페그 재검증 기준 미달",
+      "text": "CMC 02:47:48 UTC 집계: BTC 76,500.74달러, 1시간 -0.365%, 24시간 -0.353%; ETH 2,251.76달러, 1시간 -0.301%, 24시간 -0.084%. USDT 0.99846710달러(-15.33bp), USDC 0.99971541달러(-2.85bp). 급락 또는 50bp 페그 이탈 후보는 없었다. 단일 집계 시점으로 지속 안정이나 위험 해소를 판정하지 않았다.",
+      "evidence": "CMC 직접 조회 성공. 공급자 수치 시각 02:47:48 UTC, 조회 02:47:50 UTC. 독립 거래소 가격 비교는 이번 비경보 후보에서 수행하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/",
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-04T02:48:42Z",
+      "kind": "운영·자금시장",
+      "title": "기존 운영 이슈와 지연 자금시장 자료 재확인",
+      "text": "Circle Noble CCTP는 00:30 UTC 해결 표시를 유지했고, Coinbase Sonic은 전일 14:21 UTC부터 조사 중이다. FRB 표시 서비스는 모두 정상, 공지 없음이며 갱신 시각은 미표시다. FRED의 11월 2일 관측값은 고수익 OAS 343bp, SOFR 3.95%, 미국 10년 4.91%로 이전 조회와 같다. 이는 현재 장중 신용·자금시장 상태를 확정하지 않는다.",
+      "evidence": "공식 상태와 통계 페이지 02:48 UTC 직접 조회. 회사 상태 표시는 고객별 처리 완료의 독립 검증이 아니다. Binance Update 6의 단계적 출금 재개 안내는 기존 사건으로 분류했고 새로운 복구로 재알림하지 않았다.",
+      "sources": [
+        "https://status.circle.com/",
+        "https://status.coinbase.com/",
+        "https://www.frbservices.org/service-status/",
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        "https://fred.stlouisfed.org/series/SOFR",
+        "https://fred.stlouisfed.org/series/DGS10"
+      ]
+    },
+    {
+      "at": "2026-11-04T02:48:42Z",
+      "kind": "지연 시세·한계",
+      "title": "미국 현물 종가 유지, 달러 지연 값은 하락",
+      "text": "미국 현물은 폐장 상태로 S&P 500 7,568.92(+0.36%), Nasdaq 25,372.01(+0.83%)의 기존 종가 표시를 유지한다. DXY는 01:10 UTC 지연 시세 101.58(-0.28%)로 조회 당시 약 98분 전 값이다. Cboe VIX는 11월 3일 기준 20.83이며 현재 시각의 동반 스트레스로 해석하지 않았다. 새로운 중대 악화는 이번 제한된 확인 범위에서 검증되지 않았다.",
+      "evidence": "현물 출처 갱신 시각은 전일 21:30/22:15 UTC. 현재 선물·동시점 금리·에너지·지정학 전체 범위는 미확인. 일봉 조건을 시간당 재판정하지 않았으며 파생 자료 단위 모순은 계속 제외했다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/spx",
+        "https://www.marketwatch.com/investing/index/comp",
+        "https://www.marketwatch.com/investing/index/dxy",
+        "https://www.cboe.com/tradable-products/vix"
+      ]
+    },
     {
       "at": "2026-11-03T15:20:00.000Z",
       "kind": "원장 기록",
