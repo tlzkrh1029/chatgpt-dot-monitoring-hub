@@ -4,6 +4,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 
+// The collector rewrites the index on every published change, so its bytes identify the deployed commit.
+const PUBLIC_PATH = 'data/parallel/index.json';
 const digest = text => createHash('sha256').update(text, 'utf8').digest('hex');
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -17,7 +19,7 @@ async function publishAndVerify({ repository, token, expectedText, fetchImpl = f
   if (!Number.isInteger(attempts) || attempts < 1 || attempts > 120) throw new Error('Invalid verification attempts');
   const [owner, repo] = repository.split('/');
   const api = `https://api.github.com/repos/${repository}`;
-  const publicUrl = `https://${owner.toLowerCase()}.github.io/${repo}/data/parallel.json`;
+  const publicUrl = `https://${owner.toLowerCase()}.github.io/${repo}/${PUBLIC_PATH}`;
   const expectedHash = digest(expectedText);
   let serial = 0;
   async function published() {
@@ -62,8 +64,8 @@ async function publishAndVerify({ repository, token, expectedText, fetchImpl = f
 
 async function main() {
   const result = await publishAndVerify({ repository: process.env.GITHUB_REPOSITORY, token: process.env.GITHUB_TOKEN,
-    expectedText: fs.readFileSync(path.join(__dirname, '..', 'data', 'parallel.json'), 'utf8') });
+    expectedText: fs.readFileSync(path.join(__dirname, '..', ...PUBLIC_PATH.split('/')), 'utf8') });
   console.log(JSON.stringify({ publicationVerified: true, alreadyPublished: result.alreadyPublished, url: result.publicUrl, sha256: result.sha256 }));
 }
 if (require.main === module) main().catch(error => { console.error(`Pages publication failed: ${error.message}`); process.exitCode = 1; });
-module.exports = { publishAndVerify, digest };
+module.exports = { publishAndVerify, digest, PUBLIC_PATH };

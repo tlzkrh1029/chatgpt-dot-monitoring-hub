@@ -1,23 +1,48 @@
 name: Update parallel market prices
 
+# 병렬 타임라인: collects the KST session (Yahoo Finance 15-minute bars, Coin Metrics Community reference
+# rates) every 15 minutes during 08:00-16:00 KST on weekdays, finalizes it after the close, and publishes
+# only data/parallel. The collector throttles itself (10 minutes) and skips sessions that are already final,
+# so extra runs from push events are cheap.
+
 on:
+  schedule:
+    - cron: '7,22,37,52 23 * * 0-4'  # 08:07-08:52 KST, Monday-Friday
+    - cron: '7,22,37,52 0-7 * * 1-5' # 09:07-16:52 KST, Monday-Friday
+    - cron: '17 8,10,13 * * 1-5'     # 17:17, 19:17, 22:17 KST: finalize and catch up
   push:
     branches: [main]
     paths:
+      - 'data/*.json'
       - '.github/workflows/update-parallel-prices.yml'
-      - 'scripts/update-parallel-prices.js'
-      - 'scripts/request-parallel-pages-build.js'
-      - 'parallel-data.js'
-      - 'parallel-refresh.js'
-  schedule:
-    - cron: '3,13,23,33,43,53 * * * *'
+      - 'scripts/collect-parallel.js'
+      - 'parallel-core.js'
   workflow_dispatch:
     inputs:
       mode:
-        description: 'collect (main only) or probe (read-only source check, any branch)'
+        description: 'collect (writes data/parallel on the selected branch) or probe (read-only source check, any branch)'
         type: choice
         options: [collect, probe]
         default: collect
+      date:
+        description: 'KST session date YYYY-MM-DD (empty: the current session; weekends only when set)'
+        type: string
+        required: false
+        default: ''
+      start:
+        description: 'Window start HH:MM KST (empty: 08:00)'
+        type: string
+        required: false
+        default: ''
+      end:
+        description: 'Window end HH:MM KST (empty: 16:00)'
+        type: string
+        required: false
+        default: ''
+      force:
+        description: 'Collect even if the session is final or was collected less than 10 minutes ago'
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -50,53 +75,69 @@ jobs:
           retention-days: 3
           if-no-files-found: warn
 
-  update:
-    if: github.ref == 'refs/heads/main' && inputs.mode != 'probe'
+  collect:
+    if: inputs.mode != 'probe' && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      COIN_METRICS_USAGE: noncommercial
+    timeout-minutes: 15
     steps:
-      - name: Check out the latest main
+      - name: Check out the triggering branch
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          ref: main
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '22'
-      - name: Collect Coin Metrics reference rates
-        run: node scripts/update-parallel-prices.js
+      - name: Collect the session (Yahoo Finance, Coin Metrics)
+        id: collect
+        shell: bash
+        env:
+          INPUT_DATE: ${{ inputs.date }}
+          INPUT_START: ${{ inputs.start }}
+          INPUT_END: ${{ inputs.end }}
+          INPUT_FORCE: ${{ inputs.force }}
+        run: |
+          args=()
+          if [ -n "$INPUT_DATE" ]; then args+=(--date "$INPUT_DATE"); fi
+          if [ -n "$INPUT_START" ]; then args+=(--start "$INPUT_START"); fi
+          if [ -n "$INPUT_END" ]; then args+=(--end "$INPUT_END"); fi
+          if [ "$INPUT_FORCE" = 'true' ]; then args+=(--force); fi
+          node scripts/collect-parallel.js "${args[@]}"
       - name: Test and validate before publication
         run: |
           npm test
           npm run validate
-      - name: Publish only the parallel dataset without overwriting other writers
+      - name: Publish only data/parallel without overwriting other writers
         shell: bash
+        env:
+          BRANCH: ${{ github.ref_name }}
         run: |
-          if ! git diff --quiet -- data/parallel.json; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add -- data/parallel.json
-            git commit -m 'Update Coin Metrics parallel reference rates'
-            pushed=false
-            for attempt in 1 2 3; do
-              git fetch origin main
-              git rebase origin/main
-              npm run validate
-              if git push origin HEAD:main; then
-                pushed=true
-                break
-              fi
-              sleep 2
-            done
-            if [ "$pushed" != true ]; then
-              echo 'Parallel publication was not pushed; no force push was attempted.' >&2
+          if [ -z "$(git status --porcelain -- data/parallel)" ]; then
+            echo 'No parallel data changes to publish.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A -- data/parallel
+          git commit -m "Update parallel timeline data ($(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') KST)"
+          for attempt in 1 2 3; do
+            git fetch origin "$BRANCH"
+            if ! git rebase "origin/$BRANCH"; then
+              git rebase --abort
+              echo 'Rebase onto the latest branch failed; nothing was pushed.' >&2
               exit 1
             fi
-          fi
-      - name: Request the existing Pages build and verify public data
+            npm run validate
+            if git push origin "HEAD:$BRANCH"; then
+              exit 0
+            fi
+            sleep $((attempt * 3))
+          done
+          echo 'Parallel data was not pushed after 3 attempts; no force push was attempted.' >&2
+          exit 1
+      - name: Request the Pages build and verify the public index
+        if: github.ref == 'refs/heads/main' && (steps.collect.outputs.final == 'true' || github.event_name == 'workflow_dispatch')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/request-parallel-pages-build.js

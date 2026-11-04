@@ -1,10 +1,20 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { publishAndVerify } = require('../scripts/request-parallel-pages-build.js');
+const { publishAndVerify, PUBLIC_PATH } = require('../scripts/request-parallel-pages-build.js');
 const response = (value, status = 200) => ({ ok: status >= 200 && status < 300, status,
   json: async () => value, text: async () => typeof value === 'string' ? value : JSON.stringify(value) });
-const options = { repository: 'owner/repo', token: 'test-token', expectedText: '{"schemaVersion":2}\n', pollMs: 0, sleep: async () => {}, attempts: 3, now: () => 123 };
+const options = { repository: 'owner/repo', token: 'test-token', expectedText: '{"schemaVersion":3,"kind":"index"}\n', pollMs: 0, sleep: async () => {}, attempts: 3, now: () => 123 };
+
+test('verifies the public parallel index (data/parallel/index.json), not the retired data/parallel.json', async () => {
+  assert.equal(PUBLIC_PATH, 'data/parallel/index.json');
+  const calls = [];
+  const result = await publishAndVerify({ ...options, fetchImpl: async (url, init) => {
+    calls.push([url, init]); return response(options.expectedText);
+  } });
+  assert.equal(result.publicUrl, 'https://owner.github.io/repo/data/parallel/index.json');
+  assert.equal(calls[0][0], 'https://owner.github.io/repo/data/parallel/index.json?verify=123-1');
+});
 
 test('matching public content avoids a duplicate Pages build and never transmits a token to the public site', async () => {
   const calls = [];

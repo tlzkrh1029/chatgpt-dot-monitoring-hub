@@ -1,0 +1,30 @@
+{
+  "chart": {
+    "result": [
+      {
+        "meta": {
+          "currency": "KRW",
+          "symbol": "^KS11",
+          "exchangeName": "KSC",
+          "instrumentType": "INDEX",
+          "regularMarketTime": 1772605800,
+          "gmtoffset": 32400,
+          "timezone": "KST",
+          "exchangeTimezoneName": "Asia/Seoul",
+          "chartPreviousClose": 2470.1,
+          "dataGranularity": "1d"
+        },
+        "timestamp": [1772064000, 1772150400, 1772496000, 1772582400],
+        "indicators": {
+          "quote": [
+            {
+              "open": [2475.199951171875, 2489, 2497.300048828125, 2510.199951171875],
+              "close": [2486.89990234375, 2491.199951171875, 2500.5, 2523.60009765625]
+            }
+          ]
+        }
+      }
+    ],
+    "error": null
+  }
+}
