@@ -112,11 +112,43 @@
     try { detail = decodeURIComponent(detail); } catch (_) { /* keep the encoded path */ }
     return { url, name: known ? known[1] : host, detail, api: /\/api\//i.test(u.pathname) };
   }
+  // Sentences end at . ! ? followed by whitespace, except after an abbreviation
+  // or a single initial ("U.S. 하원", "J. Smith"). A newline always ends one.
+  const NOT_SENTENCE_END = /(?:^|[^A-Za-z.])(?:U\.S|U\.K|e\.g|i\.e|vs|Inc|Corp|Co|Ltd|Jr|Sr|Mr|Ms|Mrs|Dr|St|No|[A-Z])\.$/;
+  function sentences(text) {
+    const result = [];
+    for (const line of String(text || '').split(/\n+/)) {
+      const boundary = /[.!?]+(?=\s)/g;
+      let start = 0;
+      let m;
+      while ((m = boundary.exec(line))) {
+        const end = m.index + m[0].length;
+        if (NOT_SENTENCE_END.test(line.slice(start, end))) continue;
+        const sentence = line.slice(start, end).trim();
+        if (sentence) result.push(sentence);
+        start = end;
+      }
+      const rest = line.slice(start).trim();
+      if (rest) result.push(rest);
+    }
+    return result;
+  }
+  // Paragraphs for feed text and evidence. Writers' newlines always win; text
+  // without newlines is split only at sentence boundaries, never rewritten.
+  function paragraphs(text) {
+    const raw = String(text || '');
+    if (/\n/.test(raw)) return raw.split(/\n+/).map(p => p.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    const all = sentences(raw);
+    if (all.length < 3) return all.length ? [raw.replace(/\s+/g, ' ').trim()] : [];
+    const result = [];
+    for (let i = 0; i < all.length; i += 2) result.push(all.slice(i, i + 2).join(' '));
+    return result;
+  }
   // One summary per record: distinct source names in first-seen order.
   function sourceSummary(urls) {
     const sources = (urls || []).map(sourceInfo);
     return { sources, names: [...new Set(sources.map(source => source.name))] };
   }
   return Object.freeze({ SECURITY_NAME, KIND_STYLES, KIND_RANK, displayKey, subtype, matches, categories, groupFeed,
-    sourceInfo, sourceSummary });
+    sourceInfo, sourceSummary, sentences, paragraphs });
 });

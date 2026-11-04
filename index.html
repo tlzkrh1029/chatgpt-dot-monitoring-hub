@@ -116,6 +116,9 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
 .cat { font-size: 13px; font-weight: 600; color: var(--c, var(--text-2)); }
 .item-text { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text-2); text-wrap: pretty; }
 .item.is-quiet .item-text { font-size: 14px; color: var(--muted); }
+.item-text p, .basis-text p { margin: 0; }
+.item-text p + p { margin-top: 10px; }
+.basis-text p + p { margin-top: 6px; }
 .linklike { padding: 0; border: 0; background: none; color: var(--link); font-size: 13px; text-align: left; cursor: pointer; }
 .linklike:hover { color: #C7DCFF; text-decoration: underline; }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -346,7 +349,7 @@ html[data-view] .page-tabs { display:none; }
 <script src="public-data.js?v=20261104-security-label"></script>
 <script src="refresh-client.js"></script>
 <script src="manual-refresh.js?v=20261104-refresh-outcome"></script>
-<script src="display-data.js?v=20261104-source-names"></script>
+<script src="display-data.js?v=20261104-paragraphs"></script>
 <script>
 (() => {
   'use strict';
@@ -365,6 +368,8 @@ html[data-view] .page-tabs { display:none; }
   const safeColor = (v) => (/^#[0-9a-fA-F]{6}$/.test(v || '') ? v : '#8B95A5');
   const safeUrl = (v) => (/^https?:\/\//i.test(v || '') ? v : '');
   const anchorId = (key) => 'ev-' + String(key || '').toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
+  // Feed text and evidence: writers' line breaks, or sentence-boundary splits, become paragraphs.
+  const paragraphsHtml = (text) => MonitorView.paragraphs(text).map(p => `<p>${esc(p)}</p>`).join('');
   // Stable per-record key so an opened method/source panel survives re-rendering.
   const recordKey = (x) => {
     let h = 5381;
@@ -540,7 +545,7 @@ html[data-view] .page-tabs { display:none; }
     return `<details class="basis" data-detail="${recordKey(item)}">
       <summary>${esc(label)}${shown ? `<span class="basis-names">${esc(shown)}</span>` : ''}</summary>
       <div class="basis-body">
-        ${item.evidence ? `<p class="basis-text"><span class="basis-label">확인 방법</span>${esc(item.evidence)}</p>` : ''}
+        ${item.evidence ? `<div class="basis-text"><span class="basis-label">확인 방법</span>${paragraphsHtml(item.evidence)}</div>` : ''}
         ${sources.length ? `<div><span class="basis-label">출처</span><ul class="src-list">${links}</ul></div>` : ''}
       </div>
     </details>`;
@@ -588,7 +593,7 @@ html[data-view] .page-tabs { display:none; }
                   <span class="item-where${continued ? ' sr-only' : ''}"><span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span>${MonitorView.subtype(x.category) ? `<span class="source-label">${esc(MonitorView.subtype(x.category))}</span>` : ''}</span>
                   ${kind}
                 </div>
-                ${x.title ? `<h3 class="item-title">${esc(x.title)}</h3>` : ''}<p class="item-text">${esc(x.text)}</p>
+                ${x.title ? `<h3 class="item-title">${esc(x.title)}</h3>` : ''}<div class="item-text">${paragraphsHtml(x.text)}</div>
                 ${x.isQuiet ? '' : basisHtml(x)}
               </div>
             </div>`;

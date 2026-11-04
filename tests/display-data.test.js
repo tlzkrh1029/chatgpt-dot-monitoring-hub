@@ -206,3 +206,24 @@ test('source summaries keep every link and list each publisher once in first-see
   for (const row of composeCurrent().feed)
     assert.equal(V.sourceSummary(row.sources).sources.length, (row.sources || []).length);
 });
+
+test('paragraphs keep writer line breaks, accept empty input and never change the text', () => {
+  assert.deepEqual(V.paragraphs('A는 첫 단락이다.\n\nB는 둘째 단락이다. C도 같은 단락이다. D도 같은 단락이다.'),
+    ['A는 첫 단락이다.', 'B는 둘째 단락이다. C도 같은 단락이다. D도 같은 단락이다.']);
+  assert.deepEqual(V.paragraphs('A는 첫 줄이다.\nB는 둘째 줄이다.'), ['A는 첫 줄이다.', 'B는 둘째 줄이다.']);
+  for (const empty of ['', ' \n\n ', undefined, null]) assert.deepEqual(V.paragraphs(empty), []);
+  assert.deepEqual(V.paragraphs('한 문장뿐이다.'), ['한 문장뿐이다.']);
+  // Every published text and evidence note survives splitting character for character.
+  const norm = s => s.replace(/\s+/g, ' ').trim();
+  for (const row of composeCurrent().feed) for (const value of [row.text, row.evidence].filter(Boolean)) {
+    const parts = V.paragraphs(value);
+    assert.ok(parts.length >= 1 && parts.every(part => part.trim()));
+    assert.equal(norm(parts.join(' ')), norm(value));
+  }
+});
+
+test('sentence boundaries skip abbreviations, initials, decimals and times', () => {
+  assert.deepEqual(V.sentences('U.S. 하원 결과가 나왔다. Mr. Kim은 J. Smith와 만났다. 0.9985와 10:47:58.559 UTC는 한 문장이다!'),
+    ['U.S. 하원 결과가 나왔다.', 'Mr. Kim은 J. Smith와 만났다.', '0.9985와 10:47:58.559 UTC는 한 문장이다!']);
+  assert.deepEqual(V.sentences('첫 줄이다\n둘째 줄이다.'), ['첫 줄이다', '둘째 줄이다.']);
+});
