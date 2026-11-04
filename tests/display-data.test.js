@@ -10,9 +10,12 @@ const { createController } = require('../refresh-client.js');
 
 const NOW = Date.parse('2026-11-04T10:00:00Z');
 const read = file => JSON.parse(fs.readFileSync(path.join(__dirname, '..', file), 'utf8'));
-const original = () => M.validateData(read('data.json'), { now: NOW });
+// These helpers read live publisher files; their clocks must advance with the
+// actual repository. Fixed NOW remains the clock for synthetic fixtures below.
+const currentClock = () => Math.max(NOW, Date.now());
+const original = () => M.validateData(read('data.json'), { now: currentClock() });
 const composeCurrent = () => M.composeData(original(), Object.keys(M.CATEGORY_CONFIG).map(key =>
-  M.validateCategory(read(`data/${key}.json`), key, { now: NOW })));
+  M.validateCategory(read(`data/${key}.json`), key, { now: currentClock() })));
 const freeze = value => {
   if (value && typeof value === 'object') {
     Object.values(value).forEach(freeze);

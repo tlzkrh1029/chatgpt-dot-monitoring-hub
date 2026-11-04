@@ -60,13 +60,101 @@
     set.add(value);
   }
 
+  function rate(value, path) {
+    if (typeof value !== 'string' || value.length > 100 || !/^\d+(?:\.\d+)?$/.test(value) ||
+      !Number.isFinite(Number(value)) || Number(value) <= 0) fail(path, 'expected a positive finite decimal string');
+    return Number(value);
+  }
+  function sameRate(first, second) {
+    const decimal = /^\d+(?:\.\d+)?$/;
+    if (typeof first !== 'string' || typeof second !== 'string' || !decimal.test(first) || !decimal.test(second)) return false;
+    const key = value => {
+      const [integer, fraction = ''] = value.split('.');
+      const whole = integer.replace(/^0+(?=\d)/, '');
+      const rest = fraction.replace(/0+$/, '');
+      return rest ? `${whole}.${rest}` : whole;
+    };
+    return key(first) === key(second);
+  }
+  function minuteTimestamp(value, path, maximum) {
+    if (typeof value !== 'string' || !/T\d{2}:\d{2}:00(?:\.0{1,9})?Z$/.test(value)) fail(path, 'expected an exact minute boundary');
+    return timestamp(value, path, maximum);
+  }
+
+  function validateProviders(raw, { start, end, publication, maximum }) {
+    minuteTimestamp(raw.window.start, 'dataset.window.start', maximum);
+    minuteTimestamp(raw.window.end, 'dataset.window.end', maximum);
+    list(raw.providers, 'dataset.providers', 16);
+    const providerIds = new Set(), backed = new Set();
+    const seriesById = new Map(raw.series.map(series => [series.id, series]));
+    raw.providers.forEach((provider, providerIndex) => {
+      const path = `dataset.providers[${providerIndex}]`;
+      object(provider, path, ['id', 'label', 'metric', 'frequency', 'sourceUrl', 'requestUrl', 'licenseName', 'licenseUrl',
+        'attribution', 'attributionUrl', 'transformation', 'observedAt', 'requestedStartAt', 'requestedEndAt', 'pages', 'series']);
+      unique(provider.id, providerIds, `${path}.id`);
+      for (const key of ['label', 'metric', 'frequency', 'licenseName', 'attribution']) text(provider[key], `${path}.${key}`);
+      text(provider.transformation, `${path}.transformation`, 2000);
+      for (const key of ['sourceUrl', 'requestUrl', 'licenseUrl', 'attributionUrl']) publicContract.publicUrl(provider[key], `${path}.${key}`);
+      if (provider.metric !== 'ReferenceRateUSD' || provider.frequency !== '1m') fail(path, 'expected a one-minute ReferenceRateUSD source');
+      const observed = timestamp(provider.observedAt, `${path}.observedAt`, maximum);
+      const requestedStart = timestamp(provider.requestedStartAt, `${path}.requestedStartAt`, maximum);
+      const requestedEnd = timestamp(provider.requestedEndAt, `${path}.requestedEndAt`, maximum);
+      if (publication === null || observed > publication || requestedEnd > observed || requestedStart > start || requestedEnd < end) fail(path, 'invalid provider request or receipt chronology');
+      if (!Number.isInteger(provider.pages) || provider.pages < 1 || provider.pages > 32) fail(`${path}.pages`, 'expected a bounded successful page count');
+      list(provider.series, `${path}.series`, 128);
+      const assets = new Set();
+      provider.series.forEach((receipt, receiptIndex) => {
+        const receiptPath = `${path}.series[${receiptIndex}]`;
+        object(receipt, receiptPath, ['id', 'asset', 'observedAt', 'baseline', 'latest', 'samples']);
+        unique(receipt.id, backed, `${receiptPath}.id`);
+        unique(receipt.asset, assets, `${receiptPath}.asset`);
+        const series = seriesById.get(receipt.id);
+        if (!series || !series.points.length || series.panel !== 'crypto') fail(receiptPath, 'provider receipt must back one populated crypto series');
+        minuteTimestamp(series.asOf, `${receiptPath}.sampleAsOf`, maximum);
+        if (![provider.sourceUrl, provider.requestUrl].includes(series.sourceUrl)) fail(receiptPath, 'series source must match the provider source or request');
+        const receiptObserved = timestamp(receipt.observedAt, `${receiptPath}.observedAt`, maximum);
+        if (receiptObserved > observed || Date.parse(series.observedAt) !== receiptObserved) fail(receiptPath, 'series must preserve its actual receipt time');
+        object(receipt.baseline, `${receiptPath}.baseline`, ['at', 'value']);
+        object(receipt.latest, `${receiptPath}.latest`, ['at', 'value']);
+        const baselineAt = minuteTimestamp(receipt.baseline.at, `${receiptPath}.baseline.at`, maximum);
+        const baseline = rate(receipt.baseline.value, `${receiptPath}.baseline.value`);
+        const latestAt = minuteTimestamp(receipt.latest.at, `${receiptPath}.latest.at`, maximum);
+        rate(receipt.latest.value, `${receiptPath}.latest.value`);
+        // 08:00 KST is 23:00 UTC on the preceding calendar date. The daily
+        // comparison basis is retained as data, never inferred from receipt time.
+        if (baselineAt !== start || baselineAt % (24 * 60 * MINUTE) !== 23 * 60 * MINUTE) fail(receiptPath, 'baseline must be the exact 08:00 KST window start');
+        if (latestAt % MINUTE !== 0 || latestAt < Date.parse(series.asOf) || latestAt > end || latestAt > receiptObserved ||
+          baselineAt < requestedStart || latestAt > requestedEnd) fail(receiptPath, 'invalid latest calculation time');
+        if (series.delaySeconds === null || Math.abs(series.delaySeconds - (receiptObserved - latestAt) / 1000) > 0.001) fail(receiptPath, 'delay must match the newest calculation and actual receipt clocks');
+        list(receipt.samples, `${receiptPath}.samples`, 5000);
+        if (receipt.samples.length !== series.points.length) fail(receiptPath, 'each plotted point needs one raw sample');
+        receipt.samples.forEach((sample, sampleIndex) => {
+          const samplePath = `${receiptPath}.samples[${sampleIndex}]`;
+          object(sample, samplePath, ['at', 'value']);
+          const at = minuteTimestamp(sample.at, `${samplePath}.at`, maximum);
+          const value = rate(sample.value, `${samplePath}.value`);
+          const point = series.points[sampleIndex];
+          if (at !== minuteTimestamp(point.at, `${samplePath}.plottedAt`, maximum) || (at - baselineAt) % (15 * MINUTE) !== 0 || at < requestedStart || at > requestedEnd) fail(samplePath, 'raw sample must match its exact 15-minute plotted time');
+          const expected = (value / baseline - 1) * 100;
+          if (Math.abs(point.pct - expected) > 1e-9) fail(samplePath, 'percentage does not match the retained raw rate and baseline');
+          if (sampleIndex === 0 && (at !== baselineAt || !sameRate(sample.value, receipt.baseline.value))) fail(samplePath, 'the baseline observation must be retained as the first sample');
+          if (at === latestAt && !sameRate(sample.value, receipt.latest.value)) fail(samplePath, 'latest raw value conflicts with the matching sampled value');
+        });
+      });
+    });
+    for (const series of raw.series) if (series.points.length && !backed.has(series.id)) fail('dataset.providers', 'every populated v2 series needs source provenance');
+  }
+
   function validateDataset(raw, { allowLocalReference = false, now = Date.now() } = {}) {
     const current = Number(new Date(now));
     if (!Number.isFinite(current)) fail('now', 'invalid clock');
     const maximum = current + 5 * MINUTE;
-    object(raw, 'dataset', ['schemaVersion', 'mode', 'title', 'publishedAt', 'window', 'series', 'events', 'stories']);
-    if (raw.schemaVersion !== 1) fail('dataset.schemaVersion', 'unsupported schema version');
+    const fields = ['schemaVersion', 'mode', 'title', 'publishedAt', 'window', 'series', 'events', 'stories'];
+    if (raw?.schemaVersion === 2) fields.push('providers');
+    object(raw, 'dataset', fields);
+    if (![1, 2].includes(raw.schemaVersion)) fail('dataset.schemaVersion', 'unsupported schema version');
     choice(raw.mode, 'dataset.mode', ['reference', 'observed']);
+    if (raw.schemaVersion === 2 && raw.mode !== 'observed') fail('dataset.mode', 'v2 provider records are public observations, not local references');
     text(raw.title, 'dataset.title');
     const publication = nullableDate(raw.publishedAt, 'dataset.publishedAt', maximum);
     object(raw.window, 'dataset.window', ['start', 'end', 'timezone', 'intervalMinutes']);
@@ -144,6 +232,7 @@
       list(story.sources, `${path}.sources`, 8);
       story.sources.forEach((url, sourceIndex) => publicContract.publicUrl(url, `${path}.sources[${sourceIndex}]`));
     });
+    if (raw.schemaVersion === 2) validateProviders(raw, { start, end, publication, maximum });
     return clone(raw);
   }
 
@@ -263,5 +352,18 @@
     return { firstAt: points[0].at, lastAt: points.at(-1).at, pointCount: points.length, expectedGridCount, missingGridCount,
       offGridCount: points.filter(point => (Date.parse(point.at) - origin) % step !== 0).length, gaps };
   }
-  return Object.freeze({ PANELS, validateDataset, parseReference, segments, summarizeSeries });
+  function sourceReceipt(data, seriesId) {
+    for (const provider of data.providers || []) {
+      const receipt = provider.series.find(item => item.id === seriesId);
+      if (receipt) return { provider, receipt };
+    }
+    return null;
+  }
+  function sourceFreshness(data, seriesId, now = Date.now()) {
+    const record = sourceReceipt(data, seriesId);
+    if (!record) return null;
+    const ageSeconds = Math.max(0, (Number(new Date(now)) - Date.parse(record.receipt.latest.at)) / 1000);
+    return { ageSeconds, stale: ageSeconds >= 20 * 60, sourceAsOf: record.receipt.latest.at };
+  }
+  return Object.freeze({ PANELS, validateDataset, parseReference, segments, summarizeSeries, sourceReceipt, sourceFreshness, sameRate });
 });

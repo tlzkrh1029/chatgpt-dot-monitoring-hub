@@ -89,6 +89,7 @@
       const regressed = (next, prior) => prior !== null && prior !== undefined &&
         (next === null || next === undefined || Date.parse(next) < Date.parse(prior));
       if (regressed(candidate.publishedAt, data.publishedAt)) throw new Error('publication regression');
+      if (data.schemaVersion === 2 && candidate.schemaVersion !== 2) throw new Error('provider provenance removed');
 
       const start = Date.parse(candidate.window.start);
       const end = Date.parse(candidate.window.end);
@@ -113,6 +114,38 @@
           if (!points.has(at) || points.get(at) !== point.pct) throw new Error('overlapping source point changed');
         }
         if (regressed(item.observedAt, prior.observedAt) || regressed(item.asOf, prior.asOf)) throw new Error('source clock regression');
+      }
+
+      const currentProviders = new Map((candidate.providers || []).map(provider => [provider.id, provider]));
+      for (const priorProvider of data.providers || []) {
+        const provider = currentProviders.get(priorProvider.id);
+        const retainedReceipts = priorProvider.series.filter(receipt =>
+          receipt.samples.some(sample => inWindow(sample.at)));
+        if (!provider) {
+          if (retainedReceipts.length) throw new Error('provider provenance removed');
+          continue;
+        }
+        for (const key of ['label', 'metric', 'frequency', 'sourceUrl', 'licenseName', 'licenseUrl', 'attribution', 'attributionUrl', 'transformation']) {
+          if (provider[key] !== priorProvider[key]) throw new Error('provider identity changed');
+        }
+        if (regressed(provider.observedAt, priorProvider.observedAt)) throw new Error('provider receipt regression');
+        const receipts = new Map(provider.series.map(receipt => [receipt.id, receipt]));
+        for (const prior of priorProvider.series) {
+          const receipt = receipts.get(prior.id);
+          const retainedSamples = prior.samples.filter(sample => inWindow(sample.at));
+          if (!receipt) {
+            if (retainedSamples.length) throw new Error('raw provenance removed');
+            continue;
+          }
+          if (receipt.asset !== prior.asset || Date.parse(receipt.baseline.at) !== Date.parse(prior.baseline.at) ||
+            !contract.sameRate(receipt.baseline.value, prior.baseline.value)) throw new Error('raw comparison basis changed');
+          if (regressed(receipt.observedAt, prior.observedAt) || regressed(receipt.latest.at, prior.latest.at)) throw new Error('raw source clock regression');
+          if (Date.parse(receipt.latest.at) === Date.parse(prior.latest.at) && !contract.sameRate(receipt.latest.value, prior.latest.value)) throw new Error('latest raw source value changed');
+          const samples = new Map(receipt.samples.map(sample => [Date.parse(sample.at), sample.value]));
+          for (const sample of retainedSamples) {
+            if (!samples.has(Date.parse(sample.at)) || !contract.sameRate(samples.get(Date.parse(sample.at)), sample.value)) throw new Error('retained raw source value changed');
+          }
+        }
       }
 
       const currentEvents = new Map(candidate.events.map(item => [item.id, item]));
