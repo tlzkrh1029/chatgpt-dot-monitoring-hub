@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T18:02:36.046Z",
-  "observedAt": "2026-11-04T18:01:59.551Z",
+  "publishedAt": "2026-11-04T18:17:39.947Z",
+  "observedAt": "2026-11-04T18:17:39.946Z",
   "checkStatus": "partial",
-  "headline": "11/5 03:01KST: 하원249·151 표시 일치, 추가1석 대조 미완료",
-  "body": "DDHQ 세 총괄 하원249D·151R 표시는 일치하지만 최신 공화 추가1석의 개별 판단은 미식별이다. 상원54D·44R·주지사28D·20R 유지. Mississippi 민주1881표 우세는 미판정이며 공식 인증과 남은 표 분포는 미확인이다.",
-  "unknown": "하원 최신 공화 추가1석의 개별 판단·시각, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502. 하원 최신 공화 추가1석 개별 판단 미식별. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 03:17KST: 하원 공화 추가1석 TX38 판단 근거 확인",
+  "body": "DDHQ 하원249D·151R 유지. 이전 미식별 공화 추가1석을 Texas38구 Bonck의 개별 판단으로 보완했다. 판단은 한국시간02:29이며 지금 새 발표나 공식 인증은 아니다. 상원54D·44R·주지사28D·20R 유지. Maine2구 공화3645표 우세는 미판정이다.",
+  "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T18:17:39.946Z",
+      "kind": "개별 판단·누락 보완",
+      "title": "하원 공화 추가1석 TX38 DDHQ 판단 확인",
+      "text": "하원249D·151R 총괄은 유지되며 직전 미식별 공화 추가1석에 해당하는 Texas38구 Jon Bonck의 개별 DDHQ 판단을 확인했다. 판단과 자료갱신은11월4일12:29EST=17:29UTC·한국시간11월5일02:29다. Bonck157261 대 McDonough144397,51.54% 대47.33%이며 표시 예상집계95%초과다. 지금 새 발표나 공식 인증이 아니라 앞선 판단의 개별 근거 보완이다. 상원54D·44R·주지사28D·20R 유지. Maine2구 공화 우세는4278표에서3645표로 줄었지만 미판정이다.",
+      "evidence": "실제조회11월4일18:15–18:17UTC·한국시간11월5일03:15–03:17. Maine2구 LePage163726 대 Dunlap160081,자료13:01EST=18:01UTC·다음날03:01KST. Kansas 주지사 Holscher546633 대 Masterson541058,민주5575표 우세 미판정,자료12:50EST=17:50UTC. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원12개 개별 표본·총괄 목록 점검,435개 전수 아님. Kansas·Michigan·Massachusetts·Rhode Island·South Dakota 상원과 South Dakota 주지사 집계 증가에도 판단 유지. Illinois 상원은 표시시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포와 공식 인증은 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-38-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T18:01:59.551Z",
       "kind": "개표 관찰·합계 대조",
