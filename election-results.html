@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>미국 중간선거 결과 | 지금 상황판</title>
+<script>
+// Embed views for stacking Notion embeds: ?view=power | map | close. Without ?view= the full page is shown.
+(function () {
+  var view = new URLSearchParams(location.search).get('view');
+  if (/^(power|map|close)$/.test(view || '')) document.documentElement.setAttribute('data-view', view);
+})();
+</script>
+<link rel="stylesheet" href="election-results.css">
+</head>
+<body>
+<main class="page">
+
+<header class="top">
+  <div class="top-title">
+    <p class="kicker">공개 자료 모니터링 허브 / 독립 탭 · 미국 중간선거 2026년 11월 3일 실시</p>
+    <h1>선거 결과</h1>
+    <p class="sub">판정된 선거만 확정으로 칠하고, 앞선 후보는 승자로 표시하지 않습니다.</p>
+  </div>
+  <div class="top-chips" id="top-chips"></div>
+</header>
+
+<nav class="page-tabs" aria-label="상황판 화면"><a href="./">기존 상황판</a><a href="parallel.html">병렬 타임라인</a><a href="election-results.html" aria-current="page">선거 결과</a></nav>
+
+<p class="status" id="fetch-status" role="status" aria-live="polite">게시 자료를 불러오는 중입니다.</p>
+<p class="notice" id="notice" hidden></p>
+
+<section class="sec sec-power" aria-labelledby="h-power">
+  <h2 id="h-power" class="h-sec">다수당 판세</h2>
+  <div class="cards">
+    <article class="card" id="card-senate" aria-label="상원"></article>
+    <article class="card" id="card-house" aria-label="하원"></article>
+  </div>
+</section>
+
+<section class="sec sec-map" aria-labelledby="h-map">
+  <div class="sec-head">
+    <div class="sec-title"><h2 id="h-map" class="h-sec">주별 결과</h2><p class="view-asof" id="asof-map"></p></div>
+    <div class="toggle" role="group" aria-label="선거 종류">
+      <button type="button" data-office="senate" aria-pressed="true">상원 35곳</button>
+      <button type="button" data-office="governor" aria-pressed="false">주지사 36곳</button>
+    </div>
+  </div>
+  <div class="panel map-panel">
+    <div class="map-col">
+      <div class="pills" id="map-pills"></div>
+      <div class="tiles" id="tiles" role="group" aria-label="주별 결과 타일 지도. 칸 하나가 주 하나이며 면적과 무관합니다."></div>
+      <div class="legend">
+        <span><i class="sw sq" style="background:var(--d)"></i><i class="sw sq" style="background:var(--r)"></i>판정</span>
+        <span><i class="sw sq lead-d"></i><i class="sw sq lead-r"></i>앞섬 · 미판정</span>
+        <span><i class="sw bar"></i>칸 아래 막대는 개표율</span>
+        <span><i class="sw sq unk"></i>판정 확인 중</span>
+        <span><i class="sw sq none"></i>선거 없음</span>
+      </div>
+    </div>
+    <aside class="detail" id="detail" aria-live="polite"></aside>
+  </div>
+</section>
+
+<section class="sec sec-close" aria-labelledby="h-close">
+  <div class="sec-head">
+    <div class="sec-title"><h2 id="h-close" class="h-sec">남은 접전</h2><p class="view-asof" id="asof-close"></p></div>
+    <p class="sec-sub" id="close-sub"></p>
+  </div>
+  <div class="panel close-panel">
+    <div class="plot" id="plot"></div>
+    <div class="ticks" aria-hidden="true">
+      <span style="left:8%">민주 +8</span><span style="left:29%">민주 +4</span><span style="left:50%">동률</span><span style="left:71%">공화 +4</span><span style="left:92%">공화 +8</span>
+    </div>
+    <div class="rows" id="rows"></div>
+  </div>
+</section>
+
+<footer class="foot" id="foot"></footer>
+</main>
+<script src="public-data.js"></script>
+<script src="election-results-data.js"></script>
+<script src="election-results-view.js"></script>
+</body>
+</html>

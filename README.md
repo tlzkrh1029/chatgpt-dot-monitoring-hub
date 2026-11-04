@@ -9,7 +9,7 @@
 | 감시 작업 | 단독으로 수정할 파일 | 관찰 주기 | 화면의 지연 기준 |
 |---|---|---|---|
 | 거시·크립토 | data/macro.json | 매시간 | 90분 |
-| 미국 중간선거 | data/election.json | 매시간 | 90분 |
+| 미국 중간선거 | data/election.json, data/election-results.json | 매시간 | 90분 |
 | 크립토 보안 | data/security.json | 매시간 | 90분 |
 | X 계정 연구 | data/xr.json | KST 00/04/08/12/16/19시 | 5시간 |
 | 온체인 보안·자금흐름 | data/onchain.json | 매시간 | 90분 |
@@ -104,4 +104,10 @@ node scripts/prepare-parallel-reference.js <market.csv> <events.csv>
 
 자동 수집·배포 운영은 [docs/parallel-automation.md](docs/parallel-automation.md)를 참고하세요. 개인용 비상업적 이용을 전제로 Coin Metrics 출처·CC BY-NC 4.0·가공 내역을 표시합니다. 키 없는 수집은 `COIN_METRICS_USAGE=noncommercial npm run collect:parallel`로 실행합니다. Windows PowerShell에서는 `$env:COIN_METRICS_USAGE='noncommercial'`을 설정하거나 `node scripts/update-parallel-prices.js --noncommercial`을 사용합니다. 수동 실행은 Actions의 **Update parallel market prices → Run workflow → main**입니다. `GITHUB_TOKEN` push 뒤에는 기존 Pages 빌드를 명시적으로 요청하고 공개 JSON까지 검증합니다.
 
+## 선거 결과 탭
 
+`election-results.html`은 기존 상황판과 분리된 미국 중간선거 결과 화면입니다. 상원·하원 반원 의석도, 50개 주를 같은 크기 칸으로 놓은 타일 지도(상원·주지사 전환), 남은 미판정 경합의 격차 점 그래프와 목록을 보여 줍니다. 판정된 경합만 정당 색으로 칠하고, 앞선 후보는 승자로 표시하지 않습니다.
+
+전용 게시 파일은 `data/election-results.json`, 계약은 `election-results-data.js`, 화면은 `election-results-view.js`와 `election-results.css`입니다. 기존 다섯 범주 계약과 병렬 탭 계약은 바꾸지 않습니다. 미국 중간선거 감시 작업이 `data/election.json`과 같은 회차에 이 파일을 갱신하며, 판정 기준·필드·갱신 절차는 [docs/election-results-data.md](docs/election-results-data.md)에 있습니다. `npm test`와 `npm run validate`가 새 계약도 함께 점검합니다.
+
+`?view=power`, `?view=map`, `?view=close`는 노션에 나눠 임베드할 때 쓰는 보기입니다. 기본 주소는 전체 화면입니다.
