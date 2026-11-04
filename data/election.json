@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T16:46:28.640Z",
-  "observedAt": "2026-11-04T16:46:28.640Z",
+  "publishedAt": "2026-11-04T17:01:51.460Z",
+  "observedAt": "2026-11-04T17:01:28.947Z",
   "checkStatus": "partial",
-  "headline": "11/5 01:46KST: 주요 합계·판단 유지·부분 집계 증가",
-  "body": "DDHQ 하원247D·150R, 상원54D·44R, 주지사28D·20R과 확인 가능한 당선 판단은 유지됐다. Maine2구 공화2,963표 우세, Alaska 상원 민주507표 우세, Mississippi 민주1,985표 우세는 미판정이다. 공식 인증과 구분한다.",
-  "unknown": "이전 DDHQ 합계 불일치 원인, Mississippi·Alaska·Maine2구 공식 집계 대조, Oregon 주지사 원문, 전국 법원·재검표·인증·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수 및 시장수치 확인 미완료. 이전 합계 불일치의 원인·수정 설명은 미확인. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 02:01KST: 하원247·249 표시 불일치·판단 확인 대기",
+  "body": "DDHQ 하원 본문247D·150R과 상원 페이지 요약249D·150R이 다르다. 추가2석의 개별 판단은 미확인이므로 기존 확인 합계를 대체하지 않는다. 상원54D·44R·주지사28D·20R과 확인 가능한 개별 판단은 유지된다. Mississippi 민주2,000표 우세는 미판정이다.",
+  "unknown": "DDHQ 하원247D·249D 불일치 및 추가 개별 판단, 주요 미판정 경합 공식대조, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 하원247D·249D 페이지 간 불일치 및 추가 개별 판단 미해소. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T17:01:28.947Z",
+      "kind": "부분 관찰",
+      "title": "17:00 점검: 하원247·249석 표시 차이·개별 판단 유지",
+      "text": "DDHQ 하원 전용 본문은247D·150R인 반면 상원 페이지의 하원 요약은249D·150R로 달라 추가2석을 확인된 새 판단으로 다루지 않는다. 최근 개별 판단 목록도 이전과 같아 추가 경합은 미확인이다. 상원54D·44R·주지사28D·20R 및 확인 가능한 개별 판단은 유지됐다. Mississippi Colom465,606표·Hyde-Smith463,606표로 민주2,000표 우세·미판정이다. Maine 상원·주지사 등 일부 집계 증가도 새 판단과 구분한다.",
+      "evidence": "예정17:00UTC 이후 실제 조회11월4일17:00–17:01UTC/11월5일02:00–02:01KST. Mississippi 집계11:29EST=16:29UTC, Maine 상원11:40EST=16:40UTC·주지사11:41EST=16:41UTC. Iowa·Kansas 상원은 갱신시각만 바뀌고 수치 불변. Maine2구 공화2,963표 및 Alaska상원 민주507표 우세는 미판정 유지. 상원35·주지사36개 중70개 확인·Oregon 실패. 공식 인증·재검표·법원 전수 대조 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T16:46:28.640Z",
       "kind": "부분 관찰",
