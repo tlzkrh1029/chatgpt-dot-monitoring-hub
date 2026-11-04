@@ -9,7 +9,7 @@
 | 감시 작업 | 단독으로 수정할 파일 | 관찰 주기 | 화면의 지연 기준 |
 |---|---|---|---|
 | 거시·크립토 | data/macro.json | 매시간 | 90분 |
-| 미국 중간선거 | data/election.json, data/election-results.json | 매시간 | 90분 |
+| 미국 중간선거 | data/election.json(범주 파일), data/election-results.json(범주 파일이 아닌 스냅샷, 아래 [선거 결과 탭](#선거-결과-탭) 참고) | 매시간 | 90분 |
 | 크립토 보안 | data/security.json | 매시간 | 90분 |
 | X 계정 연구 | data/xr.json | KST 00/04/08/12/16/19시 | 5시간 |
 | 온체인 보안·자금흐름 | data/onchain.json | 매시간 | 90분 |
@@ -19,6 +19,8 @@
 data.json은 기존 공개 기록과 사용자 지정 감시 강도를 보존하는 기본 자료입니다. 감시 작업은 이 파일이나 index.html을 수정하지 않습니다. 각 작업은 자신의 범주 파일만 바꾸므로 동시 실행이 다른 범주를 덮어쓰지 않습니다. 공유 집계 파일 작성 서비스·새 자격 증명은 필요하지 않습니다.
 
 ## 범주 JSON 게시 계약 v1
+
+이 계약은 다섯 범주 파일에만 적용합니다. `data/election-results.json`과 `data/parallel.json`은 범주 파일이 아니며 각자의 별도 계약을 따릅니다.
 
 모든 최상위 필드가 필수이고 추가 필드는 거부합니다. 실제 예시는 다섯 범주 파일에 있습니다.
 
@@ -49,6 +51,8 @@ timeBasis는 생략 시 observation이며 at <= observedAt이어야 합니다. �
 자동 필터는 내용이 공개 가능한지 보증하지 않습니다. 작성 작업은 링크가 실제 공개 근거인지 확인하고 개인 계정 정보가 문장에 섞이지 않도록 정제해야 합니다. 접근 여부를 확인하지 못하면 링크를 빼고 일반적인 확인 한계를 기록합니다.
 
 ## 성공·변화 없음·실패 처리
+
+아래 절차는 다섯 범주 파일에 적용합니다. `data/election-results.json`에는 1번과 4번의 기록 보존·병합 규칙을 적용하지 않습니다. 그 파일은 [선거 결과 탭](#선거-결과-탭) 절과 [docs/election-results-data.md](docs/election-results-data.md)의 스냅샷 교체 절차를 따릅니다.
 
 1. 자신의 범주 파일을 최신 SHA와 함께 읽고 기존 공개 기록을 보존합니다.
 2. 새 원문을 실제 점검한 경우에만 observedAt을 진행시킵니다. 변화가 없어도 실제 점검했다면 그 시각과 확인 범위를 기록할 수 있습니다.
@@ -115,5 +119,7 @@ node scripts/prepare-parallel-reference.js <market.csv> <events.csv>
 `election-results.html`은 기존 상황판과 분리된 미국 중간선거 결과 화면입니다. 상원·하원 반원 의석도, 50개 주를 같은 크기 칸으로 놓은 타일 지도(상원·주지사 전환), 남은 미판정 경합의 격차 점 그래프와 목록을 보여 줍니다. 판정된 경합만 정당 색으로 칠하고, 앞선 후보는 승자로 표시하지 않습니다.
 
 전용 게시 파일은 `data/election-results.json`, 계약은 `election-results-data.js`, 화면은 `election-results-view.js`와 `election-results.css`입니다. 기존 다섯 범주 계약과 병렬 탭 계약은 바꾸지 않습니다. 미국 중간선거 감시 작업이 `data/election.json`과 같은 회차에 이 파일을 갱신하며, 판정 기준·필드·갱신 절차는 [docs/election-results-data.md](docs/election-results-data.md)에 있습니다. `npm test`와 `npm run validate`가 새 계약도 함께 점검합니다.
+
+`data/election-results.json`은 범주 파일이 아니라 지금 시점의 판정 상태를 담는 스냅샷입니다. 범주 계약 v1의 `category`·`feed` 필드가 없고, 기록 보존·최신 200개 병합·"정정은 기존 항목을 지우지 말고 별도 기록" 규칙을 적용하지 않습니다. 판정·득표·합계가 바뀐 경합의 값을 고쳐 쓰는 것이 정해진 갱신 방식입니다. 이전 상태는 Git 커밋 이력에 남으므로, 이렇게 고쳐 쓰는 것은 기존 데이터 손상이 아닙니다. 바뀌지 않은 경합은 한 글자도 바꾸지 않고, 점검 시각은 최상위 `observedAt`과 `note`에만 적습니다. 쓰기 전에는 `node scripts/validate-election-results.js data/election-results.json --compare <이전 파일>`로 바뀐 범위를 확인하고 그 요약을 커밋 메시지에 넣습니다.
 
 `?view=power`, `?view=map`, `?view=close`는 노션에 나눠 임베드할 때 쓰는 보기입니다. 기본 주소는 전체 화면입니다.

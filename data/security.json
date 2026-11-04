@@ -1,14 +1,51 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T12:07:49.785Z",
-  "observedAt": "2026-11-04T12:07:14Z",
+  "publishedAt": "2026-11-04T15:15:37.741Z",
+  "observedAt": "2026-11-04T15:15:07Z",
   "checkStatus": "partial",
-  "headline": "11/4 21:07 보안 점검 — GitHub 장애 해소·Mercado 분석 갱신",
-  "body": "GitHub는 기존 운영 장애 해소를 공지했지만 GitBook 동기화 공지는 아직 유지된다. Mercado 동결 추산 증가와 자금 이동은 분석자 보고로 기록했고 확정 반환으로 취급하지 않았다. Chainalysis 일부 제품 중단과 Coinbase Sonic 지연은 유지됐다.",
-  "unknown": "Mercado 추가 동결의 발행사 확인·독립 온체인 검증, BitMart 발언 원문·지갑 귀속·공통 침해 경로, Liquid 준비금 복구의 최신 공식 원문·독립 검증, 개별 하위 서비스의 복구 완료.",
-  "gap": "공식 상태·기존 공지·제한된 검색만 확인했다. 공개 탐색기와 GitHub 직접 사건 페이지 조회가 실패했다. 전체 X 피드·모든 프로토콜·온체인 거래별 재계산은 미완료다.",
+  "headline": "11/5 00:15 보안 점검 — 기존 대응 유지·새 확정 변화 미확인",
+  "body": "공식 상태와 기존 사고 공지를 재확인했다. GitBook 정상 운영, Mercado 유지보수, Chainalysis 일부 제품 중단과 Coinbase Sonic 지연은 유지됐다. Arkéa 공시는 기존 온체인 기록과 대조해 중복 사건으로 세지 않았다. 확인 범위에서 새 중대 침해·실제 추가 회수는 확인하지 못했다.",
+  "unknown": "Arkéa 정확한 피해액·공시와 추적 주소의 동일성, Liquid 현재 준비금의 독립 검증과 직접 출금 재개, BitMart 원문·공통 침해 경로, GitBook 상세 사후보고서.",
+  "gap": "공식 상태·기존 공지·일부 분석과 검색만 확인했다. 전체 X 피드·모든 프로토콜·독립 온체인 재계산은 미완료다. 이전 접근 제한이 확인된 자료는 우회하거나 재시도하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T15:15:07Z",
+      "kind": "부분 점검",
+      "title": "기존 보안 대응 재확인·새 확정 변화 미확인",
+      "text": "GitBook 정상 운영과 사고 해소 공지, Mercado 유지보수 및 기존 동결 분석, Chainalysis 일부 제품 중단, Coinbase Sonic 지연은 기존 상태다. 이미 기록된 은행 사이버공격 공시와 자금추적 주장은 별도 온체인 기록과 대조해 신규 사건으로 중복 계산하지 않았다.",
+      "evidence": "조회 11월 4일 15:14~15:15 UTC, 한국시간 11월 5일 00:14~00:15. GitBook 사후보고서·새 Binance 복구 공시·추가 확정 회수는 확인 범위에서 찾지 못했다. 검색 부재는 사건 부재가 아니며 은행 피해액 관련 후속 보도는 원자료 확인 전 확정값으로 쓰지 않는다.",
+      "sources": [
+        "https://www.gitbookstatus.com/",
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.coinbase.com/"
+      ]
+    },
+    {
+      "at": "2026-11-04T14:08:02Z",
+      "kind": "근거 보완",
+      "title": "Liquid 준비금 복구 주장 원문 확보·직접 출금 제한 구분",
+      "text": "SideSwap의 11월 3일 공식 글은 Liquid 준비금의 일대일 복구를 설명하지만 Federation 직접 출금은 아직 제한된다고 명시한다. SideSwap 출금은 자체 비트코인 지갑에서 지급하고 수동 재충전 때문에 대기할 수 있다. 과거 공지의 근거 보완이며 오늘 새 회수나 전면 복구로 판단하지 않는다.",
+      "evidence": "조회 11월 4일 14:07~14:08 UTC, 한국시간 23:07~23:08. 공지 날짜는 11월 3일이며 시각·시간대는 미표시다. 공지가 인용한 11월 3일 아침 준비금과 유통량은 각각 4,270.54 BTC와 L-BTC다. 탐색기와 연결된 두 비트코인 거래 페이지는 읽을 수 있는 수치를 반환하지 않아 독립 검증하지 못했다.",
+      "sources": [
+        "https://sideswap.io/news/the-liquid-peg-is-back-to-one-to-one/",
+        "https://blog.liquid.net/liquid-network-staged-recovery-update/"
+      ]
+    },
+    {
+      "at": "2026-11-04T12:38:15Z",
+      "kind": "공식 복구 공지",
+      "title": "GitBook 보안사고 해소 공지·운영 상태 정상 전환",
+      "text": "GitBook은 보안사고를 해결하고 플랫폼 기능을 복구했다고 공지했다. 상태 페이지도 모든 서비스 정상으로 바뀌었다. 기존 토큰·외부 연동 비밀값 교체 안내는 여전히 유효하며, 서비스 정상화가 독립 보안 검증 완료를 의미하지 않는다.",
+      "evidence": "조회 11월 4일 12:38 UTC, 한국시간 21:38. 보안사고 해소 공시 11:36 CET는 10:36 UTC, 한국시간 19:36이다. Git 동기화 장애는 앞선 12:07 UTC 관찰 때 유지됐으나 이번 상태 화면에서 사라졌고 정확한 해소 시각은 미확인이다. 상세 사후보고서는 공지 후 24시간 내 공개 예정이며 아직 확인하지 못했다.",
+      "sources": [
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://www.gitbookstatus.com/"
+      ]
+    },
     {
       "at": "2026-11-04T12:07:14Z",
       "kind": "운영 복구",

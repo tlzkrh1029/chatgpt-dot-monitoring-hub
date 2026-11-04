@@ -1,14 +1,130 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-04T12:17:37.770Z",
-  "observedAt": "2026-11-04T12:16:47.129Z",
+  "publishedAt": "2026-11-04T15:10:23.670Z",
+  "observedAt": "2026-11-04T15:09:42.826Z",
   "checkStatus": "partial",
-  "headline": "일간 시세 지연 보존 · GitHub 해소 공지 확인",
-  "body": "OKX 09시 KST 기준 대비 BTC +1.5370%·ETH +2.1179%는 각각 약 28분·9분 전 값이다. 현재 CMC 집계와 혼합하지 않는다. 페그는 50bp 미달이며 GitHub 기존 장애 해소 공지는 보안 기록과 중복 제외한다.",
-  "unknown": "새 급등·급락 경계, 신선한 동시점 거시·에너지 자료, 전면 출금·상환 및 독립 준비금 검증, 사용자 일봉 설정은 미확인이다.",
-  "gap": "OKX 시세 지연·Cboe 시간대 미표기·FRED 과거 관측일·FRB 상태 조회 실패 지속. 주식 새 시세·에너지·지정학·파생 수치·일봉 검증 미완료. GitHub 공식 해소와 개별 저장·배포 완료를 구분한다.",
+  "headline": "최신 크립토 집계 상승 · 일간 독립 검증 제한",
+  "body": "CMC BTC80,528.88·ETH2,427.49로 상승 표시. OKX는 23~30분 전 자료여서 최신 일간 상승폭 독립 확인은 보류한다. 페그는 50bp 미달, OAS 전일 관측은 340bp로 3bp 축소됐다.",
+  "unknown": "신선한 동일 피드 일간 상승폭과 지속성·새 급등급락 경계, 동시점 거시·에너지·파생 자료, 전면 출금·상환·독립 준비금 및 일봉 설정은 미확인.",
+  "gap": "OKX 지연·Cboe 시간대 미표기·S&P 전일 자료 반환·FRB 조회 실패 지속. 새 가격 움직임의 독립 동시점 확인과 에너지·지정학·파생·일봉 검증 미완료.",
   "feed": [
+    {
+      "at": "2026-11-04T15:09:42.826Z",
+      "kind": "가격·페그 관찰",
+      "title": "11/5 00:09 KST — 최신 집계 상승·일간 독립 검증 제한",
+      "text": "CMC 11월 4일 15:09:03 UTC USD 집계는 BTC 80,528.88·ETH 2,427.49로 이전 조회보다 높은 가격을 표시했다. USDT 0.99966815(-3.32bp), USDC 1.00067767(+6.78bp)이며 단일 관측 페그 이탈은 50bp 미달이다. 최신 가격 상승의 지속성과 같은 시각 독립 확인은 미완료다. 새 급등·급락 수치 경계가 미설정이므로 임의 경보 기준을 적용하지 않는다.",
+      "evidence": "실제 조회 11월 4일 15:09 UTC, 한국시간 11월 5일 00:09. 가격은 집계 공급자 관측값이며 1시간·24시간 변화율을 사용자 일간 기준으로 대체하지 않았다. 다음 확인은 신선한 같은 시장·호가통화의 UTC 0시 기준 대비 값과 독립 자료다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/",
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-04T15:09:42.826Z",
+      "kind": "일간 기준 확인",
+      "title": "OKX 시세 지연으로 최신 일간 상승폭 확인 보류",
+      "text": "OKX BTC-USDT는 14:46:17.365 UTC의 79,219로 UTC 0시 시가 77,454.2 대비 +2.2785%, ETH-USDT는 14:39:31.765 UTC의 2,323.61로 시가 2,274.91 대비 +2.1407%다. 약 23분·30분 전 값이어서 최신 CMC 집계 상승을 같은 시각에 확인한 자료가 아니다. 현재 일간 상승폭이나 광범위 위험 해소로 표현하지 않는다.",
+      "evidence": "조회 15:09 UTC, 한국시간 다음 날 00:09. 같은 OKX 현물·USDT 응답의 UTC 0시 시가를 사용했고 CMC USD와 혼합하지 않았다. 전체 현물 티커 경로는 읽을 수 있는 개별 수치를 얻지 못해 추가 근거에서 제외했다. 사용자 일봉 조건은 재판정하지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT"
+      ]
+    },
+    {
+      "at": "2026-11-04T15:09:42.826Z",
+      "kind": "거시·운영 관찰",
+      "title": "OAS 새 관측일 3bp 축소·현물 자료 지연 주의",
+      "text": "FRED OAS는 11월 3일 340bp로 전일 343bp보다 3bp 축소됐으며 11월 4일 14:41 UTC 게시됐다. SOFR 11월 3일 3.97%, 10년물 11월 2일 4.91%는 기존 값이다. Cboe VIX 17.41(-16.42%)와 MarketWatch 14:08 UTC의 18.00(-13.59%)는 전일 20.83 대비다. S&P 자료는 아직 전일 종가 7,568.92를 표시해 현재 장중 값으로 쓰지 않는다. DXY는 13:39 UTC의 101.27(-0.59%)다. Coinbase Sonic·Circle Cronos 기존 장애는 같다.",
+      "evidence": "조회 15:09 UTC, 한국시간 다음 날 00:09. Cboe 14:39 표기의 시간대 미확인·최소 20분 지연 안내를 보존한다. SOFR 게시 13:02 UTC, 10년물 게시 전일 21:16 UTC. FRB 상태 조회 실패 지속, 신선한 에너지·지정학·파생 자료 미완료. 서로 다른 관측일·시각의 수치를 동시 회복이나 선거 인과로 확정하지 않는다.",
+      "sources": [
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        "https://fred.stlouisfed.org/series/SOFR",
+        "https://fred.stlouisfed.org/series/DGS10",
+        "https://www.cboe.com/tradable-products/vix",
+        "https://www.marketwatch.com/investing/index/spx",
+        "https://www.marketwatch.com/investing/index/dxy",
+        "https://status.coinbase.com/",
+        "https://status.circle.com/"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:46:41.377Z",
+      "kind": "가격·페그 관찰",
+      "title": "11/4 22:46 KST — 일간 변화와 자료 시차",
+      "text": "OKX BTC-USDT는 13:45:56.077 UTC의 78,401로 UTC 0시 시가 77,454.2 대비 +1.2224%, ETH-USDT는 13:38:10.269 UTC의 2,320.54로 시가 2,274.91 대비 +2.0058%다. 조회보다 각각 약 30초·8분 전 값이며 동시점으로 간주하지 않는다. CMC 13:46:18 UTC USD 집계는 BTC 78,309.64·ETH 2,317.11, USDT 0.99868248(-13.18bp), USDC 0.99975115(-2.49bp)다. 단일 관측 페그 이탈은 50bp 미달이다.",
+      "evidence": "14UTC 예정 회차를 실제 13:46 UTC, 한국시간 22:46에 조회했다. 같은 OKX 현물·USDT 응답의 UTC 0시 시가를 사용했다. CMC USD·24시간 변화와 혼합하지 않았다. 새 급등·급락 경계는 미설정이며 사용자 일봉 조건을 재판정하지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/",
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:46:41.377Z",
+      "kind": "거시·운영 관찰",
+      "title": "금리 관측일 유지·시장 지연·운영 확인 한계",
+      "text": "SOFR 11월 3일 3.97%는 직전 점검과 같고 11월 2일 대비 2bp 상승은 기존 기록이다. OAS 343bp·10년물 4.91%도 11월 2일 자료로 동일하다. Cboe VIX는 18.52(-11.09%), MarketWatch는 12:21 UTC의 18.42(-11.57%)로 전일 20.83 대비다. DXY는 12:06 UTC 지연값 101.37, 화면 등락 -0.48%다. Coinbase Sonic·Circle Cronos 기존 장애는 유지됐다. FRB 서비스 상태 조회 실패를 정상으로 바꾸지 않는다.",
+      "evidence": "조회 13:46 UTC, 한국시간 22:46. SOFR 게시 11월 4일 13:02 UTC, OAS·10년물 게시 11월 3일 16:01·21:16 UTC. Cboe 13:32 표시의 시간대는 미확인이고 최소 20분 지연 안내가 있다. DXY 전일 표시는 101.87이다. 신선한 주식 현물·에너지·지정학·파생 자료 검증과 실제 전면 출금·상환 확인은 미완료다. 새 광범위 악화·해소로 판단하지 않는다.",
+      "sources": [
+        "https://fred.stlouisfed.org/series/SOFR",
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        "https://fred.stlouisfed.org/series/DGS10",
+        "https://www.cboe.com/tradable-products/vix",
+        "https://www.marketwatch.com/investing/index/vix",
+        "https://www.marketwatch.com/investing/index/dxy",
+        "https://status.coinbase.com/",
+        "https://status.circle.com/"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:20:52.766Z",
+      "kind": "가격·페그 관찰",
+      "title": "11/4 22:20 KST — 일간 시각별 변화·페그 점검",
+      "text": "OKX BTC-USDT는 13:15:44.269 UTC의 78,327.4로 UTC 0시 시가 77,454.2 대비 +1.1274%, ETH-USDT는 13:08:01.745 UTC의 2,319.68로 시가 2,274.91 대비 +1.9680%다. 조회보다 약 5분·12분 전 값으로 현재 동시점 일간 변화와 구분한다. CMC 13:20:18 UTC USD 집계는 BTC 78,307.57·ETH 2,316.51, USDT 0.99880472(-11.95bp), USDC 0.99982606(-1.74bp)다. 단일 관측 페그 이탈은 50bp 미달이다.",
+      "evidence": "조회 13:20 UTC, 한국시간 22:20. 같은 OKX 현물·USDT 응답으로 UTC 0시 대비 계산했다. CMC USD·24시간 변화로 대체하거나 혼합하지 않았다. 새 급등·급락 경계는 미설정이며 사용자 일봉 조건을 재판정하지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/",
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:20:52.766Z",
+      "kind": "금리·거시 관찰",
+      "title": "SOFR 새 관측일 2bp 상승·지연 자료와 구분",
+      "text": "FRED의 SOFR는 11월 3일 3.97%로 새 관측일이 공개됐으며 11월 2일 3.95%보다 2bp 높다. 게시 시각은 11월 4일 13:02 UTC다. OAS 343bp·10년물 4.91%는 여전히 11월 2일 자료다. Cboe VIX 18.44(-11.47%)와 MarketWatch 12:21 UTC의 18.42(-11.57%)는 전일 20.83 대비 지연값이다. S&P 500은 전일 21:30 UTC 표기 종가 7,568.92(+0.36%)로 장 마감 상태다.",
+      "evidence": "조회 13:20 UTC, 한국시간 22:20. SOFR는 당일 실시간 금리가 아니라 전일 관측값이다. NY Fed 직접 페이지는 열렸으나 최신 표 수치를 추출하지 못했다. Cboe 13:10 표기의 시간대는 미확인이고 최소 20분 지연 안내가 있다. OAS·10년물 게시 시각은 각각 11월 3일 16:01·21:16 UTC다. 단일 2bp 상승만으로 자금시장 스트레스를 확정하지 않는다.",
+      "sources": [
+        "https://fred.stlouisfed.org/series/SOFR",
+        "https://www.newyorkfed.org/markets/reference-rates/sofr",
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        "https://fred.stlouisfed.org/series/DGS10",
+        "https://www.cboe.com/tradable-products/vix",
+        "https://www.marketwatch.com/investing/index/vix",
+        "https://www.marketwatch.com/investing/index/spx"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:20:52.766Z",
+      "kind": "운영·확인 한계",
+      "title": "기존 운영 장애 유지·달러 지연값·금융전산 미확인",
+      "text": "Coinbase Sonic 지연 조사와 Circle Cronos 교차체인 일부 장애 표시는 기존과 같다. DXY는 12:06 UTC 지연값 101.37, 화면 등락 -0.48%·전일 101.87이다. FRB 서비스 상태 조회는 다시 실패해 정상으로 간주하지 않는다. 신선한 에너지·지정학·검증된 파생 수치와 실제 전면 출금·상환 상태는 미확인이다.",
+      "evidence": "조회 13:20 UTC, 한국시간 22:20. 운영자 상태 공지와 독립 보안·준비금 검증은 구분한다. 보안 감시의 GitBook 복구 기록은 동일 사건으로 대조해 중복 경보하지 않았다. 현재 자료 범위에서 새로운 광범위 악화·해소 판단은 보류한다.",
+      "sources": [
+        "https://status.coinbase.com/",
+        "https://status.circle.com/",
+        "https://www.marketwatch.com/investing/index/dxy"
+      ]
+    },
     {
       "at": "2026-11-04T12:16:47.129Z",
       "kind": "가격·페그 관찰",
