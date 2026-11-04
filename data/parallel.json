@@ -2,10 +2,10 @@
   "schemaVersion": 2,
   "mode": "observed",
   "title": "네 시장 병렬 타임라인 · Coin Metrics 크립토 자동 갱신",
-  "publishedAt": "2026-11-04T08:58:03.549Z",
+  "publishedAt": "2026-11-04T09:07:16.813Z",
   "window": {
     "start": "2026-11-03T23:00:00.000Z",
-    "end": "2026-11-04T08:58:00.000Z",
+    "end": "2026-11-04T09:07:00.000Z",
     "timezone": "Asia/Seoul",
     "intervalMinutes": 15
   },
@@ -191,9 +191,9 @@
       "verification": "verified",
       "redistribution": "permitted",
       "availability": "available",
-      "asOf": "2026-11-04T08:45:00.000Z",
-      "observedAt": "2026-11-04T08:58:03.549Z",
-      "delaySeconds": 3.549,
+      "asOf": "2026-11-04T09:00:00.000Z",
+      "observedAt": "2026-11-04T09:07:16.813Z",
+      "delaySeconds": 16.813,
       "marketState": "unknown",
       "points": [
         {
@@ -355,6 +355,10 @@
         {
           "at": "2026-11-04T08:45:00.000Z",
           "pct": 0.6607581788076189
+        },
+        {
+          "at": "2026-11-04T09:00:00.000Z",
+          "pct": 0.7749040963458853
         }
       ]
     },
@@ -369,9 +373,9 @@
       "verification": "verified",
       "redistribution": "permitted",
       "availability": "available",
-      "asOf": "2026-11-04T08:45:00.000Z",
-      "observedAt": "2026-11-04T08:58:03.549Z",
-      "delaySeconds": 3.549,
+      "asOf": "2026-11-04T09:00:00.000Z",
+      "observedAt": "2026-11-04T09:07:16.813Z",
+      "delaySeconds": 16.813,
       "marketState": "unknown",
       "points": [
         {
@@ -533,6 +537,10 @@
         {
           "at": "2026-11-04T08:45:00.000Z",
           "pct": 1.3809754585423661
+        },
+        {
+          "at": "2026-11-04T09:00:00.000Z",
+          "pct": 1.282303168428367
         }
       ]
     },
@@ -547,9 +555,9 @@
       "verification": "verified",
       "redistribution": "permitted",
       "availability": "available",
-      "asOf": "2026-11-04T08:45:00.000Z",
-      "observedAt": "2026-11-04T08:58:03.549Z",
-      "delaySeconds": 3.549,
+      "asOf": "2026-11-04T09:00:00.000Z",
+      "observedAt": "2026-11-04T09:07:16.813Z",
+      "delaySeconds": 16.813,
       "marketState": "unknown",
       "points": [
         {
@@ -711,6 +719,10 @@
         {
           "at": "2026-11-04T08:45:00.000Z",
           "pct": 0.9425175467289826
+        },
+        {
+          "at": "2026-11-04T09:00:00.000Z",
+          "pct": 1.2137856308411132
         }
       ]
     },
@@ -725,9 +737,9 @@
       "verification": "verified",
       "redistribution": "permitted",
       "availability": "available",
-      "asOf": "2026-11-04T08:45:00.000Z",
-      "observedAt": "2026-11-04T08:58:03.549Z",
-      "delaySeconds": 3.549,
+      "asOf": "2026-11-04T09:00:00.000Z",
+      "observedAt": "2026-11-04T09:07:16.813Z",
+      "delaySeconds": 16.813,
       "marketState": "unknown",
       "points": [
         {
@@ -889,6 +901,10 @@
         {
           "at": "2026-11-04T08:45:00.000Z",
           "pct": 5.150327919971276
+        },
+        {
+          "at": "2026-11-04T09:00:00.000Z",
+          "pct": 4.916780710815982
         }
       ]
     },
@@ -903,9 +919,9 @@
       "verification": "verified",
       "redistribution": "permitted",
       "availability": "available",
-      "asOf": "2026-11-04T08:45:00.000Z",
-      "observedAt": "2026-11-04T08:58:03.549Z",
-      "delaySeconds": 3.549,
+      "asOf": "2026-11-04T09:00:00.000Z",
+      "observedAt": "2026-11-04T09:07:16.813Z",
+      "delaySeconds": 16.813,
       "marketState": "unknown",
       "points": [
         {
@@ -1067,6 +1083,10 @@
         {
           "at": "2026-11-04T08:45:00.000Z",
           "pct": 1.2738651213588525
+        },
+        {
+          "at": "2026-11-04T09:00:00.000Z",
+          "pct": 1.5668518942172138
         }
       ]
     },
@@ -1190,28 +1210,28 @@
       "metric": "ReferenceRateUSD",
       "frequency": "1m",
       "sourceUrl": "https://gitbook-docs.coinmetrics.io/coin-metrics-prices/coin-metrics-prices/reference-rate-metrics",
-      "requestUrl": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics?assets=btc%2Ceth%2Chype%2Czec%2Cxmr&metrics=ReferenceRateUSD&frequency=1m&page_size=1000&paging_from=start&start_time=2026-11-03T23%3A00%3A00.000Z&end_time=2026-11-04T08%3A58%3A00.000Z",
+      "requestUrl": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics?assets=btc%2Ceth%2Chype%2Czec%2Cxmr&metrics=ReferenceRateUSD&frequency=1m&page_size=1000&paging_from=start&start_time=2026-11-03T23%3A00%3A00.000Z&end_time=2026-11-04T09%3A07%3A00.000Z",
       "licenseName": "CC BY-NC 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
       "attribution": "Data: Coin Metrics. Sampling and percentage changes by this dashboard.",
       "attributionUrl": "https://coinmetrics.io/",
       "transformation": "1분 복합 기준가격에서 정확한 15분 시각만 표본 추출. 당일 08:00 KST 기준으로 등락률 계산. 원가격 문자열 보존; 보간하지 않음.",
-      "observedAt": "2026-11-04T08:58:03.549Z",
+      "observedAt": "2026-11-04T09:07:16.813Z",
       "requestedStartAt": "2026-11-03T23:00:00.000Z",
-      "requestedEndAt": "2026-11-04T08:58:00.000Z",
-      "pages": 3,
+      "requestedEndAt": "2026-11-04T09:07:00.000Z",
+      "pages": 4,
       "series": [
         {
           "id": "cm-btc-usd-2026-11-04-0800-kst-v1",
           "asset": "btc",
-          "observedAt": "2026-11-04T08:58:03.549Z",
+          "observedAt": "2026-11-04T09:07:16.813Z",
           "baseline": {
             "at": "2026-11-03T23:00:00.000Z",
             "value": "77786.4"
           },
           "latest": {
-            "at": "2026-11-04T08:58:00.000Z",
-            "value": "78323.68"
+            "at": "2026-11-04T09:07:00.000Z",
+            "value": "78300.34"
           },
           "samples": [
             {
@@ -1373,20 +1393,24 @@
             {
               "at": "2026-11-04T08:45:00.000Z",
               "value": "78300.38"
+            },
+            {
+              "at": "2026-11-04T09:00:00.000Z",
+              "value": "78389.17"
             }
           ]
         },
         {
           "id": "cm-eth-usd-2026-11-04-0800-kst-v1",
           "asset": "eth",
-          "observedAt": "2026-11-04T08:58:03.549Z",
+          "observedAt": "2026-11-04T09:07:16.813Z",
           "baseline": {
             "at": "2026-11-03T23:00:00.000Z",
             "value": "2290.41"
           },
           "latest": {
-            "at": "2026-11-04T08:58:00.000Z",
-            "value": "2318.39"
+            "at": "2026-11-04T09:07:00.000Z",
+            "value": "2317.56"
           },
           "samples": [
             {
@@ -1548,20 +1572,24 @@
             {
               "at": "2026-11-04T08:45:00.000Z",
               "value": "2322.04"
+            },
+            {
+              "at": "2026-11-04T09:00:00.000Z",
+              "value": "2319.78"
             }
           ]
         },
         {
           "id": "cm-hype-usd-2026-11-04-0800-kst-v1",
           "asset": "hype",
-          "observedAt": "2026-11-04T08:58:03.549Z",
+          "observedAt": "2026-11-04T09:07:16.813Z",
           "baseline": {
             "at": "2026-11-03T23:00:00.000Z",
             "value": "85.6"
           },
           "latest": {
-            "at": "2026-11-04T08:58:00.000Z",
-            "value": "86.53"
+            "at": "2026-11-04T09:07:00.000Z",
+            "value": "86.6799149834609"
           },
           "samples": [
             {
@@ -1723,20 +1751,24 @@
             {
               "at": "2026-11-04T08:45:00.000Z",
               "value": "86.40679502"
+            },
+            {
+              "at": "2026-11-04T09:00:00.000Z",
+              "value": "86.6390005"
             }
           ]
         },
         {
           "id": "cm-zec-usd-2026-11-04-0800-kst-v1",
           "asset": "zec",
-          "observedAt": "2026-11-04T08:58:03.549Z",
+          "observedAt": "2026-11-04T09:07:16.813Z",
           "baseline": {
             "at": "2026-11-03T23:00:00.000Z",
             "value": "1226.91082901984"
           },
           "latest": {
-            "at": "2026-11-04T08:58:00.000Z",
-            "value": "1284.175389"
+            "at": "2026-11-04T09:07:00.000Z",
+            "value": "1289.00064602425"
           },
           "samples": [
             {
@@ -1898,20 +1930,24 @@
             {
               "at": "2026-11-04T08:45:00.000Z",
               "value": "1290.10076"
+            },
+            {
+              "at": "2026-11-04T09:00:00.000Z",
+              "value": "1287.235344"
             }
           ]
         },
         {
           "id": "cm-xmr-usd-2026-11-04-0800-kst-v1",
           "asset": "xmr",
-          "observedAt": "2026-11-04T08:58:03.549Z",
+          "observedAt": "2026-11-04T09:07:16.813Z",
           "baseline": {
             "at": "2026-11-03T23:00:00.000Z",
             "value": "633.121544616887"
           },
           "latest": {
-            "at": "2026-11-04T08:58:00.000Z",
-            "value": "642.8751597"
+            "at": "2026-11-04T09:07:00.000Z",
+            "value": "642.734699787669"
           },
           "samples": [
             {
@@ -2073,6 +2109,10 @@
             {
               "at": "2026-11-04T08:45:00.000Z",
               "value": "641.18665914957"
+            },
+            {
+              "at": "2026-11-04T09:00:00.000Z",
+              "value": "643.041621531414"
             }
           ]
         }
