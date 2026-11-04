@@ -1,14 +1,49 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T08:08:34.165Z",
-  "observedAt": "2026-11-04T08:07:54Z",
+  "publishedAt": "2026-11-04T09:17:49.825Z",
+  "observedAt": "2026-11-04T09:16:54Z",
   "checkStatus": "partial",
-  "headline": "17:07 KST: 알래스카 상원 선두 변경, 하원238·146",
-  "body": "DDHQ 알래스카 상원은 Sullivan2589표 선두로 바뀌었고 미시시피 Colom 격차는2169표로 줄었다. 상원54·44와 주지사27·20은 유지, 하원은238·146으로 증가했다. MT01·OH10·TX09 판단을 추가하고 Hawaii 및 TX23·SC01의 이전 호출 표시 누락을 보완했다. 진행 집계·언론 판단과 공식 인증을 구분한다.",
-  "unknown": "알래스카 독립 수치·남은 표, 미시시피 최종 결과, Nevada 실제 개표 상태, 전국 인증·재검표·운영사고와 시장 인과는 미확인.",
-  "gap": "Oregon 주지사 조회 실패, Alaska 공식502·시간초과, Nevada 공식 자동 접근 금지로 중단. 카운티 내부 페이지·하원435석·주민투표·법원 및 전국 공식 교차검증 미완료.",
+  "headline": "11/4 18:16KST: 상원54·44 유지, Nevada 주지사 집계 확인",
+  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R. Nevada 주지사 Ford 선두 집계가 표시됐으나 미판정. Alaska 상원 Sullivan 선두2,150표로 축소. 상하원 민주 지배권 언론 판단은 유지되며 공식 인증과 구분한다.",
+  "unknown": "Nevada 공식 교차검증, Alaska 남은 표와 공식 집계, Oregon 주지사 원문, 하원 증가6석의 개별 구성·시각, 전국 인증·법원·재검표·운영 변화. 집계율은 제공자 추정치로 공식 투표구 보고율과 다르다.",
+  "gap": "상원35·주지사36 개별 경선 중 Oregon 주지사는 접근 실패. Alaska 공식 결과502, Nevada 공식 자동접근 차단 유지. 하원435개·카운티/투표구 페이지 전수 확인과 전국 공식 교차검증은 미완료. 시장 반응은 이번 회차에서 수치 확인하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T09:16:54Z",
+      "kind": "개표 관찰",
+      "title": "Nevada 주지사 자료 공백 해소, Ford 선두·당선 판단 없음",
+      "text": "이전 조회의 집계 대기 화면과 달리 DDHQ는 Aaron Ford 393,690표 51.53%, Joe Lombardo 339,946표 44.50%를 표시한다. 전체 표시 합계 763,929표, 추정 집계 68%이며 선두 격차는 53,744표다. 당선 판단은 없고 공식 인증 결과가 아니다. Clark와 Washoe는 Ford 우세로 표시되지만 남은 표 종류·정확한 분모와 최종 결과는 미확인이다.",
+      "evidence": "11월4일 09:16UTC/18:16KST 조회. DDHQ 갱신 03:23EST=08:23UTC/17:23KST. 17개 카운티 목록은 단일 페이지로 확인했으나 대부분 상세 남은 표는 가려져 있다. 공식 Nevada 집계는 이전 자동접근 차단을 우회하지 않아 교차검증하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T09:16:54Z",
+      "kind": "개표 관찰",
+      "title": "상원54·44와 주지사27·20 판단 유지, 미판정 경합지 추적",
+      "text": "DDHQ 상원은 민주54·공화44, 주지사는 민주27·공화20으로 이전 관찰과 같다. 상원 수치는 비선거 보유34·31과 이번 판단20·13을 합친 값이다. Alaska 상원 Sullivan 99,557표 대 Peltola 97,407표로 선두2,150표, 이전2,589표보다439표 축소됐다. Mississippi 상원 Colom461,370 대 Hyde-Smith459,201, Kansas 주지사 Holscher546,533 대 Masterson540,636은 표본값과 미판정 상태가 유지됐다. 언론 판단과 비공식 집계이며 인증이 아니다.",
+      "evidence": "실제 조회09:14–09:16UTC/18:14–18:16KST. Alaska 자료 갱신03:12EST=08:12UTC, Mississippi02:01EST=07:01UTC, Kansas03:13EST=08:13UTC. Alaska 공식 결과 조회502. 35개 상원·36개 주지사 경선 개별 페이지를 모두 시도했으며 Oregon 주지사 원문은 접근 실패로 기존 기록 보존.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T09:16:54Z",
+      "kind": "판세 관찰",
+      "title": "하원 판단 합계241·149, 지배권 판단 유지",
+      "text": "DDHQ 하원 판단 합계는 민주241·공화149로 직전238·146보다 각각3석 증가했다. 정당 전환 표시는 민주32·공화2이며 이전 공화1에서 증가했다. 그러나 최근 판단 목록은 이전 TX09·MT01·OH10·TX23·SC01과 같아 합계 증가6석의 개별 구성·판단 시각은 모두 대조하지 못했다. TN09 Brent Taylor의01:14EST 판단은 이번에 직접 확인한 과거 시각의 근거이며 이번 시각의 신규 당선 판단으로 발표하지 않는다. 하원 민주 지배권 판단은 유지되고 Pulse 예상257·178은 당선 판단 합계와 별개다.",
+      "evidence": "11월4일09:14–09:16UTC/18:14–18:16KST 조회. TN09 판단·집계 갱신01:14EST=06:14UTC/15:14KST, Taylor111,968표·Pearson109,429표. 하원 목록 전체와 주요5경선 개별 페이지를 확인했으나435개 개별 결과·county pagination·공식 인증은 전수 확인하지 못했다. 전체 법원·재검표·선거운영 변화도 완전 점검되지 않았다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/tennessee-us-house-9-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T08:07:54Z",
       "kind": "경합지 변화",
