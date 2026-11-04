@@ -1,14 +1,25 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T17:27:58.938Z",
-  "observedAt": "2026-11-04T17:27:41Z",
+  "publishedAt": "2026-11-04T18:01:01.938Z",
+  "observedAt": "2026-11-04T18:00:34Z",
   "checkStatus": "partial",
-  "headline": "11/5 02:27 — Chainalysis KYT·주소 스크리닝 중단 확대",
-  "body": "Chainalysis가 이상 활동에 대응해 거래 감시 KYT의 화면·API와 주소 스크리닝 제품, 로그인 페이지도 중단했다고 추가 확인했다. 비밀번호 재설정 불가 안내는 유지된다. Coinbase 제한과 Arkéa 사건은 기존 기록과 대조해 중복 경보에서 제외했다. GitBook 정상 표시와 Mercado 유지보수는 유지됐다.",
-  "unknown": "Chainalysis 추가 침해·고객사 영향 범위·운영 재개 시각·실제 수정 시각, 기존 사고의 독립 복구 검증과 추가 회수.",
-  "gap": "공식 상태·사고 공지와 제한된 검색의 부분 점검이다. 전체 X 피드·모든 프로토콜·독립 온체인 재계산은 미완료다. 제공사의 운영 설명을 고객사 전반의 피해나 독립 보안 검증으로 일반화하지 않았다.",
+  "headline": "11/5 03:00 — Binance PoR 44토큰 확대·전체 증명 대기",
+  "body": "Binance 새 공식 공시의 검색 수록 본문에서 44토큰 준비금 스냅샷 확대를 확인했다. 전체 영지식 증명은50~60시간 예상이며 아직 검증 완료가 아니다. Chainalysis 거래 감시·로그인 중단과 비밀번호 재설정 불가, Coinbase AERO·VELO 송수신 비활성은 기존 상태다. GitBook 사고 해소 공지와 Mercado 유지보수도 유지됐다.",
+  "unknown": "Binance 공시 표시 시각의 시간대·전체 증명 생성 완료·독립 준비금 검증·전면 출금 재개, Chainalysis 안전한 운영 재개와 고객사 영향, 기존 사건의 실제 회수.",
+  "gap": "공식 상태·사고 공지·검색 수록 공식 본문을 부분 확인했다. Binance 새 공시 직접 페이지 조회는 실패했다. 전체 X 피드·모든 프로토콜·독립 온체인 및 준비금 재계산은 미완료다.",
   "feed": [
+    {
+      "at": "2026-11-04T18:00:34Z",
+      "kind": "공식 복구 공시",
+      "title": "Binance 새 PoR 범위 44토큰·전체 증명은 생성 대기",
+      "text": "Binance Update 7은 새 준비금 스냅샷의 범위를 이전 10개에서 44개 토큰으로 확대했다고 밝혔다. 전체 영지식 증명은 생성에 약 50~60시간이 걸릴 예정으로 완료되지 않았다. 98% 보충은 기존 발표 수치이며 공격자 자금 회수나 전면 출금 복구를 뜻하지 않는다.",
+      "evidence": "조회 11월 4일 18:00 UTC, 한국시간 11월 5일03:00. 스냅샷 기준은11월4일00:00 UTC·09:00 KST다. 공시의15:23 표시는 시간대 미확인이다. 공식 Support와 공식 Square 공시의 검색 수록 본문은 일치했지만 직접 페이지 조회는 실패했다. 실제 준비금·증명·모든 자산 출금 완료의 독립 검증은 미완료다.",
+      "sources": [
+        "https://www.binance.com/en-GB/support/announcement/security-incident-recovery-update-7-98-of-stolen-assets-replenished-and-new-por-snapshot-with-expanded-coverage-2026-11-04-c6ba9aa726974fc6b9332a2c8f63b405",
+        "https://www.binance.com/en/square/post/384674399709556"
+      ]
+    },
     {
       "at": "2026-11-04T17:27:41Z",
       "kind": "공식 운영 영향 확대",
