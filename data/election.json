@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T13:46:31.475Z",
-  "observedAt": "2026-11-04T13:46:03.498Z",
+  "publishedAt": "2026-11-04T14:02:19.396Z",
+  "observedAt": "2026-11-04T14:01:54.867Z",
   "checkStatus": "partial",
-  "headline": "11/4 22:45KST: 확인 가능한 DDHQ 수치·판단 유지",
-  "body": "상원35·주지사36개 개별 경선을 재점검. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R과 열람 가능한 개별 수치·당선 판단 유지. Oregon 원문 및 일부 공식·언론 자료 확인 한계가 있어 전체 변화 없음으로 단정하지 않는다.",
+  "headline": "11/4 23:01KST: DDHQ 주요 당선 판단 유지·일부 집계 증가",
+  "body": "상원35·주지사36개 경합 원문을 점검했다. Maine 상원·주지사와 Maryland 주지사 집계가 증가했지만 확인 가능한 당선 판단은 유지됐다. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R이다. 언론 판단이며 공식 인증 결과가 아니다.",
   "unknown": "Oregon 주지사 원문, Alaska·Nevada·Kansas 최신 공식 대조, Mississippi 언론별 집계 시점·수치 차이, 전국 법원·재검표·인증 및 하원435석 개별 대조.",
-  "gap": "상원35·주지사36개 개별 페이지 중 Oregon 주지사 접근 실패. 일부 공식·언론 본문 접근 실패 및 자료 시차 지속. 카운티 하위 페이지·하원435개·전국 운영사고·주민투표 전수 점검은 미완료. 시장 반응은 이번 회차 수치 확인하지 않았다.",
+  "gap": "Oregon 주지사 DDHQ 원문 접근 실패. New Mexico 공식 조회403 및 Mississippi 최신 공식 수치 미게시로 대조 제한. Alaska·Nevada·Kansas 최신 공식 집계, 전국 법원·재검표·인증·주민투표, 하원435개 개별 및 카운티 하위 전수 확인 미완료. 시장 반응 수치는 확인하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T14:01:54.867Z",
+      "kind": "부분 관찰",
+      "title": "14:00 점검: DDHQ 판단 유지·Maine 집계 증가",
+      "text": "상원35·주지사36개 DDHQ 개별 페이지를 재조회했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 접근 가능한 당선 판단은 유지됐다. Maine 상원 Jackson354,076표·Collins302,500표, 주지사 Pingree365,067표·Charles243,710표로 집계가 늘었지만 기존 당선 판단은 같다. Maryland 주지사 소폭 집계 증가도 판정 변화가 아니다. Alaska·Mississippi 상원과 Alaska·Kansas·Nevada 주지사는 DDHQ 미판정이다.",
+      "evidence": "실제 조회11월4일14:00–14:01UTC/23:00–23:01KST. Maine 상원 갱신08:44EST=13:44UTC, 주지사08:48EST=13:48UTC. Maryland 주지사08:30EST=13:30UTC. Michigan 상원은 갱신시각08:34EST만 바뀌고 수치는 같았다. AZ05·MI04 집계·미판정 유지. Mississippi 공식 목록에는11월 총선 링크가 없어 공식 수치 대조 불가. New Mexico 공식 조회403. 언론 당선 판단은 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maryland-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T13:46:03.498Z",
       "kind": "부분 관찰",
