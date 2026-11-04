@@ -1,14 +1,32 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T22:31:41.208Z",
-  "observedAt": "2026-11-04T22:31:25.090Z",
+  "publishedAt": "2026-11-04T22:47:33.156Z",
+  "observedAt": "2026-11-04T22:47:18.018Z",
   "checkStatus": "partial",
-  "headline": "07:31 KST 부분 확인: 의석 유지·미판정 격차 소폭 변동",
-  "body": "11월5일 07:30–07:31 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 당선 판단은 동일하다. Arizona2 Crane우세991→966표, Minnesota1 Johnson우세322→321표로 소폭 좁혀졌지만 모두 미판정이다. Texas22 Nehls 당선 판단 유지. 상원35·주지사36개 중70개 및 하원9개를 읽었다. Tennessee 주지사는 다시 확인됐고 Oregon 주지사는 실패했다. Texas 상원의 앞선 단일 후보177059표 증가 원인은 여전히 독립 검증되지 않았다.",
+  "headline": "07:47 KST 부분 확인: 의석 유지·Kansas 격차 변동",
+  "body": "11월5일 07:45–07:47 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 개별 당선 판단은 동일하다. 하원9개 표본의 득표·판정도 직전과 같다. Kansas 주지사 Holscher 우세는5585→5850표로 늘었지만 미판정이다. 상원35·주지사36개 중70개를 읽었고 Oregon 주지사는 실패했다. Texas 상원의 앞선 단일 후보177059표 증가와 Massachusetts 주지사 앞선 수치 감소 원인은 여전히 독립 검증되지 않았다.",
   "unknown": "Texas 상원 단일 후보 표시증가의 지역·표 유형·공식 근거, Massachusetts 주지사 앞선 수치 감소 원인, Oregon 주지사 원문, 미판정 경합 공식대조·남은 표 분포.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502, Mississippi 본선 집계와 Arizona 결과 미확인. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T22:47:18.018Z",
+      "kind": "부분 확인",
+      "title": "의석·하원 표본 판정 유지, Kansas 주지사 미판정",
+      "text": "11월5일 07:45–07:47 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 개별 당선 판단은 동일하다. 하원9개 표본의 득표·판정도 직전과 같다. Kansas 주지사 Holscher 우세는5585→5850표로 늘었지만 미판정이다. 상원35·주지사36개 중70개를 읽었고 Oregon 주지사는 실패했다. Texas 상원의 앞선 단일 후보177059표 증가와 Massachusetts 주지사 앞선 수치 감소 원인은 여전히 독립 검증되지 않았다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회22:45–22:47 UTC. Kansas 주지사 원자료 Nov4 17:33 EST=22:33 UTC=Nov5 07:33 KST, Holscher547512·Masterson541662, 총1089174. 추가표의 지역·종류와 공식 집계 대조는 미완료이므로 단순 격차 증가를 당선 판단으로 바꾸지 않는다. Colorado·New Hampshire·Massachusetts 등 기존 판정 경합의 득표와 일부 자료시각이 갱신됐지만 판정 변경은 확인되지 않았다. Alaska 공식502, Mississippi 공식목록 본선 미표시, Arizona 공식 결과는 템플릿만 표시됐다. Texas 공식403은 이전 확인 한계이며 우회하지 않았다. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수는 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-22-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T22:31:25.090Z",
       "kind": "부분 확인",
