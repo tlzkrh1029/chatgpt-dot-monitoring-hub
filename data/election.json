@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T13:17:24.160Z",
-  "observedAt": "2026-11-04T13:17:04.542Z",
+  "publishedAt": "2026-11-04T13:32:30.711Z",
+  "observedAt": "2026-11-04T13:31:57.338Z",
   "checkStatus": "partial",
-  "headline": "11/4 22:17KST: DDHQ 주요 판단 유지, 공식 자료 일부 확인",
-  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. 상원35·주지사36개 중 Oregon 원문 접근 실패. California 집계 증가와 New Mexico 비공식 투표구 보고 현황을 확인했으며 새 당선 판단·공식 인증으로 해석하지 않는다.",
+  "headline": "11/4 22:31KST: DDHQ 판단 유지, Maine 표 집계 증가",
+  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. 상원35·주지사36개를 재점검했고 Oregon 원문 접근 실패. Maine 상원·주지사 집계 증가만 확인됐으며 새 당선 판단이나 공식 인증으로 해석하지 않는다.",
   "unknown": "Oregon 주지사 원문, Alaska·Nevada·Kansas 최신 공식 대조, Mississippi 언론별 집계 시점·수치 차이, 전국 법원·재검표·인증 및 하원435석 개별 대조.",
   "gap": "상원35·주지사36개 개별 페이지 중 Oregon 주지사 접근 실패. 일부 공식·언론 본문 접근 실패 및 자료 시차 지속. 카운티 하위 페이지·하원435개·전국 운영사고·주민투표 전수 점검은 미완료. 시장 반응은 이번 회차 수치 확인하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T13:31:57.338Z",
+      "kind": "부분 관찰",
+      "title": "13:30 점검: DDHQ 판단 유지, Maine 집계 증가",
+      "text": "상원35·주지사36개 DDHQ 개별 페이지를 재조회했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 접근 가능한 개별 당선 판단은 이전과 같다. Maine 상원 Jackson351,692표·Collins299,235표, 주지사 Pingree362,035표·Charles240,152표로 증가했지만 기존 판단은 유지됐다. Texas·Michigan 주지사는 갱신시각이 변했어도 표 수치는 같아 새 개표 진전으로 세지 않았다.",
+      "evidence": "조회11월4일13:31UTC/22:31KST. Maine 상원 집계08:15EST=13:15UTC, 주지사08:17EST=13:17UTC. Texas 주지사08:11EST=13:11UTC, Michigan08:25EST=13:25UTC 표시는 수치 불변. 주지사 총괄08:04EST=13:04UTC. Kansas 공식 본문과 Reuters 본문 접근 실패로 검색색인 내용을 새 독립 검증으로 다루지 않는다. 상원 Alaska·Mississippi 및 주지사 Alaska·Kansas·Nevada DDHQ 미판정 유지. 공식 인증·전국 법원·재검표·주민투표·하원435개·카운티 하위·시장 수치 전수 확인은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T13:17:04.542Z",
       "kind": "부분 관찰",
