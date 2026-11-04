@@ -11,14 +11,22 @@
   // this list is still shown, as a plain label without signal styling.
   const KIND_STYLES = Object.freeze({ '새 사실': 'k-new', '정정': 'k-new', '누락 보완': 'k-base', '참고': 'k-note',
     '확인 제한': 'k-quiet', '변화 없음': 'k-quiet', '기준점': 'k-base', '감시 설정': 'k-set' });
-  const KIND_RANK = Object.freeze({ '새 사실': 0, '정정': 0, '감시 설정': 1, '기준점': 2, '누락 보완': 2, '참고': 3,
-    '확인 제한': 3, '변화 없음': 4 });
+  // Order of same-time records. Kinds outside the table rank with '참고', so a
+  // run written with legacy kinds keeps the writer's order.
+  const KIND_RANK = Object.freeze({ '새 사실': 0, '정정': 0, '감시 설정': 1, '기준점': 2, '누락 보완': 3, '참고': 3,
+    '확인 제한': 4, '변화 없음': 4 });
+  const UNLISTED_RANK = 3;
   // The six kinds monitoring jobs write. '기준점' and '감시 설정' stay displayable for
   // existing base records but are not part of the writing vocabulary.
   const WRITER_KINDS = Object.freeze(['새 사실', '정정', '누락 보완', '참고', '확인 제한', '변화 없음']);
   // Records shown dimmed: quiet checks and the two low-signal kinds.
   const DIM_KINDS = Object.freeze(['변화 없음', '확인 제한']);
   const isDim = item => Boolean(item && (item.isQuiet || DIM_KINDS.includes(item.kind)));
+  // Newest first; within one time, dimmed records go last so they never head a
+  // check run, then signal kinds come before the rest.
+  const rankOf = item => KIND_RANK[item.kind] ?? UNLISTED_RANK;
+  const compareRecords = (a, b) => Date.parse(b.at) - Date.parse(a.at)
+    || Number(isDim(a)) - Number(isDim(b)) || rankOf(a) - rankOf(b);
   const displayKey = key => key === 'onchain' ? 'security' : key;
   const subtype = key => SUBTYPES[key] || '';
   const matches = (item, key) => key === 'all' || displayKey(item.category) === displayKey(key);
@@ -116,7 +124,8 @@
     try { u = new URL(url); } catch (_) { return { url, name: String(url || ''), detail: '', api: false }; }
     const host = u.hostname.toLowerCase().replace(/^www\./, '');
     const known = SOURCE_NAMES.find(([pattern]) => pattern.test(host));
-    let detail = `${u.pathname.replace(/\/+$/, '')}${u.search}`;
+    // The address without the scheme, so readers see the real domain as well.
+    let detail = `${host}${u.pathname.replace(/\/+$/, '')}${u.search}`;
     try { detail = decodeURIComponent(detail); } catch (_) { /* keep the encoded path */ }
     return { url, name: known ? known[1] : host, detail, api: /\/api\//i.test(u.pathname) };
   }
@@ -125,6 +134,6 @@
     const sources = (urls || []).map(sourceInfo);
     return { sources, names: [...new Set(sources.map(source => source.name))] };
   }
-  return Object.freeze({ SECURITY_NAME, KIND_STYLES, KIND_RANK, WRITER_KINDS, DIM_KINDS, isDim, displayKey, subtype,
-    matches, categories, groupFeed, sourceInfo, sourceSummary });
+  return Object.freeze({ SECURITY_NAME, KIND_STYLES, KIND_RANK, WRITER_KINDS, DIM_KINDS, isDim, compareRecords,
+    displayKey, subtype, matches, categories, groupFeed, sourceInfo, sourceSummary });
 });

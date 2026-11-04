@@ -75,3 +75,39 @@ test('sentence boundaries skip abbreviations, initials, decimals and times', () 
   // "EST." ends a sentence even though "est." could be an abbreviation in English prose.
   assert.equal(T.sentences('판정은 21:13 EST. 집계는 계속됐다.').length, 2);
 });
+
+test('quotations and brackets never end a sentence or a paragraph inside them', () => {
+  const quoted = 'Binance는 공지에서 “일부 사용자의 출금이 네트워크 혼잡으로 약 40분 동안 지연됐으며 현재는 모든 출금이 정상적으로 처리되고 있다. 사용자 자금은 모두 안전하게 보관되어 있으며 이번 지연은 보안 사고와 관계가 없다.”라고 밝혔다. Binance 상태 페이지에는 같은 시각 출금 지연 표시가 남아 있었다.';
+  for (const part of T.paragraphs(quoted)) assert.equal((part.match(/“/g) || []).length, (part.match(/”/g) || []).length, part);
+  assert.equal(T.sentences('Binance 공지는 “출금이 지연됐다. 사용자 자금은 안전하다.”라는 문구까지 직전 기록과 같다.').length, 1);
+  assert.equal(T.sentences('ZachXBT는 "피해 기관은 A다. 피해액은 B다."라고 주장했다. 은행은 확인하지 않았다.').length, 2);
+  assert.equal(T.sentences("공지는 '출금이 지연됐다. 자금은 안전하다.'라는 문구가 같다.").length, 1);
+  // Apostrophes are not quotation marks.
+  assert.equal(T.sentences("Binance's 공지는 같다. GitBook’s 공지도 같다.").length, 2);
+  assert.deepEqual(T.sentences('미국(U.S.) 국채 10년물 금리는 4.12%로 올랐다. VIX는 18.2로 내렸다.'),
+    ['미국(U.S.) 국채 10년물 금리는 4.12%로 올랐다.', 'VIX는 18.2로 내렸다.']);
+  assert.equal(T.sentences('갱신 표시(Nov. 4, 2026, 12:58 a.m.)는 시간대가 없어 변환하지 않았다. 둘째 문장이다.').length, 2);
+});
+
+test('dotted dates and case names are not sentence ends', () => {
+  assert.deepEqual(T.sentences('업비트 공지의 게시 표시는 2026. 11. 4. 오전 4:42이며 시간대 표시가 없다. 다음 문장이다.'),
+    ['업비트 공지의 게시 표시는 2026. 11. 4. 오전 4:42이며 시간대 표시가 없다.', '다음 문장이다.']);
+  assert.equal(T.sentences('기준 연도는 2026. 다음 문장이다.').length, 2);
+  assert.deepEqual(T.sentences('원고 측은 Purcell v. Gonzalez 판결을 근거로 들었다. 주정부는 반박했다.'),
+    ['원고 측은 Purcell v. Gonzalez 판결을 근거로 들었다.', '주정부는 반박했다.']);
+});
+
+test('a single soft-wrapped block is split like the same text without the newline', () => {
+  const soft = 'Kansas 주정부의 비공식 집계에서 Holscher 후보는 546,587표, Masterson 후보는 541,030표를 얻었다. DDHQ의 Kansas 집계는 18:57에 갱신된 값이며 두 후보의 격차 5,557표는 직전 기록과 같다. Kansas의 투표구 4,168곳이 모두 보고됐지만\n공식 인증까지 끝났다는 뜻은 아니다.';
+  const parts = T.paragraphs(soft);
+  assert.deepEqual(parts, T.paragraphs(soft.replace('\n', ' ')));
+  assert.deepEqual(T.paragraphs(parts.join('\n\n')), parts);
+});
+
+test('long runs of punctuation, quotes or particles stay fast', () => {
+  const inputs = ['앞 문장이다. ' + '-'.repeat(7980) + 'x 다.', '가' + '.'.repeat(7999), '"'.repeat(8000),
+    '앞이다.' + '”'.repeat(7990) + ' 뒤다.', '가도 '.repeat(2600) + '같다.'];
+  const started = Date.now();
+  for (const input of inputs) { T.paragraphs(input); T.sentences(input); }
+  assert.ok(Date.now() - started < 1000, `took ${Date.now() - started}ms`);
+});

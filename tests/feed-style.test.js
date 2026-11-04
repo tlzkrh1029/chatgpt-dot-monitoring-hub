@@ -83,3 +83,48 @@ test('category summaries follow the title rules for headline and the sentence ru
   assert.ok(warnings.every(w => !['paragraphs', 'kind-vocabulary', 'text-length'].includes(w.rule)));
   assert.deepEqual(lintSummary({ headline: 'GitBook 동기화 장애 추가', body: '장애가 이어지고 있다.', unknown: '', gap: '' }), []);
 });
+
+test('titles may name a reference time but not a record time, and never start with a digit', () => {
+  for (const title of ['15:15 점검: 일부 집계 증가', '12:16 UTC 기준 BTC 상승', '5,557표 차 Holscher 우세', 'Kansas 집계, 11월 4일 갱신', 'Kansas 2026-11-04 집계'])
+    assert.ok(rules({ title }).includes('title-time'), title);
+  for (const title of ['오전 9시 대비 BTC 1.54%, ETH 2.12% 상승', 'Kansas 주지사 경합, 주정부 비공식 집계도 Holscher 5,557표 우세'])
+    assert.ok(!rules({ title }).includes('title-time'), title);
+  assert.deepEqual(lintSummary({ headline: '15:15 기준 Kansas 집계 갱신' }).map(w => w.rule), ['title-time']);
+});
+
+test('precision, sentence endings, ordinals and thousands separators follow the guide', () => {
+  assert.ok(rules({ text: 'USDT는 1달러보다 13.27bp 낮다.' }).includes('precision'));
+  assert.ok(!rules({ text: 'USDT는 1달러보다 13.3bp 낮다.' }).includes('precision'));
+  assert.ok(rules({ title: '오전 9시 대비 BTC 1.5370% 상승' }).includes('precision'));
+  assert.ok(rules({ text: 'Kansas 집계는 같다. 추가 확인 필요.' }).includes('noun-ending'));
+  assert.ok(rules({ text: '동결 해제3건이 공지됐다.' }).includes('spacing-number'));
+  assert.ok(!rules({ text: '제9연방항소법원과 (제2차) 회의가 이어졌다.' }).includes('spacing-number'));
+  assert.ok(rules({ text: 'Holscher 후보는 546587표를 얻었다.' }).includes('thousands'));
+  assert.ok(rules({ text: '투표구 4168곳이 보고됐다.' }).includes('thousands'));
+  assert.ok(!rules({ text: '투표구 4,168곳이 2026년 11월 4일 20:08에 보고됐다.' }).includes('thousands'));
+});
+
+test('quoted claims count as one sentence, as on screen', () => {
+  assert.deepEqual(rules({ kind: '변화 없음', text: 'Binance 공지는 “출금이 지연됐다. 사용자 자금은 안전하다.”라는 문구까지 직전 기록과 같다.' }), []);
+  assert.ok(!rules({ text: 'ZachXBT는 “피해 기관은 A다. 피해액은 B다.”라고 주장했다. A는 아직 확인하지 않았다.' }).includes('paragraphs'));
+});
+
+test('summary fields stay single paragraphs and unreadable files are reported, not thrown', () => {
+  assert.deepEqual(lintSummary({ headline: '보안 상황 유지', body: 'A가 이어진다.\n\nB가 늘었다.' }).map(w => w.rule), ['summary-newline']);
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const path = require('node:path');
+  const { main } = require('../scripts/lint-feed-style.js');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-feed-'));
+  for (const key of ['macro', 'election', 'security', 'xr', 'onchain'])
+    fs.writeFileSync(path.join(dir, `${key}.json`), JSON.stringify({ headline: '상황 유지', body: '변화가 없다.', feed: [] }));
+  fs.writeFileSync(path.join(dir, 'macro.json'), '{ "feed": [ { "text": "첫 단락이다.\n둘째 단락이다." } ] }');
+  const lines = [];
+  const log = console.log;
+  console.log = line => lines.push(String(line));
+  try {
+    assert.equal(main([], dir), 0);
+    assert.equal(main(['--strict'], dir), 1);
+  } finally { console.log = log; fs.rmSync(dir, { recursive: true, force: true }); }
+  assert.ok(lines.some(line => line.includes('macro.json을 읽거나 JSON으로 해석하지 못했습니다')));
+});

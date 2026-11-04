@@ -116,6 +116,7 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
 .cat { font-size: 13px; font-weight: 600; color: var(--c, var(--text-2)); }
 .item-text { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text-2); text-wrap: pretty; }
 .item.is-quiet .item-text { font-size: 14px; color: var(--muted); }
+.item.is-quiet .item-title { font-size: 15px; font-weight: 600; color: var(--text-3); }
 .item-text p, .basis-text p { margin: 0; }
 .item-text p + p { margin-top: 10px; }
 .basis-text p + p { margin-top: 6px; }
@@ -140,10 +141,11 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
 .basis-label { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 600; color: var(--muted); }
 .basis-text { margin: 0; font-size: 13px; line-height: 1.65; color: var(--text-3); text-wrap: pretty; }
 .src-list { list-style: none; margin: 0; padding: 0; }
-.src { display: flex; align-items: baseline; gap: 10px; min-height: 32px; padding: 6px 0; color: var(--text-2); font-size: 13px; text-decoration: none; }
+.src { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; min-height: 32px; padding: 6px 0; color: var(--text-2); font-size: 13px; text-decoration: none; }
 .src-list li + li .src { border-top: 1px solid var(--line); }
-.src-name { flex: none; font-weight: 600; }
-.src-path { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--mono); font-size: 12px; color: var(--muted-2); }
+.src-name { flex: 0 1 auto; min-width: 0; font-weight: 600; overflow-wrap: anywhere; }
+/* The whole address wraps instead of being cut, so sibling links stay distinguishable. */
+.src-path { flex: 1 1 12em; min-width: 0; overflow-wrap: anywhere; font-family: var(--mono); font-size: 12px; color: var(--muted-2); }
 .src-tag { flex: none; padding: 0 5px; border: 1px solid var(--line-strong); border-radius: 3px; font-size: 11px; line-height: 16px; color: var(--muted); }
 .src::after { content: '↗'; content: '↗' / ''; flex: none; margin-left: auto; padding-left: 8px; color: var(--muted-2); }
 .src:hover .src-name, .src:focus-visible .src-name { color: var(--link); text-decoration: underline; }
@@ -255,6 +257,8 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 @media (max-width: 600px) {
   .related-history > summary { margin-left: 62px; }
   .basis-names { display: block; padding-left: 17px; }
+  .src::after { order: 1; }
+  .src-path { order: 2; flex-basis: 100%; }
   .basis-names::before { content: none; }
 }
 .source-check + .source-check { margin-top: 10px; }
@@ -349,8 +353,8 @@ html[data-view] .page-tabs { display:none; }
 <script src="public-data.js?v=20261104-security-label"></script>
 <script src="refresh-client.js"></script>
 <script src="manual-refresh.js?v=20261104-refresh-outcome"></script>
-<script src="display-data.js?v=20261104-dim-kinds"></script>
-<script src="feed-text.js?v=20261104-paragraphs"></script>
+<script src="display-data.js?v=20261105-record-order"></script>
+<script src="feed-text.js?v=20261105-quotes"></script>
 <script>
 (() => {
   'use strict';
@@ -361,7 +365,6 @@ html[data-view] .page-tabs { display:none; }
   const state = { data: null, cat: 'all', showQuiet: false, statuses: {}, baseError: '', lastFetchAt: null, revision: -1 };
 
   const KIND_CLASS = MonitorView.KIND_STYLES;
-  const KIND_RANK = MonitorView.KIND_RANK;
   const STATUS_CLASS = { '진행 중': 's-progress', '관찰 중': 's-watch', '확인 대기': 's-wait', '해소': 's-done' };
 
   const $ = (id) => document.getElementById(id);
@@ -374,7 +377,9 @@ html[data-view] .page-tabs { display:none; }
   // Stable per-record key so an opened method/source panel survives re-rendering.
   const recordKey = (x) => {
     let h = 5381;
-    for (const ch of `${x.category}|${x.at}|${x.title}|${x.text}`) h = (h * 33 + ch.charCodeAt(0)) >>> 0;
+    // The same identity composeData uses, so records it keeps apart get separate keys.
+    const id = JSON.stringify([x.category, x.at, x.kind, x.title, x.text, x.timeBasis || 'observation', x.sources || [], x.evidence || '']);
+    for (const ch of id) h = (h * 33 + ch.charCodeAt(0)) >>> 0;
     return h.toString(36);
   };
 
@@ -560,14 +565,16 @@ html[data-view] .page-tabs { display:none; }
     if (state.showQuiet) {
       items = items.concat(quiet.map((q) => ({ at: q.at, category: q.category, kind: '변화 없음', evidence: '', text: q.text, isQuiet: true })));
     }
-    items.sort((a, b) => Date.parse(b.at) - Date.parse(a.at) || (KIND_RANK[a.kind] ?? 9) - (KIND_RANK[b.kind] ?? 9));
+    items.sort(MonitorView.compareRecords);
 
     const count = (kind) => base.filter((x) => x.kind === kind).length;
     const groups = MonitorView.groupFeed(items);
-    const parts = [`기록 ${base.length}건`, '최신순', '시각은 한국시간(KST) 관찰 시각'];
+    const parts = [`기록 ${base.length}건`, '최신순'];
     const extra = count('기준점') + count('감시 설정');
     if (extra) parts.push(`기준점과 설정 ${extra}`);
     if (state.showQuiet) parts.push(`변화 없음 ${quiet.length}`);
+    // Notification records carry their own label; every other time is an observation time.
+    parts.push('시각은 한국시간(KST)이며, 따로 표시하지 않은 시각은 관찰 시각입니다');
     $('feed-summary').textContent = parts.join(' · ');
 
     const toggle = $('quiet-toggle'); toggle.hidden = true;
@@ -585,10 +592,13 @@ html[data-view] .page-tabs { display:none; }
           const dim = MonitorView.isDim(x);
           const kind = KIND_CLASS[x.kind] ? `<span class="badge ${KIND_CLASS[x.kind]}">${esc(x.kind)}</span>`
             : x.kind ? `<span class="kind">${esc(x.kind)}</span>` : '';
-          const timeLabel = x.timeBasis === 'notification' ? '<span class="time-basis">알림 전달 시각</span>' : '';
+          const timeLabel = x.timeBasis === 'notification' ? '알림 전달 시각' : '';
+          const timeCell = continued
+            ? `<span class="sr-only">${esc(timeText(x.at, ref))}${timeLabel ? ` ${timeLabel}` : ''}</span>`
+            : `${timeHtml(x.at, ref)}${timeLabel ? `<span class="time-basis">${timeLabel}</span>` : ''}`;
           return `
             <div class="item${dim ? ' is-quiet' : ''}${continued ? ' is-continued' : ''}" data-record-category="${esc(x.category)}">
-              <time datetime="${esc(x.at)}">${continued ? `<span class="sr-only">${esc(timeText(x.at, ref))}</span>` : timeHtml(x.at, ref)}${timeLabel}</time>
+              <time datetime="${esc(x.at)}">${timeCell}</time>
               <div class="item-body">
                 <div class="item-meta">
                   <span class="item-where${continued ? ' sr-only' : ''}"><span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span>${MonitorView.subtype(x.category) ? `<span class="source-label">${esc(MonitorView.subtype(x.category))}</span>` : ''}</span>
@@ -683,7 +693,15 @@ html[data-view] .page-tabs { display:none; }
       : focusDetail ? document.querySelector(`[data-detail="${focusDetail}"] > summary`)
       : focusSummary === 'foot' ? $('foot').querySelector('summary')
       : focusSummary === 'rules' ? document.querySelector('.rules summary') : null;
-    if (nextFocus && nextFocus !== document.activeElement && focus !== document.body) nextFocus.focus({ preventScroll: true });
+    // A refresh can move the focused record under a closed related history, where it
+    // cannot take focus (closed content still reports layout boxes, so check the tree).
+    // Focus the summary of the outermost closed <details> that hides it instead.
+    let target = nextFocus;
+    let hider = null;
+    for (let p = target && target.parentElement; p; p = p.parentElement)
+      if (p.tagName === 'DETAILS' && !p.open && !p.querySelector(':scope > summary')?.contains(target)) hider = p;
+    if (hider) target = hider.querySelector(':scope > summary');
+    if (target && target !== document.activeElement && focus !== document.body) target.focus({ preventScroll: true });
   }
 
   function jumpTo(id) {

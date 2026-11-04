@@ -33,8 +33,13 @@
     'Dr.', 'St.', 'No.', 'Prof.', 'Gov.', 'Sen.', 'Rep.', 'Gen.', 'Mt.', 'Fig.', 'Vol.', 'Jan.', 'Feb.',
     'Mar.', 'Apr.', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Sept.', 'Oct.', 'Nov.', 'Dec.']);
   // Case-insensitive only for Latin-phrase abbreviations ("EST." must stay a real end).
-  const ABBR_ANYCASE = new Set(['e.g.', 'i.e.', 'vs.', 'etc.', 'cf.', 'approx.']);
+  // "v." covers case names such as "Purcell v. Gonzalez".
+  const ABBR_ANYCASE = new Set(['e.g.', 'i.e.', 'vs.', 'v.', 'etc.', 'cf.', 'approx.']);
   const CLOSERS = '["\'”’)\\]」』>]';
+  const CLOSER_SET = new Set(['"', '\'', '”', '’', ')', ']', '」', '』', '>']);
+  // Opening quotes and brackets with the character that closes them. Straight
+  // double quotes toggle; ’ closes only an open ‘, since it is also an apostrophe.
+  const PAIRS = Object.freeze({ '“': '”', '‘': '’', '「': '」', '『': '』', '(': ')', '[': ']' });
 
   function width(s) {
     let w = 0;
@@ -53,19 +58,50 @@
       /^[A-Z]\.$/.test(tok) || /^(?:[A-Za-z]{1,3}\.){2,}$/.test(tok); // "J.", "U.K.", "Ph.D."
   }
 
+  // A token of 1-4 digits followed by "." that belongs to a dotted date such as
+  // "2026. 11. 4." (the token before or after it is also a dotted number).
+  function inDottedDate(s, tokStart, dot) {
+    if (!/^\d{1,4}$/.test(s.slice(tokStart, dot))) return false;
+    const before = s.slice(s.lastIndexOf(' ', tokStart - 2) + 1, Math.max(0, tokStart - 1));
+    return /^\d{1,4}\.$/.test(before) || /^ \d{1,2}\./.test(s.slice(dot + 1, dot + 5));
+  }
+
   // Sentences of one whitespace-collapsed block: they end at . ? ! (plus closing
-  // quotes or brackets) followed by a space.
+  // quotes or brackets) followed by a space, but never inside an open quotation
+  // or bracket. One linear pass, so long runs of punctuation cannot stall it.
   function splitSentences(s) {
     const out = [];
-    const re = new RegExp(`[.?!]+${CLOSERS}*(?= )`, 'g');
-    let start = 0, m;
-    while ((m = re.exec(s))) {
-      const end = m.index + m[0].length;
-      if (m[0][0] === '.' && !/[?!]/.test(m[0])) {
-        const tokStart = s.lastIndexOf(' ', m.index) + 1;
+    const open = []; // closers expected for the quotes and brackets now open
+    let straight = false; // inside an ASCII "…" quote
+    let single = false;   // inside an ASCII '…' quote
+    let start = 0;
+    // An ASCII ' opens a quote at the start of a word and closes it unless a Latin
+    // letter or digit follows, so apostrophes such as "Binance's" are ignored.
+    const track = k => {
+      const ch = s[k];
+      if (ch === '"') straight = !straight;
+      else if (ch === '\'') {
+        if (!single && /[\s(\[“‘"]/.test(k ? s[k - 1] : ' ') && s[k + 1] && s[k + 1] !== ' ') single = true;
+        else if (single && !/[A-Za-z0-9]/.test(s[k + 1] || '')) single = false;
+      } else if (PAIRS[ch]) open.push(PAIRS[ch]);
+      else if (open.length && ch === open[open.length - 1]) open.pop();
+    };
+    for (let i = 0; i < s.length; i++) {
+      const ch = s[i];
+      if (ch !== '.' && ch !== '?' && ch !== '!') { track(i); continue; }
+      let end = i;
+      let periodsOnly = true;
+      while (end < s.length && '.?!'.includes(s[end])) { if (s[end] !== '.') periodsOnly = false; end++; }
+      while (end < s.length && CLOSER_SET.has(s[end])) track(end++);
+      const boundary = s[end] === ' ' && !open.length && !straight && !single;
+      i = end - 1;
+      if (!boundary) continue;
+      if (periodsOnly) {
+        const tokStart = s.lastIndexOf(' ', end - 1) + 1;
         const core = s.slice(tokStart, end).replace(/^[("'“‘[「『<]+/, '');
         if (isAbbrev(core)) continue;                                      // bare token only
         if (tokStart === start && /^\(?\d{1,2}\.$/.test(core)) continue;   // "1. " list marker
+        if (inDottedDate(s, tokStart, s.indexOf('.', tokStart))) continue; // "2026. 11. 4."
       }
       out.push(s.slice(start, end));
       start = end + 1;
@@ -122,16 +158,25 @@
 
   // Korean drops a subject repeated from the previous sentence: a verb-final
   // sentence with no subject- or topic-marked word continues it.
+  // Trailing characters are trimmed with a backward loop: a regex anchored only at
+  // the end retries from every offset and turns quadratic on long runs.
+  function trimTrailing(s, keep) {
+    let end = s.length;
+    while (end > 0 && !keep(s[end - 1])) end--;
+    return s.slice(0, end);
+  }
+  const isWordChar = ch => /[\p{L}\p{N}]/u.test(ch);
+
   function subjectless(sent) {
     if (!/다\.$/.test(sent)) return false;
-    const toks = sent.split(' ').slice(0, -1).map(t => t.replace(/[^\p{L}\p{N}]+$/u, ''));
+    const toks = sent.split(' ').slice(0, -1).map(t => trimTrailing(t, isWordChar));
     return !toks.some(t => /(?:은|는|이|가|도|께서|에서|에선)$/.test(t));
   }
 
   // The splitter's boundary may be false: "(U.S.)", "Ph.D.", "Nov." at the end of
   // a token, an inline "1." list number, or a quote continued by a quotative particle.
   function weakBoundary(prev, sent) {
-    const tail = prev.replace(new RegExp(`${CLOSERS}+$`), '');
+    const tail = trimTrailing(prev, ch => !CLOSER_SET.has(ch));
     const tok = tail.slice(Math.max(tail.lastIndexOf(' '), tail.lastIndexOf('('), tail.lastIndexOf('[')) + 1);
     if (isAbbrev(tok)) return true;
     if (/^\d{1,2}\.$/.test(tok) && tail.length > tok.length) return true;
@@ -210,18 +255,31 @@
     return blocks;
   }
 
+  function blocksOf(raw) {
+    return raw.includes('\n') ? writerBlocks(raw) : [raw.replace(/\s+/g, ' ')];
+  }
+
+  // A text that forms one block (no newline, or only soft wraps) is split
+  // automatically; writer paragraphs stay, unless one is wider than EXPLICIT_LONG.
   function paragraphs(text) {
     const raw = normalized(text);
     if (!raw) return [];
-    if (!raw.includes('\n')) return autoSplit(raw.replace(/\s+/g, ' '));
-    return writerBlocks(raw).flatMap(b => (width(b) > EXPLICIT_LONG ? autoSplit(b) : [b]));
+    const blocks = blocksOf(raw);
+    if (blocks.length === 1) return autoSplit(blocks[0]);
+    return blocks.flatMap(b => (width(b) > EXPLICIT_LONG ? autoSplit(b) : [b]));
   }
 
-  // Sentences in reading order, using the same boundaries as paragraphs().
+  // Sentences in reading order, with the boundaries paragraphs() can break at:
+  // pieces split at a false boundary ("(U.S.)", "Ph.D.", a quotative particle)
+  // are joined back to the sentence they belong to.
   function sentences(text) {
     const raw = normalized(text);
     if (!raw) return [];
-    return (raw.includes('\n') ? writerBlocks(raw) : [raw.replace(/\s+/g, ' ')]).flatMap(splitSentences);
+    return blocksOf(raw).flatMap(block => splitSentences(block).reduce((joined, piece) => {
+      if (joined.length && weakBoundary(joined[joined.length - 1], piece)) joined[joined.length - 1] += ` ${piece}`;
+      else joined.push(piece);
+      return joined;
+    }, []));
   }
 
   return Object.freeze({ paragraphs, sentences, width });

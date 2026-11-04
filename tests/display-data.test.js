@@ -183,12 +183,13 @@ test('security and onchain publications update independently inside the same fou
 test('source labels name the publisher, keep the exact URL and mark raw API responses', () => {
   const okx = V.sourceInfo('https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT');
   assert.deepEqual(okx, { url: 'https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT', name: 'OKX',
-    detail: '/api/v5/market/ticker?instId=BTC-USDT', api: true });
+    detail: 'okx.com/api/v5/market/ticker?instId=BTC-USDT', api: true });
   assert.equal(V.sourceInfo('https://votes.decisiondeskhq.com/balance-of-power/2026/house').name, 'DDHQ');
-  assert.equal(V.sourceInfo('https://x.com/USAnt_IDEA/status/2117892586572828717').detail, '/USAnt_IDEA/status/2117892586572828717');
-  assert.equal(V.sourceInfo('https://status.coinbase.com/').detail, '');
+  // The address keeps the real domain, so a publisher label never hides where a link goes.
+  assert.equal(V.sourceInfo('https://x.com/USAnt_IDEA/status/2117892586572828717').detail, 'x.com/USAnt_IDEA/status/2117892586572828717');
+  assert.equal(V.sourceInfo('https://status.coinbase.com/').detail, 'status.coinbase.com');
   assert.equal(V.sourceInfo('https://elections.hawaii.gov/wp-content/results/2026%20General/histatewide.pdf').detail,
-    '/wp-content/results/2026 General/histatewide.pdf');
+    'elections.hawaii.gov/wp-content/results/2026 General/histatewide.pdf');
   // Unknown publishers stay visible by hostname instead of disappearing behind a generic label.
   const unknown = V.sourceInfo('https://news.example.org/story/1');
   assert.equal(unknown.name, 'news.example.org');
@@ -222,4 +223,21 @@ test('dimmed records never head a subject group, so substantive history stays on
   assert.ok(!V.isDim(incident) && !V.isDim(follow) && !V.isDim(null));
   assert.ok(V.isDim({ isQuiet: true, kind: '참고' }));
   assert.deepEqual(V.DIM_KINDS, ['변화 없음', '확인 제한']);
+});
+
+test('same-time records keep the writer order, put signal kinds first and dimmed records last', () => {
+  const at = '2026-11-04T03:43:03Z';
+  const price = { at, kind: '가격·페그 관찰', title: 'price' };
+  const ops = { at, kind: '운영·지연 거시자료', title: 'ops' };
+  const limit = { at, kind: '확인 제한', title: 'limit' };
+  const fresh = { at, kind: '새 사실', title: 'fresh' };
+  const missed = { at, kind: '누락 보완', title: 'missed' };
+  const quiet = { at, kind: '변화 없음', title: 'quiet' };
+  const newer = { at: '2026-11-04T04:00:00Z', kind: '변화 없음', title: 'newer' };
+  // A run written with legacy kinds keeps its order; a dimmed record never heads it.
+  assert.deepEqual([price, ops, limit].sort(V.compareRecords), [price, ops, limit]);
+  assert.deepEqual([limit, price, ops].sort(V.compareRecords), [price, ops, limit]);
+  assert.deepEqual([quiet, missed, price, fresh, limit].sort(V.compareRecords).map(r => r.title),
+    ['fresh', 'missed', 'price', 'quiet', 'limit']);
+  assert.deepEqual([price, newer].sort(V.compareRecords), [newer, price]);
 });
