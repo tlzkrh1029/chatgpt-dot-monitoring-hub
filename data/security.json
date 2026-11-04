@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T18:01:01.938Z",
-  "observedAt": "2026-11-04T18:00:34Z",
+  "publishedAt": "2026-11-04T19:25:21.588Z",
+  "observedAt": "2026-11-04T19:25:21.588Z",
   "checkStatus": "partial",
-  "headline": "11/5 03:00 — Binance PoR 44토큰 확대·전체 증명 대기",
-  "body": "Binance 새 공식 공시의 검색 수록 본문에서 44토큰 준비금 스냅샷 확대를 확인했다. 전체 영지식 증명은50~60시간 예상이며 아직 검증 완료가 아니다. Chainalysis 거래 감시·로그인 중단과 비밀번호 재설정 불가, Coinbase AERO·VELO 송수신 비활성은 기존 상태다. GitBook 사고 해소 공지와 Mercado 유지보수도 유지됐다.",
-  "unknown": "Binance 공시 표시 시각의 시간대·전체 증명 생성 완료·독립 준비금 검증·전면 출금 재개, Chainalysis 안전한 운영 재개와 고객사 영향, 기존 사건의 실제 회수.",
-  "gap": "공식 상태·사고 공지·검색 수록 공식 본문을 부분 확인했다. Binance 새 공시 직접 페이지 조회는 실패했다. 전체 X 피드·모든 프로토콜·독립 온체인 및 준비금 재계산은 미완료다.",
+  "headline": "11/5 04:25 — 기존 보안 대응 유지·추가 확정 변화 미확인",
+  "body": "Chainalysis 거래 감시·주소 스크리닝·로그인 중단 및 비밀번호 재설정 불가, Coinbase AERO·VELO 송수신 제한과 Sonic 지연은 유지됐다. Binance 44토큰 스냅샷 공시와 전체 증명 생성 대기도 기존 내용이다. GitBook은 정상 운영·사고 해소 공지를 유지하며 Mercado 상태와 분석 수치도 이전 확인과 같다.",
+  "unknown": "Chainalysis 안전한 서비스·재설정 재개와 고객사 영향, Binance 전체 증명 완료·독립 준비금 검증·전면 출금 재개, GitBook 사후보고서, 기존 사건의 실제 반환 및 최종 피해액.",
+  "gap": "공식 상태·사고 공지와 검색 수록 공식 본문을 부분 확인했다. Binance 직접 페이지 접근 한계와 Arkéa 직접 조회 제한을 유지한다. 전체 X 피드·모든 프로토콜 전수 확인·독립 온체인 및 준비금 재계산은 미완료다.",
   "feed": [
+    {
+      "at": "2026-11-04T19:25:21.588Z",
+      "kind": "부분 점검",
+      "title": "기존 보안 대응 재확인·새 확정 변화 미확인",
+      "text": "Chainalysis 거래 감시·주소 스크리닝·로그인 중단 및 비밀번호 재설정 불가, Coinbase AERO·VELO 송수신 제한과 Sonic 지연은 유지됐다. Binance 44토큰 스냅샷 공시와 전체 증명 생성 대기도 기존 내용이다. GitBook은 정상 운영·사고 해소 공지를 유지하며 Mercado 상태와 분석 수치도 이전 확인과 같다.",
+      "evidence": "조회 11월 4일19:24~19:25 UTC, 한국시간11월5일04:24~04:25. Arkéa 후속 설명과 GitHub 운영 해소는 별도 온체인·거시 기록 및 기존 알림과 대조해 중복 경보에서 제외했다. 새 확정 침해·독립 검증된 회수·전면 복구는 확인 범위에서 찾지 못했으며 검색 부재를 사건 부재로 판단하지 않는다.",
+      "sources": [
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.coinbase.com/",
+        "https://www.binance.com/en-GB/support/announcement/security-incident-recovery-update-7-98-of-stolen-assets-replenished-and-new-por-snapshot-with-expanded-coverage-2026-11-04-c6ba9aa726974fc6b9332a2c8f63b405",
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://www.gitbookstatus.com/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack"
+      ]
+    },
     {
       "at": "2026-11-04T18:00:34Z",
       "kind": "공식 복구 공시",
