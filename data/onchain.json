@@ -1,14 +1,26 @@
 {
   "schemaVersion": 1,
   "category": "onchain",
-  "publishedAt": "2026-11-04T06:45:50.496Z",
-  "observedAt": "2026-11-04T06:45:37Z",
+  "publishedAt": "2026-11-04T08:14:48.063Z",
+  "observedAt": "2026-11-04T08:14:36Z",
   "checkStatus": "partial",
   "headline": "EU 기관명 의혹 후속 확인 — 새 공식 확인 미확인",
   "body": "텔레그램의 기존 기관명 주장과 분석 자료는 이전 점검과 동일했다. 새 자금 회수·확정 손실 확대·공식 정정은 확인하지 못했다.",
   "unknown": "피해 기관·실제 손실·OTC 포함 규모·공격 경로·은행 및 수사기관의 공식 확인.",
   "gap": "텔레그램 채널 공개 미리보기·은행 홈페이지·기존 분석 페이지의 부분 확인. X는 앞선 접근 승인 처리 오류 이후 재확인하지 못했으며, 전체 피드·미디어·편집 이력·독립 온체인 재계산은 미확인.",
   "feed": [
+    {
+      "at": "2026-11-04T08:14:36Z",
+      "kind": "부분 점검",
+      "title": "EU 피해 의혹 공개자료 확인 — 본문 변화 미확인",
+      "text": "텔레그램 최신 공개 미리보기는 기존 기관명 주장까지 동일했다. 은행 홈페이지와 Bitquery 분석에서도 새 사건 확인문이나 수정된 분석 수치를 확인하지 못했다. 조회·반응 수 변화는 새 사건 근거로 세지 않았다.",
+      "evidence": "기관명과 피해액은 작성자 주장이다. Bitquery 수치는 이전 분석 시점의 값이며 현재 잔액 검증이 아니다. X 직접 확인·전체 편집 이력·미디어·독립 온체인 재계산은 미완료다.",
+      "sources": [
+        "https://t.me/s/investigations",
+        "https://www.cm-arkea.com/arkea/banque/assurances/j_6/fr/accueil",
+        "https://www.bitquery.io/investigations/eu-106m-crypto-theft"
+      ]
+    },
     {
       "at": "2026-11-04T06:45:37Z",
       "kind": "부분 점검",
