@@ -349,7 +349,8 @@ html[data-view] .page-tabs { display:none; }
 <script src="public-data.js?v=20261104-security-label"></script>
 <script src="refresh-client.js"></script>
 <script src="manual-refresh.js?v=20261104-refresh-outcome"></script>
-<script src="display-data.js?v=20261104-paragraphs"></script>
+<script src="display-data.js?v=20261104-dim-kinds"></script>
+<script src="feed-text.js?v=20261104-paragraphs"></script>
 <script>
 (() => {
   'use strict';
@@ -369,7 +370,7 @@ html[data-view] .page-tabs { display:none; }
   const safeUrl = (v) => (/^https?:\/\//i.test(v || '') ? v : '');
   const anchorId = (key) => 'ev-' + String(key || '').toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
   // Feed text and evidence: writers' line breaks, or sentence-boundary splits, become paragraphs.
-  const paragraphsHtml = (text) => MonitorView.paragraphs(text).map(p => `<p>${esc(p)}</p>`).join('');
+  const paragraphsHtml = (text) => MonitorText.paragraphs(text).map(p => `<p>${esc(p)}</p>`).join('');
   // Stable per-record key so an opened method/source panel survives re-rendering.
   const recordKey = (x) => {
     let h = 5381;
@@ -581,7 +582,7 @@ html[data-view] .page-tabs { display:none; }
     // category for screen readers but does not repeat them visually.
     const recordHtml = (x, continued = false) => {
           const c = cats.get(x.category) || { name: x.category, color: '#8B95A5' };
-          const dim = x.isQuiet || x.kind === '변화 없음';
+          const dim = MonitorView.isDim(x);
           const kind = KIND_CLASS[x.kind] ? `<span class="badge ${KIND_CLASS[x.kind]}">${esc(x.kind)}</span>`
             : x.kind ? `<span class="kind">${esc(x.kind)}</span>` : '';
           const timeLabel = x.timeBasis === 'notification' ? '<span class="time-basis">알림 전달 시각</span>' : '';

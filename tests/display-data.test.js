@@ -207,23 +207,19 @@ test('source summaries keep every link and list each publisher once in first-see
     assert.equal(V.sourceSummary(row.sources).sources.length, (row.sources || []).length);
 });
 
-test('paragraphs keep writer line breaks, accept empty input and never change the text', () => {
-  assert.deepEqual(V.paragraphs('A는 첫 단락이다.\n\nB는 둘째 단락이다. C도 같은 단락이다. D도 같은 단락이다.'),
-    ['A는 첫 단락이다.', 'B는 둘째 단락이다. C도 같은 단락이다. D도 같은 단락이다.']);
-  assert.deepEqual(V.paragraphs('A는 첫 줄이다.\nB는 둘째 줄이다.'), ['A는 첫 줄이다.', 'B는 둘째 줄이다.']);
-  for (const empty of ['', ' \n\n ', undefined, null]) assert.deepEqual(V.paragraphs(empty), []);
-  assert.deepEqual(V.paragraphs('한 문장뿐이다.'), ['한 문장뿐이다.']);
-  // Every published text and evidence note survives splitting character for character.
-  const norm = s => s.replace(/\s+/g, ' ').trim();
-  for (const row of composeCurrent().feed) for (const value of [row.text, row.evidence].filter(Boolean)) {
-    const parts = V.paragraphs(value);
-    assert.ok(parts.length >= 1 && parts.every(part => part.trim()));
-    assert.equal(norm(parts.join(' ')), norm(value));
+test('dimmed records never head a subject group, so substantive history stays on top', () => {
+  const incident = record({ at: '2026-11-04T01:00:00Z', kind: '새 사실', title: 'Binance confirms a breach', text: 'Binance published its report.' });
+  const quiet = record({ at: '2026-11-04T05:00:00Z', kind: '변화 없음', title: 'Binance unchanged', text: 'Binance notices are unchanged.' });
+  const limited = record({ at: '2026-11-04T06:00:00Z', kind: '확인 제한', title: 'Binance page unavailable', text: 'The Binance page did not open.' });
+  const follow = record({ at: '2026-11-04T03:00:00Z', kind: '정정', title: 'Binance revises its estimate', text: 'Binance revised the estimate.' });
+  const groups = V.groupFeed([incident, quiet, limited, follow]);
+  const binance = groups.find(group => group.key === 'binance');
+  assert.deepEqual(binance.records, [follow, incident]);
+  for (const dim of [quiet, limited]) {
+    assert.ok(V.isDim(dim));
+    assert.deepEqual(groups.find(group => group.records.includes(dim)).records, [dim]);
   }
-});
-
-test('sentence boundaries skip abbreviations, initials, decimals and times', () => {
-  assert.deepEqual(V.sentences('U.S. 하원 결과가 나왔다. Mr. Kim은 J. Smith와 만났다. 0.9985와 10:47:58.559 UTC는 한 문장이다!'),
-    ['U.S. 하원 결과가 나왔다.', 'Mr. Kim은 J. Smith와 만났다.', '0.9985와 10:47:58.559 UTC는 한 문장이다!']);
-  assert.deepEqual(V.sentences('첫 줄이다\n둘째 줄이다.'), ['첫 줄이다', '둘째 줄이다.']);
+  assert.ok(!V.isDim(incident) && !V.isDim(follow) && !V.isDim(null));
+  assert.ok(V.isDim({ isQuiet: true, kind: '참고' }));
+  assert.deepEqual(V.DIM_KINDS, ['변화 없음', '확인 제한']);
 });

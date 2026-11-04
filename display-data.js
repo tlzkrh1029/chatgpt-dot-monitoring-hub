@@ -13,6 +13,12 @@
     '확인 제한': 'k-quiet', '변화 없음': 'k-quiet', '기준점': 'k-base', '감시 설정': 'k-set' });
   const KIND_RANK = Object.freeze({ '새 사실': 0, '정정': 0, '감시 설정': 1, '기준점': 2, '누락 보완': 2, '참고': 3,
     '확인 제한': 3, '변화 없음': 4 });
+  // The six kinds monitoring jobs write. '기준점' and '감시 설정' stay displayable for
+  // existing base records but are not part of the writing vocabulary.
+  const WRITER_KINDS = Object.freeze(['새 사실', '정정', '누락 보완', '참고', '확인 제한', '변화 없음']);
+  // Records shown dimmed: quiet checks and the two low-signal kinds.
+  const DIM_KINDS = Object.freeze(['변화 없음', '확인 제한']);
+  const isDim = item => Boolean(item && (item.isQuiet || DIM_KINDS.includes(item.kind)));
   const displayKey = key => key === 'onchain' ? 'security' : key;
   const subtype = key => SUBTYPES[key] || '';
   const matches = (item, key) => key === 'all' || displayKey(item.category) === displayKey(key);
@@ -41,7 +47,9 @@
     ['chainalysis', 'Chainalysis', /\bChainalysis\b/i],
   ];
   function subject(item) {
-    if (!subtype(item.category) || item.isQuiet) return null;
+    // A dimmed record never heads a subject group, where it would fold the
+    // substantive records about that subject beneath it.
+    if (!subtype(item.category) || isDim(item)) return null;
     const title = SUBJECTS.filter(([, , pattern]) => pattern.test(item.title || ''));
     const body = SUBJECTS.filter(([, , pattern]) => pattern.test(item.text || ''));
     // A single-subject title cannot turn a multi-subject roundup into one case.
@@ -112,43 +120,11 @@
     try { detail = decodeURIComponent(detail); } catch (_) { /* keep the encoded path */ }
     return { url, name: known ? known[1] : host, detail, api: /\/api\//i.test(u.pathname) };
   }
-  // Sentences end at . ! ? followed by whitespace, except after an abbreviation
-  // or a single initial ("U.S. 하원", "J. Smith"). A newline always ends one.
-  const NOT_SENTENCE_END = /(?:^|[^A-Za-z.])(?:U\.S|U\.K|e\.g|i\.e|vs|Inc|Corp|Co|Ltd|Jr|Sr|Mr|Ms|Mrs|Dr|St|No|[A-Z])\.$/;
-  function sentences(text) {
-    const result = [];
-    for (const line of String(text || '').split(/\n+/)) {
-      const boundary = /[.!?]+(?=\s)/g;
-      let start = 0;
-      let m;
-      while ((m = boundary.exec(line))) {
-        const end = m.index + m[0].length;
-        if (NOT_SENTENCE_END.test(line.slice(start, end))) continue;
-        const sentence = line.slice(start, end).trim();
-        if (sentence) result.push(sentence);
-        start = end;
-      }
-      const rest = line.slice(start).trim();
-      if (rest) result.push(rest);
-    }
-    return result;
-  }
-  // Paragraphs for feed text and evidence. Writers' newlines always win; text
-  // without newlines is split only at sentence boundaries, never rewritten.
-  function paragraphs(text) {
-    const raw = String(text || '');
-    if (/\n/.test(raw)) return raw.split(/\n+/).map(p => p.replace(/\s+/g, ' ').trim()).filter(Boolean);
-    const all = sentences(raw);
-    if (all.length < 3) return all.length ? [raw.replace(/\s+/g, ' ').trim()] : [];
-    const result = [];
-    for (let i = 0; i < all.length; i += 2) result.push(all.slice(i, i + 2).join(' '));
-    return result;
-  }
   // One summary per record: distinct source names in first-seen order.
   function sourceSummary(urls) {
     const sources = (urls || []).map(sourceInfo);
     return { sources, names: [...new Set(sources.map(source => source.name))] };
   }
-  return Object.freeze({ SECURITY_NAME, KIND_STYLES, KIND_RANK, displayKey, subtype, matches, categories, groupFeed,
-    sourceInfo, sourceSummary, sentences, paragraphs });
+  return Object.freeze({ SECURITY_NAME, KIND_STYLES, KIND_RANK, WRITER_KINDS, DIM_KINDS, isDim, displayKey, subtype,
+    matches, categories, groupFeed, sourceInfo, sourceSummary });
 });
