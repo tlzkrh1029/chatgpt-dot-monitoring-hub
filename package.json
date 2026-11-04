@@ -1,0 +1,10 @@
+{
+  "name": "chatgpt-dot-monitoring-hub",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "validate": "node scripts/validate-publication.js"
+  },
+  "engines": { "node": ">=18" }
+}
