@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T21:00:33.590Z",
-  "observedAt": "2026-11-04T21:00:33.590Z",
+  "publishedAt": "2026-11-04T22:00:37.695Z",
+  "observedAt": "2026-11-04T22:00:37.695Z",
   "checkStatus": "partial",
-  "headline": "11/5 06:00 — 기존 보안 대응 유지·추가 확정 변화 미확인",
+  "headline": "11/5 07:00 — 기존 보안 대응 유지·추가 확정 변화 미확인",
   "body": "GitBook 사후보고의 고객 데이터 노출 가능 범위·서명키 대응 지침과 정상 운영 표시는 유지됐다. Chainalysis 제품·로그인 중단 및 재설정 불가, Coinbase AERO·VELO 송수신 제한·Sonic 지연, Mercado 유지보수도 이전 상태다. Binance 검색 수록 공시는 기존 복구 업데이트 7이며 전체 증명 완료를 새로 확인하지 못했다.",
   "unknown": "GitBook 고객별 실제 접근·유출·저장소 변경과 독립 보안 검증, Chainalysis 안전한 재개, Binance 전체 증명 완료·전면 출금, 기존 사건의 최종 손실·반환.",
   "gap": "공식 공지·상태와 검색 수록 공식 자료를 부분 확인했다. Binance 직접 조회 한계와 Arkéa 직접 접근 제한은 유지한다. 전체 X 피드·모든 프로토콜 및 독립 온체인 재계산은 미완료다.",
   "feed": [
+    {
+      "at": "2026-11-04T22:00:37.695Z",
+      "kind": "부분 점검",
+      "title": "GitBook 후속 지침 유지·추가 확정 변화 미확인",
+      "text": "GitBook 사후보고의 고객 데이터 노출 가능 범위·서명키 대응 지침과 정상 운영 표시는 유지됐다. Chainalysis 제품·로그인 중단 및 재설정 불가, Coinbase AERO·VELO 송수신 제한·Sonic 지연, Mercado 유지보수도 이전 상태다. Binance 검색 수록 공시는 기존 복구 업데이트 7이며 전체 증명 완료를 새로 확인하지 못했다.",
+      "evidence": "실제 조회 11월4일22:00 UTC, 한국시간11월5일07:00. 직전 GitBook 사후보고 알림과 온체인·거시 기록을 대조했다. 신규 중대 침해·독립 검증된 반환·전면 복구는 확인 범위에서 미확인이다. 검색 결과 부재나 같은 공시 재노출을 사건 부재·새 사건으로 판단하지 않는다.",
+      "sources": [
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://www.gitbookstatus.com/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.coinbase.com/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack",
+        "https://www.binance.com/en-GB/support/announcement/security-incident-recovery-update-7-98-of-stolen-assets-replenished-and-new-por-snapshot-with-expanded-coverage-2026-11-04-c6ba9aa726974fc6b9332a2c8f63b405"
+      ]
+    },
     {
       "at": "2026-11-04T21:00:33.590Z",
       "kind": "부분 점검",
