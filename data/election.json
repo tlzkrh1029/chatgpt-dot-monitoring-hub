@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T16:32:20.616Z",
-  "observedAt": "2026-11-04T16:31:47.419Z",
+  "publishedAt": "2026-11-04T16:46:28.640Z",
+  "observedAt": "2026-11-04T16:46:28.640Z",
   "checkStatus": "partial",
-  "headline": "11/5 01:31KST: 하원247D·150R 일치·추가6석 확인",
-  "body": "DDHQ 하원 본문과 다른 페이지의 합계가247D·150R로 일치했다. NC09·NC14·NC06·NJ02를 추가 확인해 기존 NC13·NV02와 민주 증가6석을 개별 대응했다. 상원54D·44R, 주지사28D·20R이다. 이전 불일치 원인은 미확인이며 공식 인증 결과가 아니다.",
+  "headline": "11/5 01:46KST: 주요 합계·판단 유지·부분 집계 증가",
+  "body": "DDHQ 하원247D·150R, 상원54D·44R, 주지사28D·20R과 확인 가능한 당선 판단은 유지됐다. Maine2구 공화2,963표 우세, Alaska 상원 민주507표 우세, Mississippi 민주1,985표 우세는 미판정이다. 공식 인증과 구분한다.",
   "unknown": "이전 DDHQ 합계 불일치 원인, Mississippi·Alaska·Maine2구 공식 집계 대조, Oregon 주지사 원문, 전국 법원·재검표·인증·주민투표.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수 및 시장수치 확인 미완료. 이전 합계 불일치의 원인·수정 설명은 미확인. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T16:46:28.640Z",
+      "kind": "부분 관찰",
+      "title": "16:45 점검: 합계·판단 유지·일부 집계 증가",
+      "text": "DDHQ 하원247D·150R, 상원54D·44R, 주지사28D·20R이 유지됐다. Massachusetts 상원 Markey1,493,048표·Deaton734,424표, Michigan 주지사 Benson2,596,504표·James2,082,745표로 집계가 늘었지만 기존 판단은 같다. Maine2구 LePage159,189표·Dunlap156,226표로 공화 우세가2,963표로 증가했으나 미판정이다. Alaska 상원 민주507표·Mississippi 민주1,985표 우세도 미판정 유지.",
+      "evidence": "실제 조회11월4일16:44–16:46UTC/11월5일01:44–01:46KST. Massachusetts 상원 집계11:35EST=16:35UTC·85%, Michigan 주지사11:19EST=16:19UTC·95%초과, Maine2구11:33EST=16:33UTC. Kentucky 상원은 시각만 바뀌고 수치 불변. 상원35·주지사36개 중70개 확인·Oregon 실패. Johnson 지도부 불출마 언론보도는 공식 미확인 단서로 구분. AP본문 접근 실패. 전국 법정절차·공식 인증 전수 대조 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/massachusetts-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.theguardian.com/us-news/live/2026/nov/04/midterm-elections-results-senate-house-michigan-maine-mississippi-latest-updates"
+      ]
+    },
     {
       "at": "2026-11-04T16:31:47.419Z",
       "kind": "불일치 해소",
