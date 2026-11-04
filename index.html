@@ -50,12 +50,12 @@ button { font: inherit; }
 .page { padding: 28px 24px 56px; }
 .wrap { max-width: 1360px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
 
-.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 16px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
 .top-title { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .kicker { margin: 0; font-size: 13px; font-weight: 500; color: var(--muted-2); }
 h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -0.01em; color: var(--text-strong); }
 .sub { margin: 0; font-size: 14px; color: var(--muted); }
-.top-chips { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; }
+.top-chips { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; min-width: 0; max-width: 100%; }
 .chip-setting { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 2px; min-height: 44px; padding: 8px 14px; border: 1px solid var(--amber-line-strong); border-radius: 8px; background: var(--amber-chip); color: var(--amber); cursor: pointer; text-align: left; }
 .chip-setting-title { font-size: 13px; font-weight: 700; }
 .chip-setting-sub { font-size: 12px; color: var(--amber-sub); }
@@ -203,11 +203,13 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 .time-basis { display: block; margin-top: 5px; white-space: normal; color: var(--muted-2); font: 11px/1.5 var(--sans); }
 .item-title { margin: 0 0 6px; font-size: 14px; line-height: 1.6; }
 .item, .tile, .banner { overflow-wrap: anywhere; }
-.refresh-control { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; max-width: 330px; }
-.refresh-button { min-height: 44px; padding: 8px 15px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--panel); color: var(--text); font: 600 14px var(--sans); cursor: pointer; }
+.refresh-control { flex: 0 0 96px; display: flex; align-items: flex-start; }
+.refresh-button { width: 96px; min-height: 44px; padding: 8px 15px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--panel); color: var(--text); font: 600 14px var(--sans); cursor: pointer; }
 .refresh-button:hover { border-color: var(--link); }
 .refresh-button[aria-busy="true"] { color: var(--muted); cursor: progress; }
-.refresh-status { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.refresh-feedback { flex: 0 0 100%; min-width: 0; display: grid; color: var(--muted); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.refresh-status, .refresh-reserve { grid-area: 1 / 1; margin: 0; min-width: 0; }
+.refresh-reserve { visibility: hidden; user-select: none; }
 .refresh-status[data-state="warning"], .refresh-status[data-state="error"] { color: var(--amber); }
 .refresh-status[data-state="success"] { color: #50C4AE; }
 </style>
@@ -230,8 +232,11 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
     <div class="chip-counts" id="counts" hidden></div>
     <div class="refresh-control">
       <button type="button" class="refresh-button" id="refresh-button" aria-describedby="refresh-status" aria-busy="false" aria-disabled="false">새로고침</button>
-      <p class="refresh-status" id="refresh-status" role="status" aria-live="polite" aria-atomic="true"></p>
     </div>
+  </div>
+  <div class="refresh-feedback">
+    <span class="refresh-reserve" aria-hidden="true">일부 파일 수신 실패 (4/5) · 기본 자료 수신 실패 · 마지막 정상 자료 유지 · 23:59:59 KST</span>
+    <p class="refresh-status" id="refresh-status" role="status" aria-live="polite" aria-atomic="true"></p>
   </div>
 </header>
 
