@@ -1,14 +1,31 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T05:26:11.335Z",
-  "observedAt": "2026-11-04T05:25:50Z",
+  "publishedAt": "2026-11-04T05:34:23.048Z",
+  "observedAt": "2026-11-04T05:34:04Z",
   "checkStatus": "partial",
-  "headline": "11/4 14:25 보안 점검 — 기존 대응 유지·새 중대 변화 미확인",
-  "body": "GitBook·BTCPay·Chainalysis의 대응과 Mercado 유지보수 상태는 이전 확인과 같다. Binance 초기 보고서는 기존 사건 자료로 유지한다. Solana 정상 표시 및 일부 결제·전송 경로 장애도 재확인했지만 이를 보안 무사고 보증이나 새 해킹으로 해석하지 않았다. 확인한 범위에서 새 피해 확대·실제 회수·전면 복구는 확인하지 못했다.",
+  "headline": "11/4 14:34 보안 점검 — 기존 대응 유지·재개 공지와 완료 구분",
+  "body": "GitBook·BTCPay·Chainalysis 기존 대응과 Mercado 유지보수 표시는 유지됐다. Binance 추가 자산 순차 재개 공지를 확인했지만 목록 전체의 실제 출금 완료·전면 복구는 미확인이다. 제한된 공식 자료 점검에서 새 중대 침해·추가 피해·실제 회수는 확인하지 못했다.",
   "unknown": "Binance 독립 보안검토 및 전면 출금 복구, Mercado 영상 전체 내용과 실제 서비스 재개, Circle Cronos 장애 시작·수정시각, 추가 피해·회수의 독립 검증.",
   "gap": "공식 공지·상태 페이지와 제한된 공개 검색을 확인했다. 전체 X 피드·영상 전사·모든 프로토콜과 브리지·관리키 사고를 전수 점검하지 못했다. THOR·PancakeSwap·Troves 최신 상태와 독립 온체인 재계산은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T05:34:04Z",
+      "kind": "부분 점검",
+      "title": "기존 대응 유지·Binance 추가 재개 공지와 완료를 구분",
+      "text": "GitBook 복구 모니터링, Chainalysis 일부 제품 중단, BTCPay 구버전 지침과 Mercado 유지보수 표시는 이전 확인과 같다. Binance 복구 공지 6은 11월 3일 04:00 UTC부터 추가 자산을 순차 재개한다는 내용이다. 목록 전체의 출금 완료나 전면 복구를 확인한 자료는 아니므로 완료로 바꾸지 않는다.",
+      "evidence": "조회 11월 4일 05:33~05:34 UTC, 한국시간 14:33~14:34. Binance 공지의 표시 게시시각은 11월 3일 02:40이나 해당 표시 시간대는 미확인이다. 본문 재개 예정 시각은 UTC로 명시됐다. Coinbase Sonic·Kraken PIX 기존 지연과 Solana 정상 표시도 재조회했다. 확인 범위에서 새 중대 침해·추가 피해·실제 회수는 확인하지 못했다.",
+      "sources": [
+        "https://www.gitbookstatus.com/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.binance.com/en-IN/support/announcement/detail/2d83c325ab6e49c6bd6c5de8803b11a6",
+        "https://status.coinbase.com/",
+        "https://status.kraken.com/",
+        "https://status.solana.com/"
+      ]
+    },
     {
       "at": "2026-11-04T05:25:50Z",
       "kind": "부분 점검",
