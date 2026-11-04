@@ -36,6 +36,8 @@ data.json은 기존 공개 기록과 사용자 지정 감시 강도를 보존하
 
 피드 항목 필수 필드는 at, kind, title, text입니다. kind는 비어 있지 않은 60자 이내, title과 text는 각각 비어 있지 않은 8,000자 이내 텍스트입니다. 선택 필드는 timeBasis, evidence, sources뿐입니다. evidence는 8,000자 이내 텍스트, sources는 공개 HTTPS URL 0–8개입니다. 항목 내부에 category를 넣지 않습니다.
 
+kind 어휘, 제목·본문·evidence의 역할과 문장 규칙은 [docs/feed-writing-guide.md](docs/feed-writing-guide.md)에 있습니다. 이 규칙은 계약 검증과 별개이며 새로 쓰는 기록부터 적용합니다.
+
 timeBasis는 생략 시 observation이며 at <= observedAt이어야 합니다. 이미 전달한 알림을 이관할 때는 notification으로 하고 당시 전달 시각을 at에 넣습니다. 화면은 이를 **알림 전달 시각**으로 표시합니다. 이 시각은 새 원문 확인을 뜻하지 않습니다. notification에서도 at <= publishedAt이어야 합니다.
 
 ## 공개 범위와 출처
@@ -69,6 +71,8 @@ Node.js 18 이상이면 추가 패키지 설치 없이 실행합니다.
 npm test
 npm run validate
 ~~~
+
+`npm run lint:feed`는 범주별 최신 회차의 피드 문장을 작성 규칙으로 점검합니다. 경고만 출력하며 게시를 막지 않습니다.
 
 브라우저와 로컬 검증은 같은 public-data.js 계약을 사용합니다. 테스트는 성공 재수신, 시계 기반 지연, 통신/파싱/스키마 오류, 마지막 정상 자료 보존, 범주 격리, 시각 역행, 요청 중첩·시간 제한, 공개 URL 제한과 역사·설정 보존을 확인합니다.
 
