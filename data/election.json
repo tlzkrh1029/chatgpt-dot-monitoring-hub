@@ -1,14 +1,41 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T11:08:53.387Z",
-  "observedAt": "2026-11-04T11:08:31Z",
+  "publishedAt": "2026-11-04T12:28:33.246Z",
+  "observedAt": "2026-11-04T12:25:35Z",
   "checkStatus": "partial",
-  "headline": "11/4 20:08KST: 주요 판단 유지, Kansas 공식 집계 대조",
-  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. Kansas 주지사 비공식 공식집계546,587 대541,030이 DDHQ와 일치. 당선 판단·공식 인증은 별개이며, Nevada의 기존 보도와 DDHQ 미판정 차이를 보존한다.",
-  "unknown": "Oregon 주지사 직접 원문, Alaska 공식 집계, Nevada 공식 교차검증, Wallingford 재검표 실행·영향, 전국 법원·재검표·인증 진행 및 하원 이전 증가6석 개별 대조.",
-  "gap": "71개 상원·주지사 페이지 중 Oregon 주지사 원문 접근 실패. Alaska 공식502, 일부 AP·공식 공지 본문 접근 실패. 하원435개 및 카운티 페이지 전수 확인은 미완료. 관측값 불변은 개표 중단·전체 정상의 증거가 아니다. 시장 반응은 이번 회차 수치 확인하지 않았다.",
+  "headline": "11/4 21:25KST: AZ05 선두 변경·MI04 접전, 지배권 판단 유지",
+  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. AZ05는 Lamb6,014표 선두로 관측 선두가 바뀌었고 MI04는 Huizenga600표 선두로 격차 축소. 두 경선 미판정이며 독립 공식 수치 대조는 미완료다.",
+  "unknown": "Oregon 주지사 원문, Alaska·Nevada·Kansas 최신 공식 대조, Mississippi 언론별 집계 시점·수치 차이, 전국 법원·재검표·인증 및 하원435석 개별 대조.",
+  "gap": "상원35·주지사36개 개별 페이지 중 Oregon 주지사 접근 실패. 일부 공식·언론 본문 접근 실패 및 자료 시차 지속. 카운티 하위 페이지·하원435개·전국 운영사고·주민투표 전수 점검은 미완료. 시장 반응은 이번 회차 수치 확인하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T12:25:35Z",
+      "kind": "개표 관찰",
+      "title": "AZ05 관측 선두 변경·MI04 격차 축소, 당선 판단 없음",
+      "text": "DDHQ AZ05 하원은 앞선 목록의 민주+0.8에서 공화+2로 바뀌었다. 개별 페이지는 Lamb137,240표51.12% 대 Lee131,226표48.88%, 선두6,014표·합계268,466표·추정83%다. MI04는 Huizenga168,430표49.33% 대 McCann167,830표49.16%, 선두600표·합계341,428표·추정92%다. MI04의 직전 정확한 개별 관측인09:16UTC의3,511표 차이보다 줄었다. 두 경선 모두 미판정이며 공식 인증이 아니다.",
+      "evidence": "조회11월4일12:25:35UTC/21:25:35KST. AZ05 갱신06:13EST=11:13UTC/20:13KST, MI04 갱신06:07EST=11:07UTC/20:07KST. AZ05 2개·MI04 6개 카운티 목록을 확인했으나 남은 표 종류·정확한 최종 분모와 공식 독립 수치 대조는 미확인. 선두 변경 정확시각을 확정하지 않는다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-5-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-us-house-4-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T12:25:35Z",
+      "kind": "부분 관찰",
+      "title": "71개 상원·주지사 경선 재점검, 합계·당선 판단 유지",
+      "text": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 접근 가능한 개별 경선 당선 판단은 직전과 같다. 상원35·주지사36개 페이지를 모두 시도했으며 Oregon 주지사는 접근 실패했다. Alaska 상원1,796표, Mississippi 상원2,169표, Kansas 주지사5,557표의 관측 격차도 같다. Nevada는 Ford505,738표51.73% 대 Lombardo431,367표44.12%, 합계977,638표·선두74,371표로 늘었으나 DDHQ는 여전히 미판정이다. 기존 AP 색인·Guardian 승리 보도와 구분한다.",
+      "evidence": "조회12:23–12:25UTC/21:23–21:25KST. DDHQ 주지사 총괄 갱신07:11EST=12:11UTC, Nevada06:06EST=11:06UTC. Alaska·Mississippi·Kansas 원자료 갱신은 각각09:12·07:01·09:57UTC로 오래된 값을 새 개표로 취급하지 않는다. Kansas 공식 결과 이번 접근은 실패했고11:08UTC의 이전 공식 대조만 유효하다. Alaska 공식502, Nevada 공식 접근 제한을 우회하지 않았다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T11:08:31Z",
       "kind": "부분 관찰",
