@@ -1,14 +1,28 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T20:31:50.282Z",
-  "observedAt": "2026-11-04T20:31:50.281Z",
+  "publishedAt": "2026-11-04T20:46:40.454Z",
+  "observedAt": "2026-11-04T20:46:40.453Z",
   "checkStatus": "partial",
-  "headline": "11/5 05:31KST: 의석 합계 유지, 확인 범위 내 새 중대 변화 없음",
-  "body": "DDHQ 하원249D·152R·상원54D·44R·주지사28D·20R 유지. Colorado3 공화1379표 우세는 미판정이며 다른 주요 미판정 경합 선두도 유지된다. 새 중대 판단은 확인하지 못했고 공식 인증·전국 전수 확인은 미완료다.",
+  "headline": "11/5 05:46KST: 의석 합계 유지, 확인 범위 내 새 중대 변화 없음",
+  "body": "DDHQ 하원249D·152R·상원54D·44R·주지사28D·20R 유지. Maine2구 공화3902표 우세는 미판정이며 다른 주요 미판정 경합 선두도 유지된다. 새 중대 판단은 확인하지 못했고 공식 인증·전국 전수 확인은 미완료다.",
   "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T20:46:40.453Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계 유지, Maine2 미판정 격차 소폭 확대",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Maine2구 LePage164635 대 Dunlap160733로 공화3902표 우세, 직전3727표보다175표 늘었으나 미판정이다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5606표 우세도 미판정 유지. 확인 범위에서 새 중대 판단·선두 역전은 확인하지 못했다.",
+      "evidence": "실제조회11월4일20:45–20:46UTC·한국시간11월5일05:45–05:46. Maine2 자료15:10EST=20:10UTC·다음날05:10KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원8개 표본·총괄 목록 점검,435개 전수 아님. Massachusetts 상원과 Colorado·Massachusetts 주지사 집계 증가에도 기존 판단 유지. 자료표시15:11·15:29·15:14EST, UTC20:11·20:29·20:14, KST다음날05:11·05:29·05:14다. Kentucky 상원은 갱신시각만 바뀌고 표수 동일. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 공식 인증·남은 표 분포·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T20:31:50.281Z",
       "kind": "부분 재확인",
