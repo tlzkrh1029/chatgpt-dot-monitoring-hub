@@ -1,14 +1,65 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T05:22:21.170Z",
-  "observedAt": "2026-11-04T05:21:28Z",
+  "publishedAt": "2026-11-04T05:35:24.262Z",
+  "observedAt": "2026-11-04T05:34:39Z",
   "checkStatus": "partial",
-  "headline": "DDHQ 민주당 상원 지배권 판단 · 주지사 4개 주 전환 기록",
-  "body": "한국시간 14:17–14:21 관찰. DDHQ는 13:19 KST에 민주당 상원 지배권을 판단했다. 조회 집계는 상원 민주당 52·공화당 40, 하원 본문 민주당 218·공화당 124다. 주지사 조지아·아이오와·오하이오·텍사스의 민주당 당선 판단을 기록했다. 이전에 빠진 판정과 이번에 새로 확인한 결과를 구분하며 모두 언론 판단이지 공식 인증이 아니다.",
-  "unknown": "하원 다른 페이지 요약의 공화당 125와 본문 124는 시점이 달라 합산하지 않았다. 상원·주지사 총괄과 일부 개별 페이지가 불일치한다. 미집계 표 종류·지역 전수, 공식 인증, 전국 법원·재검표·운영사고와 동시점 시장 반응은 미확인.",
-  "gap": "상원 35개·주지사 36개 개별 페이지를 읽었지만 시점 불일치 때문에 동일 시각 완전 집계로 간주하지 않는다. AP 원문·제휴 일부 접근 실패, 오하이오 공식 홈페이지 403, 아이오와 결과 로봇 확인 화면, 조지아 공식 결과 본문 미추출. 하원은 지배권과 3개 경합지만 개별 확인했다.",
+  "headline": "14:34 KST 확인: 하원 판단220·126, 네브래스카 상원 선두 변경",
+  "body": "DDHQ 상원52·40·주지사26·17은 유지되고 하원 판단은220·126으로 증가했다. 미네소타 상원·주지사와 버몬트 주지사 판단 표시를 보완했다. 네브래스카 상원은 Ricketts 선두로 바뀌었고 공식 비공식 집계로 현재 선두를 교차 확인했다. 언론 당선 판단과 공식 인증은 다르다.",
+  "unknown": "미집계 표 종류·지역, 실제 역전 시각, 전체 공식 인증·재검표, 모든 하원 경주의 개별 판단 및 시장 인과는 미확인.",
+  "gap": "상원35·주지사36 경주를 재조회했으나 오리건 주지사 개별 페이지 실패. MO02 호출 목록과 개별 페이지, ME02 선두 표시의 갱신 차이가 남아 있다. 카운티 내부 페이지 전수·전국 공식 교차검증은 미완료.",
   "feed": [
+    {
+      "at": "2026-11-04T05:34:39Z",
+      "kind": "개표 관찰",
+      "title": "상원·주지사 구성 유지, 하원 DDHQ 판단 220 대 126",
+      "text": "05:32 UTC(14:32 KST) DDHQ 하원 본문은 민주220·공화126, 민주당 교체24석으로 이전218·124 및23석에서 늘었다. 기존 민주당 하원 지배권 판단은 유지된다. 상원52·40, 주지사26·17은 이전과 같다. 주지사 페이지의 하원 사이드바218·125는 서로 다른 갱신 상태이며 합산하지 않았다.",
+      "evidence": "언론 판단 집계이며 공식 인증이나 Pulse 최종예측이 아니다. MO02 호출 목록은 Wellman 판단을 표시하지만 개별 페이지는00:11 EST 집계와 호출 미표시 상태로 불일치. 추가2석 전부의 신규 판단 시각·전국 공식 교차검증은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/missouri-us-house-2-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:34:39Z",
+      "kind": "누락 보완",
+      "title": "미네소타 두 선거와 버몬트 주지사 판단 표시 확인",
+      "text": "DDHQ 개별 페이지에서 미네소타 상원 Peggy Flanagan과 주지사 Amy Klobuchar 판단은11월4일00:03 EST(05:03 UTC·14:03 KST), 버몬트 주지사 Phil Scott은00:09 EST(05:09 UTC·14:09 KST)로 확인됐다. 앞선 개별 페이지의 오래된 표시를 보완한 것으로 지금 새로 발표된 판단은 아니다. 모두 공식 인증과 구분한다.",
+      "evidence": "조회05:33 UTC. 미네소타 공식 비공식 집계도 Flanagan1182797 대 Tafoya944663, Klobuchar1171712 대 Demuth868615로 같은 선두를 보인다. 각각 투표구3079/4105와2849/4105 보고이며 투표수 개표율이 아니다. 공식 표시 갱신23:08·22:59의 시간대는 페이지에 없어 임의 UTC 변환하지 않았다. 주 인증위원회 예정일은11월19일.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/minnesota-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/minnesota-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/vermont-governor-general-election",
+        "https://electionresults.sos.mn.gov/",
+        "https://electionresults.sos.mn.gov/Results/Index?ErsElectionId=201&electionDate=11%2F03%2F2026+00%3A00%3A00&officeInElectionIdList=-1&officeInElectionIdList=38485&scenario=USSenate",
+        "https://electionresults.sos.mn.gov/Results/Index?ersElectionId=201&officeInElectionId=38695&scenario=Governor"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:34:39Z",
+      "kind": "경합지 변화",
+      "title": "네브래스카 상원 관측 선두가 Ricketts로 변경",
+      "text": "DDHQ00:06 EST 집계의 Osborn217951 대 Ricketts216223에서00:16 EST 집계 Ricketts226126 대 Osborn221595로 관측 선두가 바뀌었다. 공식 비공식 집계23:30 CT(05:30 UTC·14:30 KST)도 Ricketts236466 대 Osborn226192로 현재 선두를 교차 확인한다. 당선 판단·공식 인증은 확인되지 않았다.",
+      "evidence": "실제 조회05:33–05:34 UTC. 공식 완전보고307/1322투표구, 부분보고677/1322이며23.22%는 완전보고 투표구 비율이다. 총 집계491079표와 등록유권자·투표율은 다른 분모다. 역전 정확시각 및 남은 표 종류·지역별 분포는 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nebraska-us-senate-general-election",
+        "https://electionresults.nebraska.gov/resultsSW.aspx?map=CTY&type=SW"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:34:39Z",
+      "kind": "확인 범위",
+      "title": "상원35·주지사36개 목록 재점검, 오리건 조회 실패",
+      "text": "05:32–05:34 UTC(14:32–14:34 KST) DDHQ 상원35개와 주지사36개 경주 목록 및 개별 페이지71개를 재조회했다. 오리건 주지사 개별 페이지는 두 차례 접근 실패하여 과거 판단을 유지하고 새 확인으로 처리하지 않았다. 주 전체 경주 목록은 읽었으나 카운티·타운십 내부 모든 페이지와 남은 표 전수 확인은 하지 못했다.",
+      "evidence": "미네소타의 이전 목록·개별 페이지 불일치는 이번 개별 판단 표시로 보완됐다. ME02는 목록 민주 우세와 개별00:05 EST 공화 우세가 달라 선두 역전으로 확정하지 않는다. 하원 개별 점검은 MO02·ME02·GA10 표본이며435석 전수 점검이 아니다. 전국 공식 운영사고·재검표·인증 및 시장반응 전수 확인은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T05:21:28Z",
       "kind": "지배권·언론 판정",
