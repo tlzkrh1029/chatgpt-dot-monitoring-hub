@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T06:32:03.322Z",
-  "observedAt": "2026-11-04T06:31:28Z",
+  "publishedAt": "2026-11-04T07:34:51.157Z",
+  "observedAt": "2026-11-04T07:34:34Z",
   "checkStatus": "partial",
-  "headline": "11/4 15:31 보안 점검 — BitMart 연관 분석 검증 중",
-  "body": "Bitquery 분석에서 Mercado 공격 주소와 BitMart 연관 지갑 유출의 연결 단서를 확인했다. 공식 원문 확인과 독립 온체인 검증은 미완료이므로 동일 공격조직·공통 공급망 침해를 확정하지 않는다. Mercado 유출·동결 분석 수치의 갱신도 과거 기준 자료로 구분했다. 기존 GitBook·Chainalysis 대응과 Mercado 유지보수는 유지됐다.",
+  "headline": "11/4 16:34 보안 점검 — BitMart 공식 원문 여전히 미확인",
+  "body": "BitMart 연관 지갑의 기존 분석과 Mercado 피해·동결 수치는 유지됐다. 창업자 확인 보도의 원문 발언을 확보하지 못해 공식 확인으로 바꾸지 않았다. 기존 주요 보안 대응과 운영 상태를 부분 재확인했으며 새 중대 피해·실제 회수·전면 복구는 확인하지 못했다.",
   "unknown": "BitMart 공식 확인 원문·사건 발생일·피해액·지갑 귀속·공통 침해 경로, Mercado 실제 회수·서비스 재개, 분석의 정확한 수정시각.",
   "gap": "공식 상태·공지와 공개 분석·제한된 검색을 확인했다. 일부 보도 본문 접근 실패, 전체 X 피드·모든 프로토콜·발행사별 동결 및 독립 온체인 재계산은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T07:34:34Z",
+      "kind": "부분 점검",
+      "title": "BitMart 원문 확인 대기·기존 보안 대응 유지",
+      "text": "Bitquery의 BitMart 연관 지갑 분석과 Mercado 피해·동결 수치는 이전 확인과 같다. 창업자 확인을 전하는 보도가 추가 검색되지만 본문 접근 실패와 보도 간 날짜 차이가 남아 공식 원문 확인으로 격상하지 않았다. GitBook 복구 모니터링, Chainalysis 일부 제품 중단, BTCPay 구버전 지침, Mercado 유지보수와 Coinbase Sonic 지연도 기존 상태다.",
+      "evidence": "조회 11월 4일 07:34 UTC, 한국시간 16:34. 분석의 원자료 기준은 11월 3일이며 현재 추가 유출·회수의 증거로 사용하지 않았다. 검색 결과 반복은 독립 확인이 아니다. 동일 공격조직·공통 공급업체 침해와 BitMart 사건 발생일은 미확인이다.",
+      "sources": [
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack",
+        "https://www.gitbookstatus.com/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://status.coinbase.com/"
+      ]
+    },
     {
       "at": "2026-11-04T06:31:28Z",
       "kind": "조사 단서",
