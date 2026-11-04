@@ -1,14 +1,31 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T10:26:59.721Z",
-  "observedAt": "2026-11-04T10:26:15Z",
+  "publishedAt": "2026-11-04T11:08:53.387Z",
+  "observedAt": "2026-11-04T11:08:31Z",
   "checkStatus": "partial",
-  "headline": "11/4 19:26KST: Nevada Ford 당선 보도, DDHQ는 미판정",
-  "body": "AP 공개 색인에 Ford 당선 판단, Guardian 원문에 승리 보도 확인. 공식 인증과 구분하며 DDHQ 미판정 상태를 함께 보존한다. DDHQ 합계는 하원241D·149R, 상원54D·44R, 주지사27D·20R로 유지. Alaska 상원·Kansas 주지사 격차 축소, CO03 하원 관측 선두 변경.",
-  "unknown": "AP 본문 직접 접근, Nevada 공식 교차검증·인증, Alaska 남은 표·공식 집계, Oregon 주지사 원문, 하원 이전 증가6석 개별 구성, 전국 법원·재검표·운영 변화.",
-  "gap": "상원35·주지사36 개별 페이지 점검 중 Oregon 주지사 접근 실패. AP 및 일부 재전송 직접 접근 실패로 검색 색인과 직접 확인한 다른 보도를 구분. Alaska 공식 결과502·Nevada 공식 자동접근 차단 유지. 하원·카운티 페이지 전수와 독립 수치 검증 미완료. 시장 수치·선거 인과는 이번 회차 미평가.",
+  "headline": "11/4 20:08KST: 주요 판단 유지, Kansas 공식 집계 대조",
+  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. Kansas 주지사 비공식 공식집계546,587 대541,030이 DDHQ와 일치. 당선 판단·공식 인증은 별개이며, Nevada의 기존 보도와 DDHQ 미판정 차이를 보존한다.",
+  "unknown": "Oregon 주지사 직접 원문, Alaska 공식 집계, Nevada 공식 교차검증, Wallingford 재검표 실행·영향, 전국 법원·재검표·인증 진행 및 하원 이전 증가6석 개별 대조.",
+  "gap": "71개 상원·주지사 페이지 중 Oregon 주지사 원문 접근 실패. Alaska 공식502, 일부 AP·공식 공지 본문 접근 실패. 하원435개 및 카운티 페이지 전수 확인은 미완료. 관측값 불변은 개표 중단·전체 정상의 증거가 아니다. 시장 반응은 이번 회차 수치 확인하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T11:08:31Z",
+      "kind": "부분 관찰",
+      "title": "DDHQ 주요 판단 불변, Kansas 공식 비공식 집계 대조",
+      "text": "상원35·주지사36 경선 개별 페이지를 재점검했으며 Oregon 주지사만 접근 실패했다. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 열람 가능한 경선의 당선 판단은 직전과 같다. Alaska 상원 선두1,796표, Mississippi 상원2,169표, Kansas 주지사5,557표와 CO03 하원 Hurd선두1,211표도 관측값이 같다. Kansas 공식 비공식 결과에서 Holscher546,587표·Masterson541,030표, 합계1,087,617표를 직접 확인해 DDHQ와 일치함을 확인했다. 보고 투표구4168/4168은 모든 유효표 최종 처리·인증 완료를 뜻하지 않는다.",
+      "evidence": "조회11월4일11:06–11:08UTC/20:06–20:08KST. Kansas 공식 페이지 갱신표시11/04/2026 12:58AM은 시간대 미표기로 변환하지 않았다. DDHQ Alaska갱신04:12EST=09:12UTC, Mississippi02:01EST=07:01UTC, Kansas04:57EST=09:57UTC, CO03 04:49EST=09:49UTC. 기존 Nevada AP색인·Guardian 승리보도와 DDHQ 미판정의 차이를 유지하며 반복 경보하지 않는다. Wallingford 재검표 관련11월3일 공식 검색색인을 발견했으나 본문 접근 실패, 실행·완료·영향 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://ent.sos.ks.gov/kssos_ent.html",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T10:26:15Z",
       "kind": "언론 판단",
