@@ -1,14 +1,31 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T23:32:41.690Z",
-  "observedAt": "2026-11-04T23:32:23.868Z",
+  "publishedAt": "2026-11-04T23:48:16.308Z",
+  "observedAt": "2026-11-04T23:47:52.640Z",
   "checkStatus": "partial",
-  "headline": "08:32 KST 부분 확인: 의석·판정 유지",
-  "body": "11월5일 08:31–08:32 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 개별 당선 판단은 동일하다. 하원9개 표본의 득표·판정도 직전과 같다. Texas 상원 총9885636표와 기존 Talarico 당선 판단은 유지되며 앞선208923표 감소의 원인은 여전히 미확인이다. 상원35·주지사36개 중70개를 읽었고 Oregon 주지사는 실패했다. Montana 상원·Connecticut 및 Massachusetts 주지사의 집계 증가를 새 당선 판단으로 취급하지 않는다.",
+  "headline": "08:47 KST 부분 확인: 의석·판정 유지",
+  "body": "11월5일 08:46–08:47 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 기존 당선 판단은 유지된다. Mississippi 상원 Colom 우세는1883→1852표로 소폭 좁혀졌지만 미판정이다. Arizona2 Crane966표·Colorado3 Hurd5013표·Minnesota1 Johnson321표 우세와 Texas22 Nehls 판단은 동일하다. 상원35·주지사36개 중70개와 하원9개 확인, Oregon 주지사 실패. Texas 상원 총9885636표는 같고 앞선208923표 감소 원인은 미확인이다.",
   "unknown": "Texas 상원 표시득표 증가·감소의 원인과 공식 근거, Massachusetts 주지사 앞선 감소 원인, 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502, Mississippi 본선 집계와 Arizona 결과 미확인. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회시간 초과, Mississippi 본선 집계와 Arizona 결과 미확인. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T23:47:52.640Z",
+      "kind": "부분 확인",
+      "timeBasis": "observation",
+      "title": "의석·주요 판정 유지, Mississippi 미판정 격차 소폭 축소",
+      "text": "11월5일 08:46–08:47 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 기존 당선 판단은 유지된다. Mississippi 상원 Colom 우세는1883→1852표로 소폭 좁혀졌지만 미판정이다. Arizona2 Crane966표·Colorado3 Hurd5013표·Minnesota1 Johnson321표 우세와 Texas22 Nehls 판단은 동일하다. 상원35·주지사36개 중70개와 하원9개 확인, Oregon 주지사 실패. Texas 상원 총9885636표는 같고 앞선208923표 감소 원인은 미확인이다.",
+      "evidence": "실제 조회23:46–23:47 UTC. Mississippi 상원 원자료 Nov4 18:38 EST=23:38 UTC=Nov5 08:38 KST, Colom466464·Hyde-Smith464612·Pinkins20030, 총951106. Nevada 주지사 원자료18:20 EST, Ford508245·Lombardo435387, 기존 Ford 판정 유지. Kansas·Colorado·Massachusetts·Oregon 상원과 Colorado 주지사 등의 집계가 갱신됐지만 새 당선 판단은 확인되지 않았다. 이전 개별 원문 전체와의 기계적 수치 대조는 이번 회차에 재현하지 못해 이전 공개 기록과 주요 경합 수치를 중심으로 비교했다. Alaska 공식 조회시간 초과, Mississippi 공식목록 본선 미표시, Arizona 공식 템플릿만 표시. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T23:32:23.868Z",
       "kind": "부분 확인",
