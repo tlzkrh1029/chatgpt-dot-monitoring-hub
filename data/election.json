@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T15:32:09.799Z",
-  "observedAt": "2026-11-04T15:31:39.789Z",
+  "publishedAt": "2026-11-04T15:46:36.151Z",
+  "observedAt": "2026-11-04T15:46:04.840Z",
   "checkStatus": "partial",
-  "headline": "11/5 00:31KST: Alaska 상원 민주 재역전·Maine2구 공화 선두",
-  "body": "DDHQ Alaska 상원은 Peltola507표 우세로 재역전했고 Maine 하원2구는 LePage865표 우세다. 둘 다 미판정·부분 집계이며 공식 대조 미완료다. 상원54D·44R과 주지사27D·20R은 유지된다. 하원 합계는 DDHQ 페이지 간 공화149·150석 불일치로 추가 확인이 필요하다.",
-  "unknown": "Alaska·Maine2구 공식 집계 대조, DDHQ 하원 공화149·150석 불일치, Oregon 주지사 원문, 전국 법원·재검표·인증·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패·Alaska 공식502. Maine2구 공식 대조 및 하원합계 페이지 간 불일치 해소 미완료. 하원435개·하위지역·전국 법정절차·주민투표 전수 확인 및 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 00:46KST: 하원241D·150R·주지사 합계 불일치",
+  "body": "DDHQ 하원 본문241D·150R로 이전 합계 불일치가 해소됐다. 추가1석 개별 판단은 미확인이다. Alaska 상원 민주507표 우세와 Maine2구 공화1,615표 우세는 미판정이다. 주지사 본문27D와 다른 페이지28D 표시가 달라 추가 승자를 단정하지 않는다.",
+  "unknown": "DDHQ 주지사27D·28D 불일치 및 추가 하원 공화1석 개별 판단, Alaska·Maine2구 공식 대조, Oregon 주지사 원문, 전국 법원·재검표·인증·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ·Maine 공식 경로 접근 실패. 주지사 합계 페이지 간 불일치 및 추가 하원1석 개별 판단 미해소. 하원435개·하위지역·전국 법정절차·주민투표 전수 확인 및 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T15:46:04.840Z",
+      "kind": "부분 관찰",
+      "title": "15:45 점검: 하원 합계 갱신·주지사 합계 불일치",
+      "text": "Alaska 상원 Peltola507표 우세·미판정은 유지됐다. Maine 하원2구 LePage154,386표·Dunlap152,771표로 공화 후보 우세가865표에서1,615표로 늘었으나 미판정이다. DDHQ 하원 본문도241D·150R로 갱신돼 이전149·150석 불일치는 해소됐다. 추가 공화1석의 개별 판단은 확인하지 못했다. 상원54D·44R 유지. 주지사는 본문27D·20R과 하원 페이지 상단28D·20R이 달라 추가 승자를 확정하지 않는다.",
+      "evidence": "실제 조회11월4일15:44–15:46UTC/11월5일00:44–00:46KST. Maine2구 집계10:34EST=15:34UTC. Alaska 주지사103,610표49.15%로 증가했지만 미판정이며 집계10:18EST=15:18UTC. AK·KS·NV 주지사 개별 재조회에서도 새 당선 판단 없음. 주지사 본문 갱신10:27EST=15:27UTC. Maine 공식 결과 경로 접근 실패. 상원35·주지사36개 중70개 확인, Oregon 주지사 원문 실패. 언론 판단과 공식 인증은 별개다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T15:31:39.789Z",
       "kind": "선두 변화",
