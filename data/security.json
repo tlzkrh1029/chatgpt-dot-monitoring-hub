@@ -1,14 +1,44 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T02:09:12Z",
-  "observedAt": "2026-11-03T15:00:00.000Z",
+  "publishedAt": "2026-11-04T02:35:59.018Z",
+  "observedAt": "2026-11-04T02:35:15Z",
   "checkStatus": "partial",
-  "headline": "11/4 00시 보안 관찰 — Binance 초기조사 공개",
-  "body": "Binance 다단계 침해·온체인 위임 차단 지연에 관한 초기조사 공식 공개. 현재 추가침해 또는 독립 최종검증으로 해석하지 않음.",
-  "unknown": "독립 보안검토·98%재충당 기준 정정·실제 추가 출금, GitBook 고객데이터 영향. 기존 사건 재경보 방지.",
-  "gap": "기존 공개 기록의 이관입니다. 이후 새 점검 결과는 아직 수신하지 않았습니다.",
+  "headline": "11/4 11:35 보안 점검 — 기존 경고 유지·Mercado 새 영상 미확인",
+  "body": "GitBook 토큰 교체 권고와 복구 모니터링, BTCPay 구버전 대응 지침, Chainalysis 일부 제품 중단 공지는 기존 내용 유지. Binance의 공개 프로필 표본에서는 기존 초기조사·인터뷰 이후 중대한 새 사실이 확인되지 않음. Mercado는 새 CEO 영상을 올렸고 상태 페이지는 유지보수 표시지만 영상 전체 내용과 실제 서비스 재개는 미확인.",
+  "unknown": "독립 보안검토, 실제 추가 피해·회수·고객 자금 접근, Mercado 새 영상 전체 내용, 전체 X 피드와 미조회 프로토콜 범위.",
+  "gap": "Mercado 영상 전체 음성·전사는 검증하지 못함. 공개 X 프로필은 전수 피드가 아님. THOR 게이트웨이 조회 실패로 최신 플래그 미확인. Solana·PancakeSwap·Troves 등은 이번에 직접 재확인하지 못함.",
   "feed": [
+    {
+      "at": "2026-11-04T02:35:15Z",
+      "kind": "정기 관찰",
+      "title": "11/4 11:35 보안 점검 — 기존 경고 유지·일부 범위 미확인",
+      "text": "GitBook의 토큰 교체 권고와 복구 모니터링, BTCPay의 구버전 복구 지침, Chainalysis의 일부 제품 예방 중단 공지는 기존 내용과 같음. Binance 초기조사도 기존 사건 설명이며 새로운 피해로 합산하지 않음. Mercado 상태 페이지는 다섯 구성요소를 유지보수로 표시하지만 변경 시각과 실제 자금 접근 여부는 미확인. Circle Noble 지연의 00:30 UTC 해결 공시는 기존 기록과 같고 Coinbase Sonic은 조사 중. 이번 공개자료 표본에서 새로운 중대 침해·회수는 확인되지 않았으나 전체 안전을 뜻하지 않음.",
+      "timeBasis": "observation",
+      "evidence": "피해기관·서비스 운영자의 공식 게시 내용 확인. 회사의 복구·안전 설명과 독립 검증은 구분. 피해액·동결·반환을 재합산하지 않음.",
+      "sources": [
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://www.gitbookstatus.com/",
+        "https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://www.binance.com/en/square/post/384312159834579",
+        "https://status.mercadobitcoin.com.br/",
+        "https://status.circle.com/",
+        "https://status.coinbase.com/"
+      ]
+    },
+    {
+      "at": "2026-11-04T02:35:15Z",
+      "kind": "추가 확인 필요",
+      "title": "Mercado 새 CEO 영상 — 내용 전체 검증 대기",
+      "text": "공식 계정에 새 CEO 영상이 표시됨. 제목은 고객에게 전하는 메시지이며 영상 전체 음성·전사를 확인하지 못해 추가 피해·회수·재개 발표인지 판단 보류. 상태 페이지의 다섯 구성요소는 유지보수 표시지만 변경 시작 시각과 출처 갱신 시각은 표시되지 않음.",
+      "timeBasis": "observation",
+      "evidence": "공개 프로필과 개별 게시물 직접 열람. 영상은 재생됐으나 전체 내용 미검증. 게시물 화면의 시간대는 미확인.",
+      "sources": [
+        "https://x.com/MercadoBitcoin/status/2117795720849990086",
+        "https://status.mercadobitcoin.com.br/"
+      ]
+    },
     {
       "at": "2026-11-03T15:00:00.000Z",
       "kind": "원장 기록",
