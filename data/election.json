@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T13:02:55.122Z",
-  "observedAt": "2026-11-04T13:02:13.236Z",
+  "publishedAt": "2026-11-04T13:17:24.160Z",
+  "observedAt": "2026-11-04T13:17:04.542Z",
   "checkStatus": "partial",
-  "headline": "11/4 22:02KST: DDHQ 당선 판단 유지, 일부 집계 증가",
-  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. 상원35·주지사36개를 재점검했으며 Oregon 원문 접근 실패. 일부 기존 판단 경선 집계만 증가했고 새 당선 판단은 확인되지 않았다. 언론 판단은 공식 인증과 별개다.",
+  "headline": "11/4 22:17KST: DDHQ 주요 판단 유지, 공식 자료 일부 확인",
+  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. 상원35·주지사36개 중 Oregon 원문 접근 실패. California 집계 증가와 New Mexico 비공식 투표구 보고 현황을 확인했으며 새 당선 판단·공식 인증으로 해석하지 않는다.",
   "unknown": "Oregon 주지사 원문, Alaska·Nevada·Kansas 최신 공식 대조, Mississippi 언론별 집계 시점·수치 차이, 전국 법원·재검표·인증 및 하원435석 개별 대조.",
   "gap": "상원35·주지사36개 개별 페이지 중 Oregon 주지사 접근 실패. 일부 공식·언론 본문 접근 실패 및 자료 시차 지속. 카운티 하위 페이지·하원435개·전국 운영사고·주민투표 전수 점검은 미완료. 시장 반응은 이번 회차 수치 확인하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T13:17:04.542Z",
+      "kind": "부분 관찰",
+      "title": "13:15 점검: 주요 판단 유지·공식 집계 범위 확인",
+      "text": "DDHQ 상원35·주지사36개 페이지를 재조회했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R과 접근 가능한 개별 판단은 직전과 같다. California 주지사 집계는 Becerra4,991,593표·Hilton2,813,147표로 늘었으나 기존 판단은 유지된다. Mississippi 공식 결과 목록에는 이번 총선 집계가 표시되지 않아 상원 수치를 공식 대조하지 못했다. New Mexico 공식 비공식 결과는 보고 투표구2,204/2,204·투표726,684건을 표시하지만 모든 유효표 처리나 인증 완료를 뜻하지 않는다.",
+      "evidence": "실제 조회11월4일13:16–13:17UTC/22:16–22:17KST. California 및 주지사 총괄 갱신08:04EST=13:04UTC/22:04KST. New Mexico 공식 갱신04:56AM MT는 서머타임 종료 후11:56UTC/20:56KST다. Mississippi 목록의 자료 미표시는 개표 중단이나 사건 부재의 증거가 아니다. 상원 Alaska·Mississippi 및 주지사 Alaska·Kansas·Nevada DDHQ 미판정을 유지한다. 전국 재검표·법원·주민투표·하원435개·카운티 하위·시장 수치 전수 확인은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results",
+        "https://electionresults.sos.nm.gov/"
+      ]
+    },
     {
       "at": "2026-11-04T13:02:13.236Z",
       "kind": "부분 관찰",
