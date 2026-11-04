@@ -1,14 +1,32 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T21:17:29.470Z",
-  "observedAt": "2026-11-04T21:17:03.913Z",
+  "publishedAt": "2026-11-04T21:32:27.016Z",
+  "observedAt": "2026-11-04T21:32:02.926Z",
   "checkStatus": "partial",
-  "headline": "06:17 KST 부분 확인: 하원152·153 불일치 지속",
-  "body": "11월5일 06:15–06:17 KST 조회. DDHQ 하원 본문·상원 교차표는 민주249·공화153, 주지사 교차표는 민주249·공화152로 직전 불일치가 유지된다. 하원21개 경합을 읽었으나 추가 공화1석에 대응하는 신규 판정은 식별하지 못했다. 상원54·44와 주지사28·20 및 읽은 기존 판정은 유지된다. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 미판정 Maine2 LePage 우세는3902→4089표, Kansas 주지사 Holscher 우세는5606→5610표로 변했다. 단순 집계 증가를 새 당선 판단으로 해석하지 않는다.",
-  "unknown": "하원 추가1석의 개별 판정 및 합계 불일치 원인, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "headline": "06:32 KST 부분 확인: 하원249·153 표시 일치",
+  "body": "11월5일 06:30–06:32 KST 조회. DDHQ 하원·상원·주지사 세 페이지의 하원 표시는 민주249·공화153으로 일치해 이전 공화152·153 표시 불일치가 해소됐다. 추가 공화1석에 해당하는 개별 신규 판정은 이번 하원22개 표본에서 식별하지 못해 미확인으로 남긴다. 상원54·44와 주지사28·20, 읽은 개별 당선 판단은 유지된다. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 미판정 Maine2 LePage4089표, Kansas 주지사 Holscher5610표, Alaska 상원 Peltola626표, Mississippi 상원 Colom1864표 우세는 동일하다.",
+  "unknown": "하원 추가1석의 개별 판정과 이전 표시 차이의 원인, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T21:32:02.926Z",
+      "kind": "부분 확인",
+      "title": "하원249·153으로 총괄 표시 일치, 추가1석 개별 판정 미확인",
+      "text": "11월5일 06:30–06:32 KST 조회. DDHQ 하원·상원·주지사 세 페이지의 하원 표시는 민주249·공화153으로 일치해 이전 공화152·153 표시 불일치가 해소됐다. 추가 공화1석에 해당하는 개별 신규 판정은 이번 하원22개 표본에서 식별하지 못해 미확인으로 남긴다. 상원54·44와 주지사28·20, 읽은 개별 당선 판단은 유지된다. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 미판정 Maine2 LePage4089표, Kansas 주지사 Holscher5610표, Alaska 상원 Peltola626표, Mississippi 상원 Colom1864표 우세는 동일하다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회21:30–21:32 UTC. 주지사 총괄 갱신표시 Nov4 16:21 EST=21:21 UTC=Nov5 06:21 KST. Mississippi 상원은466382 대464518, 자료16:15 EST=21:15 UTC=06:15 KST로 득표가 늘었으나 격차1864표와 미판정 상태는 같다. 일부 기존 판정 경합의 득표·자료시각이 갱신됐지만 새 판정·철회는 확인되지 않았다. 합계 표시의 일치는 공식 인증이나 추가1석 개별 검증을 뜻하지 않는다. Alaska 공식502, Mississippi 공식 목록에는2026년3월 예비선거만 표시돼 본선 집계 대조 미완료. 하원435개·남은 표 분포·전국 법정절차·주민투표는 전수 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T21:17:03.913Z",
       "kind": "부분 확인",
