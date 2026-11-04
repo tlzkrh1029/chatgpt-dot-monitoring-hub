@@ -1,14 +1,51 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T09:17:49.825Z",
-  "observedAt": "2026-11-04T09:16:54Z",
+  "publishedAt": "2026-11-04T10:26:59.721Z",
+  "observedAt": "2026-11-04T10:26:15Z",
   "checkStatus": "partial",
-  "headline": "11/4 18:16KST: 상원54·44 유지, Nevada 주지사 집계 확인",
-  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R. Nevada 주지사 Ford 선두 집계가 표시됐으나 미판정. Alaska 상원 Sullivan 선두2,150표로 축소. 상하원 민주 지배권 언론 판단은 유지되며 공식 인증과 구분한다.",
-  "unknown": "Nevada 공식 교차검증, Alaska 남은 표와 공식 집계, Oregon 주지사 원문, 하원 증가6석의 개별 구성·시각, 전국 인증·법원·재검표·운영 변화. 집계율은 제공자 추정치로 공식 투표구 보고율과 다르다.",
-  "gap": "상원35·주지사36 개별 경선 중 Oregon 주지사는 접근 실패. Alaska 공식 결과502, Nevada 공식 자동접근 차단 유지. 하원435개·카운티/투표구 페이지 전수 확인과 전국 공식 교차검증은 미완료. 시장 반응은 이번 회차에서 수치 확인하지 않았다.",
+  "headline": "11/4 19:26KST: Nevada Ford 당선 보도, DDHQ는 미판정",
+  "body": "AP 공개 색인에 Ford 당선 판단, Guardian 원문에 승리 보도 확인. 공식 인증과 구분하며 DDHQ 미판정 상태를 함께 보존한다. DDHQ 합계는 하원241D·149R, 상원54D·44R, 주지사27D·20R로 유지. Alaska 상원·Kansas 주지사 격차 축소, CO03 하원 관측 선두 변경.",
+  "unknown": "AP 본문 직접 접근, Nevada 공식 교차검증·인증, Alaska 남은 표·공식 집계, Oregon 주지사 원문, 하원 이전 증가6석 개별 구성, 전국 법원·재검표·운영 변화.",
+  "gap": "상원35·주지사36 개별 페이지 점검 중 Oregon 주지사 접근 실패. AP 및 일부 재전송 직접 접근 실패로 검색 색인과 직접 확인한 다른 보도를 구분. Alaska 공식 결과502·Nevada 공식 자동접근 차단 유지. 하원·카운티 페이지 전수와 독립 수치 검증 미완료. 시장 수치·선거 인과는 이번 회차 미평가.",
   "feed": [
+    {
+      "at": "2026-11-04T10:26:15Z",
+      "kind": "언론 판단",
+      "title": "Nevada Ford 당선 보도, DDHQ 미판정과 구분",
+      "text": "AP 공개 검색 색인은 Aaron Ford의 Nevada 주지사 당선 판단을 표시한다. Guardian 직접 열람도 Ford의 승리를 보도한다. 이는 언론 판단이지 공식 인증이 아니다. 반면 이번 DDHQ 개별 페이지에는 당선 판단이 표시되지 않아 제공자별 상태를 합치지 않는다.",
+      "evidence": "AP 검색 색인 게시11월4일09:47:02UTC/18:47:02KST. AP 원문 및 AP·KUNR 재전송 직접 열람은 실패했으며 재전송은 독립 판정으로 세지 않는다. Guardian 직접 확인10:26UTC/19:26KST, 항목 시각21:10AEDT=10:10UTC/19:10KST. 공식 최종 인증·남은 표는 미확인.",
+      "sources": [
+        "https://www.theguardian.com/us-news/live/2026/nov/03/midterm-election-results-live-updates",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T10:26:15Z",
+      "kind": "개표 관찰",
+      "title": "DDHQ 지배권 합계 유지, Alaska·Kansas 격차 축소",
+      "text": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R은 직전 관찰과 같다. Alaska 상원 Sullivan100,747표 대 Peltola98,951표로 선두1,796표, 이전2,150표에서354표 축소. Kansas 주지사 Holscher546,587표 대 Masterson541,030표로 격차5,557표, 이전5,897표에서340표 축소. Mississippi 상원 Colom461,370표 대 Hyde-Smith459,201표는 동일하다. 세 경선은 DDHQ 미판정이며 표 증가나 작은 격차 변화만으로 새 당선 판단을 만들지 않는다.",
+      "evidence": "조회11월4일10:24–10:25UTC/19:24–19:25KST. Alaska 갱신04:12EST=09:12UTC, Kansas04:57EST=09:57UTC, Mississippi02:01EST=07:01UTC. 상원35·주지사36 개별 경선을 시도, Oregon 주지사만 접근 실패. Alaska 공식 결과502. 공식 인증·독립 수치 교차검증은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T10:26:15Z",
+      "kind": "개표 관찰",
+      "title": "Nevada 주지사 집계 증가·CO03 선두 변화 관찰",
+      "text": "DDHQ Nevada 주지사 Ford490,976표51.56%, Lombardo421,840표44.30%, 합계952,257표로 선두69,136표다. CO03 하원은 이전 목록의 민주+0.4에서 공화+0.4로 바뀌었고, 개별 페이지 Hurd146,913표48.63% 대 Romero145,702표48.23%, 격차1,211표·추정83%·미판정을 확인했다. 선두 변경의 정확한 순간, 남은 표 구성과 공식 수치 대조는 미확인이다.",
+      "evidence": "Nevada 갱신05:05EST=10:05UTC/19:05KST, CO03 갱신04:49EST=09:49UTC/18:49KST. 실제 열람10:25UTC/19:25KST. CO03 county27개 중 첫 페이지25개만 표시되어 미집계 범위 전수 검증 불가. Nevada 공식 자동접근 차단을 우회하지 않았다. 하원 전체435개 개별 경선·전국 법원·재검표·운영사고의 완전 점검은 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T09:16:54Z",
       "kind": "개표 관찰",
