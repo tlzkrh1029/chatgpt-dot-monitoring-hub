@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T19:46:48.364Z",
-  "observedAt": "2026-11-04T19:46:48.363Z",
+  "publishedAt": "2026-11-04T20:02:14.721Z",
+  "observedAt": "2026-11-04T20:02:14.720Z",
   "checkStatus": "partial",
-  "headline": "11/5 04:46KST: 의석 합계 유지, 일부 미판정 집계 증가",
-  "body": "DDHQ 하원249D·152R·상원54D·44R·주지사28D·20R 유지. Maine2구 공화3727표·Colorado3구 공화1266표 우세는 미판정이다. 확인 범위에서 새 중대 판단·선두 역전은 없으며 공식 인증·전국 전수 확인은 미완료다.",
+  "headline": "11/5 05:02KST: 의석 합계 유지, 확인 범위 내 새 중대 변화 없음",
+  "body": "DDHQ 하원249D·152R·상원54D·44R·주지사28D·20R과 주요 미판정 경합 선두 유지. 일부 집계는 증가했지만 새 중대 판단은 확인하지 못했다. 공식 인증·전국 전수 확인은 미완료다.",
   "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T20:02:14.720Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계·주요 미판정 경합 유지",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5584표·Maine2구 공화3727표 우세는 미판정 상태로 유지된다. NC05 민주99표·AZ02 민주86표·MN01 민주322표·Colorado3 공화1266표 우세도 미판정이다. 확인 범위에서 새 중대 판단·선두 역전은 확인하지 못했다.",
+      "evidence": "실제조회11월4일20:00–20:02UTC·한국시간11월5일05:00–05:02. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원8개 표본·총괄 목록 점검,435개 전수 아님. Maine·Minnesota·Massachusetts 상원 및 Pennsylvania·Idaho 주지사의 표수 증가에도 기존 판단 유지. 자료표시 각각14:27·14:38·14:58·14:37·14:39EST, UTC19:27·19:38·19:58·19:37·19:39, KST다음날04:27·04:38·04:58·04:37·04:39다. South Carolina 상원은 갱신시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 공식 인증·남은 표 분포·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/idaho-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T19:46:48.363Z",
       "kind": "부분 재확인",
