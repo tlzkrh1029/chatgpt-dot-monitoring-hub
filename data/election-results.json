@@ -1,1160 +1,2428 @@
 {
- "schemaVersion": 1,
- "kind": "election-results",
- "provider": "DDHQ",
- "publishedAt": "2026-11-04T11:30:46Z",
- "observedAt": "2026-11-04T11:08:31Z",
- "checkStatus": "partial",
- "note": "첫 게시본입니다. 의석 합계와 미판정 경합 수치는 DDHQ 기준입니다. DDHQ 개별 판정을 확인하지 못한 상원 19곳과 주지사 9곳은 AP·CBS·NBC·ABC 등 다른 언론의 판정으로 채우고, 판정 주체를 표기했습니다. 주지사 14곳은 개별 판정을 아직 확인하지 못해 확인 중으로 둡니다. 선거 감시 작업이 이 파일을 갱신하기 전까지는 이 시점의 자료입니다.",
- "chambers": {
-  "senate": {
-   "seats": 100,
-   "majority": 51,
-   "tieBreaker": "R",
-   "notUp": {
-    "D": 32,
-    "R": 31,
-    "I": 2,
-    "O": 0
-   },
-   "independentsCaucus": "D",
-   "control": {
-    "party": "D",
-    "by": "DDHQ",
-    "at": "2026-11-04T04:19:00Z"
-   }
+  "schemaVersion": 1,
+  "kind": "election-results",
+  "provider": "DDHQ",
+  "publishedAt": "2026-11-04T12:37:35.231Z",
+  "observedAt": "2026-11-04T12:37:35.231Z",
+  "checkStatus": "partial",
+  "note": "11월4일12:33–12:37UTC(21:33–21:37KST)에 상원35·주지사36개 DDHQ 개별 페이지와 합계 페이지를 재점검했다. 상원 개별 판정20D·13R에 비선거 의석과 민주당 협력 무소속2명을 합친54D·44R·미판정2는 DDHQ 합계와 일치한다. 주지사 개별 DDHQ 판정20D·12R, 미판정3, Oregon은 접근 실패로 기존 ABC 판단을 보존한다. 현직 포함 DDHQ 합계27D·20R·미판정3과 구분한다. 하원241D·149R·미판정45. 언론 판단이며 공식 인증 아님. 모든 카운티·미집계 표를 전수 검증하지 않았다.",
+  "chambers": {
+    "senate": {
+      "seats": 100,
+      "majority": 51,
+      "tieBreaker": "R",
+      "notUp": {
+        "D": 32,
+        "R": 31,
+        "I": 2,
+        "O": 0
+      },
+      "independentsCaucus": "D",
+      "control": {
+        "party": "D",
+        "by": "DDHQ",
+        "at": "2026-11-04T04:19:00Z"
+      }
+    },
+    "house": {
+      "seats": 435,
+      "majority": 218,
+      "totals": {
+        "D": 241,
+        "R": 149,
+        "I": 0,
+        "O": 0,
+        "uncalled": 45
+      },
+      "flips": {
+        "D": 32,
+        "R": 2
+      },
+      "control": {
+        "party": "D",
+        "by": "DDHQ",
+        "at": "2026-11-04T02:09:00Z"
+      }
+    },
+    "governor": {
+      "states": 50,
+      "notUp": {
+        "D": 6,
+        "R": 8,
+        "I": 0,
+        "O": 0
+      },
+      "totals": {
+        "D": 27,
+        "R": 20,
+        "I": 0,
+        "O": 0,
+        "uncalled": 3
+      }
+    }
   },
-  "house": {
-   "seats": 435,
-   "majority": 218,
-   "totals": {
-    "D": 241,
-    "R": 149,
-    "I": 0,
-    "O": 0,
-    "uncalled": 45
-   },
-   "flips": {
-    "D": 32,
-    "R": 2
-   },
-   "control": {
-    "party": "D",
-    "by": "DDHQ",
-    "at": "2026-11-04T02:09:00Z"
-   }
+  "races": {
+    "senate": {
+      "AL": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Barry Moore",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:05:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Barry Moore",
+            "party": "R",
+            "votes": 916559,
+            "pct": 54.75
+          },
+          {
+            "name": "Everett Wess",
+            "party": "D",
+            "votes": 757464,
+            "pct": 45.25
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "CBS",
+            "name": "Barry Moore",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:43UTC. 집계 Nov 4, 2:57 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "AK": {
+        "status": "uncalled",
+        "special": false,
+        "winner": null,
+        "calledBy": null,
+        "calledAt": null,
+        "leader": "R",
+        "candidates": [
+          {
+            "name": "Dan Sullivan",
+            "party": "R",
+            "votes": 100747,
+            "pct": 48.52
+          },
+          {
+            "name": "Mary Peltola",
+            "party": "D",
+            "votes": 98951,
+            "pct": 47.66
+          },
+          {
+            "name": "Gerald Heikes",
+            "party": "R",
+            "votes": 4494,
+            "pct": 2.16
+          }
+        ],
+        "reported": 68,
+        "otherCalls": [],
+        "note": "조회 12:33:26UTC. 집계 Nov 4, 4:12 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "AR": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Tom Cotton",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:33:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Tom Cotton",
+            "party": "R",
+            "votes": 480621,
+            "pct": 54.11
+          },
+          {
+            "name": "Hallie Shoffner",
+            "party": "D",
+            "votes": 375619,
+            "pct": 42.29
+          },
+          {
+            "name": "Jeff Wadlin",
+            "party": "O",
+            "votes": 31944,
+            "pct": 3.6
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Tom Cotton",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:44UTC. 집계 Nov 4, 5:04 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "CO": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "John Hickenlooper",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "John Hickenlooper",
+            "party": "D",
+            "votes": 1310937,
+            "pct": 60.24
+          },
+          {
+            "name": "Mark Baisley",
+            "party": "R",
+            "votes": 773936,
+            "pct": 35.56
+          }
+        ],
+        "reported": 77,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "John Hickenlooper",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:37UTC. 집계 Nov 4, 4:49 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "DE": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Chris Coons",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Chris Coons",
+            "party": "D",
+            "votes": 240347,
+            "pct": 63.57
+          },
+          {
+            "name": "Michael Katz",
+            "party": "R",
+            "votes": 137764,
+            "pct": 36.43
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Chris Coons",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:38UTC. 집계 Nov 4, 3:52 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "FL": {
+        "status": "called",
+        "special": true,
+        "winner": {
+          "name": "Ashley Moody",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Ashley Moody",
+            "party": "R",
+            "votes": 4207774,
+            "pct": 50.87
+          },
+          {
+            "name": "Angie Nixon",
+            "party": "D",
+            "votes": 3968811,
+            "pct": 47.98
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Ashley Moody",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:34UTC. 집계 Nov 4, 3:00 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "GA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Jon Ossoff",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T00:18:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Jon Ossoff",
+            "party": "D",
+            "votes": 2463132,
+            "pct": 59
+          },
+          {
+            "name": "Mike Collins",
+            "party": "R",
+            "votes": 1711322,
+            "pct": 41
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:31UTC. 집계 Nov 4, 4:25 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "ID": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Jim Risch",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T05:30:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Jim Risch",
+            "party": "R",
+            "votes": 366445,
+            "pct": 56.82
+          },
+          {
+            "name": "Todd Achilles",
+            "party": "I",
+            "votes": 215763,
+            "pct": 33.46
+          },
+          {
+            "name": "Natalie Fleming",
+            "party": "I",
+            "votes": 44240,
+            "pct": 6.86
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:45UTC. 집계 Nov 4, 4:25 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "IL": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Juliana Stratton",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Juliana Stratton",
+            "party": "D",
+            "votes": 2373044,
+            "pct": 60.65
+          },
+          {
+            "name": "Don Tracy",
+            "party": "R",
+            "votes": 1477661,
+            "pct": 37.77
+          }
+        ],
+        "reported": 91,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Juliana Stratton",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:39UTC. 집계 Nov 4, 4:56 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "IA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Josh Turek",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T04:16:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Josh Turek",
+            "party": "D",
+            "votes": 683429,
+            "pct": 50.47
+          },
+          {
+            "name": "Ashley Hinson",
+            "party": "R",
+            "votes": 628799,
+            "pct": 46.43
+          },
+          {
+            "name": "Thomas Laehn",
+            "party": "O",
+            "votes": 42013,
+            "pct": 3.1
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:26UTC. 집계 Nov 4, 3:13 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "KS": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Adam Hamilton",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:48:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Adam Hamilton",
+            "party": "D",
+            "votes": 556414,
+            "pct": 50.92
+          },
+          {
+            "name": "Roger Marshall",
+            "party": "R",
+            "votes": 503230,
+            "pct": 46.05
+          },
+          {
+            "name": "David Graham",
+            "party": "O",
+            "votes": 33134,
+            "pct": 3.03
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:27UTC. 집계 Nov 4, 4:57 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "KY": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Andy Barr",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:26:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Andy Barr",
+            "party": "R",
+            "votes": 784181,
+            "pct": 54.97
+          },
+          {
+            "name": "Charles Booker",
+            "party": "D",
+            "votes": 612397,
+            "pct": 42.93
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Andy Barr",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:34UTC. 집계 Nov 4, 6:36 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "LA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Julia Letlow",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T05:32:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Julia Letlow",
+            "party": "R",
+            "votes": 745963,
+            "pct": 50.88
+          },
+          {
+            "name": "Jamie Davis",
+            "party": "D",
+            "votes": 720106,
+            "pct": 49.12
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:35UTC. 집계 Nov 4, 2:12 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "ME": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Troy Jackson",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T06:10:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Troy Jackson",
+            "party": "D",
+            "votes": 334814,
+            "pct": 53.31
+          },
+          {
+            "name": "Susan Collins",
+            "party": "R",
+            "votes": 285385,
+            "pct": 45.44
+          }
+        ],
+        "reported": 83,
+        "otherCalls": [],
+        "note": "조회 12:33:29UTC. 집계 Nov 4, 7:04 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Edward Markey",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Edward Markey",
+            "party": "D",
+            "votes": 1475418,
+            "pct": 63.89
+          },
+          {
+            "name": "John Deaton",
+            "party": "R",
+            "votes": 730036,
+            "pct": 31.61
+          },
+          {
+            "name": "Shiva Ayyadurai",
+            "party": "I",
+            "votes": 52651,
+            "pct": 2.28
+          }
+        ],
+        "reported": 84,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Ed Markey",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:39UTC. 집계 Nov 4, 6:25 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MI": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Abdul El-Sayed",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T06:15:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Abdul El-Sayed",
+            "party": "D",
+            "votes": 2443218,
+            "pct": 52.45
+          },
+          {
+            "name": "Mike Rogers",
+            "party": "R",
+            "votes": 2121823,
+            "pct": 45.55
+          },
+          {
+            "name": "Lydia Christensen",
+            "party": "O",
+            "votes": 48274,
+            "pct": 1.04
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:31UTC. 집계 Nov 4, 6:07 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MN": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Peggy Flanagan",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T05:03:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Peggy Flanagan",
+            "party": "D",
+            "votes": 1520756,
+            "pct": 53.78
+          },
+          {
+            "name": "Michele Tafoya",
+            "party": "R",
+            "votes": 1232698,
+            "pct": 43.6
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:32UTC. 집계 Nov 4, 3:49 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MS": {
+        "status": "uncalled",
+        "special": false,
+        "winner": null,
+        "calledBy": null,
+        "calledAt": null,
+        "leader": "D",
+        "candidates": [
+          {
+            "name": "Scott Colom",
+            "party": "D",
+            "votes": 461370,
+            "pct": 49.06
+          },
+          {
+            "name": "Cindy Hyde-Smith",
+            "party": "R",
+            "votes": 459201,
+            "pct": 48.83
+          },
+          {
+            "name": "Ty Pinkins",
+            "party": "I",
+            "votes": 19766,
+            "pct": 2.1
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:36UTC. 집계 Nov 4, 2:01 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MT": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Kurt Alme",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T06:13:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Kurt Alme",
+            "party": "R",
+            "votes": 198199,
+            "pct": 48.24
+          },
+          {
+            "name": "Seth Bodnar",
+            "party": "I",
+            "votes": 156419,
+            "pct": 38.07
+          },
+          {
+            "name": "Alani Bankhead",
+            "party": "D",
+            "votes": 48845,
+            "pct": 11.89
+          }
+        ],
+        "reported": 83,
+        "otherCalls": [],
+        "note": "조회 12:33:37UTC. 집계 Nov 4, 4:26 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NE": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Pete Ricketts",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T06:34:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Pete Ricketts",
+            "party": "R",
+            "votes": 370411,
+            "pct": 50.38
+          },
+          {
+            "name": "Dan Osborn",
+            "party": "I",
+            "votes": 321218,
+            "pct": 43.69
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:30UTC. 집계 Nov 4, 7:03 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NH": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Chris Pappas",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Chris Pappas",
+            "party": "D",
+            "votes": 328387,
+            "pct": 56.37
+          },
+          {
+            "name": "John Sununu",
+            "party": "R",
+            "votes": 243230,
+            "pct": 41.75
+          }
+        ],
+        "reported": 90,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Chris Pappas",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:32UTC. 집계 Nov 4, 3:12 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NJ": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Cory Booker",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Cory Booker",
+            "party": "D",
+            "votes": 1754918,
+            "pct": 62.34
+          },
+          {
+            "name": "Justin Murphy",
+            "party": "R",
+            "votes": 987416,
+            "pct": 35.08
+          }
+        ],
+        "reported": 92,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Cory Booker",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:40UTC. 집계 Nov 4, 4:57 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NM": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Ben Ray Lujan",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:32:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Ben Ray Lujan",
+            "party": "D",
+            "votes": 455165,
+            "pct": 63.15
+          },
+          {
+            "name": "Larry Marker",
+            "party": "R",
+            "votes": 265557,
+            "pct": 36.85
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Ben Ray Luján",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:41UTC. 집계 Nov 4, 3:22 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NC": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Roy Cooper",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:23:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Roy Cooper",
+            "party": "D",
+            "votes": 2463773,
+            "pct": 58.68
+          },
+          {
+            "name": "Michael Whatley",
+            "party": "R",
+            "votes": 1640663,
+            "pct": 39.08
+          },
+          {
+            "name": "Shannon Bray",
+            "party": "O",
+            "votes": 57138,
+            "pct": 1.36
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:33UTC. 집계 Nov 4, 4:21 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "OH": {
+        "status": "called",
+        "special": true,
+        "winner": {
+          "name": "Sherrod Brown",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T04:15:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Sherrod Brown",
+            "party": "D",
+            "votes": 2301042,
+            "pct": 50.01
+          },
+          {
+            "name": "Jon Husted",
+            "party": "R",
+            "votes": 2077750,
+            "pct": 45.15
+          },
+          {
+            "name": "William Redpath",
+            "party": "O",
+            "votes": 128272,
+            "pct": 2.79
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:28UTC. 집계 Nov 4, 5:40 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "OK": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Kevin Hern",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Kevin Hern",
+            "party": "R",
+            "votes": 629971,
+            "pct": 57.29
+          },
+          {
+            "name": "N'Kiyla Thomas",
+            "party": "D",
+            "votes": 430993,
+            "pct": 39.2
+          },
+          {
+            "name": "Curtis Stinnett",
+            "party": "I",
+            "votes": 14300,
+            "pct": 1.3
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Kevin Hern",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:45UTC. 집계 Nov 4, 3:49 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "OR": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Jeff Merkley",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T04:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Jeff Merkley",
+            "party": "D",
+            "votes": 862755,
+            "pct": 56.66
+          },
+          {
+            "name": "David Smith",
+            "party": "R",
+            "votes": 617053,
+            "pct": 40.52
+          }
+        ],
+        "reported": 71,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Jeff Merkley",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:41UTC. 집계 Nov 4, 4:30 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "RI": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Jack Reed",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Jack Reed",
+            "party": "D",
+            "votes": 235276,
+            "pct": 66.73
+          },
+          {
+            "name": "Raymond McKay",
+            "party": "R",
+            "votes": 103996,
+            "pct": 29.49
+          },
+          {
+            "name": "Michael Bahry",
+            "party": "I",
+            "votes": 13328,
+            "pct": 3.78
+          }
+        ],
+        "reported": 89,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Jack Reed",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:42UTC. 집계 Nov 3, 11:20 PM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "SC": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Annie Andrews",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:54:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Annie Andrews",
+            "party": "D",
+            "votes": 1042362,
+            "pct": 51.25
+          },
+          {
+            "name": "Darline Graham",
+            "party": "R",
+            "votes": 951165,
+            "pct": 46.76
+          },
+          {
+            "name": "Kasie Whitener",
+            "party": "O",
+            "votes": 23560,
+            "pct": 1.16
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:28UTC. 집계 Nov 4, 2:25 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "SD": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Mike Rounds",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:02:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Mike Rounds",
+            "party": "R",
+            "votes": 184437,
+            "pct": 60.67
+          },
+          {
+            "name": "Brian Bengs",
+            "party": "I",
+            "votes": 119543,
+            "pct": 39.33
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Mike Rounds",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:46UTC. 집계 Nov 4, 4:15 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "TN": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Bill Hagerty",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:51:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Bill Hagerty",
+            "party": "R",
+            "votes": 1138264,
+            "pct": 55.09
+          },
+          {
+            "name": "Marquita Bradshaw",
+            "party": "D",
+            "votes": 886969,
+            "pct": 42.93
+          },
+          {
+            "name": "Robert Jones",
+            "party": "I",
+            "votes": 9787,
+            "pct": 0.47
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Bill Hagerty",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:47UTC. 집계 Nov 4, 3:16 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "TX": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "James Talarico",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:14:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "James Talarico",
+            "party": "D",
+            "votes": 5278203,
+            "pct": 54.95
+          },
+          {
+            "name": "Ken Paxton",
+            "party": "R",
+            "votes": 4144687,
+            "pct": 43.15
+          },
+          {
+            "name": "Ted Brown",
+            "party": "O",
+            "votes": 182509,
+            "pct": 1.9
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:29UTC. 집계 Nov 4, 6:49 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "VA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Mark Warner",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T00:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Mark Warner",
+            "party": "D",
+            "votes": 2176244,
+            "pct": 61.1
+          },
+          {
+            "name": "Bert Mizusawa",
+            "party": "R",
+            "votes": 1385569,
+            "pct": 38.9
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Mark Warner",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:43UTC. 집계 Nov 4, 3:15 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "WV": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Shelley Moore Capito",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T00:30:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Shelley Moore Capito",
+            "party": "R",
+            "votes": 266068,
+            "pct": 58.33
+          },
+          {
+            "name": "Rachel Anderson",
+            "party": "D",
+            "votes": 172922,
+            "pct": 37.91
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Shelley Moore Capito",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:47UTC. 집계 Nov 4, 2:36 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "WY": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Harriet Hageman",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Harriet Hageman",
+            "party": "R",
+            "votes": 122157,
+            "pct": 65.24
+          },
+          {
+            "name": "James Byrd",
+            "party": "D",
+            "votes": 65097,
+            "pct": 34.76
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Harriet Hageman",
+            "party": "R"
+          }
+        ],
+        "note": "조회 12:33:48UTC. 집계 Nov 4, 2:02 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      }
+    },
+    "governor": {
+      "AL": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Tommy Tuberville",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T04:10:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Tommy Tuberville",
+            "party": "R",
+            "votes": 871814,
+            "pct": 52
+          },
+          {
+            "name": "Doug Jones",
+            "party": "D",
+            "votes": 804647,
+            "pct": 48
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:01UTC. 집계 Nov 4, 2:57 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "AK": {
+        "status": "uncalled",
+        "special": false,
+        "winner": null,
+        "calledBy": null,
+        "calledAt": null,
+        "leader": "D",
+        "candidates": [
+          {
+            "name": "Jonathan Kreiss-Tomkins",
+            "party": "D",
+            "votes": 100667,
+            "pct": 48.97
+          },
+          {
+            "name": "Bernadette Wilson",
+            "party": "R",
+            "votes": 60564,
+            "pct": 29.46
+          },
+          {
+            "name": "Dave Bronson",
+            "party": "R",
+            "votes": 29108,
+            "pct": 14.16
+          }
+        ],
+        "reported": 67,
+        "otherCalls": [],
+        "note": "조회 12:33:49UTC. 집계 Nov 4, 4:12 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "AZ": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Katie Hobbs",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:11:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Katie Hobbs",
+            "party": "D",
+            "votes": 1170284,
+            "pct": 55.83
+          },
+          {
+            "name": "Andy Biggs",
+            "party": "R",
+            "votes": 890649,
+            "pct": 42.49
+          }
+        ],
+        "reported": 76,
+        "otherCalls": [
+          {
+            "by": "NBC",
+            "name": "Katie Hobbs",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:55UTC. 집계 Nov 4, 6:13 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "AR": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Sarah Huckabee Sanders",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:46:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Sarah Huckabee Sanders",
+            "party": "R",
+            "votes": 477140,
+            "pct": 53.84
+          },
+          {
+            "name": "Fred Love",
+            "party": "D",
+            "votes": 341621,
+            "pct": 38.55
+          },
+          {
+            "name": "Colt Shelby",
+            "party": "O",
+            "votes": 67394,
+            "pct": 7.61
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:09UTC. 집계 Nov 4, 5:04 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "CA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Xavier Becerra",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T04:13:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Xavier Becerra",
+            "party": "D",
+            "votes": 4979472,
+            "pct": 63.99
+          },
+          {
+            "name": "Steve Hilton",
+            "party": "R",
+            "votes": 2801614,
+            "pct": 36.01
+          }
+        ],
+        "reported": 67,
+        "otherCalls": [],
+        "note": "조회 12:34:05UTC. 집계 Nov 4, 6:34 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "CO": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Phil Weiser",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:14:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Phil Weiser",
+            "party": "D",
+            "votes": 1319781,
+            "pct": 60.94
+          },
+          {
+            "name": "Victor Marx",
+            "party": "R",
+            "votes": 728650,
+            "pct": 33.65
+          },
+          {
+            "name": "Greg Lopez",
+            "party": "I",
+            "votes": 60227,
+            "pct": 2.78
+          }
+        ],
+        "reported": 77,
+        "otherCalls": [],
+        "note": "조회 12:33:56UTC. 집계 Nov 4, 4:49 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "CT": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Ned Lamont",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:16:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Ned Lamont",
+            "party": "D",
+            "votes": 682177,
+            "pct": 58.53
+          },
+          {
+            "name": "Ryan Fazio",
+            "party": "R",
+            "votes": 483430,
+            "pct": 41.47
+          }
+        ],
+        "reported": 83,
+        "otherCalls": [],
+        "note": "조회 12:33:57UTC. 집계 Nov 4, 3:56 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "FL": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Byron Donalds",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:28:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Byron Donalds",
+            "party": "R",
+            "votes": 4132112,
+            "pct": 50.02
+          },
+          {
+            "name": "David Jolly",
+            "party": "D",
+            "votes": 4024180,
+            "pct": 48.71
+          },
+          {
+            "name": "Scott Jewett",
+            "party": "O",
+            "votes": 37884,
+            "pct": 0.46
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:53UTC. 집계 Nov 4, 3:00 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "GA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Keisha Lance Bottoms",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:13:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Keisha Lance Bottoms",
+            "party": "D",
+            "votes": 2268462,
+            "pct": 54.31
+          },
+          {
+            "name": "Rick Jackson",
+            "party": "R",
+            "votes": 1908261,
+            "pct": 45.69
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:50UTC. 집계 Nov 4, 4:25 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "HI": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Joshua Green",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T06:30:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Joshua Green",
+            "party": "D",
+            "votes": 227046,
+            "pct": 74.93
+          },
+          {
+            "name": "Gary Cordery",
+            "party": "R",
+            "votes": 75978,
+            "pct": 25.07
+          }
+        ],
+        "reported": 67,
+        "otherCalls": [],
+        "note": "조회 12:34:05UTC. 집계 Nov 4, 2:16 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "ID": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Brad Little",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T04:32:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Brad Little",
+            "party": "R",
+            "votes": 371568,
+            "pct": 57.41
+          },
+          {
+            "name": "Terri Pickens",
+            "party": "D",
+            "votes": 207078,
+            "pct": 31.99
+          },
+          {
+            "name": "John Stegner",
+            "party": "I",
+            "votes": 49479,
+            "pct": 7.64
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:10UTC. 집계 Nov 4, 4:25 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "IL": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "JB Pritzker",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:20:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "JB Pritzker",
+            "party": "D",
+            "votes": 2320865,
+            "pct": 59.4
+          },
+          {
+            "name": "Darren Bailey",
+            "party": "R",
+            "votes": 1454884,
+            "pct": 37.24
+          },
+          {
+            "name": "Collin Corbett",
+            "party": "I",
+            "votes": 131470,
+            "pct": 3.36
+          }
+        ],
+        "reported": 89,
+        "otherCalls": [
+          {
+            "by": "언론 보도",
+            "name": "JB Pritzker",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:34:06UTC. 집계 Nov 4, 4:56 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "IA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Rob Sand",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:57:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Rob Sand",
+            "party": "D",
+            "votes": 754959,
+            "pct": 55.48
+          },
+          {
+            "name": "Zach Lahn",
+            "party": "R",
+            "votes": 605709,
+            "pct": 44.52
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:51UTC. 집계 Nov 4, 3:13 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "KS": {
+        "status": "uncalled",
+        "special": false,
+        "winner": null,
+        "calledBy": null,
+        "calledAt": null,
+        "leader": "D",
+        "candidates": [
+          {
+            "name": "Cindy Holscher",
+            "party": "D",
+            "votes": 546587,
+            "pct": 50.26
+          },
+          {
+            "name": "Ty Masterson",
+            "party": "R",
+            "votes": 541030,
+            "pct": 49.74
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:53UTC. 집계 Nov 4, 4:57 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "ME": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Hannah Pingree",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:29:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Hannah Pingree",
+            "party": "D",
+            "votes": 344777,
+            "pct": 55.27
+          },
+          {
+            "name": "Bobby Charles",
+            "party": "R",
+            "votes": 229246,
+            "pct": 36.75
+          },
+          {
+            "name": "Rick Bennett",
+            "party": "I",
+            "votes": 49802,
+            "pct": 7.98
+          }
+        ],
+        "reported": 83,
+        "otherCalls": [],
+        "note": "조회 12:33:57UTC. 집계 Nov 4, 7:15 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MD": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Wes Moore",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:32:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Wes Moore",
+            "party": "D",
+            "votes": 1163257,
+            "pct": 62.71
+          },
+          {
+            "name": "Dan Cox",
+            "party": "R",
+            "votes": 616821,
+            "pct": 33.25
+          }
+        ],
+        "reported": 85,
+        "otherCalls": [
+          {
+            "by": "언론 보도",
+            "name": "Wes Moore",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:34:07UTC. 집계 Nov 4, 3:50 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Maura Healey",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:13:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Maura Healey",
+            "party": "D",
+            "votes": 1459865,
+            "pct": 62.61
+          },
+          {
+            "name": "Mike Minogue",
+            "party": "R",
+            "votes": 795236,
+            "pct": 34.11
+          },
+          {
+            "name": "Andrea James",
+            "party": "I",
+            "votes": 76549,
+            "pct": 3.28
+          }
+        ],
+        "reported": 85,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Maura Healey",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:34:07UTC. 집계 Nov 4, 6:26 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MI": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Jocelyn Benson",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:45:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Jocelyn Benson",
+            "party": "D",
+            "votes": 2533098,
+            "pct": 54.44
+          },
+          {
+            "name": "John James",
+            "party": "R",
+            "votes": 2039042,
+            "pct": 43.83
+          },
+          {
+            "name": "Anthony Hudson",
+            "party": "O",
+            "votes": 43268,
+            "pct": 0.93
+          }
+        ],
+        "reported": null,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Jocelyn Benson",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:58UTC. 집계 Nov 4, 6:07 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "MN": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Amy Klobuchar",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T05:03:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Amy Klobuchar",
+            "party": "D",
+            "votes": 1569585,
+            "pct": 55.52
+          },
+          {
+            "name": "Lisa Demuth",
+            "party": "R",
+            "votes": 1205824,
+            "pct": 42.66
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:59UTC. 집계 Nov 4, 3:50 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NE": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Jim Pillen",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T06:03:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Jim Pillen",
+            "party": "R",
+            "votes": 373465,
+            "pct": 50.69
+          },
+          {
+            "name": "Lynne Walz",
+            "party": "D",
+            "votes": 311363,
+            "pct": 42.26
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:02UTC. 집계 Nov 4, 7:03 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NV": {
+        "status": "uncalled",
+        "special": false,
+        "winner": null,
+        "calledBy": null,
+        "calledAt": null,
+        "leader": "D",
+        "candidates": [
+          {
+            "name": "Aaron Ford",
+            "party": "D",
+            "votes": 505738,
+            "pct": 51.73
+          },
+          {
+            "name": "Joe Lombardo",
+            "party": "R",
+            "votes": 431367,
+            "pct": 44.12
+          },
+          {
+            "name": "Danielle Ford",
+            "party": "I",
+            "votes": 26578,
+            "pct": 2.72
+          }
+        ],
+        "reported": 87,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "party": "D",
+            "name": "Aaron Ford"
+          }
+        ],
+        "note": "조회 12:33:49UTC. 집계 Nov 4, 6:06 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NH": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Kelly Ayotte",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T06:06:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Kelly Ayotte",
+            "party": "R",
+            "votes": 300370,
+            "pct": 50.88
+          },
+          {
+            "name": "Cinde Warmington",
+            "party": "D",
+            "votes": 281070,
+            "pct": 47.61
+          },
+          {
+            "name": "Stephen Villee",
+            "party": "O",
+            "votes": 8890,
+            "pct": 1.51
+          }
+        ],
+        "reported": 91,
+        "otherCalls": [],
+        "note": "조회 12:33:54UTC. 집계 Nov 4, 3:51 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NM": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Deb Haaland",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:33:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Deb Haaland",
+            "party": "D",
+            "votes": 412834,
+            "pct": 57.25
+          },
+          {
+            "name": "Greggory Hull",
+            "party": "R",
+            "votes": 308315,
+            "pct": 42.75
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:59UTC. 집계 Nov 4, 3:22 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "NY": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Kathy Hochul",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:50:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Kathy Hochul",
+            "party": "D",
+            "votes": 3493607,
+            "pct": 59.83
+          },
+          {
+            "name": "Bruce Blakeman",
+            "party": "R",
+            "votes": 2345341,
+            "pct": 40.17
+          }
+        ],
+        "reported": 93,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "Kathy Hochul",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:34:00UTC. 집계 Nov 4, 1:47 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "OH": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Amy Acton",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:30:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Amy Acton",
+            "party": "D",
+            "votes": 2404179,
+            "pct": 52.31
+          },
+          {
+            "name": "Vivek Ramaswamy",
+            "party": "R",
+            "votes": 2039731,
+            "pct": 44.38
+          },
+          {
+            "name": "Don Kissick",
+            "party": "O",
+            "votes": 151874,
+            "pct": 3.3
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:51UTC. 집계 Nov 4, 5:40 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "OK": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Mike Mazzei",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:30:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Mike Mazzei",
+            "party": "R",
+            "votes": 572738,
+            "pct": 51.99
+          },
+          {
+            "name": "Cyndi Munson",
+            "party": "D",
+            "votes": 505249,
+            "pct": 45.86
+          },
+          {
+            "name": "Robert Brooks",
+            "party": "I",
+            "votes": 11472,
+            "pct": 1.04
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:10UTC. 집계 Nov 4, 3:49 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "OR": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Tina Kotek",
+          "party": "D"
+        },
+        "calledBy": "ABC",
+        "calledAt": null,
+        "leader": null,
+        "candidates": [],
+        "reported": null,
+        "otherCalls": [],
+        "note": "DDHQ 개별 페이지 접근 실패. 기존 ABC 당선 판단을 출처와 함께 보존하며 이번 DDHQ 확인으로 표시하지 않는다."
+      },
+      "PA": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Josh Shapiro",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:17:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Josh Shapiro",
+            "party": "D",
+            "votes": 2980559,
+            "pct": 60.23
+          },
+          {
+            "name": "Stacy Garrity",
+            "party": "R",
+            "votes": 1903526,
+            "pct": 38.47
+          },
+          {
+            "name": "Kenneth Krawchuk",
+            "party": "O",
+            "votes": 64186,
+            "pct": 1.3
+          }
+        ],
+        "reported": 85,
+        "otherCalls": [
+          {
+            "by": "언론 보도",
+            "name": "Josh Shapiro",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:34:08UTC. 집계 Nov 4, 2:04 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "RI": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Helena Foulkes",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T01:42:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Helena Foulkes",
+            "party": "D",
+            "votes": 202877,
+            "pct": 57.67
+          },
+          {
+            "name": "Ken Block",
+            "party": "I",
+            "votes": 98586,
+            "pct": 28.03
+          },
+          {
+            "name": "Aaron Guckian",
+            "party": "R",
+            "votes": 46656,
+            "pct": 13.26
+          }
+        ],
+        "reported": 89,
+        "otherCalls": [],
+        "note": "조회 12:34:08UTC. 집계 Nov 3, 11:19 PM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "SC": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Alan Wilson",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T02:50:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Alan Wilson",
+            "party": "R",
+            "votes": 1050190,
+            "pct": 51.62
+          },
+          {
+            "name": "Jermaine Johnson",
+            "party": "D",
+            "votes": 959001,
+            "pct": 47.14
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:02UTC. 집계 Nov 4, 2:25 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "SD": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Larry Rhoden",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:01:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Larry Rhoden",
+            "party": "R",
+            "votes": 193187,
+            "pct": 63.69
+          },
+          {
+            "name": "Dan Ahlers",
+            "party": "D",
+            "votes": 110146,
+            "pct": 36.31
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:11UTC. 집계 Nov 4, 4:15 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "TN": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Marsha Blackburn",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T05:35:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Marsha Blackburn",
+            "party": "R",
+            "votes": 957136,
+            "pct": 45.62
+          },
+          {
+            "name": "Jerri Green",
+            "party": "D",
+            "votes": 902953,
+            "pct": 43.04
+          },
+          {
+            "name": "David Hatley",
+            "party": "I",
+            "votes": 195548,
+            "pct": 9.32
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:03UTC. 집계 Nov 4, 2:41 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "TX": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Gina Hinojosa",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T05:00:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Gina Hinojosa",
+            "party": "D",
+            "votes": 5066667,
+            "pct": 52.79
+          },
+          {
+            "name": "Greg Abbott",
+            "party": "R",
+            "votes": 4383996,
+            "pct": 45.68
+          },
+          {
+            "name": "Pat Dixon",
+            "party": "O",
+            "votes": 147242,
+            "pct": 1.53
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:33:55UTC. 집계 Nov 4, 6:49 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "VT": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Phil Scott",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T05:09:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Phil Scott",
+            "party": "R",
+            "votes": 160814,
+            "pct": 52.48
+          },
+          {
+            "name": "Amanda Janoo",
+            "party": "D",
+            "votes": 140665,
+            "pct": 45.91
+          },
+          {
+            "name": "Brian Judd",
+            "party": "I",
+            "votes": 2582,
+            "pct": 0.84
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:04UTC. 집계 Nov 4, 1:52 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "WI": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "David Crowley",
+          "party": "D"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:20:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "David Crowley",
+            "party": "D",
+            "votes": 1438734,
+            "pct": 54.08
+          },
+          {
+            "name": "Tom Tiffany",
+            "party": "R",
+            "votes": 1221690,
+            "pct": 45.92
+          }
+        ],
+        "reported": 92,
+        "otherCalls": [
+          {
+            "by": "AP",
+            "name": "David Crowley",
+            "party": "D"
+          }
+        ],
+        "note": "조회 12:33:52UTC. 집계 Nov 4, 4:15 AM EST. 언론 판단·부분 집계이며 공식 인증 아님."
+      },
+      "WY": {
+        "status": "called",
+        "special": false,
+        "winner": {
+          "name": "Eric Barlow",
+          "party": "R"
+        },
+        "calledBy": "DDHQ",
+        "calledAt": "2026-11-04T03:58:00.000Z",
+        "leader": null,
+        "candidates": [
+          {
+            "name": "Eric Barlow",
+            "party": "R",
+            "votes": 128480,
+            "pct": 68.56
+          },
+          {
+            "name": "Kenneth Casner",
+            "party": "D",
+            "votes": 27469,
+            "pct": 14.66
+          }
+        ],
+        "reported": null,
+        "otherCalls": [],
+        "note": "조회 12:34:12UTC. 집계 Nov 4, 2:02 AM EST. 예상 집계율 >95%; 정확한 수치 미표기. 언론 판단·부분 집계이며 공식 인증 아님."
+      }
+    }
   },
-  "governor": {
-   "states": 50,
-   "notUp": {
-    "D": 6,
-    "R": 8,
-    "I": 0,
-    "O": 0
-   },
-   "totals": {
-    "D": 27,
-    "R": 20,
-    "I": 0,
-    "O": 0,
-    "uncalled": 3
-   }
-  }
- },
- "races": {
-  "senate": {
-   "AL": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Barry Moore",
-     "party": "R"
-    },
-    "calledBy": "CBS",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "AK": {
-    "status": "uncalled",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": "R",
-    "candidates": [
-     {
-      "name": "Dan Sullivan",
-      "party": "R",
-      "votes": 100747,
-      "pct": null
-     },
-     {
-      "name": "Mary Peltola",
-      "party": "D",
-      "votes": 98951,
-      "pct": null
-     }
-    ],
-    "reported": null,
-    "otherCalls": [],
-    "note": "DDHQ 미판정입니다. 미국 동부 04:12 집계 기준 1,796표 차이이고, 과반 득표자가 없으면 순위선택 집계가 이어질 수 있습니다."
-   },
-   "AR": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Tom Cotton",
-     "party": "R"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "CO": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "John Hickenlooper",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "DE": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Chris Coons",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "FL": {
-    "status": "called",
-    "special": true,
-    "winner": {
-     "name": "Ashley Moody",
-     "party": "R"
-    },
-    "calledBy": "AP",
-    "calledAt": "2026-11-04T01:50:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "GA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Jon Ossoff",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T00:18:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "ID": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Jim Risch",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T05:30:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "IL": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Juliana Stratton",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "IA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Josh Turek",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T04:16:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "KS": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Adam Hamilton",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T03:48:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "KY": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Andy Barr",
-     "party": "R"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "LA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Julia Letlow",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T05:32:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "ME": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Troy Jackson",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T06:10:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "MA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Ed Markey",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": "2026-11-04T01:07:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "MI": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Abdul El-Sayed",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T06:15:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "MN": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Peggy Flanagan",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T05:03:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "MS": {
-    "status": "uncalled",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": "D",
-    "candidates": [
-     {
-      "name": "Scott Colom",
-      "party": "D",
-      "votes": 461370,
-      "pct": null
-     },
-     {
-      "name": "Cindy Hyde-Smith",
-      "party": "R",
-      "votes": 459201,
-      "pct": null
-     }
-    ],
-    "reported": null,
-    "otherCalls": [],
-    "note": "DDHQ 미판정입니다. 미국 동부 02:01 집계 기준 2,169표 차이이며, DDHQ가 표시한 개표율은 95% 이상입니다."
-   },
-   "MT": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Kurt Alme",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T06:13:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NE": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Pete Ricketts",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T06:34:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NH": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Chris Pappas",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NJ": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Cory Booker",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NM": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Ben Ray Luján",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NC": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Roy Cooper",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T01:23:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "OH": {
-    "status": "called",
-    "special": true,
-    "winner": {
-     "name": "Sherrod Brown",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T04:15:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "OK": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Kevin Hern",
-     "party": "R"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "OR": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Jeff Merkley",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "RI": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Jack Reed",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "SC": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Annie Andrews",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T02:54:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "SD": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Mike Rounds",
-     "party": "R"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "TN": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Bill Hagerty",
-     "party": "R"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "TX": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "James Talarico",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T03:14:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "VA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Mark Warner",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "WV": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Shelley Moore Capito",
-     "party": "R"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "WY": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Harriet Hageman",
-     "party": "R"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   }
-  },
-  "governor": {
-   "AL": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "AK": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": "후보 4명이 겨루는 순위선택 방식이라 1차 집계만으로 승자를 판단하지 않습니다."
-   },
-   "AZ": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Katie Hobbs",
-     "party": "D"
-    },
-    "calledBy": "NBC",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "AR": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "CA": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "CO": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "CT": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "FL": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Byron Donalds",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T01:28:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "GA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Keisha Lance Bottoms",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T02:13:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "HI": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Josh Green",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T06:30:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "ID": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "IL": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "JB Pritzker",
-     "party": "D"
-    },
-    "calledBy": "언론 보도",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": "판정 주체를 밝히지 않은 언론 보도를 기준으로 했습니다."
-   },
-   "IA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Rob Sand",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T02:57:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "KS": {
-    "status": "uncalled",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": "D",
-    "candidates": [
-     {
-      "name": "Cindy Holscher",
-      "party": "D",
-      "votes": 546587,
-      "pct": null
-     },
-     {
-      "name": "Ty Masterson",
-      "party": "R",
-      "votes": 541030,
-      "pct": null
-     }
-    ],
-    "reported": null,
-    "otherCalls": [],
-    "note": "DDHQ 미판정입니다. 주 선거관리 비공식 집계와 DDHQ 수치가 같고, 격차는 5,557표입니다."
-   },
-   "ME": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "MD": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Wes Moore",
-     "party": "D"
-    },
-    "calledBy": "언론 보도",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": "판정 주체를 밝히지 않은 언론 보도를 기준으로 했습니다."
-   },
-   "MA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Maura Healey",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "MI": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Jocelyn Benson",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "MN": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Amy Klobuchar",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T05:03:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NE": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Jim Pillen",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T06:03:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NV": {
-    "status": "uncalled",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": "D",
-    "candidates": [
-     {
-      "name": "Aaron Ford",
-      "party": "D",
-      "votes": 490976,
-      "pct": 51.56
-     },
-     {
-      "name": "Joe Lombardo",
-      "party": "R",
-      "votes": 421840,
-      "pct": 44.3
-     }
-    ],
-    "reported": null,
-    "otherCalls": [
-     {
-      "by": "AP",
-      "party": "D",
-      "name": "Aaron Ford"
-     }
-    ],
-    "note": "DDHQ 미판정입니다. AP는 Ford 당선으로 판단했으며, 두 판단을 합치지 않습니다."
-   },
-   "NH": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Kelly Ayotte",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T06:06:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NM": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "NY": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Kathy Hochul",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": "2026-11-04T02:15:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "OH": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Amy Acton",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T03:30:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "OK": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "OR": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Tina Kotek",
-     "party": "D"
-    },
-    "calledBy": "ABC",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "PA": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Josh Shapiro",
-     "party": "D"
-    },
-    "calledBy": "언론 보도",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": "판정 주체를 밝히지 않은 언론 보도를 기준으로 했습니다."
-   },
-   "RI": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "SC": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "SD": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "TN": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Marsha Blackburn",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T05:35:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "TX": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Gina Hinojosa",
-     "party": "D"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T05:00:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "VT": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "Phil Scott",
-     "party": "R"
-    },
-    "calledBy": "DDHQ",
-    "calledAt": "2026-11-04T05:09:00Z",
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "WI": {
-    "status": "called",
-    "special": false,
-    "winner": {
-     "name": "David Crowley",
-     "party": "D"
-    },
-    "calledBy": "AP",
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   },
-   "WY": {
-    "status": "unknown",
-    "special": false,
-    "winner": null,
-    "calledBy": null,
-    "calledAt": null,
-    "leader": null,
-    "candidates": [],
-    "reported": null,
-    "otherCalls": [],
-    "note": ""
-   }
-  }
- },
- "sources": [
-  "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
-  "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
-  "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
-  "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
-  "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
-  "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
-  "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
-  "https://www.pbs.org/newshour/politics/democrats-take-control-of-the-senate-after-winning-key-midterm-races",
-  "https://www.abc10.com/article/news/politics/elections/live-2026-election-results-house-and-senate-maps-by-state-and-district/507-edcc4ab7-82ab-433b-a713-fd75de9f82f9",
-  "https://www.cbsnews.com/live-updates/senate-election-results-2026/",
-  "https://www.sdpb.org/elections/2026-11-03/ap-rounds-wins-u-s-senate-reelection-bid",
-  "https://gvwire.com/2026/11/03/mark-warner-wins-reelection-in-virginia-ap-makes-first-senate-call-of-night/",
-  "https://www.bostonglobe.com/2026/11/03/nation/massachusetts-election-live-updates-results-2026/",
-  "https://www.bostonglobe.com/2026/11/04/nation/midterm-elections-results-blue-wave/",
-  "https://www.cnbc.com/2026/11/03/midterm-elections-2026-live-updates.html",
-  "https://www.amny.com/politics/nyc-midterm-election-results-governor-house-11032026/",
-  "https://www.nbcnews.com/politics/2026-elections/arizona-governor-results",
-  "https://abcnews.com/Politics/live-updates/midterm-elections-live-updates/?id=137782085",
-  "https://www.forbes.com/sites/saradorn/2026/11/03/midterm-election-results-live-updates-democrats-win-senate-in-stunning-rout/"
- ]
+  "sources": [
+    "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+    "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+    "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+    "https://www.pbs.org/newshour/politics/democrats-take-control-of-the-senate-after-winning-key-midterm-races",
+    "https://www.abc10.com/article/news/politics/elections/live-2026-election-results-house-and-senate-maps-by-state-and-district/507-edcc4ab7-82ab-433b-a713-fd75de9f82f9",
+    "https://www.cbsnews.com/live-updates/senate-election-results-2026/",
+    "https://www.sdpb.org/elections/2026-11-03/ap-rounds-wins-u-s-senate-reelection-bid",
+    "https://gvwire.com/2026/11/03/mark-warner-wins-reelection-in-virginia-ap-makes-first-senate-call-of-night/",
+    "https://www.bostonglobe.com/2026/11/03/nation/massachusetts-election-live-updates-results-2026/",
+    "https://www.bostonglobe.com/2026/11/04/nation/midterm-elections-results-blue-wave/",
+    "https://www.cnbc.com/2026/11/03/midterm-elections-2026-live-updates.html",
+    "https://www.amny.com/politics/nyc-midterm-election-results-governor-house-11032026/",
+    "https://www.nbcnews.com/politics/2026-elections/arizona-governor-results",
+    "https://abcnews.com/Politics/live-updates/midterm-elections-live-updates/?id=137782085",
+    "https://www.forbes.com/sites/saradorn/2026/11/03/midterm-election-results-live-updates-democrats-win-senate-in-stunning-rout/",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-governor-general-election",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-governor-general-election",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/rhode-island-governor-general-election",
+    "https://votes.decisiondeskhq.com/races/2026-11-03/wyoming-governor-general-election"
+  ]
 }
