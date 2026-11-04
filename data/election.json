@@ -1,14 +1,28 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T13:32:30.711Z",
-  "observedAt": "2026-11-04T13:31:57.338Z",
+  "publishedAt": "2026-11-04T13:46:31.475Z",
+  "observedAt": "2026-11-04T13:46:03.498Z",
   "checkStatus": "partial",
-  "headline": "11/4 22:31KST: DDHQ 판단 유지, Maine 표 집계 증가",
-  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. 상원35·주지사36개를 재점검했고 Oregon 원문 접근 실패. Maine 상원·주지사 집계 증가만 확인됐으며 새 당선 판단이나 공식 인증으로 해석하지 않는다.",
+  "headline": "11/4 22:45KST: 확인 가능한 DDHQ 수치·판단 유지",
+  "body": "상원35·주지사36개 개별 경선을 재점검. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R과 열람 가능한 개별 수치·당선 판단 유지. Oregon 원문 및 일부 공식·언론 자료 확인 한계가 있어 전체 변화 없음으로 단정하지 않는다.",
   "unknown": "Oregon 주지사 원문, Alaska·Nevada·Kansas 최신 공식 대조, Mississippi 언론별 집계 시점·수치 차이, 전국 법원·재검표·인증 및 하원435석 개별 대조.",
   "gap": "상원35·주지사36개 개별 페이지 중 Oregon 주지사 접근 실패. 일부 공식·언론 본문 접근 실패 및 자료 시차 지속. 카운티 하위 페이지·하원435개·전국 운영사고·주민투표 전수 점검은 미완료. 시장 반응은 이번 회차 수치 확인하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T13:46:03.498Z",
+      "kind": "부분 관찰",
+      "title": "13:45 점검: DDHQ 수치·당선 판단 유지",
+      "text": "상원35·주지사36개 DDHQ 개별 페이지를 재조회했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 접근 가능한 개별 당선 판단·표 집계는 직전과 같다. Texas 상원 자료 갱신시각만 바뀌었고 표 수치는 같아 새 개표 진전으로 세지 않았다. 상원 Alaska·Mississippi 및 주지사 Alaska·Kansas·Nevada DDHQ 미판정을 유지한다.",
+      "evidence": "조회11월4일13:45UTC/22:45KST. Texas 상원 갱신08:11EST=13:11UTC, 주지사 총괄08:34EST=13:34UTC이며 합계 불변. Kansas Linwood 투표용지 부족 관련11월3일 보도와 다음날 Axios 후속 검색색인을 찾았으나 공식 원문·실제 누락표·최종 영향은 미확인이다. 새로 발생한 장애로 경보하지 않는다. Axios 원문 및 Alaska 공식 일정502로 확인 실패. 전국 법원·재검표·인증·주민투표·하원435개·카운티 하위·시장 수치 전수 검증은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://www.axios.com/local/kansas-city/2026/11/04/kansas-governor-race-holscher-masterson"
+      ]
+    },
     {
       "at": "2026-11-04T13:31:57.338Z",
       "kind": "부분 관찰",
