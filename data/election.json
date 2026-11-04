@@ -1,14 +1,31 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T21:32:27.016Z",
-  "observedAt": "2026-11-04T21:32:02.926Z",
+  "publishedAt": "2026-11-04T21:46:58.052Z",
+  "observedAt": "2026-11-04T21:46:37.999Z",
   "checkStatus": "partial",
-  "headline": "06:32 KST 부분 확인: 하원249·153 표시 일치",
-  "body": "11월5일 06:30–06:32 KST 조회. DDHQ 하원·상원·주지사 세 페이지의 하원 표시는 민주249·공화153으로 일치해 이전 공화152·153 표시 불일치가 해소됐다. 추가 공화1석에 해당하는 개별 신규 판정은 이번 하원22개 표본에서 식별하지 못해 미확인으로 남긴다. 상원54·44와 주지사28·20, 읽은 개별 당선 판단은 유지된다. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 미판정 Maine2 LePage4089표, Kansas 주지사 Holscher5610표, Alaska 상원 Peltola626표, Mississippi 상원 Colom1864표 우세는 동일하다.",
-  "unknown": "하원 추가1석의 개별 판정과 이전 표시 차이의 원인, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "headline": "06:46 KST 부분 확인: 의석 유지·일부 집계 수치 감소",
+  "body": "11월5일 06:45–06:46 KST 조회. DDHQ 세 총괄 페이지의 하원 민주249·공화153, 상원54·44, 주지사28·20은 동일하다. 하원21개 표본에서도 이전 추가 공화1석의 새 판정을 식별하지 못했다. 상원35·주지사36개 중70개를 확인했고 Oregon 주지사는 실패했다. 확인한 당선 판단 변경은 없다. Massachusetts 주지사 표시 총득표는2475160→2473538로1622표 감소했다. Healey2표·James1620표 감소이며 원인은 미확인이다. 기존 Healey 당선 판단은 유지돼 판정 철회로 해석하지 않는다.",
+  "unknown": "하원 추가1석의 개별 판정, Massachusetts 주지사 수치 감소 원인, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T21:46:37.999Z",
+      "kind": "부분 확인",
+      "title": "하원249·153 유지, Massachusetts 주지사 수치 감소 기록",
+      "text": "11월5일 06:45–06:46 KST 조회. DDHQ 세 총괄 페이지의 하원 민주249·공화153, 상원54·44, 주지사28·20은 동일하다. 하원21개 표본에서도 이전 추가 공화1석의 새 판정을 식별하지 못했다. 상원35·주지사36개 중70개를 확인했고 Oregon 주지사는 실패했다. 확인한 당선 판단 변경은 없다. Massachusetts 주지사 표시 총득표는2475160→2473538로1622표 감소했다. Healey2표·James1620표 감소이며 원인은 미확인이다. 기존 Healey 당선 판단은 유지돼 판정 철회로 해석하지 않는다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회21:45–21:46 UTC. Massachusetts 주지사 원자료 Nov4 16:16 EST=21:16 UTC=Nov5 06:16 KST, Healey1541844·Minogue850539·James81155. 이전16:04 EST 표시와 비교한 것으로 공식 정정 사유는 확인하지 못했다. 미판정 Maine2 LePage 우세4089→4067표, 자료16:26 EST; Kansas 주지사 Holscher5610→5592표, 자료16:30 EST. Alaska 상원626표·Mississippi 상원1864표 격차와 미판정은 동일하다. Alaska 공식502, Mississippi 공식 목록에는2026년3월 예비선거만 표시돼 본선 대조 미완료. 공식 인증·하원435개·남은 표 분포·전국 법정절차·주민투표는 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/massachusetts-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T21:32:02.926Z",
       "kind": "부분 확인",
