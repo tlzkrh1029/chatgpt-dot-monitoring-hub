@@ -1198,9 +1198,9 @@
         "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-senate-general-election",
         "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election"
       ],
-      "interpretation": "세 기록은 DDHQ의 언론 판단이다. 다른 방송사의 판단 시각이나 공식 인증 시각으로 바꾸어 읽을 수 없다. 시장 시계열이 연결되지 않아 같은 시각의 시장 반응은 검증하지 못했다.",
+      "interpretation": "세 기록은 DDHQ의 언론 판단이다. 다른 방송사의 판단 시각이나 공식 인증 시각으로 바꾸어 읽을 수 없다. 현재 BTC·ETH·HYPE·ZEC·XMR 5개 계열의 Coin Metrics 복합 기준가격 시계열이 연결되어 있고, 주식지수·AI/반도체 종목·달러·금 등 나머지 14개 계열은 미연결이다. 이 이야기는 판단 시각을 정리한 것으로, 시장 반응이나 인과를 검증한 결과는 아니다.",
       "verdict": "원출처 판단 시각 확인. 공식 인증과 시장반응 인과는 미확인.",
-      "nextWatch": "거래소·공급자와 공개 이용 조건이 확인된 시계열을 확보한 후, 각 계열의 실제 시각과 지연을 대조한다."
+      "nextWatch": "연결된 크립토 5개 계열의 실제 원자료 시각·지연·15분 표본 공백을 판단 시각과 대조한다. 나머지 14개 계열은 공급자와 공개 이용 조건을 확인한 뒤 연결한다."
     }
   ],
   "providers": [
