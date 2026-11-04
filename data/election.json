@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T15:46:36.151Z",
-  "observedAt": "2026-11-04T15:46:04.840Z",
+  "publishedAt": "2026-11-04T16:03:10.183Z",
+  "observedAt": "2026-11-04T16:02:36.477Z",
   "checkStatus": "partial",
-  "headline": "11/5 00:46KST: 하원241D·150R·주지사 합계 불일치",
-  "body": "DDHQ 하원 본문241D·150R로 이전 합계 불일치가 해소됐다. 추가1석 개별 판단은 미확인이다. Alaska 상원 민주507표 우세와 Maine2구 공화1,615표 우세는 미판정이다. 주지사 본문27D와 다른 페이지28D 표시가 달라 추가 승자를 단정하지 않는다.",
-  "unknown": "DDHQ 주지사27D·28D 불일치 및 추가 하원 공화1석 개별 판단, Alaska·Maine2구 공식 대조, Oregon 주지사 원문, 전국 법원·재검표·인증·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ·Maine 공식 경로 접근 실패. 주지사 합계 페이지 간 불일치 및 추가 하원1석 개별 판단 미해소. 하원435개·하위지역·전국 법정절차·주민투표 전수 확인 및 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 01:02KST: Nevada 주지사 DDHQ 판단·하원247D·150R",
+  "body": "DDHQ가 Nevada 주지사 Ford 당선 판단을 추가했다. 주지사28D·20R, 하원247D·150R, 상원54D·44R이다. 하원 민주6석 증가 중 NC13·NV02 개별 판단을 확인했다. Mississippi 상원은 민주745표 우세로 격차가 줄었지만 미판정이다. 모두 언론 판단·부분 집계이며 공식 인증과 구분한다.",
+  "unknown": "하원 민주6석 증가 전체 개별 대응 및 NC09 목록·원문 불일치, Mississippi·Alaska·Maine2구 공식 집계 대조, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 하원 증가분 전체 개별 판단 대응 및 NC09 목록·원문 불일치 미해소. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수 확인 및 시장수치 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T16:02:36.477Z",
+      "kind": "언론 당선 판단",
+      "title": "Nevada 주지사 DDHQ 판단·하원 민주 의석 증가",
+      "text": "DDHQ가 Nevada 주지사 Aaron Ford 당선 판단을 새로 표시해 앞서 알려진 AP 판단에 합류했다. 주지사 합계28D·20R로 이전 불일치가 해소됐다. 하원 합계는247D·150R로 민주6석 증가했으며 NC13 Barringer와 NV02 Benitez-Thompson의 개별 판단을 확인했다. 나머지 증가분의 개별 대응은 미완료다. Mississippi 상원은 Colom463,166표·Hyde-Smith462,421표로 격차가2,169표에서745표로 줄었고 미판정이다. 공식 인증과 구분한다.",
+      "evidence": "실제 조회11월4일16:01–16:02UTC/11월5일01:01–01:02KST. Nevada 주지사 판단10:31EST=15:31UTC, NV02 판단10:35EST=15:35UTC, NC13 판단10:45EST=15:45UTC. 하원 목록 NC09 판단 표시는 개별 원문에 아직 없어 불일치로 남긴다. Mississippi 집계10:57EST=15:57UTC·95% 초과, 공식 대조 미완료. Alaska 상원Peltola507표 우세·Maine2구LePage1,615표 우세 미판정 유지. 상원35·주지사36개 중70개 확인·Oregon 실패. 상원 합계54D·44R 유지.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-13-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-9-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T15:46:04.840Z",
       "kind": "부분 관찰",
