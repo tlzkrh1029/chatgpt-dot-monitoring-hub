@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>모니터링 허브 · 지금 상황판</title>
+<script>
+// Embed views for stacking several Notion embeds: ?view=status | feed | checks
+(function () {
+  var view = new URLSearchParams(location.search).get('view');
+  if (/^(status|feed|checks)$/.test(view || '')) document.documentElement.setAttribute('data-view', view);
+})();
+</script>
 <style>
 :root {
   --bg: #0D1117;
@@ -159,6 +166,35 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
   .chip { padding: 0 12px; font-size: 13px; }
 }
 @media(min-width:1200px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Embed views (?view=status | feed | checks). Without ?view= the full page is unchanged. */
+html[data-view] .page { padding-top: 16px; padding-bottom: 20px; }
+html[data-view] .wrap { max-width: 1880px; }
+html[data-view="status"] .main,
+html[data-view="status"] .rules,
+html[data-view="status"] .levels,
+html[data-view="status"] .foot,
+html[data-view="feed"] .top,
+html[data-view="feed"] .banner,
+html[data-view="feed"] .status-sec,
+html[data-view="feed"] .setting,
+html[data-view="feed"] .side,
+html[data-view="feed"] .rules,
+html[data-view="feed"] .levels,
+html[data-view="feed"] .foot,
+html[data-view="checks"] .top,
+html[data-view="checks"] .banner,
+html[data-view="checks"] .status-sec,
+html[data-view="checks"] .setting,
+html[data-view="checks"] .feed { display: none !important; }
+html[data-view="status"] .tiles { grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); }
+html[data-view="feed"] .feed,
+html[data-view="checks"] .side { flex: 1 1 100%; }
+@media (min-width: 1100px) {
+  html[data-view="feed"] #feed { display: block; columns: 2; column-gap: 36px; }
+  html[data-view="feed"] #feed > li { break-inside: avoid; }
+  html[data-view="checks"] .side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}
 </style>
 </head>
 <body>
@@ -182,7 +218,7 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
 
 <div class="banner" id="banner" role="status" hidden></div>
 
-<section aria-labelledby="status-h" style="display: flex; flex-direction: column; gap: 12px">
+<section class="status-sec" aria-labelledby="status-h" style="display: flex; flex-direction: column; gap: 12px">
   <h2 id="status-h" class="h-sec">범주별 지금 상황</h2>
   <div class="tiles" id="tiles"></div>
 </section>
@@ -227,7 +263,7 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
   <p id="rules-link" hidden></p>
 </details>
 
-<section style="margin:24px 0;padding:20px;border:1px solid #34404b;border-radius:12px"><h2>감시 단계와 일봉 판단 기준</h2><p>적색경보 · 주황경계 · 황색주의 · 평시관찰의 네 단계를 보존합니다. 현재 적색경보는 사용자 지정 감시 강도이며, 시스템 전반의 위기 확정을 의미하지 않습니다.</p><p>BTCUSD · CPTRA · USDT.D 일봉은 한국시간 오전 9시 종가를 기준으로 하루 한 번 판단합니다. 동일 피드·시간대·지표 설정과 확정봉을 확인해야 하며, 미확보 자료로 추세나 판단 결과를 만들지 않습니다.</p><p>이 공개 화면에는 새 차트 검증 결과나 차트 시계열이 연결되어 있지 않습니다. 차트 판단과 시간당 사건 감시는 구분합니다.</p></section><footer class="foot" id="foot"></footer>
+<section class="levels" style="margin:24px 0;padding:20px;border:1px solid #34404b;border-radius:12px"><h2>감시 단계와 일봉 판단 기준</h2><p>적색경보 · 주황경계 · 황색주의 · 평시관찰의 네 단계를 보존합니다. 현재 적색경보는 사용자 지정 감시 강도이며, 시스템 전반의 위기 확정을 의미하지 않습니다.</p><p>BTCUSD · CPTRA · USDT.D 일봉은 한국시간 오전 9시 종가를 기준으로 하루 한 번 판단합니다. 동일 피드·시간대·지표 설정과 확정봉을 확인해야 하며, 미확보 자료로 추세나 판단 결과를 만들지 않습니다.</p><p>이 공개 화면에는 새 차트 검증 결과나 차트 시계열이 연결되어 있지 않습니다. 차트 판단과 시간당 사건 감시는 구분합니다.</p></section><footer class="foot" id="foot"></footer>
 
 </div>
 </div>
