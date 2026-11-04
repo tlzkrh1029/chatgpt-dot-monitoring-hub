@@ -95,3 +95,78 @@ test('Senate math counts seats not up, caucusing independents and the tie-breake
   assert.equal(s.need.R, Math.max(0, 50 - s.seats.R));
   assert.equal(s.need.D, Math.max(0, 51 - s.seats.D));
 });
+
+// Flip a race between called and uncalled with fields the contract accepts.
+function flip(r) {
+  if (r.status === 'called') Object.assign(r, { status: 'uncalled', winner: null, calledBy: null, calledAt: null, leader: 'D' });
+  else Object.assign(r, { status: 'called', winner: { name: 'Test Winner', party: 'D' }, calledBy: 'DDHQ', calledAt: null, leader: null });
+}
+
+test('comparing a file with itself finds no change', () => {
+  const d = check(fixture());
+  const diff = E.compareDatasets(d, check(fixture()));
+  assert.deepEqual(diff.top, []);
+  assert.deepEqual(diff.chambers, []);
+  assert.deepEqual(diff.races, []);
+  assert.equal(diff.unchanged, 71);
+  assert.equal(diff.total, 71);
+});
+
+test('comparison lists changed races, fields, chambers and note-only rewrites', () => {
+  const before = check(fixture());
+  const after = fixture();
+  flip(after.races.senate.AL);
+  after.races.governor.AK.note = `${after.races.governor.AK.note} 재확인`.trim();
+  after.chambers.house.totals.uncalled -= 1;
+  after.chambers.house.totals.D += 1;
+  after.observedAt = '2026-11-04T11:15:00Z';
+  const diff = E.compareDatasets(before, check(after));
+  assert.deepEqual(diff.top, ['observedAt']);
+  assert.deepEqual(diff.chambers, ['house.totals']);
+  const al = diff.races.find((r) => r.office === 'senate' && r.state === 'AL');
+  assert.ok(al.fields.includes('status') && al.fields.includes('winner') && al.fields.includes('calledBy'));
+  assert.equal(al.noteOnly, false);
+  const ak = diff.races.find((r) => r.office === 'governor' && r.state === 'AK');
+  assert.deepEqual(ak.fields, ['note']);
+  assert.equal(ak.noteOnly, true);
+  assert.equal(diff.unchanged, 69);
+});
+
+test('comparison ignores key order', () => {
+  const before = check(fixture());
+  const after = fixture();
+  const called = Object.keys(after.races.senate).find((k) => after.races.senate[k].status === 'called');
+  const w = after.races.senate[called].winner;
+  after.races.senate[called].winner = { party: w.party, name: w.name };
+  assert.deepEqual(E.compareDatasets(before, check(after)).races, []);
+});
+
+test('the validator command reports the scope of an update and warns about rewrites', () => {
+  const { spawnSync } = require('node:child_process');
+  const os = require('node:os');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'election-results-'));
+  const write = (name, d, text) => { const f = path.join(dir, name); fs.writeFileSync(f, text || `${JSON.stringify(d, null, 2)}\n`); return f; };
+  const before = write('before.json', fixture());
+  const changed = fixture();
+  flip(changed.races.senate.AL);
+  changed.races.governor.AK.note = `${changed.races.governor.AK.note} 재확인`.trim();
+  const after = write('after.json', changed);
+  const script = path.join(__dirname, '..', 'scripts', 'validate-election-results.js');
+  const run = spawnSync(process.execPath, [script, after, '--compare', before], { encoding: 'utf8' });
+  assert.equal(run.status, 0, run.stderr);
+  assert.match(run.stdout, /2 of 71 races changed, 69 unchanged/);
+  assert.match(run.stdout, /senate\.AL: status/);
+  assert.match(run.stdout, /Warning: 1 race changed only in their note \(governor\.AK\)/);
+  assert.match(run.stdout, /Commit summary: 2 races changed \(senate\.AL, governor\.AK\); 69 races unchanged/);
+  assert.doesNotMatch(run.stdout, /canonical format/);
+  const minified = write('minified.json', null, JSON.stringify(fixture()));
+  const reformatted = spawnSync(process.execPath, [script, minified, '--compare', before], { encoding: 'utf8' });
+  assert.equal(reformatted.status, 0, reformatted.stderr);
+  assert.match(reformatted.stdout, /no race changed \(71 unchanged\)/);
+  assert.match(reformatted.stdout, /not in the canonical format/);
+  const broken = write('broken.json', null, '{');
+  const failed = spawnSync(process.execPath, [script, after, '--compare', broken], { encoding: 'utf8' });
+  assert.equal(failed.status, 1);
+  assert.match(failed.stderr, /previous file .* could not be read/);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
