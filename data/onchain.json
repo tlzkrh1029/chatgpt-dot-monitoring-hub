@@ -1,14 +1,36 @@
 {
   "schemaVersion": 1,
   "category": "onchain",
-  "publishedAt": "2026-11-04T02:09:12Z",
-  "observedAt": "2026-11-03T15:03:00.000Z",
+  "publishedAt": "2026-11-04T03:19:19.322Z",
+  "observedAt": "2026-11-04T03:18:46Z",
   "checkStatus": "partial",
-  "headline": "11/4 00:03 온체인 관찰 — 신규 중대 사실 미확인",
-  "body": "Telegram /374·X 공개 표본은 기존 본문과 동일. Binance 초기조사 공시는 15UTC 보안 기록과 연결, 중복 경보 제외.",
-  "unknown": "귀속·금액 독립 검증과 새 게시·정정. X 전수 피드·Telegram 실시간 최신성 보장 없음.",
-  "gap": "기존 공개 기록의 이관입니다. 이후 새 점검 결과는 아직 수신하지 않았습니다.",
+  "headline": "EU 피해 의혹에 새 기관명 주장 — 공식 확인 대기",
+  "body": "ZachXBT가 Crédit Mutuel Arkéa를 기존 EU 피해 의혹의 기관으로 지목했다. 피해 기관과 총액은 아직 작성자의 주장으로 구분하며, 기존 자금추적 수치에서 새 회수나 확정 손실은 확인되지 않았다.",
+  "unknown": "피해 기관·실제 손실·OTC 포함 규모·공격 경로·은행 및 수사기관의 공식 확인.",
+  "gap": "텔레그램 공개 미리보기와 보조 자료만 확인. X 직접 열람은 접근 승인 처리 오류로 실행되지 않았고, 전체 미디어·편집 이력·독립 온체인 재계산은 미확인.",
   "feed": [
+    {
+      "at": "2026-11-04T03:18:46Z",
+      "kind": "조사 업데이트",
+      "title": "ZachXBT가 EU 피해 의혹의 기관명을 제시",
+      "text": "ZachXBT의 새 텔레그램 글은 기존 1억 3,300만 달러 이상 피해 의혹의 기관을 Crédit Mutuel Arkéa라고 주장했다. OTC 활동을 포함하면 규모가 더 클 수 있다는 추정도 덧붙였으나, 기관명·최종 피해액·공격 기간은 공식 확인되지 않았다.",
+      "evidence": "작성자의 주장. 게시물에는 02:24와 수정 표시만 보이며 정확한 날짜·시간대 및 수정 이력은 미확인. 은행 홈페이지와 제한된 공식기관 검색에서는 해당 사고 확인문을 찾지 못했다. 검색 부재는 사건 부재나 은폐의 증거가 아니다.",
+      "sources": [
+        "https://t.me/investigations/375",
+        "https://www.cm-arkea.com/arkea/banque/assurances/j_6/fr/accueil"
+      ]
+    },
+    {
+      "at": "2026-11-04T03:18:46Z",
+      "kind": "관찰 한계",
+      "title": "기존 자금추적 수치 유지·X 직접 확인 미완료",
+      "text": "Bitquery의 11월 3일 13:27 UTC 분석과 관련 기사 정정은 이전 확인과 동일했다. 새 자금 회수나 피해 확대를 독립 검증하지 못했다. 텔레그램 공개 미리보기는 확인했지만 전체 편집 이력과 미디어는 미확인이다.",
+      "evidence": "X 직접 열람은 접근 승인 처리 오류로 실행되지 않았다. 이번 실행은 텔레그램과 공개 보조 자료의 부분 확인이며 전체 피드 점검이나 정상 판정을 뜻하지 않는다.",
+      "sources": [
+        "https://www.bitquery.io/investigations/eu-106m-crypto-theft",
+        "https://cointelegraph.com/news/zachxbt-eu-crypto-theft-133m-alleged-cover-up"
+      ]
+    },
     {
       "at": "2026-11-03T15:03:00.000Z",
       "kind": "원장 기록",
