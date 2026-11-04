@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T18:47:36.994Z",
-  "observedAt": "2026-11-04T18:47:36.993Z",
+  "publishedAt": "2026-11-04T19:02:33.422Z",
+  "observedAt": "2026-11-04T19:02:33.421Z",
   "checkStatus": "partial",
-  "headline": "11/5 03:47KST: 하원249·152 일치, NY21 판단 근거 확인",
-  "body": "DDHQ 하원249D·152R 표시가 일치하고 추가 공화1석은 NY21 Constantino 개별 판단으로 확인했다. 판단은 한국시간03:09이며 공식 인증이 아니다. 상원54D·44R·주지사28D·20R 유지. Alaska 상원 민주626표 우세는 미판정이다.",
+  "headline": "11/5 04:02KST: 하원249·152 유지, 확인 범위 내 새 중대 변화 없음",
+  "body": "DDHQ 하원249D·152R·상원54D·44R·주지사28D·20R과 NY21 판단은 유지된다. 주요 미판정 경합 선두도 같았다. 일부 개표 증가가 있지만 확인 범위에서 새 중대 판정은 확인하지 못했으며 공식 인증·전국 전수 확인은 아니다.",
   "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T19:02:33.421Z",
+      "kind": "부분 재확인",
+      "title": "하원249·152 및 NY21 판단 유지, 새 중대 변화 미확인",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R을 재확인했다. NY21 Constantino의 앞선13:09EST 판단은 유지된다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5584표·Maine2구 공화3716표 우세는 미판정 상태로 같았다. 확인 가능한 범위에서 새 지배권 판단·선두 역전·중대한 판정 변경을 확인하지 못했다. 전국 모든 사건이나 공식 인증의 변화가 없다는 의미는 아니다.",
+      "evidence": "실제조회11월4일19:00–19:02UTC·한국시간11월5일04:00–04:02. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원10개 표본·총괄 목록 점검,435개 전수 아님. Maine·New Hampshire·Massachusetts 상원과 Arizona·Oklahoma 주지사의 표수 증가에도 기존 판단 유지. 자료표시 각각13:40·13:33·13:27·13:43·13:55EST로 UTC는5시간, 한국시간은14시간을 더한 다음날 시각이다. Kentucky 상원은 갱신시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포·최종분모·공식 인증은 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-york-us-house-21-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T18:47:36.993Z",
       "kind": "개별 판단·합계 대조",
