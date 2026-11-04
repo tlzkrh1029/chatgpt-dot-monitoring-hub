@@ -1,14 +1,27 @@
 {
   "schemaVersion": 1,
   "category": "onchain",
-  "publishedAt": "2026-11-04T19:04:37.230Z",
-  "observedAt": "2026-11-04T19:03:49Z",
+  "publishedAt": "2026-11-04T20:04:34.567Z",
+  "observedAt": "2026-11-04T20:03:50Z",
   "checkStatus": "partial",
-  "headline": "Arkéa 후속 설명 유지·추가 확정 변화 미확인",
-  "body": "검색 수록 Arkéa 후속 공시의 공급업체 경유·자체 계정 사용 설명과 Fortuneo 진입 부인은 직전 확인과 같다. 텔레그램 마지막 글과 Bitquery 분석 기준도 유지됐다. 추가 확정 피해·차단·반환액이나 특정 추적 주소와의 연결은 확인하지 못했다.",
+  "headline": "Arkéa 기존 정정 유지·새 확정 손실과 반환 미확인",
+  "body": "검색 수록 Arkéa 후속 공시와 텔레그램 마지막 글은 직전 내용과 같으며 Bitquery의 기준 시각도 유지됐다. 확인 범위에서 추가 확정 손실·차단·반환액이나 추적 주소 연결을 찾지 못했다. 회사 설명과 독립 검증 여부를 구분한다.",
   "unknown": "공급업체와 세부 공격 경로, 특정 추적 주소와 은행 사고의 동일성, 최종 피해·차단·반환 금액, 최신 온체인 잔액 및 복구의 독립 검증.",
   "gap": "텔레그램 공개 미리보기·분석 본문·검색 수록 회사 후속 공시를 부분 확인했다. X와 이전 차단 경로 및 직접 조회 실패 공시는 재시도하지 않았다. 전체 편집 이력·미디어·최신 잔액·독립 온체인 재계산과 실제 반환은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T20:03:50Z",
+      "kind": "부분 점검",
+      "title": "EU 의혹 공개 자료 재확인·새 확정 손실과 반환 미확인",
+      "text": "텔레그램 마지막 공개 글과 검색 수록 Arkéa 후속 공시는 기존 내용이며 Bitquery 분석도 11월 4일09:49 UTC 기준을 유지한다. 공급업체 경유 정정과 과거 자금 차단 설명을 신규 사건·회수로 반복 계산하지 않는다.",
+      "evidence": "예정 시각 이후 실제 조회 11월4일20:03 UTC, 한국시간11월5일05:03. 기존 알림·온체인 공개 기록과 최신 보안·거시 기록을 대조했다. 조회·반응 수 변화는 사건 변화가 아니며 후속 보도의 추산을 공식 확정값으로 올리지 않았다. 최종 손실·차단·반환 금액, 특정 추적 주소와 은행 사고의 동일성 및 최신 잔액은 미확인이다.",
+      "sources": [
+        "https://www.cm-arkea.com/arkea/banque/assurances/pa_38386/fr/informations-complementaires-suite-a-l-attaque-dont-le-credit-mutuel-arkea-a-ete-victime",
+        "https://www.actusnews.com/fr/credit-mutuel-arkea/cp/2026/11/04/informations-complementaires-suite-a-l_attaque-dont-le-credit-mutuel-arkea-a-ete-victime",
+        "https://t.me/s/investigations",
+        "https://www.bitquery.io/investigations/eu-106m-crypto-theft"
+      ]
+    },
     {
       "at": "2026-11-04T19:03:49Z",
       "kind": "부분 점검",
