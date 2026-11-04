@@ -103,7 +103,10 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
 .item time { font-family: var(--mono); font-size: 13px; line-height: 22px; color: var(--muted); }
 .t-date { display: block; font-size: 11px; line-height: 16px; color: var(--muted-2); }
 .item-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.item-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.item-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; min-height: 22px; }
+.item-where { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.kind { font-size: 12.5px; color: var(--muted); }
+.item-where:not(.sr-only) + .kind::before { content: '·'; margin-right: 8px; color: var(--muted-2); }
 .badge { display: inline-block; font-size: 12px; line-height: 18px; padding: 1px 8px; border-radius: 4px; font-weight: 600; }
 .k-new { background: var(--text); color: var(--bg); font-weight: 700; }
 .k-note { border: 1px solid var(--muted-2); color: #D5DBE3; }
@@ -111,14 +114,41 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
 .k-set { border: 1px solid var(--amber); color: var(--amber); }
 .k-quiet { border: 1px solid var(--line-strong); color: var(--muted-2); font-weight: 500; }
 .cat { font-size: 13px; font-weight: 600; color: var(--c, var(--text-2)); }
-.evidence { font-size: 12px; color: var(--muted-2); }
-.item-text { margin: 0; font-size: 15px; line-height: 1.65; color: var(--text); text-wrap: pretty; }
+.item-text { margin: 0; font-size: 15px; line-height: 1.7; color: var(--text-2); text-wrap: pretty; }
 .item.is-quiet .item-text { font-size: 14px; color: var(--muted); }
-.item-links { display: flex; flex-wrap: wrap; gap: 4px 16px; }
 .linklike { padding: 0; border: 0; background: none; color: var(--link); font-size: 13px; text-align: left; cursor: pointer; }
 .linklike:hover { color: #C7DCFF; text-decoration: underline; }
-.src { font-size: 13px; color: var(--link); text-decoration: none; }
-.src:hover { text-decoration: underline; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Record footer: method and sources stay one quiet line until opened. */
+.basis > summary,
+.related-history > summary { display: block; width: fit-content; max-width: 100%; padding: 6px 0; list-style: none; cursor: pointer; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.basis > summary::-webkit-details-marker,
+.related-history > summary::-webkit-details-marker { display: none; }
+.basis > summary::before,
+.related-history > summary::before { content: ''; display: inline-block; width: 6px; height: 6px; margin: 0 10px 2px 1px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); vertical-align: middle; transition: transform 0.15s ease; }
+.basis[open] > summary::before,
+.related-history[open] > summary::before { transform: rotate(45deg); }
+.basis > summary:hover,
+.related-history > summary:hover { color: var(--text-2); }
+.basis-names { display: inline-block; color: var(--text-3); }
+.basis-names::before { content: '·'; margin: 0 7px; color: var(--muted-2); }
+.basis-body { display: flex; flex-direction: column; gap: 12px; margin: 2px 0 4px; padding: 12px 14px; border-left: 2px solid var(--line-strong); border-radius: 0 6px 6px 0; background: var(--panel-deep); }
+.basis-label { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.basis-text { margin: 0; font-size: 13px; line-height: 1.65; color: var(--text-3); text-wrap: pretty; }
+.src-list { list-style: none; margin: 0; padding: 0; }
+.src { display: flex; align-items: baseline; gap: 10px; min-height: 32px; padding: 6px 0; color: var(--text-2); font-size: 13px; text-decoration: none; }
+.src-list li + li .src { border-top: 1px solid var(--line); }
+.src-name { flex: none; font-weight: 600; }
+.src-path { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--mono); font-size: 12px; color: var(--muted-2); }
+.src-tag { flex: none; padding: 0 5px; border: 1px solid var(--line-strong); border-radius: 3px; font-size: 11px; line-height: 16px; color: var(--muted); }
+.src::after { content: '↗'; content: '↗' / ''; flex: none; margin-left: auto; padding-left: 8px; color: var(--muted-2); }
+.src:hover .src-name, .src:focus-visible .src-name { color: var(--link); text-decoration: underline; }
+.src:hover::after, .src:focus-visible::after { color: var(--link); }
+.item.is-continued { padding-top: 6px; border-top: 1px dashed var(--line); }
+@media (prefers-reduced-motion: reduce) {
+  .basis > summary::before, .related-history > summary::before { transition: none; }
+}
 .empty { margin: 0; padding: 14px 0; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
 
 .ev-row { display: flex; flex-direction: column; gap: 6px; padding: 12px 8px; margin: 0 -8px; border-top: 1px solid var(--line); border-radius: 6px; }
@@ -201,7 +231,7 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 .health.is-warning { color: var(--amber); }
 .tile-gap { flex-basis: 100%; color: var(--muted); }
 .time-basis { display: block; margin-top: 5px; white-space: normal; color: var(--muted-2); font: 11px/1.5 var(--sans); }
-.item-title { margin: 0 0 6px; font-size: 14px; line-height: 1.6; }
+.item-title { margin: 0; font-size: 16px; line-height: 1.45; font-weight: 700; color: var(--text-strong); text-wrap: pretty; }
 .item, .tile, .banner { overflow-wrap: anywhere; }
 .refresh-control { flex: 0 0 96px; display: flex; align-items: flex-start; }
 .refresh-button { width: 96px; min-height: 44px; padding: 8px 15px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--panel); color: var(--text); font: 600 14px var(--sans); cursor: pointer; }
@@ -216,10 +246,14 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 .tile-source + .tile-source { padding-top: 14px; border-top: 1px solid var(--line); }
 .source-label { margin: 0; font-size: 12px; font-weight: 600; color: var(--amber-sub); }
 .tile-source .tile-foot { margin-top: 0; }
-.related-heading { margin: 0 0 10px; color: var(--text-2); font-size: 13px; }
-.related-history { margin-top: 12px; }
-.related-history > summary { padding: 8px 0; color: var(--link); font-size: 13px; cursor: pointer; }
+.related-history { margin-bottom: 8px; }
+.related-history > summary { margin-left: 78px; }
 .related-history .item { padding-bottom: 0; }
+@media (max-width: 600px) {
+  .related-history > summary { margin-left: 62px; }
+  .basis-names { display: block; padding-left: 17px; }
+  .basis-names::before { content: none; }
+}
 .source-check + .source-check { margin-top: 10px; }
 .source-check .source-label { margin-bottom: 4px; }
 .page-tabs { display:flex; gap:8px; padding-bottom:12px; border-bottom:1px solid var(--line); }
@@ -312,7 +346,7 @@ html[data-view] .page-tabs { display:none; }
 <script src="public-data.js?v=20261104-security-label"></script>
 <script src="refresh-client.js"></script>
 <script src="manual-refresh.js?v=20261104-refresh-outcome"></script>
-<script src="display-data.js?v=20261104-four-categories"></script>
+<script src="display-data.js?v=20261104-source-names"></script>
 <script>
 (() => {
   'use strict';
@@ -322,8 +356,8 @@ html[data-view] .page-tabs { display:none; }
   const now = () => new Date();
   const state = { data: null, cat: 'all', showQuiet: false, statuses: {}, baseError: '', lastFetchAt: null, revision: -1 };
 
-  const KIND_CLASS = { '새 사실': 'k-new', '참고': 'k-note', '기준점': 'k-base', '감시 설정': 'k-set', '변화 없음': 'k-quiet' };
-  const KIND_RANK = { '새 사실': 0, '감시 설정': 1, '기준점': 2, '참고': 3, '변화 없음': 4 };
+  const KIND_CLASS = MonitorView.KIND_STYLES;
+  const KIND_RANK = MonitorView.KIND_RANK;
   const STATUS_CLASS = { '진행 중': 's-progress', '관찰 중': 's-watch', '확인 대기': 's-wait', '해소': 's-done' };
 
   const $ = (id) => document.getElementById(id);
@@ -331,6 +365,12 @@ html[data-view] .page-tabs { display:none; }
   const safeColor = (v) => (/^#[0-9a-fA-F]{6}$/.test(v || '') ? v : '#8B95A5');
   const safeUrl = (v) => (/^https?:\/\//i.test(v || '') ? v : '');
   const anchorId = (key) => 'ev-' + String(key || '').toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
+  // Stable per-record key so an opened method/source panel survives re-rendering.
+  const recordKey = (x) => {
+    let h = 5381;
+    for (const ch of `${x.category}|${x.at}|${x.title}|${x.text}`) h = (h * 33 + ch.charCodeAt(0)) >>> 0;
+    return h.toString(36);
+  };
 
   const fmt = new Intl.DateTimeFormat('ko-KR', {
     timeZone: TZ, year: 'numeric', month: 'numeric', day: 'numeric', weekday: 'long',
@@ -487,10 +527,23 @@ html[data-view] .page-tabs { display:none; }
     }).join('');
   }
 
-  function eventLinks(item) {
-    const sources = item.sources || [];
-    return sources.length ? `<div class="item-links">${sources.map((url, i) =>
-      `<a class="src" href="${esc(url)}" target="_blank" rel="noopener noreferrer">공개 출처 ${i + 1}</a>`).join('')}</div>` : '';
+  // Method (evidence) and sources share one collapsed line that already names the publishers.
+  function basisHtml(item) {
+    const { sources, names } = MonitorView.sourceSummary(item.sources);
+    if (!item.evidence && !sources.length) return '';
+    const label = item.evidence && sources.length ? `확인 방법과 출처 ${sources.length}건`
+      : item.evidence ? '확인 방법' : `출처 ${sources.length}건`;
+    const shown = names.slice(0, 3).join(', ') + (names.length > 3 ? ` 외 ${names.length - 3}곳` : '');
+    const links = sources.map(s => `<li><a class="src" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" title="${esc(s.url)}">`
+      + `<span class="src-name">${esc(s.name)}</span>${s.detail ? ` <span class="src-path">${esc(s.detail)}</span>` : ''}`
+      + `${s.api ? ' <span class="src-tag">API 응답</span>' : ''} <span class="sr-only">(새 창)</span></a></li>`).join('');
+    return `<details class="basis" data-detail="${recordKey(item)}">
+      <summary>${esc(label)}${shown ? `<span class="basis-names">${esc(shown)}</span>` : ''}</summary>
+      <div class="basis-body">
+        ${item.evidence ? `<p class="basis-text"><span class="basis-label">확인 방법</span>${esc(item.evidence)}</p>` : ''}
+        ${sources.length ? `<div><span class="basis-label">출처</span><ul class="src-list">${links}</ul></div>` : ''}
+      </div>
+    </details>`;
   }
 
   function renderFeed(d, cats, ref) {
@@ -505,7 +558,7 @@ html[data-view] .page-tabs { display:none; }
 
     const count = (kind) => base.filter((x) => x.kind === kind).length;
     const groups = MonitorView.groupFeed(items);
-    const parts = [`원본 기록 ${base.length}건`, `표시 ${groups.length}개 항목 · 관련 이력 묶음 포함`];
+    const parts = [`기록 ${base.length}건`, '최신순', '시각은 한국시간(KST) 관찰 시각'];
     const extra = count('기준점') + count('감시 설정');
     if (extra) parts.push(`기준점과 설정 ${extra}`);
     if (state.showQuiet) parts.push(`변화 없음 ${quiet.length}`);
@@ -518,29 +571,41 @@ html[data-view] .page-tabs { display:none; }
       ? '변화 없는 점검 숨기기'
       : quiet.length ? `변화 없는 점검 ${quiet.length}회도 보기` : '이 범주에는 변화 없는 점검이 없습니다';
 
-    const recordHtml = (x) => {
+    // Reading order: where (category · kind) → title → body → collapsed method/sources.
+    // A record from the same check run as the previous one keeps its time and
+    // category for screen readers but does not repeat them visually.
+    const recordHtml = (x, continued = false) => {
           const c = cats.get(x.category) || { name: x.category, color: '#8B95A5' };
+          const dim = x.isQuiet || x.kind === '변화 없음';
+          const kind = KIND_CLASS[x.kind] ? `<span class="badge ${KIND_CLASS[x.kind]}">${esc(x.kind)}</span>`
+            : x.kind ? `<span class="kind">${esc(x.kind)}</span>` : '';
+          const timeLabel = x.timeBasis === 'notification' ? '<span class="time-basis">알림 전달 시각</span>' : '';
           return `
-            <div class="item${x.isQuiet ? ' is-quiet' : ''}" data-record-category="${esc(x.category)}">
-              <time datetime="${esc(x.at)}">${timeHtml(x.at, ref)}<span class="time-basis">${x.timeBasis === 'notification' ? '알림 전달 시각' : '관찰 시각'} · KST</span></time>
+            <div class="item${dim ? ' is-quiet' : ''}${continued ? ' is-continued' : ''}" data-record-category="${esc(x.category)}">
+              <time datetime="${esc(x.at)}">${continued ? `<span class="sr-only">${esc(timeText(x.at, ref))}</span>` : timeHtml(x.at, ref)}${timeLabel}</time>
               <div class="item-body">
                 <div class="item-meta">
-                  <span class="badge ${KIND_CLASS[x.kind] || 'k-note'}">${esc(x.kind)}</span>
-                  <span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span>
-                  ${MonitorView.subtype(x.category) ? `<span class="source-label">${esc(MonitorView.subtype(x.category))}</span>` : ''}
-                  ${x.evidence ? `<span class="evidence">${esc(x.evidence)}</span>` : ''}
+                  <span class="item-where${continued ? ' sr-only' : ''}"><span class="cat" style="--c:${safeColor(c.color)}">${esc(c.name)}</span>${MonitorView.subtype(x.category) ? `<span class="source-label">${esc(MonitorView.subtype(x.category))}</span>` : ''}</span>
+                  ${kind}
                 </div>
                 ${x.title ? `<h3 class="item-title">${esc(x.title)}</h3>` : ''}<p class="item-text">${esc(x.text)}</p>
-                ${x.isQuiet ? '' : eventLinks(x)}
+                ${x.isQuiet ? '' : basisHtml(x)}
               </div>
             </div>`;
     };
+    // The feed-only embed flows into columns, where a continued record could
+    // start a column without its time, so it always shows full headers.
+    const allowContinuation = document.documentElement.getAttribute('data-view') !== 'feed';
+    let previousRun = '';
     $('feed').innerHTML = groups.length
       ? groups.map(g => {
           const [latest, ...history] = g.records;
-          return `<li class="feed-group">${history.length ? `<p class="related-heading">${esc(g.label)} 관련 기록 · ${g.records.length}건</p>` : ''}
-            ${recordHtml(latest)}
-            ${history.length ? `<details class="related-history" data-group="${esc(g.key)}"><summary>관련 이력 ${history.length}건 펼치기 · 시각·출처 보존</summary>${history.map(recordHtml).join('')}</details>` : ''}</li>`;
+          const run = `${latest.category}|${latest.at}|${latest.timeBasis || 'observation'}`;
+          const continued = allowContinuation && run === previousRun;
+          previousRun = history.length ? '' : run;
+          return `<li class="feed-group">
+            ${recordHtml(latest, continued)}
+            ${history.length ? `<details class="related-history" data-group="${esc(g.key)}"><summary>${esc(g.label)} 관련 이전 기록 ${history.length}건</summary>${history.map(h => recordHtml(h)).join('')}</details>` : ''}</li>`;
         }).join('')
       : '<li class="empty">이 범주에 표시할 공개 기록이 없습니다.</li>';
   }
@@ -582,8 +647,12 @@ html[data-view] .page-tabs { display:none; }
     const focusCat = focus?.dataset?.cat;
     const focusId = focus?.id;
     const focusUrl = focus?.tagName === 'A' ? focus.getAttribute('href') : null;
+    // The same source URL recurs across records; restore focus inside the same panel.
+    const focusUrlScope = focus?.tagName === 'A' ? focus.closest('[data-detail]')?.dataset?.detail : null;
     const focusGroup = focus?.tagName === 'SUMMARY' ? focus.parentElement?.dataset?.group : null;
+    const focusDetail = focus?.tagName === 'SUMMARY' ? focus.parentElement?.dataset?.detail : null;
     const openGroups = Array.from(document.querySelectorAll('[data-group][open]')).map(el => el.dataset.group);
+    const openDetails = Array.from(document.querySelectorAll('[data-detail][open]')).map(el => el.dataset.detail);
     const focusSummary = focus?.tagName === 'SUMMARY' ? focus.closest('footer') ? 'foot' : 'rules' : null;
     const openRules = document.querySelector('.rules')?.open;
     const openWarnings = $('foot').querySelector('details')?.open;
@@ -596,13 +665,16 @@ html[data-view] .page-tabs { display:none; }
     renderGaps(d, cats);
     renderFooter(d, ref);
     openGroups.forEach(key => document.querySelector(`[data-group="${key}"]`)?.setAttribute('open', ''));
+    openDetails.forEach(key => document.querySelector(`[data-detail="${key}"]`)?.setAttribute('open', ''));
     if (openWarnings) $('foot').querySelector('details')?.setAttribute('open', '');
     if (openRules) document.querySelector('.rules').open = true;
     renderBanner(d);
     const nextFocus = focusCat ? document.querySelector(`[data-cat="${focusCat}"]`)
       : focusId ? $(focusId)
-      : focusUrl ? Array.from(document.querySelectorAll('a[href]')).find(a => a.getAttribute('href') === focusUrl)
+      : focusUrl ? Array.from(((focusUrlScope && document.querySelector(`[data-detail="${focusUrlScope}"]`)) || document)
+          .querySelectorAll('a[href]')).find(a => a.getAttribute('href') === focusUrl)
       : focusGroup ? document.querySelector(`[data-group="${focusGroup}"] > summary`)
+      : focusDetail ? document.querySelector(`[data-detail="${focusDetail}"] > summary`)
       : focusSummary === 'foot' ? $('foot').querySelector('summary')
       : focusSummary === 'rules' ? document.querySelector('.rules summary') : null;
     if (nextFocus && nextFocus !== document.activeElement && focus !== document.body) nextFocus.focus({ preventScroll: true });

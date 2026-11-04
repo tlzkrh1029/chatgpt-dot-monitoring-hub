@@ -179,3 +179,30 @@ test('security and onchain publications update independently inside the same fou
   assert.ok(selected.some(row => row.title === 'Updated operator recovery report'));
   assert.ok(selected.some(row => row.title === 'Updated investigator report'));
 });
+
+test('source labels name the publisher, keep the exact URL and mark raw API responses', () => {
+  const okx = V.sourceInfo('https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT');
+  assert.deepEqual(okx, { url: 'https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT', name: 'OKX',
+    detail: '/api/v5/market/ticker?instId=BTC-USDT', api: true });
+  assert.equal(V.sourceInfo('https://votes.decisiondeskhq.com/balance-of-power/2026/house').name, 'DDHQ');
+  assert.equal(V.sourceInfo('https://x.com/USAnt_IDEA/status/2117892586572828717').detail, '/USAnt_IDEA/status/2117892586572828717');
+  assert.equal(V.sourceInfo('https://status.coinbase.com/').detail, '');
+  assert.equal(V.sourceInfo('https://elections.hawaii.gov/wp-content/results/2026%20General/histatewide.pdf').detail,
+    '/wp-content/results/2026 General/histatewide.pdf');
+  // Unknown publishers stay visible by hostname instead of disappearing behind a generic label.
+  const unknown = V.sourceInfo('https://news.example.org/story/1');
+  assert.equal(unknown.name, 'news.example.org');
+  assert.equal(unknown.api, false);
+  assert.equal(V.sourceInfo('not a url').name, 'not a url');
+});
+
+test('source summaries keep every link and list each publisher once in first-seen order', () => {
+  const urls = ['https://coinmarketcap.com/currencies/bitcoin/', 'https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT',
+    'https://coinmarketcap.com/currencies/tether/'];
+  const summary = V.sourceSummary(urls);
+  assert.deepEqual(summary.names, ['CoinMarketCap', 'OKX']);
+  assert.deepEqual(summary.sources.map(source => source.url), urls);
+  assert.deepEqual(V.sourceSummary(undefined), { sources: [], names: [] });
+  for (const row of composeCurrent().feed)
+    assert.equal(V.sourceSummary(row.sources).sources.length, (row.sources || []).length);
+});
