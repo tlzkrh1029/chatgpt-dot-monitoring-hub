@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T17:01:51.460Z",
-  "observedAt": "2026-11-04T17:01:28.947Z",
+  "publishedAt": "2026-11-04T17:17:33.068Z",
+  "observedAt": "2026-11-04T17:17:00.424Z",
   "checkStatus": "partial",
-  "headline": "11/5 02:01KST: 하원247·249 표시 불일치·판단 확인 대기",
-  "body": "DDHQ 하원 본문247D·150R과 상원 페이지 요약249D·150R이 다르다. 추가2석의 개별 판단은 미확인이므로 기존 확인 합계를 대체하지 않는다. 상원54D·44R·주지사28D·20R과 확인 가능한 개별 판단은 유지된다. Mississippi 민주2,000표 우세는 미판정이다.",
-  "unknown": "DDHQ 하원247D·249D 불일치 및 추가 개별 판단, 주요 미판정 경합 공식대조, Oregon 주지사 원문, 전국 법정절차·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 하원247D·249D 페이지 간 불일치 및 추가 개별 판단 미해소. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 02:16KST: 하원249·150 표시 일치, 추가 판단 대조 미완료",
+  "body": "DDHQ 세 총괄의 하원249D·150R 표시는 일치하나 직전247석 대비 추가2석 개별 판단은 미식별이다. 상원54D·44R·주지사28D·20R 유지. Maine2구 공화 우세는4010표로 늘었지만 미판정이며 공식 인증과 남은 표 분포는 미확인이다.",
+  "unknown": "하원 추가2석의 개별 판단·시각, 주요 미판정 경합 공식대조, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 시간초과. 하원 추가2석 개별 판단 미식별. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T17:17:00.424Z",
+      "kind": "개표 관찰·합계 대조",
+      "title": "하원249·150 표시 일치, 추가2석 개별 판단 미확인",
+      "text": "DDHQ 하원 본문과 상원·주지사 요약이249D·150R로 일치해 직전247·249 표시 차이는 사라졌다. 추가2석의 개별 당선 판단은 이번 하원11개 표본과 최신 호출목록에서 식별하지 못했으므로 개별 확인 완료나 공식 확정으로 표현하지 않는다. 상원54D·44R, 주지사28D·20R 유지. Maine2구 LePage161822 대 Dunlap157812로 공화 우세4010표, 직전2963표보다 늘었으나 미판정이다. Mississippi 민주2000표·Alaska 상원 민주507표·Kansas 주지사 민주5557표 우세도 미판정 상태다.",
+      "evidence": "11월4일17:15–17:16UTC, 한국시간11월5일02:15–02:16 관찰. Maine2구 자료12:06EST=17:06UTC·다음날02:06KST, 표시92%의 최종분모와 남은 표 종류·지역 전수는 미확인. 상원35·주지사36개 원문 중70개 확인, Oregon 주지사 실패. Massachusetts·Alabama 상원 집계 증가에도 기존 판정 유지. Texas 상원·주지사 및 Kansas 주지사는 갱신 표시만 바뀌고 표수 동일. Alaska 공식 조회 시간초과, Mississippi 공식 페이지에서2026총선 수치 미확인. 언론 판단과 공식 인증을 구분한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T17:01:28.947Z",
       "kind": "부분 관찰",
