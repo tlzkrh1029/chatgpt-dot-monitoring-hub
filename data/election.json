@@ -1,14 +1,85 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T04:27:33.116Z",
-  "observedAt": "2026-11-04T04:27:09Z",
+  "publishedAt": "2026-11-04T05:22:21.170Z",
+  "observedAt": "2026-11-04T05:21:28Z",
   "checkStatus": "partial",
-  "headline": "누락 보완: DDHQ 플로리다 주지사 도널즈 당선 판단",
-  "body": "한국시간 13:27 플로리다 주지사 결과를 재확인해 누락된 기록을 추가했다. DDHQ의 바이런 도널즈 당선 판단은 11월 3일 20:28 EST, 한국시간 11월 4일 10:28에 나왔으며 방금 발생한 새 판정이 아니다. 공식 인증과 구분한다. 하원·상원 전국 집계는 이번 보완에서 재확인하지 않았고 이전 기록의 시각을 따른다.",
-  "unknown": "플로리다 공식 인증과 남은 표 종류·지역별 분포는 미확인. AP 재게시 AMP는 이번 조회 실패, 일반 주소는 이전 선거 전 본문이 반환되어 해당 당선 판단을 이번 경로로 교차확인하지 못했다. 이는 판정 철회 증거가 아니다.",
-  "gap": "이번 점검은 플로리다 주지사 누락 보완에 한정했다. 전국 경합지·의석 합계·운영사고를 재검증하지 않았다. 기존 AP 직접 접근 제한, 노스캐롤라이나 동적 개표 미추출, 하원 표시 시점 차이는 해소 확인되지 않았다.",
+  "headline": "DDHQ 민주당 상원 지배권 판단 · 주지사 4개 주 전환 기록",
+  "body": "한국시간 14:17–14:21 관찰. DDHQ는 13:19 KST에 민주당 상원 지배권을 판단했다. 조회 집계는 상원 민주당 52·공화당 40, 하원 본문 민주당 218·공화당 124다. 주지사 조지아·아이오와·오하이오·텍사스의 민주당 당선 판단을 기록했다. 이전에 빠진 판정과 이번에 새로 확인한 결과를 구분하며 모두 언론 판단이지 공식 인증이 아니다.",
+  "unknown": "하원 다른 페이지 요약의 공화당 125와 본문 124는 시점이 달라 합산하지 않았다. 상원·주지사 총괄과 일부 개별 페이지가 불일치한다. 미집계 표 종류·지역 전수, 공식 인증, 전국 법원·재검표·운영사고와 동시점 시장 반응은 미확인.",
+  "gap": "상원 35개·주지사 36개 개별 페이지를 읽었지만 시점 불일치 때문에 동일 시각 완전 집계로 간주하지 않는다. AP 원문·제휴 일부 접근 실패, 오하이오 공식 홈페이지 403, 아이오와 결과 로봇 확인 화면, 조지아 공식 결과 본문 미추출. 하원은 지배권과 3개 경합지만 개별 확인했다.",
   "feed": [
+    {
+      "at": "2026-11-04T05:21:28Z",
+      "kind": "지배권·언론 판정",
+      "title": "DDHQ 민주당 상원 지배권 판단 · 하원 218석 표시",
+      "text": "DDHQ 상원 지배권 판단은 11월 3일 23:19 EST, 11월 4일 04:19 UTC·13:19 KST다. 05:17 UTC 조회는 민주당 52·공화당 40으로, 미선출 보유 34·31과 이번 당선 판단 18·9를 합한 수치다. 민주당 전환 6석을 표시한다. 하원 본문은 민주당 218·공화당 124로 개별 당선 판단이 218석에 도달했다. 하원 지배권 판단 자체는 기존 21:09 EST 기록이며 새로운 판정이 아니다.",
+      "evidence": "DDHQ 직접 확인. 다른 페이지 하원 요약은 공화당 125로 동시점 불일치. 예측 모형 56석을 당선 의석으로 사용하지 않았다. 공식 인증 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:21:28Z",
+      "kind": "상원 당선 판단",
+      "title": "캔자스·오하이오·아이오와 민주당 전환 판단",
+      "text": "DDHQ 개별 판정은 캔자스 애덤 해밀턴 11월 3일 22:48 EST, 오하이오 셰러드 브라운 23:15 EST, 아이오와 조시 튜렉 23:16 EST다. 각각 11월 4일 03:48·04:15·04:16 UTC, 한국시간 12:48·13:15·13:16이다. 앞선 상원 47대38 기록 이후 확인된 추가 전환 판단이며 최종 인증은 아니다.",
+      "evidence": "각 경주 원문 판정 시각 확인. 집계 갱신은 캔자스 23:56 EST, 오하이오·아이오와 11월 4일 00:13 EST. 남은 표 분포 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/ohio-us-senate-special-election-general",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/iowa-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:21:28Z",
+      "kind": "주지사 당선 판단·누락 보완",
+      "title": "조지아·아이오와·오하이오·텍사스 주지사 전환",
+      "text": "DDHQ 판정은 조지아 키샤 랜스 보텀스 11월 3일 21:13 EST, 아이오와 롭 샌드 21:57 EST, 오하이오 에이미 액턴 22:30 EST, 텍사스 지나 이노호사 11월 4일 00:00 EST다. 한국시간은 각각 11월 4일 11:13·11:57·12:30·14:00, UTC는 02:13·02:57·03:30·05:00이다. 앞선 세 건은 이전 공개 요약에 누락된 판정을 보완한 것이고, 텍사스는 플로리다 보완 확인 이후 나온 판정이다.",
+      "evidence": "개별 페이지 직접 확인. 갱신 시각은 조지아 23:46 EST, 아이오와·오하이오 00:13 EST, 텍사스 00:15 EST. 언론 당선 판단이며 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/georgia-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/iowa-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/ohio-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:21:28Z",
+      "kind": "개표 선두 변화",
+      "title": "메인 상원 부분 집계 선두 변화 · 당선 판단 아님",
+      "text": "이전 11월 3일 22:19 EST 표본에서 콜린스 99,853표·잭슨 88,070표였으나, 11월 4일 00:14 EST 표본은 잭슨 255,585표·콜린스 225,307표로 선두가 바뀌었다. 표시 예상 집계율은 26%에서 65%로 늘었다. 두 관측 사이 정확한 역전 시각과 남은 표 유형·지역 비중은 미확인이고 당선 판단 표시는 확인하지 못했다.",
+      "evidence": "같은 DDHQ 경주 두 시점 비교. 최신 원자료 시각 05:14 UTC·14:14 KST. 단순한 집계율을 최종 득표율로 해석하지 않음.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:21:28Z",
+      "kind": "하원 경합지 보완",
+      "title": "NC-11·NJ-07·PA-07 민주당 당선 판단 확인",
+      "text": "DDHQ는 NC-11 제이미 에이거를 20:28 EST, NJ-07 레베카 베넷을 21:46 EST, PA-07 로버트 브룩스를 21:33 EST에 판단했다. 모두 11월 3일 현지시각이며 한국시간 11월 4일 10:28·11:46·11:33이다. 이미 나온 과거 판정을 이번 개별 점검에서 보완했고 새 발표로 간주하지 않는다.",
+      "evidence": "하원 전체 435개 개별 원문 전수 확인은 아님. 각 원문의 판정과 실제 조회 시각 구분. 공식 인증 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-11-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-jersey-us-house-7-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/pennsylvania-us-house-7-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:21:28Z",
+      "kind": "범위·시점 점검",
+      "title": "상원 35개·주지사 36개 목록과 개별 페이지 대조",
+      "text": "DDHQ 상원 35개 및 주지사 36개 경주 목록에서 각 개별 페이지를 열어 기존 공개 기록과 대조했다. 개별 본문에서 판정 시각은 상원 26개·주지사 27개에 표시됐다. 총괄의 이번 당선 판단 27개·29개와 차이가 있어 누락된 판정이 없다고 보증하지 않는다. 미네소타 상원은 총괄의 플래너건 판정과 개별 본문의 이전 집계가 달랐다. 플로리다 도널즈 판정은 유지됐다.",
+      "evidence": "목록은 한 페이지에 상원 35개·주지사 36개 링크가 표시됐다. 카운티·타운십 하위 표의 모든 페이지는 확인하지 않았다. 종합 집계와 개별 원문 시차를 철회나 새 결과로 단정하지 않음.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/minnesota-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/florida-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T04:27:09Z",
       "kind": "누락 보완·언론 판정",
