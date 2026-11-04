@@ -1,14 +1,46 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-04T05:45:11.839Z",
-  "observedAt": "2026-11-04T05:44:34.165Z",
+  "publishedAt": "2026-11-04T06:34:43.304Z",
+  "observedAt": "2026-11-04T06:34:11.043Z",
   "checkStatus": "partial",
-  "headline": "가격 집계 확인 · 일간 현재값과 일부 거시자료 확인 제한",
-  "body": "CMC 최신 집계 BTC 77,647.96달러·ETH 2,292.33달러를 확인했다. 오전 9시 기준 OKX 현물 변화는 약 15~17분 지연 자료여서 현재값 판정을 보류한다. USDT·USDC는 이번 단일 관측에서 0.5% 페그 이탈에 미달한다. 기존 운영 공지와 지연 FRED 자료를 재확인했으며 확인 범위에서 새 중대 악화는 검증되지 않았다.",
-  "unknown": "신선한 동일 피드의 현재 일간 변화율, 새 상승·하락 경계, FRB 현재 서비스 상태와 동시점 선물·금리·에너지·지정학 전체 범위는 미확인 또는 미설정이다.",
-  "gap": "OKX 불균일한 지연이 지속되고 DXY 응답의 자료 시각이 이전 조회보다 과거로 돌아갔다. FRB 상태 본문 조회도 실패했다. CMC 파생 단위 모순은 제외하며 사용자 일봉 조건을 시간당 재검증하지 않는다. 전체 정상 판정이 아닌 부분 점검이다.",
+  "headline": "오전 9시 대비 시각별 변화 확인 · 동시점 현재값·경계 미설정",
+  "body": "OKX 현물은 오늘 오전 9시 대비 BTC +0.7287%(15:32 KST), ETH +0.9266%(15:29 KST)로 관측됐다. 조회 시점과 각 가격 시각을 구분하며 급등·급락 기준은 미설정이다. CMC USD 집계는 BTC 77,885.27·ETH 2,293.31이고 USDT·USDC의 단일 관측은 0.5% 페그 이탈에 미달한다. 기존 운영 이슈와 지연 거시자료에서 새 중대 악화는 검증되지 않았다.",
+  "unknown": "동시점 현재 일간 변화율, 새 상승·하락 경계, FRB 현재 서비스 상태, 동시점 선물·금리·에너지·지정학 전체 범위 및 독립 일봉 조건 검증은 미확인 또는 미설정이다.",
+  "gap": "OKX 가격 시각은 조회보다 약 1~5분 전이며 실시간 동시점으로 표현하지 않는다. FRB 상태 본문은 반복 조회 실패, DXY는 약 54분 지연, 현물·VIX·FRED는 과거 관측이다. CMC 파생 단위 모순은 제외하고 자료 누락을 정상으로 바꾸지 않는다.",
   "feed": [
+    {
+      "at": "2026-11-04T06:34:11.043Z",
+      "kind": "가격·페그 관찰",
+      "title": "11/4 15:34 KST — 오전 9시 대비 시각별 현물 변화",
+      "text": "OKX BTC-USDT는 06:32:24.772 UTC에 78,018.6으로 UTC 0시 시가 77,454.2 대비 +0.7287%, ETH-USDT는 06:29:12.172 UTC에 2,295.99로 시가 2,274.91 대비 +0.9266%였다. 조회 당시 각각 약 1분 23초·4분 35초 전 값이며 동시점 현재값으로 간주하지 않는다. CMC 06:33:33 UTC USD 집계는 BTC 77,885.27·ETH 2,293.31이다. USDT 0.99852793(-14.72bp), USDC 0.99982903(-1.71bp)는 이번 관측의 50bp 페그 기준에 미달했다.",
+      "evidence": "조회 06:33:47 UTC, 한국시간 15:33:47. OKX 동일 현물·USDT 응답의 시가와 최종가로 계산했으며 CMC USD와 혼합하지 않았다. 급등·급락 수치 경계는 미설정이다. 관측 시각 사이 상승이 지속됐다고 주장하거나 일봉 확정 조건을 재판정하지 않는다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/",
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-04T06:34:11.043Z",
+      "kind": "운영·거시 관찰",
+      "title": "기존 운영 이슈 유지 · VIX 비교 기준 변경과 FRB 공백",
+      "text": "Circle Noble CCTP의 00:30 UTC 해결과 Coinbase Sonic의 전일 14:21 UTC 조사 공지는 동일하며 Cronos 일부 장애도 기존 표시다. FRED 11월 2일 고수익 OAS 343bp·SOFR 3.95%·미국 10년 4.91%는 유지된다. DXY는 05:40 UTC 지연 표시 101.51(-0.35%, 전일 종가 대비)다. S&P 500은 전일 종가 7,568.92(+0.36%)로 폐장 표시다. Cboe VIX 수준 20.83은 같지만 비교 종가가 20.83으로 바뀌어 변화율 0%가 표시됐다. 이를 새 장중 안정으로 해석하지 않는다.",
+      "evidence": "조회 06:33~06:34 UTC, 한국시간 15:33~15:34. FRED 게시 시각은 전일 OAS 16:01, SOFR 13:02, 10년 21:16 UTC; S&P 표시 갱신은 전일 21:30 UTC다. VIX 자료 날짜는 11월 3일이고 상세 시각의 시간대는 미확인이다. FRB 서비스 본문 조회는 다시 실패했다. 제한된 확인에서 새 중대 악화는 검증되지 않았으며 전체 정상 판정이 아니다.",
+      "sources": [
+        "https://status.circle.com/",
+        "https://status.coinbase.com/",
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        "https://fred.stlouisfed.org/series/SOFR",
+        "https://fred.stlouisfed.org/series/DGS10",
+        "https://www.marketwatch.com/investing/index/dxy",
+        "https://www.marketwatch.com/investing/index/spx",
+        "https://www.cboe.com/tradable-products/vix"
+      ]
+    },
     {
       "at": "2026-11-04T05:44:34.165Z",
       "kind": "가격·페그 관찰",
