@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T12:28:33.246Z",
-  "observedAt": "2026-11-04T12:25:35Z",
+  "publishedAt": "2026-11-04T12:46:39.535Z",
+  "observedAt": "2026-11-04T12:45:54.869Z",
   "checkStatus": "partial",
-  "headline": "11/4 21:25KST: AZ05 선두 변경·MI04 접전, 지배권 판단 유지",
-  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. AZ05는 Lamb6,014표 선두로 관측 선두가 바뀌었고 MI04는 Huizenga600표 선두로 격차 축소. 두 경선 미판정이며 독립 공식 수치 대조는 미완료다.",
+  "headline": "11/4 21:45KST: DDHQ 주요 판단 유지, 일부 집계 증가",
+  "body": "상원35·주지사36개 재점검. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. 일부 기존 당선 판단 경선의 집계만 증가했고 새 당선 판단은 확인되지 않았다. 언론 판단과 공식 인증은 별개다.",
   "unknown": "Oregon 주지사 원문, Alaska·Nevada·Kansas 최신 공식 대조, Mississippi 언론별 집계 시점·수치 차이, 전국 법원·재검표·인증 및 하원435석 개별 대조.",
   "gap": "상원35·주지사36개 개별 페이지 중 Oregon 주지사 접근 실패. 일부 공식·언론 본문 접근 실패 및 자료 시차 지속. 카운티 하위 페이지·하원435개·전국 운영사고·주민투표 전수 점검은 미완료. 시장 반응은 이번 회차 수치 확인하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-04T12:45:54.869Z",
+      "kind": "부분 관찰",
+      "title": "15분 점검: DDHQ 지배권·개별 판단 유지",
+      "text": "상원35·주지사36개 DDHQ 개별 경선을 재조회했고 Oregon 주지사 원문만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R과 접근 가능한 개별 당선 판단은 유지됐다. Texas 상원 Talarico5,400,801표·Paxton4,213,646표, Maine 상원 Jackson346,554표·Collins293,150표, California 주지사 Becerra4,982,724표·Hilton2,806,120표로 집계가 늘었으나 기존 당선 판단의 변화는 아니다. Alaska·Mississippi 상원과 Alaska·Kansas·Nevada 주지사 DDHQ 미판정을 유지하며 다른 언론 판단을 합치지 않는다.",
+      "evidence": "실제 조회11월4일12:44–12:45UTC/21:44–21:45KST. Texas 집계07:28EST=12:28UTC, Maine07:38EST=12:38UTC, California07:30EST=12:30UTC. 총괄 주지사 갱신07:34EST=12:34UTC. Oregon은 기존 ABC 판단을 DDHQ 확인으로 바꾸지 않았다. Alaska 공식 결과502, Kansas 공식 결과 본문 접근 실패. 순위선택 집계 일정은 공식 검색색인에 보이나 본문 확인 실패로 새 검증 완료 일정으로 다루지 않는다. 공식 인증·전국 재검표·법원·주민투표·하원435개·카운티 하위 전수 확인과 시장 수치 확인은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T12:25:35Z",
       "kind": "개표 관찰",
