@@ -1,14 +1,25 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T12:38:42.400Z",
-  "observedAt": "2026-11-04T12:38:15Z",
+  "publishedAt": "2026-11-04T14:08:32.723Z",
+  "observedAt": "2026-11-04T14:08:02Z",
   "checkStatus": "partial",
-  "headline": "11/4 21:38 보안 점검 — GitBook 공식 복구 확인",
-  "body": "GitBook 보안사고 해소 공지와 정상 운영 표시를 확인했다. 토큰 교체 등 기존 보안 조치는 유지되며 사후보고서는 미공개다. Mercado 유지보수와 Bitquery의 동결 추산은 직전 확인과 같고, Chainalysis·BTCPay 기존 대응 공지에도 새 변경을 확인하지 못했다.",
-  "unknown": "GitBook 상세 사후보고서·독립 보안 검증·정확한 Git 동기화 해소 시각, Mercado 추가 동결의 독립 검증, BitMart 발언 원문·지갑 귀속·공통 침해 경로, Liquid 최신 준비금 검증.",
-  "gap": "공식 상태·기존 사고 공지·제한된 검색의 부분 확인이다. 전체 X 피드·모든 프로토콜과 독립 온체인 재계산은 미완료이며 보도상 BitMart 확인 발언의 원문을 확보하지 못했다.",
+  "headline": "11/4 23:08 보안 점검 — Liquid 원문 근거 보완·직접 출금 제한",
+  "body": "Liquid 관련 SideSwap의 과거 공식 공지를 확보했다. 준비금 복구 주장과 Federation 직접 출금 제한을 구분하며 현재 준비금의 독립 검증은 미완료다. GitBook 정상 운영·보안사고 해소 공지, Mercado 유지보수와 기존 분석 추산, Chainalysis 기존 대응은 유지됐다. 확인 범위에서 새 중대 침해·추가 확정 회수는 확인하지 못했다.",
+  "unknown": "Liquid 현재 준비금·유통량의 독립 검증과 Federation 직접 출금 재개, BitMart 발언 원문·지갑 귀속·공통 침해 경로, Mercado 동결의 독립 검증, GitBook 사후보고서.",
+  "gap": "공식 공지·상태·일부 분석과 검색만 확인했다. 탐색기 페이지는 수치를 읽지 못했고 전체 X 피드·모든 프로토콜과 거래별 독립 온체인 재계산은 미완료다.",
   "feed": [
+    {
+      "at": "2026-11-04T14:08:02Z",
+      "kind": "근거 보완",
+      "title": "Liquid 준비금 복구 주장 원문 확보·직접 출금 제한 구분",
+      "text": "SideSwap의 11월 3일 공식 글은 Liquid 준비금의 일대일 복구를 설명하지만 Federation 직접 출금은 아직 제한된다고 명시한다. SideSwap 출금은 자체 비트코인 지갑에서 지급하고 수동 재충전 때문에 대기할 수 있다. 과거 공지의 근거 보완이며 오늘 새 회수나 전면 복구로 판단하지 않는다.",
+      "evidence": "조회 11월 4일 14:07~14:08 UTC, 한국시간 23:07~23:08. 공지 날짜는 11월 3일이며 시각·시간대는 미표시다. 공지가 인용한 11월 3일 아침 준비금과 유통량은 각각 4,270.54 BTC와 L-BTC다. 탐색기와 연결된 두 비트코인 거래 페이지는 읽을 수 있는 수치를 반환하지 않아 독립 검증하지 못했다.",
+      "sources": [
+        "https://sideswap.io/news/the-liquid-peg-is-back-to-one-to-one/",
+        "https://blog.liquid.net/liquid-network-staged-recovery-update/"
+      ]
+    },
     {
       "at": "2026-11-04T12:38:15Z",
       "kind": "공식 복구 공지",
