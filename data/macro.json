@@ -1,14 +1,46 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-04T10:25:18.338Z",
-  "observedAt": "2026-11-04T10:24:41.373Z",
+  "publishedAt": "2026-11-04T10:54:17.409Z",
+  "observedAt": "2026-11-04T10:53:43.907Z",
   "checkStatus": "partial",
-  "headline": "일간 시각별 변화·VIX 지연값 하락 확인",
-  "body": "VIX 18.52(-11.09%) 표시가 두 출처에서 일치했으나 지연·시간대 한계가 남는다. OKX 09시 KST 기준 대비 BTC +1.1981%·ETH +2.0726%는 19~24분 전 값이다. 페그는 50bp 미달이며 기존 운영 장애는 같다.",
-  "unknown": "새 급등·급락 경계, 신선한 동시점 시장·에너지 자료, 실제 전면 출금·상환 및 독립 준비금 검증, 사용자 일봉 설정은 미확인이다.",
-  "gap": "OKX 시세 지연·Cboe 시간대 미표기·FRED 과거 관측일·FRB 상태 조회 실패 지속·EIA 최신 기준일 추출 실패. 검증된 파생 수치와 일봉 자동 검증은 확보하지 못해 전체 정상으로 판단하지 않는다.",
+  "headline": "일간 가격 관찰 · VIX 지연값 하락·기존 장애 유지",
+  "body": "OKX 09시 KST 기준 대비 BTC +1.4490%·ETH +2.4766%는 각각 약 5분·18분 전 값이다. 페그는 50bp 미달, VIX 지연값 하락과 기존 운영 장애를 확인했다. GitHub 장애는 기존 보안 기록과 중복 경보하지 않는다.",
+  "unknown": "새 급등·급락 경계, 신선한 동시점 거시·에너지 자료, 실제 전면 출금·상환 및 독립 준비금 검증, 사용자 일봉 설정은 미확인이다.",
+  "gap": "시세 지연·Cboe 시간대 미표기·FRED 과거 관측일·FRB 상태 조회 실패가 지속된다. 에너지·지정학 새 공식 확인과 파생 수치·일봉 검증 미완료. GitHub 운영 장애 중이며 개별 저장과 Pages 배포를 구분한다.",
   "feed": [
+    {
+      "at": "2026-11-04T10:53:43.907Z",
+      "kind": "가격·페그 관찰",
+      "title": "11/4 19:53 KST — 일간 기준 상승·시세 지연 구분",
+      "text": "OKX BTC-USDT는 10:47:58.559 UTC의 78,576.5로 UTC 0시 시가 77,454.2 대비 +1.4490%, ETH-USDT는 10:34:53.445 UTC의 2,331.25로 시가 2,274.91 대비 +2.4766%다. 조회보다 약 5분·18분 전 값이므로 현재 동시점으로 쓰지 않는다. CMC 10:53:18 UTC USD 집계는 BTC 78,473.31·ETH 2,325.18, USDT 0.99853764(-14.62bp), USDC 0.99978831(-2.12bp)다. 단일 관측 페그 이탈은 50bp 미달이다.",
+      "evidence": "11UTC 예정 회차를 실제 10:53 UTC, 한국시간 19:53에 조회했다. 같은 OKX 현물·USDT 응답의 UTC 0시 시가와 최종가를 사용했다. CMC USD·24시간 변화와 혼합하지 않았다. 새 상승·하락 경계는 미설정이며 일봉 조건을 재판정하지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/",
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-04T10:53:43.907Z",
+      "kind": "거시·운영 관찰",
+      "title": "VIX 지연값 하락·기존 운영 장애와 게시 경로 상태",
+      "text": "Cboe VIX는 18.19(-12.67%), MarketWatch는 10:17 UTC의 18.24(-12.43%)다. 둘 다 전일 20.83 대비이며 지연·시각 차이가 남는다. DXY는 10:24 UTC의 101.32(-0.54%, 전일 101.87 대비)다. FRED의 11월 2일 OAS 343bp·SOFR 3.95%·10년물 4.91%는 동일하다. Coinbase Sonic·Circle Cronos 장애와 기존 완료 공지도 같다. GitHub Git 작업·이슈·풀리퀘스트·Actions 장애는 보안 감시에 이미 기록된 사건이며 새 침해로 분류하지 않는다.",
+      "evidence": "조회 10:53 UTC, 한국시간 19:53. Cboe 상세 시각은 10:28 AM으로 시간대 미확인·최소 20분 지연이다. FRED 갱신은 11월 3일 16:01·13:02·21:16 UTC다. GitHub 공지는 09:49~09:53 UTC, API와 Pages는 정상 표시다. 상태 표시와 개별 저장·배포 성공은 별도다. FRB 서비스 상태 조회는 다시 실패했으며 에너지·지정학 새 공식 확인과 파생 수치 검증은 미완료다.",
+      "sources": [
+        "https://www.cboe.com/tradable-products/vix",
+        "https://www.marketwatch.com/investing/index/dxy",
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        "https://fred.stlouisfed.org/series/SOFR",
+        "https://fred.stlouisfed.org/series/DGS10",
+        "https://status.coinbase.com/",
+        "https://status.circle.com/",
+        "https://www.githubstatus.com/"
+      ]
+    },
     {
       "at": "2026-11-04T10:24:41.373Z",
       "kind": "가격·페그 관찰",
