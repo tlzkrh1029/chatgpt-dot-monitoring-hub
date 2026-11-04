@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T18:32:43.942Z",
-  "observedAt": "2026-11-04T18:32:43.942Z",
+  "publishedAt": "2026-11-04T18:47:36.994Z",
+  "observedAt": "2026-11-04T18:47:36.993Z",
   "checkStatus": "partial",
-  "headline": "11/5 03:32KST: 하원 공화151·152 표시 불일치",
-  "body": "DDHQ 하원 본문249D·151R과 다른 총괄 요약249D·152R이 다르며 새 공화 추가1석 개별 판단은 미확인이다. 앞선 TX38 판단은 유지된다. 상원54D·44R·주지사28D·20R 유지. Mississippi 민주1864표 우세는 미판정이다.",
-  "unknown": "하원 공화151·152 불일치와 새 개별 판단, 주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 하원 공화151·152 불일치 및 새 개별 판단 미확인. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 03:47KST: 하원249·152 일치, NY21 판단 근거 확인",
+  "body": "DDHQ 하원249D·152R 표시가 일치하고 추가 공화1석은 NY21 Constantino 개별 판단으로 확인했다. 판단은 한국시간03:09이며 공식 인증이 아니다. 상원54D·44R·주지사28D·20R 유지. Alaska 상원 민주626표 우세는 미판정이다.",
+  "unknown": "주요 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문, 전국 법정절차·주민투표.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회 실패. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T18:47:36.993Z",
+      "kind": "개별 판단·합계 대조",
+      "title": "하원249·152 일치, NY21 Constantino 판단 확인",
+      "text": "DDHQ 하원 본문과 다른 두 총괄의 하원 요약이249D·152R로 일치했다. 추가 공화1석은 New York21구 Anthony Constantino의 개별 판단으로 확인했다. 판단과 자료갱신은11월4일13:09EST=18:09UTC·한국시간11월5일03:09, Constantino138637 대 Gendebien133792,50.89% 대49.11%다. 앞선 개별 조회에서는 미판정이었으며 이번 판단 표시를 보완했다. 언론 판단이고 공식 인증은 아니다. 상원54D·44R·주지사28D·20R 유지.",
+      "evidence": "실제조회11월4일18:45–18:47UTC·한국시간11월5일03:45–03:47. Alaska 상원 Peltola102701 대 Sullivan102075, 민주626표 우세로 직전507표보다119표 증가했지만 미판정. 자료13:06EST=18:06UTC·다음날03:06KST. Kansas 주지사 민주5584표·Maine2구 공화3716표 우세 미판정. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원13개 표본·총괄 목록 점검,435개 전수 아님. Kansas·Oregon·South Dakota 상원 및 여러 주지사 집계 증가에도 기존 판단 유지. Alaska 주지사는 표시시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포·최종분모·공식 인증은 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-york-us-house-21-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T18:32:43.942Z",
       "kind": "개표 관찰·합계 대조",
