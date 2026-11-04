@@ -1,14 +1,56 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-04T08:06:29.399Z",
-  "observedAt": "2026-11-04T08:05:46Z",
+  "publishedAt": "2026-11-04T09:17:51.551Z",
+  "observedAt": "2026-11-04T09:17:06.349Z",
   "checkStatus": "partial",
-  "headline": "오전 9시 대비 시각별 가격 확인 · 신용·운영 일부 확인 제한",
-  "body": "OKX 현물은 오전 9시 대비 BTC +0.9189%(17:00 KST), ETH +1.3249%(17:01 KST)로 관측됐다. 조회 시점보다 약 4~5분 전 값이며 급등·급락 수치 경계는 미설정이다. USDT·USDC는 이번 관측에서 0.5% 페그 이탈에 미달했다. 기존 운영 이슈를 재확인했으나 고수익 OAS와 FRB 상태 본문은 조회 실패했다.",
-  "unknown": "동시점 현재 일간 변화율, 새 급등·급락 경계, 고수익 신용스프레드 최신 조회, FRB 상태, AERO·VELO 이전 완료와 동시점 선물·에너지·지정학 전체 범위는 미확인이다.",
-  "gap": "OKX 자료는 약 4~5분, DXY는 약 54분 지연이다. OAS 신규 조회 실패와 FRB 반복 실패를 정상으로 처리하지 않았다. 에너지 새 보도 원문도 확인하지 못했다. 일봉 조건의 장중 재판정과 단위 모순이 있는 파생 자료 사용은 하지 않았다.",
+  "headline": "시각별 일간 변화 확인 · VIX 새 표시의 시간대 검증 대기",
+  "body": "OKX 오전 9시 대비 BTC +1.3448%(18:00 KST), ETH +1.9161%(18:07 KST)는 각각 약 16분·9분 지연 관측이다. 급등·급락 경계는 미설정이며 페그 0.5% 이탈 후보는 없었다. Coinbase 예정 이전 완료 공시와 OAS 조회 재개를 확인했다. VIX 새 하락 표시는 시각·독립 대조가 불충분해 전반적 위험 해소로 판정하지 않는다.",
+  "unknown": "동시점 현재 일간 변화율과 새 수치 경계, VIX 08:58 표시의 시간대·독립 대조, FRB 상태 및 현재 선물·에너지·지정학 전체 범위는 미확인이다.",
+  "gap": "OKX 약 9~16분, DXY 약 58분 지연이며 VIX 출처 간 자료 날짜·시각이 다르다. FRB 상태 본문은 반복 조회 실패했다. OAS 접근 복구는 통계 새 관측값이 아니며 예정 유지보수 완료는 보안 복구와 구분한다.",
   "feed": [
+    {
+      "at": "2026-11-04T09:17:06.349Z",
+      "kind": "가격·페그 관찰",
+      "title": "11/4 18:17 KST — 일간 시각별 변화·지연 구분",
+      "text": "OKX BTC-USDT는 09:00:39.071 UTC의 78,495.8로 UTC 0시 시가 77,454.2 대비 +1.3448%, ETH-USDT는 09:07:18.672 UTC의 2,318.5로 시가 2,274.91 대비 +1.9161%다. 조회보다 약 16분·9분 전 값이므로 현재 동시점으로 쓰지 않는다. CMC 09:16:33 UTC USD 집계는 BTC 78,312.08·ETH 2,317.77, USDT 0.99859780(-14.02bp), USDC 0.99978070(-2.19bp)다. 단일 관측 페그 이탈은 50bp 미달이다.",
+      "evidence": "조회 09:16:42 UTC, 한국시간 18:16:42. 같은 OKX 현물·USDT 응답의 UTC 0시 시가와 최종가로 계산했다. CMC USD 또는 24시간 변화와 혼합하지 않았다. 새 상승·하락 수치 경계는 미설정이며 사용자 일봉 조건을 재판정하지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/",
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-04T09:17:06.349Z",
+      "kind": "운영·자료 대조",
+      "title": "예정 이전 완료 공지·VIX 새 표시와 시간대 미확인",
+      "text": "Coinbase AERO·VELO 이전은 완료 공지로 바뀌었고 표기 시각은 08:00 UTC다. 웹·앱도 정상 표시지만 Sonic 지연은 기존 조사 중이며 개별 거래 완료를 시험하지 않았다. 보안 감시의 동일 완료 기록과 중복 경보하지 않는다. Cboe는 VIX 19.13(-8.16%)과 11월 4일 08:58을 표시했으나 시간대는 미확인이다. MarketWatch는 전일 21:15 UTC 종가 20.83을 유지해 동시점 독립 검증은 되지 않았다.",
+      "evidence": "조회 09:16~09:17 UTC, 한국시간 18:16~18:17. Coinbase는 완료를 11월 4일 00:00 PST로 표시했다. Cboe는 최소 20분 지연 안내가 있으므로 불명확한 08:58을 임의 UTC 또는 미국 시간으로 바꾸지 않는다. VIX 표시 하락만으로 위험 해소나 선거 인과를 확정하지 않는다. Circle Noble 해결·Cronos 일부 장애는 기존 상태다.",
+      "sources": [
+        "https://status.coinbase.com/",
+        "https://status.circle.com/",
+        "https://www.cboe.com/tradable-products/vix",
+        "https://www.marketwatch.com/investing/index/vix"
+      ]
+    },
+    {
+      "at": "2026-11-04T09:17:06.349Z",
+      "kind": "지연 거시자료",
+      "title": "신용스프레드 조회 재개·기존 통계 유지",
+      "text": "지난 회차 실패한 고수익 OAS 페이지를 다시 읽었으며 11월 2일 343bp로 이전 값과 같다. SOFR 3.95%·미국 10년 4.91%도 같은 관측일을 유지한다. DXY는 08:19 UTC 지연 표시 101.43(-0.43%, 전일 종가 대비), S&P 500은 전일 종가 7,568.92로 폐장 상태다. FRB 서비스 상태 본문 조회는 실패가 이어져 현재 정상으로 간주하지 않는다.",
+      "evidence": "조회 09:16~09:17 UTC. FRED 게시 시각은 전일 OAS 16:01, SOFR 13:02, 10년 21:16 UTC다. DXY는 조회보다 약 58분 전 값이며 S&P 표시 갱신은 전일 21:30 UTC다. 현재 선물·동시점 금리·에너지·지정학 전체 확인과 파생 자료 단위 모순 해소는 미완료다.",
+      "sources": [
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        "https://fred.stlouisfed.org/series/SOFR",
+        "https://fred.stlouisfed.org/series/DGS10",
+        "https://www.marketwatch.com/investing/index/dxy",
+        "https://www.marketwatch.com/investing/index/spx"
+      ]
+    },
     {
       "at": "2026-11-04T08:05:46Z",
       "kind": "가격·페그 관찰",
