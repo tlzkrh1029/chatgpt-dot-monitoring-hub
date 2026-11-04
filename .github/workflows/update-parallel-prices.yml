@@ -12,18 +12,46 @@ on:
   schedule:
     - cron: '3,13,23,33,43,53 * * * *'
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'collect (main only) or probe (read-only source check, any branch)'
+        type: choice
+        options: [collect, probe]
+        default: collect
 
 permissions:
   contents: write
   pages: write
 
 concurrency:
-  group: parallel-market-publisher
+  group: parallel-market-publisher-${{ inputs.mode || 'collect' }}
   cancel-in-progress: false
 
 jobs:
+  probe:
+    if: inputs.mode == 'probe'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - name: Probe sources without retries or impersonation
+        run: node scripts/probe-parallel-sources.js probe-out
+      - name: Keep raw responses as a short-lived artifact (never committed)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: parallel-source-probe
+          path: probe-out
+          retention-days: 3
+          if-no-files-found: warn
+
   update:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && inputs.mode != 'probe'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
