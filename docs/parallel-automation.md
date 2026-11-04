@@ -24,7 +24,7 @@ Community의 세밀한 과거 제공 범위는 제한된다. 현재 응답에서
 
 ## 자동 실행과 배포
 
-`.github/workflows/update-parallel-prices.yml`은 매시 03·13·23·33·43·53분에 실행하며, Actions의 **Update parallel market prices → Run workflow → main**으로 수동 실행할 수도 있다. GitHub 예약 실행은 지연되거나 누락될 수 있으므로 정확한 10분 주기를 보장하지 않는다.
+`.github/workflows/update-parallel-prices.yml`은 매시 03·13·23·33·43·53분에 실행하며, Actions의 **Update parallel market prices → Run workflow → main**으로 수동 실행할 수도 있다. 수집기·계약·게시 스크립트·해당 workflow를 main에 반영할 때도 한 번 실행한다. 시세 JSON만 바뀌거나 다른 감시 자료가 갱신될 때는 이 push 실행을 하지 않는다. GitHub 예약 실행은 지연되거나 누락될 수 있으므로 정확한 10분 주기를 보장하지 않는다.
 
 실행은 다음 순서다.
 

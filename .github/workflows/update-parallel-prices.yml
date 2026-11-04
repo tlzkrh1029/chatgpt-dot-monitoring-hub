@@ -1,6 +1,14 @@
 name: Update parallel market prices
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-parallel-prices.yml'
+      - 'scripts/update-parallel-prices.js'
+      - 'scripts/request-parallel-pages-build.js'
+      - 'parallel-data.js'
+      - 'parallel-refresh.js'
   schedule:
     - cron: '3,13,23,33,43,53 * * * *'
   workflow_dispatch:
