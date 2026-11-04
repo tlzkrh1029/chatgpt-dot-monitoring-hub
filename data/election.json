@@ -1,14 +1,32 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T22:16:53.309Z",
-  "observedAt": "2026-11-04T22:16:29.310Z",
+  "publishedAt": "2026-11-04T22:31:41.208Z",
+  "observedAt": "2026-11-04T22:31:25.090Z",
   "checkStatus": "partial",
-  "headline": "07:16 KST 부분 확인: 의석 유지·Texas 집계 변동 미검증",
-  "body": "11월5일 07:15–07:16 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20은 동일하다. Arizona2 Crane991표 우세와 미판정, Texas22 Nehls 기존 당선 판단은 유지된다. Texas 상원 Talarico 표시 득표만177059표 증가했고 다른 두 후보는 동일해, 추가 표의 지역·유형과 공식 근거를 확인하기 전 확정 판세 변화로 해석하지 않는다. 상원35·주지사36개 중69개 및 하원9개를 읽었다. Oregon 상원은 다시 읽혔으나 Oregon·Tennessee 주지사는 실패했다.",
-  "unknown": "Texas 상원 단일 후보 표시증가의 지역·표 유형·공식 근거, Massachusetts 주지사 앞선 수치 감소 원인, Oregon·Tennessee 주지사 원문, 미판정 경합 공식대조·남은 표 분포.",
-  "gap": "원자료 확인 제한: Oregon·Tennessee 주지사 DDHQ 실패, Alaska 공식502, Mississippi 본선 집계와 Arizona 결과 미확인. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "07:31 KST 부분 확인: 의석 유지·미판정 격차 소폭 변동",
+  "body": "11월5일 07:30–07:31 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 당선 판단은 동일하다. Arizona2 Crane우세991→966표, Minnesota1 Johnson우세322→321표로 소폭 좁혀졌지만 모두 미판정이다. Texas22 Nehls 당선 판단 유지. 상원35·주지사36개 중70개 및 하원9개를 읽었다. Tennessee 주지사는 다시 확인됐고 Oregon 주지사는 실패했다. Texas 상원의 앞선 단일 후보177059표 증가 원인은 여전히 독립 검증되지 않았다.",
+  "unknown": "Texas 상원 단일 후보 표시증가의 지역·표 유형·공식 근거, Massachusetts 주지사 앞선 수치 감소 원인, Oregon 주지사 원문, 미판정 경합 공식대조·남은 표 분포.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502, Mississippi 본선 집계와 Arizona 결과 미확인. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T22:31:25.090Z",
+      "kind": "부분 확인",
+      "title": "의석·판정 유지, Arizona2 미판정 격차 소폭 축소",
+      "text": "11월5일 07:30–07:31 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 당선 판단은 동일하다. Arizona2 Crane우세991→966표, Minnesota1 Johnson우세322→321표로 소폭 좁혀졌지만 모두 미판정이다. Texas22 Nehls 당선 판단 유지. 상원35·주지사36개 중70개 및 하원9개를 읽었다. Tennessee 주지사는 다시 확인됐고 Oregon 주지사는 실패했다. Texas 상원의 앞선 단일 후보177059표 증가 원인은 여전히 독립 검증되지 않았다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회22:30–22:31 UTC. Arizona2 원자료 Nov4 17:17 EST=22:17 UTC=Nov5 07:17 KST, Crane138582·Nez137616. Minnesota1 자료17:24 EST=22:24 UTC=07:24 KST, Johnson163060·Finstad162739. Massachusetts 주지사는 총2485637로 증가했지만 이전1622표 감소 사유를 설명하는 근거는 확인하지 못했다. Alaska 공식502, Mississippi 공식목록 본선 미표시, Arizona 공식 결과는 템플릿만 표시됐다. Texas 공식403은 이전 확인 한계이며 우회하지 않았다. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수는 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-22-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
     {
       "at": "2026-11-04T22:16:29.310Z",
       "kind": "부분 확인",
