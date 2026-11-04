@@ -1,14 +1,42 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T02:35:59.018Z",
-  "observedAt": "2026-11-04T02:35:15Z",
+  "publishedAt": "2026-11-04T04:23:15.664Z",
+  "observedAt": "2026-11-04T04:22:50Z",
   "checkStatus": "partial",
-  "headline": "11/4 11:35 보안 점검 — 기존 경고 유지·Mercado 새 영상 미확인",
-  "body": "GitBook 토큰 교체 권고와 복구 모니터링, BTCPay 구버전 대응 지침, Chainalysis 일부 제품 중단 공지는 기존 내용 유지. Binance의 공개 프로필 표본에서는 기존 초기조사·인터뷰 이후 중대한 새 사실이 확인되지 않음. Mercado는 새 CEO 영상을 올렸고 상태 페이지는 유지보수 표시지만 영상 전체 내용과 실제 서비스 재개는 미확인.",
-  "unknown": "독립 보안검토, 실제 추가 피해·회수·고객 자금 접근, Mercado 새 영상 전체 내용, 전체 X 피드와 미조회 프로토콜 범위.",
-  "gap": "Mercado 영상 전체 음성·전사는 검증하지 못함. 공개 X 프로필은 전수 피드가 아님. THOR 게이트웨이 조회 실패로 최신 플래그 미확인. Solana·PancakeSwap·Troves 등은 이번에 직접 재확인하지 못함.",
+  "headline": "11/4 13:22 보안 점검 — 기존 대응 유지·새 중대 피해 미확인",
+  "body": "GitBook·BTCPay·Chainalysis의 기존 보안 대응과 Binance 초기 보고서를 재확인했다. Mercado는 다섯 구성요소가 유지보수 상태다. Solana 공식 상태는 정상이며 Kraken PIX·Coinbase Sonic·Circle Cronos 운영 장애 표시는 신규 해킹과 구분한다. 확인한 공개자료 범위에서 새 중대 침해·추가 피해·실제 회수는 확인하지 못했다.",
+  "unknown": "Binance 독립 보안검토 및 전면 출금 복구, Mercado 영상 전체 내용과 실제 서비스 재개, Circle Cronos 장애 시작·수정시각, 추가 피해·회수의 독립 검증.",
+  "gap": "공식 공지·상태 페이지와 제한된 공개 검색을 확인했다. 전체 X 피드·영상 전사·모든 프로토콜과 브리지·관리키 사고를 전수 점검하지 못했다. THOR·PancakeSwap·Troves 최신 상태와 독립 온체인 재계산은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T04:22:50Z",
+      "kind": "부분 점검",
+      "title": "기존 보안 대응 유지·새 피해 확대 미확인",
+      "text": "GitBook은 토큰 교체 권고와 일부 서비스 복구 모니터링을 유지한다. BTCPay의 구버전 대응 지침과 Chainalysis 일부 제품 중단 공지도 기존 내용이다. Binance의 11월 3일 초기 조사 보고서는 기존 사건 후속 자료로 확인했으며 독립 보안검토 완료나 전면 서비스 복구를 뜻하지 않는다. Mercado는 다섯 구성요소가 유지보수 상태다.",
+      "evidence": "조회는 11월 4일 04:21~04:22 UTC, 한국시간 13:21~13:22에 수행했다. GitBook 상세 공지는 11월 3일 16:21 CET 표시, Binance는 11월 3일 날짜만 확인됐다. 상태 페이지의 갱신시각과 독립적인 실제 자금 접근·회수는 미확인이다. 확인한 원문 범위에서 이전 관찰 대비 새 중대 침해나 피해 확대는 확인하지 못했다.",
+      "sources": [
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://www.gitbookstatus.com/",
+        "https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://www.binance.com/en/blog/community/3229153443759566763",
+        "https://status.mercadobitcoin.com.br/"
+      ]
+    },
+    {
+      "at": "2026-11-04T04:22:50Z",
+      "kind": "운영 상태",
+      "title": "체인·결제 경로 상태를 해킹과 구분",
+      "text": "Solana 공식 상태는 정상 운영으로 표시된다. Kraken의 BRL PIX 입출금 지연은 11월 3일 20:39 UTC 공지이며 일부 법정화폐 경로 장애다. Coinbase Sonic 전송 지연과 Circle의 Cronos 교차체인 일부 장애 표시도 확인했다. 이들 표시만으로 신규 해킹이나 전면 출금 중단으로 분류하지 않는다.",
+      "evidence": "조회 11월 4일 04:21~04:22 UTC, 한국시간 13:21~13:22. Coinbase Sonic 공지는 11월 3일 06:21 PST로 표시됐다. Circle Cronos 장애 표시의 발생·수정 시각은 확인하지 못해 새 사건 여부를 판단하지 않았다. 상태 정상 표시는 전체 생태계의 보안 무사고 보증이 아니다.",
+      "sources": [
+        "https://status.solana.com/",
+        "https://status.kraken.com/",
+        "https://status.coinbase.com/",
+        "https://status.circle.com/"
+      ]
+    },
     {
       "at": "2026-11-04T02:35:15Z",
       "kind": "정기 관찰",
