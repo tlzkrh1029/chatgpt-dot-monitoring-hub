@@ -88,7 +88,7 @@ npm run validate
 
 `parallel.html`은 기존 상황판과 분리된 네 패널 선 그래프입니다. 주식지수 5개, AI·반도체 5개, 크립토 5개, 달러·금 4개가 같은 KST 시간축을 사용합니다. 15분은 기준 격자이며 실제 시각이 다른 끝점은 이동하지 않습니다. 15분보다 긴 관측 공백은 선으로 잇지 않습니다. 마지막 값과 실제 표기 시각을 함께 표시하며, 회색 점선은 값 라벨 연결선입니다.
 
-전용 게시 파일은 `data/parallel.json`, 계약은 `parallel-data.js`, 갱신기는 `parallel-refresh.js`입니다. 기존 다섯 작성 경로·계약·감시 설정·수집 주기는 바꾸지 않습니다. 새 탭의 5/10/15분 선택은 **게시 파일 확인 간격**입니다. 시세 공급·백그라운드 수집·GitHub Pages 배포 주기를 보장하지 않습니다. 현재는 공개 이용이 허용된 시계열 공급 경로가 미확정이므로 19개 계열을 미지원으로 표시하고, 시세 숫자는 비워 둡니다. 위젯 시각을 읽거나 위젯 위에 임의 사건선을 그리는 방식은 사용하지 않습니다.
+전용 게시 파일은 `data/parallel.json`, 계약은 `parallel-data.js`, 갱신기는 `parallel-refresh.js`입니다. 기존 다섯 작성 경로·계약·감시 설정·수집 주기는 바꾸지 않습니다. 새 탭의 5/10/15분 선택은 **게시 파일 확인 간격**입니다. 별도 Actions 작업이 BTC·ETH·HYPE·ZEC·XMR의 Coin Metrics Community 복합 기준가격을 10분 주기로 수집합니다. 정확한 08:00 KST 기준값 대비 등락률과 15분 표본을 표시하며, 다른 14계열은 공급자를 확보할 때까지 미지원으로 둡니다. 예약 실행·공급자·Pages 반영에는 지연이 있을 수 있습니다. 위젯 시각을 읽거나 위젯 위에 임의 사건선을 그리는 방식은 사용하지 않습니다.
 
 원출처에서 확인한 DDHQ의 Georgia 09:18, North Carolina 10:23, Texas 12:14 KST 당선 판단 세 건만 사건선으로 표시합니다. 모두 2026년 11월 4일의 언론 판단이며 공식 인증과 구분합니다. CSV에 있는 다른 방송사의 사건 기록을 이 시각으로 교체한 것이 아닙니다. 이야기에는 단락별 출처·해석·판정·다음 관찰점을 포함하고, 시세와 선거의 인과를 추정하지 않습니다.
 
@@ -101,5 +101,7 @@ node scripts/prepare-parallel-reference.js <market.csv> <events.csv>
 생성물 `data/parallel-reference.local.json`은 Git에서 제외됩니다. 로컬 HTTP 서버에서 `parallel.html?reference=local`을 열면 이 파일만 참조합니다. 이 생성물이나 참조 원본을 배포 패키지에 넣지 마세요. 공개 배포는 Git에 명시적으로 추가한 코드와 `data/parallel.json`만 사용해야 합니다.
 
 전용 계약과 향후 작성 경로의 요구사항은 [docs/parallel-data.md](docs/parallel-data.md)에 있습니다. `npm test`와 `npm run validate`는 기존 계약과 새 계약을 함께 점검합니다.
+
+자동 수집·배포 운영은 [docs/parallel-automation.md](docs/parallel-automation.md)를 참고하세요. 개인용 비상업적 이용을 전제로 Coin Metrics 출처·CC BY-NC 4.0·가공 내역을 표시합니다. 키 없는 수집은 `COIN_METRICS_USAGE=noncommercial npm run collect:parallel`로 실행합니다. Windows PowerShell에서는 `$env:COIN_METRICS_USAGE='noncommercial'`을 설정하거나 `node scripts/update-parallel-prices.js --noncommercial`을 사용합니다. 수동 실행은 Actions의 **Update parallel market prices → Run workflow → main**입니다. `GITHUB_TOKEN` push 뒤에는 기존 Pages 빌드를 명시적으로 요청하고 공개 JSON까지 검증합니다.
 
 

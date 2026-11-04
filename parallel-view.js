@@ -46,7 +46,8 @@
       const padding = Math.max(.3, (high-low) * .13);
       low -= padding; high += padding;
       const y = value => plotBottom - (value-low)/(high-low)*(plotBottom-plotTop);
-      svg += `<text x="${LEFT}" y="${top}" fill="#f2f4f7" font-size="18" font-weight="600">${esc(panel.label)}</text>`;
+      const panelLabel = panel.key === 'crypto' && items.some(series => ParallelData.sourceReceipt(data, series.id)) ? `${panel.label} · 복합 기준가격 / 15분 표본` : panel.label;
+      svg += `<text x="${LEFT}" y="${top}" fill="#f2f4f7" font-size="18" font-weight="600">${esc(panelLabel)}</text>`;
       items.forEach((series, i) => {
         const lx = LEFT + i * 193;
         svg += `<line x1="${lx}" x2="${lx+17}" y1="${top+26}" y2="${top+26}" stroke="${COLORS[i%COLORS.length]}" stroke-width="3"/><text x="${lx+23}" y="${top+30}" fill="#b4bdca" font-size="11">${esc(series.label)}<title>${esc(series.basis)}</title></text>`;
@@ -86,18 +87,26 @@
     const allEvents = combinedEvents(data);
     const result = chart(data, allEvents);
     const numeric = data.series.filter(s=>s.points.length).length;
+    const live = data.series.map(series => ParallelData.sourceFreshness(data, series.id)).filter(Boolean);
+    const stale = live.filter(state => state.stale).length;
     $('chart').innerHTML=result.svg;
-    $('coverage-title').textContent = localReference ? '역사적 참조 · 독립 검증되지 않은 수치' : numeric ? '확인된 자료만 표시' : '시계열 공급 확인 중 · 자동 수집 미연결';
-    $('coverage-text').textContent = localReference ? '로컬 CSV의 등락률만 재현합니다. 원가격·수집 시각·거래시간·재배포 권한은 미확인입니다. 긴 공백은 잇지 않으며, 대만 마감 설명과 13:45 관측의 충돌도 해소되지 않았습니다.' : `${numeric}/${data.series.length}개 계열의 시계열이 연결되어 있습니다. 실제 공급과 이용 조건이 확인되지 않은 계열은 미지원으로 표시합니다. 게시 파일 확인 주기는 시세 갱신 보장이 아닙니다.`;
-    $('dataset-mode').textContent = localReference ? '로컬 역사적 참조 / 공개 자료에 합치지 않음' : '공개 자료 / 시계열 원자료 검증 필요';
+    $('coverage-title').textContent = localReference ? '역사적 참조 · 독립 검증되지 않은 수치' : stale ? '원자료 지연 · 마지막 확인값 유지' : numeric ? '확인된 자료만 표시' : '시계열 공급 확인 중 · 자동 수집 미연결';
+    $('coverage-text').textContent = localReference ? '로컬 CSV의 등락률만 재현합니다. 원가격·수집 시각·거래시간·재배포 권한은 미확인입니다. 긴 공백은 잇지 않으며, 대만 마감 설명과 13:45 관측의 충돌도 해소되지 않았습니다.' : `${numeric}/${data.series.length}개 계열의 시계열이 연결되어 있습니다.${stale ? ` 최신 1분 계산 시각이 20분 이상 지난 계열 ${stale}개는 마지막 값을 유지하며 지연으로 표시합니다.` : ''} 실제 공급과 이용 조건이 확인되지 않은 계열은 미지원으로 표시합니다. 게시 파일 확인 주기는 시세 갱신 보장이 아닙니다.`;
+    $('dataset-mode').textContent = localReference ? '로컬 역사적 참조 / 공개 자료에 합치지 않음' : live.length ? '공개 자료 / 원가격·기준값·계산 시각 보존' : '공개 자료 / 시계열 원자료 검증 필요';
     $('chart-period').textContent = `${new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'long',day:'numeric'}).format(new Date(data.window.start))} · ${time(data.window.start)}–${time(data.window.end)} KST · ${data.window.intervalMinutes}분 기준 격자 · 실제 시각 별도`;
     $('event-note').textContent = `원출처 확인 사건선 ${result.count}개 · 미검증 사건은 아래 목록에만 표시합니다. CSV 사건과 DDHQ 사건은 서로 다른 출처의 기록입니다.`;
     $('series-table').innerHTML = data.series.map(s=>{
       const stats=ParallelData.summarizeSeries(s,data.window),last=s.points.at(-1);
-      const delay=s.delaySeconds===null?'지연 미확인':`${s.delaySeconds}초 지연`;
-      const sourceClock=localReference?`참조 CSV 표기 ${fullTime(s.asOf)}<small>실제 원자료 시각 미확인</small>`:`원자료 ${fullTime(s.asOf)}`;
-      return `<tr><td><strong>${esc(s.label)}</strong><small>${esc(s.basis)}</small><small>${esc(s.instrument)}</small></td><td>${esc(AVAILABILITY[s.availability])}<small>${esc(s.provider)} · ${esc(MARKET[s.marketState])}</small>${s.sourceUrl?sources([s.sourceUrl]):''}</td><td class="mono">${last?percent(last.pct):'자료 없음'}<small>${last?time(last.at)+' KST':'—'}${s.verification==='unverified'?' · 미검증':''}</small></td><td>${sourceClock}<small>확인 ${fullTime(s.observedAt)}</small><small>${delay}</small></td><td>${last?`내부 격자 누락 ${stats.missingGridCount} · 비정규 시각 ${stats.offGridCount}`:'공백 계산 불가 · 자료 없음'}<small>${s.redistribution==='permitted'?'공개 이용 조건 확인':'재배포 권한 미확인'} · ${stats.pointCount}개 관측</small><small>첫·끝 관측 밖은 휴장으로 추정하지 않음</small></td></tr>`;
+      const record=ParallelData.sourceReceipt(data,s.id),freshness=ParallelData.sourceFreshness(data,s.id);
+      const delay=s.delaySeconds===null?'지연 미확인':`${Number(s.delaySeconds.toFixed(1))}초 지연`;
+      const sourceClock=localReference?`참조 CSV 표기 ${fullTime(s.asOf)}<small>실제 원자료 시각 미확인</small>`:record?`최신 1분 계산 ${fullTime(record.receipt.latest.at)}<small>차트 표본 ${fullTime(s.asOf)}</small>`:`원자료 ${fullTime(s.asOf)}`;
+      const state=freshness?.stale?'원자료 20분 이상 지연':AVAILABILITY[s.availability];
+      const age=freshness?`<small>현재 원자료 경과 ${Math.floor(freshness.ageSeconds/60)}분</small>`:'';
+      return `<tr><td><strong>${esc(s.label)}</strong><small>${esc(s.basis)}</small><small>${esc(s.instrument)}</small></td><td>${esc(state)}<small>${esc(s.provider)} · ${esc(MARKET[s.marketState])}</small>${s.sourceUrl?sources([s.sourceUrl]):''}</td><td class="mono">${last?percent(last.pct):'자료 없음'}<small>${last?time(last.at)+' KST':'—'}${s.verification==='unverified'?' · 미검증':''}</small></td><td>${sourceClock}<small>${record?'원자료 수신':'확인'} ${fullTime(s.observedAt)}</small><small>${record?'수집 당시 계산 지연 · ':''}${delay}</small>${age}</td><td>${last?`내부 격자 누락 ${stats.missingGridCount} · 비정규 시각 ${stats.offGridCount}`:'공백 계산 불가 · 자료 없음'}<small>${s.redistribution==='permitted'?'공개 이용 조건 확인':'재배포 권한 미확인'} · ${stats.pointCount}개 관측</small><small>첫·끝 관측 밖은 휴장으로 추정하지 않음</small></td></tr>`;
     }).join('');
+    const providers=localReference?[]:(data.providers||[]);
+    $('provider-section').hidden=!providers.length;
+    $('provider-details').innerHTML=providers.map(provider=>`<article class="provider"><h3>${esc(provider.label)}</h3><p>${esc(provider.attribution)} · <a href="${esc(provider.attributionUrl)}" target="_blank" rel="noopener noreferrer">공급자</a> · <a href="${esc(provider.licenseUrl)}" target="_blank" rel="noopener noreferrer">${esc(provider.licenseName)}</a></p><p>${esc(provider.transformation)}</p><p class="hint">1분 원자료를 가공해 08:00 KST 대비 등락률과 정확한 15분 표본으로 표시합니다. 거래소 체결가·OHLC가 아닙니다. <a href="${esc(provider.sourceUrl)}" target="_blank" rel="noopener noreferrer">산출 방법</a></p></article>`).join('');
     $('events').innerHTML = allEvents.length ? allEvents.map(e=>`<li><time datetime="${esc(e.at)}">${time(e.at)} KST</time><div><span class="tag${e.verification==='verified'?'':' unverified'}">${esc(TYPES[e.type])}</span><strong>${esc(e.label)}</strong><p class="hint">${e.verification==='verified'?'원출처 시각 확인 · 확인 '+fullTime(e.observedAt):'역사적 CSV 참조 · 실제 사건 시각 미검증 · 사건선 제외'}${e.type==='media_call'?' · 공식 인증 아님':''}</p>${e.sourceUrl?sources([e.sourceUrl]):''}</div></li>`).join('') : '<li><p class="empty">원출처로 시각을 확인한 사건이 없습니다.</p></li>';
     const stories = localReference ? [] : data.stories;
     $('stories').innerHTML = stories.length ? stories.map(story=>`<article class="story"><h3>${time(story.at)} KST · ${esc(story.title)}</h3><dl><dt>이야기</dt><dd>${esc(story.story)}</dd><dt>출처</dt><dd>${sources(story.sources)}</dd><dt>해석</dt><dd>${esc(story.interpretation)}</dd><dt>판정</dt><dd>${esc(story.verdict)}</dd><dt>다음 관찰점</dt><dd>${esc(story.nextWatch)}</dd></dl></article>`).join('') : '<p class="empty">검증된 시장 해설이 아직 없습니다. 선거 사건과 시세의 인과를 추정해 이야기를 만들지 않습니다.</p>';
@@ -145,5 +154,8 @@
       render();
     }catch(_){$('import-status').textContent='로컬 참조 파일이 없습니다. CSV 두 개를 선택해 열 수 있습니다.';}
   }
+  // Source age advances even if no new publication arrives. It must never be
+  // reset by re-reading the same JSON or by moving the browser receipt clock.
+  setInterval(()=>{if(!document.hidden)render();},60000);
   schedule();refresh();previewReference();
 })();

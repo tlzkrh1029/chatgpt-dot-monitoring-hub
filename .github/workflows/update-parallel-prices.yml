@@ -1,0 +1,66 @@
+name: Update parallel market prices
+
+on:
+  schedule:
+    - cron: '3,13,23,33,43,53 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: parallel-market-publisher
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      COIN_METRICS_USAGE: noncommercial
+    steps:
+      - name: Check out the latest main
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - name: Collect Coin Metrics reference rates
+        run: node scripts/update-parallel-prices.js
+      - name: Test and validate before publication
+        run: |
+          npm test
+          npm run validate
+      - name: Publish only the parallel dataset without overwriting other writers
+        shell: bash
+        run: |
+          if ! git diff --quiet -- data/parallel.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -- data/parallel.json
+            git commit -m 'Update Coin Metrics parallel reference rates'
+            pushed=false
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git rebase origin/main
+              npm run validate
+              if git push origin HEAD:main; then
+                pushed=true
+                break
+              fi
+              sleep 2
+            done
+            if [ "$pushed" != true ]; then
+              echo 'Parallel publication was not pushed; no force push was attempted.' >&2
+              exit 1
+            fi
+          fi
+      - name: Request the existing Pages build and verify public data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/request-parallel-pages-build.js
