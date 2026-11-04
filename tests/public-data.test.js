@@ -14,11 +14,43 @@ function envelope(key = 'macro') {
     body: 'Evidence checked without a new material fact.', unknown: c.unknown, gap: '',
     feed: [{ at: '2026-11-04T09:00:00Z', kind: '참고', title: 'Public check', text: 'No new material fact.' }] };
 }
-test('existing snapshot validates unchanged and validation returns an independent value', () => {
+test('existing snapshot validates with canonical labels and validation returns an independent value', () => {
   const result = M.validateData(original, { now: NOW });
-  assert.deepEqual(result, original);
+  const expected = copy(original);
+  expected.categories.forEach((c) => { c.name = M.CATEGORY_CONFIG[c.key].name; });
+  assert.deepEqual(result, expected);
   result.categories[0].body = 'Changed outside the source';
   assert.notEqual(result.categories[0].body, original.categories[0].body);
+});
+test('legacy and renamed security metadata normalize without changing keys, alert setting or historical articles', () => {
+  const canonicalName = '크립토 보안·해킹';
+  for (const name of ['크립토 보안', canonicalName]) {
+    const input = copy(original);
+    input.categories.find((c) => c.key === 'security').name = name;
+    const before = copy(input);
+    const result = M.validateData(input, { now: NOW });
+    const security = result.categories.find((c) => c.key === 'security');
+    assert.equal(security.name, canonicalName);
+    assert.equal(security.key, 'security');
+    assert.equal(security.color, before.categories.find((c) => c.key === 'security').color);
+    assert.deepEqual(result.setting, before.setting);
+    assert.deepEqual(result.feed, before.feed);
+    assert.deepEqual(result.gaps, before.gaps);
+    assert.deepEqual(input, before);
+    const composed = M.composeData(input, []);
+    assert.equal(composed.categories.find((c) => c.key === 'security').name, canonicalName);
+    assert.deepEqual(composed.setting, before.setting);
+    for (const record of before.feed) {
+      const preserved = composed.feed.find((item) => item.at === record.at && item.category === record.category && item.title === record.title && item.text === record.text);
+      assert.deepEqual(preserved, record);
+    }
+  }
+  const invalidName = copy(original);
+  invalidName.categories.find((c) => c.key === 'security').name = 'Unapproved security label';
+  assert.throws(() => M.validateData(invalidName, { now: NOW }), /category identity/);
+  const invalidColor = copy(original);
+  invalidColor.categories.find((c) => c.key === 'security').color = '#000000';
+  assert.throws(() => M.validateData(invalidColor, { now: NOW }), /category identity/);
 });
 test('unknown fields, missing or duplicate categories and cross-category records are rejected', () => {
   const mutate = [

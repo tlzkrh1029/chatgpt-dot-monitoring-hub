@@ -14,7 +14,7 @@
   const CATEGORY_CONFIG = Object.freeze({
     macro: Object.freeze({ name: '거시·크립토', color: '#F2555A', staleAfterMs: 90 * MINUTE }),
     election: Object.freeze({ name: '미국 중간선거', color: '#5B9BFF', staleAfterMs: 90 * MINUTE }),
-    security: Object.freeze({ name: '크립토 보안', color: '#F0B429', staleAfterMs: 90 * MINUTE }),
+    security: Object.freeze({ name: '크립토 보안·해킹', legacyName: '크립토 보안', color: '#F0B429', staleAfterMs: 90 * MINUTE }),
     xr: Object.freeze({ name: 'X 계정 연구', color: '#B197FC', staleAfterMs: 300 * MINUTE }),
     onchain: Object.freeze({ name: '온체인 보안·자금흐름 추적', color: '#50C4AE', staleAfterMs: 90 * MINUTE })
   });
@@ -121,7 +121,8 @@
       category(c.key, `${p}.key`);
       if (seen.has(c.key)) fail(p, 'duplicate category');
       seen.add(c.key);
-      if (c.name !== CATEGORY_CONFIG[c.key].name || c.color !== CATEGORY_CONFIG[c.key].color) fail(p, 'category identity must match the fixed configuration');
+      const config = CATEGORY_CONFIG[c.key];
+      if ((c.name !== config.name && c.name !== config.legacyName) || c.color !== config.color) fail(p, 'category identity must match the fixed configuration');
       for (const k of ['headline', 'body', 'unknown']) text(c[k], `${p}.${k}`);
       const checked = date(c.lastCheckAt, `${p}.lastCheckAt`, now);
       if (checked > pub) fail(`${p}.lastCheckAt`, 'evidence check is newer than publication');
@@ -144,7 +145,10 @@
       object(q, p, ['at', 'category', 'text']); category(q.category, `${p}.category`); text(q.text, `${p}.text`);
       if (date(q.at, `${p}.at`, now) > observed.get(q.category)) fail(`${p}.at`, 'quiet check is newer than category observation');
     });
-    return clone(raw);
+    const result = clone(raw);
+    // Normalize the requested display label without rewriting stored history.
+    result.categories.forEach(c => { c.name = CATEGORY_CONFIG[c.key].name; });
+    return result;
   }
   function validateCategory(raw, expectedKey, options = {}) {
     const now = nowValue(options.now);
@@ -167,6 +171,7 @@
     // Inputs have already passed boundary validation. Composition never changes
     // the user's alert setting, drops history, or assigns new observation times.
     const result = clone(base);
+    result.categories.forEach(c => { c.name = CATEGORY_CONFIG[c.key].name; });
     const envelopes = Array.isArray(updates) ? updates : Object.values(updates);
     const seen = new Set();
     for (const update of envelopes) {

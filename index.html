@@ -203,6 +203,13 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 .time-basis { display: block; margin-top: 5px; white-space: normal; color: var(--muted-2); font: 11px/1.5 var(--sans); }
 .item-title { margin: 0 0 6px; font-size: 14px; line-height: 1.6; }
 .item, .tile, .banner { overflow-wrap: anywhere; }
+.refresh-control { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; max-width: 330px; }
+.refresh-button { min-height: 44px; padding: 8px 15px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--panel); color: var(--text); font: 600 14px var(--sans); cursor: pointer; }
+.refresh-button:hover { border-color: var(--link); }
+.refresh-button[aria-busy="true"] { color: var(--muted); cursor: progress; }
+.refresh-status { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.refresh-status[data-state="warning"], .refresh-status[data-state="error"] { color: var(--amber); }
+.refresh-status[data-state="success"] { color: #50C4AE; }
 </style>
 </head>
 <body>
@@ -221,6 +228,10 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
       <span class="chip-setting-sub" id="setting-chip-sub"></span>
     </button>
     <div class="chip-counts" id="counts" hidden></div>
+    <div class="refresh-control">
+      <button type="button" class="refresh-button" id="refresh-button" aria-describedby="refresh-status" aria-busy="false" aria-disabled="false">새로고침</button>
+      <p class="refresh-status" id="refresh-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    </div>
   </div>
 </header>
 
@@ -278,6 +289,7 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
 
 <script src="public-data.js"></script>
 <script src="refresh-client.js"></script>
+<script src="manual-refresh.js"></script>
 <script>
 (() => {
   'use strict';
@@ -589,6 +601,8 @@ html[data-view="checks"] .side { flex: 1 1 100%; }
       else renderBanner(state.data);
     }
   });
+  MonitorManualRefresh.bind({ button: $('refresh-button'), status: $('refresh-status'), controller,
+    categoryKeys: Object.keys(MonitorData.CATEGORY_CONFIG) });
   render();
   controller.refresh();
   setInterval(() => {
