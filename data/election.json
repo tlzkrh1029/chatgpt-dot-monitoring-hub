@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T16:03:10.183Z",
-  "observedAt": "2026-11-04T16:02:36.477Z",
+  "publishedAt": "2026-11-04T16:16:37.028Z",
+  "observedAt": "2026-11-04T16:16:37.026Z",
   "checkStatus": "partial",
-  "headline": "11/5 01:02KST: Nevada 주지사 DDHQ 판단·하원247D·150R",
-  "body": "DDHQ가 Nevada 주지사 Ford 당선 판단을 추가했다. 주지사28D·20R, 하원247D·150R, 상원54D·44R이다. 하원 민주6석 증가 중 NC13·NV02 개별 판단을 확인했다. Mississippi 상원은 민주745표 우세로 격차가 줄었지만 미판정이다. 모두 언론 판단·부분 집계이며 공식 인증과 구분한다.",
-  "unknown": "하원 민주6석 증가 전체 개별 대응 및 NC09 목록·원문 불일치, Mississippi·Alaska·Maine2구 공식 집계 대조, Oregon 주지사 원문, 전국 법정절차·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 하원 증가분 전체 개별 판단 대응 및 NC09 목록·원문 불일치 미해소. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수 확인 및 시장수치 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
+  "headline": "11/5 01:16KST: 하원244D·247D 공급원 내 불일치",
+  "body": "DDHQ 하원 전용 본문은244D·150R, 다른 페이지 요약은247D·150R로 다르다. 이전247D를 현재 확정 합계로 쓰지 않으며 실제3석 판단 철회도 미확인이다. 민주당 지배권 판단 및 NC13·NV02 개별 판단은 유지된다. 상원54D·44R, 주지사28D·20R이다.",
+  "unknown": "DDHQ 하원244D·247D 불일치의 수정시각·원인·개별 대응, NC09 목록·원문 판단 차이, 주요 경합 공식대조, Oregon 주지사 원문.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패. 하원 합계244D·247D 및 NC09 목록·개별판단 불일치 미해소. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수 및 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T16:16:37.026Z",
+      "kind": "집계 정정·불일치",
+      "title": "하원 전용 본문244D·150R·다른 페이지247D 불일치",
+      "text": "DDHQ 하원 전용 본문이 직전247D·150R에서244D·150R로 바뀌었고 재조회도 같았다. 상원·주지사 페이지의 하원 요약은 여전히247D·150R이므로 공급원 내 합계 불일치다. 이전247석 기록을 보존하며 현재 확정 수치처럼 쓰지 않는다. 개별 NC13·NV02 당선 판단은 유지되고 NC09는 목록에만 판단이 있어 실제3석 판단 철회로 단정할 수 없다. 민주당 하원 지배권 판단은 유지된다.",
+      "evidence": "실제 조회11월4일16:14–16:16UTC/11월5일01:14–01:16KST. 하원 본문244석·35석 교체 표시를16:15 및16:16UTC에 확인했으나 수정시각·사유는 표시되지 않았다. 상원54D·44R, 주지사28D·20R과 Nevada Ford 판단 유지. Mississippi745표 민주우세·Alaska507표 민주우세·Maine2구 공화우세는1,615표에서2,384표로 증가했으나 미판정 유지. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. Maine·Michigan 주지사 집계 증가는 새 판단이 아니다. Maine2구 집계11:03EST=16:03UTC, LePage156,771표·Dunlap154,387표.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-9-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-13-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T16:02:36.477Z",
       "kind": "언론 당선 판단",
