@@ -1,14 +1,42 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-04T04:23:15.664Z",
-  "observedAt": "2026-11-04T04:22:50Z",
+  "publishedAt": "2026-11-04T05:26:11.335Z",
+  "observedAt": "2026-11-04T05:25:50Z",
   "checkStatus": "partial",
-  "headline": "11/4 13:22 보안 점검 — 기존 대응 유지·새 중대 피해 미확인",
-  "body": "GitBook·BTCPay·Chainalysis의 기존 보안 대응과 Binance 초기 보고서를 재확인했다. Mercado는 다섯 구성요소가 유지보수 상태다. Solana 공식 상태는 정상이며 Kraken PIX·Coinbase Sonic·Circle Cronos 운영 장애 표시는 신규 해킹과 구분한다. 확인한 공개자료 범위에서 새 중대 침해·추가 피해·실제 회수는 확인하지 못했다.",
+  "headline": "11/4 14:25 보안 점검 — 기존 대응 유지·새 중대 변화 미확인",
+  "body": "GitBook·BTCPay·Chainalysis의 대응과 Mercado 유지보수 상태는 이전 확인과 같다. Binance 초기 보고서는 기존 사건 자료로 유지한다. Solana 정상 표시 및 일부 결제·전송 경로 장애도 재확인했지만 이를 보안 무사고 보증이나 새 해킹으로 해석하지 않았다. 확인한 범위에서 새 피해 확대·실제 회수·전면 복구는 확인하지 못했다.",
   "unknown": "Binance 독립 보안검토 및 전면 출금 복구, Mercado 영상 전체 내용과 실제 서비스 재개, Circle Cronos 장애 시작·수정시각, 추가 피해·회수의 독립 검증.",
   "gap": "공식 공지·상태 페이지와 제한된 공개 검색을 확인했다. 전체 X 피드·영상 전사·모든 프로토콜과 브리지·관리키 사고를 전수 점검하지 못했다. THOR·PancakeSwap·Troves 최신 상태와 독립 온체인 재계산은 미확인이다.",
   "feed": [
+    {
+      "at": "2026-11-04T05:25:50Z",
+      "kind": "부분 점검",
+      "title": "기존 대응 유지·새 침해와 복구 완료 미확인",
+      "text": "GitBook 복구 모니터링, Chainalysis 일부 제품 중단, BTCPay 구버전 대응 지침과 Mercado 다섯 구성요소 유지보수는 이전 점검과 같다. Binance 초기 보고서도 기존 사건 자료다. Solana 정상 표시와 Kraken PIX·Coinbase Sonic·Circle Cronos의 기존 운영 장애 표시를 재확인했으며 신규 해킹으로 분류하지 않았다.",
+      "evidence": "실제 조회는 11월 4일 05:25 UTC, 한국시간 14:25다. Chainalysis의 최신 표시 갱신은 11월 2일, Binance 보고서는 11월 3일이다. 검색에서 재노출된 BTCPay 피해 추산은 11월 2일 기준 분석으로 현재 피해 증가의 증거가 아니다. 공식 공지와 제한된 검색 범위에서 새 중대 피해·실제 회수·전면 복구는 확인하지 못했다.",
+      "sources": [
+        "https://www.gitbookstatus.com/",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.binance.com/en/blog/community/3229153443759566763",
+        "https://status.solana.com/",
+        "https://status.kraken.com/",
+        "https://status.coinbase.com/"
+      ]
+    },
+    {
+      "at": "2026-11-04T05:25:50Z",
+      "kind": "기존 분석 확인",
+      "title": "BTCPay 피해 추산은 과거 기준 자료",
+      "text": "Bitquery는 11월 2일 06:00 UTC까지 18.38 BTC와 3,405 LTC, 682회 이체를 추적했다고 설명한다. 약 162만 8,450달러는 11월 2일 가격 기준 작성자 추산이다. 새 피해 확대나 현재 잔액·회수액으로 읽지 않는다.",
+      "evidence": "작성자 분석과 BTCPay 공식 버전별 대응 지침을 구분했다. 이번에 거래별 독립 온체인 재계산은 하지 않았으며 피해 서버 수와 현재 자금 위치는 미확인이다. 조회 11월 4일 05:25 UTC, 한국시간 14:25.",
+      "sources": [
+        "https://www.bitquery.io/investigations/btcpay-server-hack",
+        "https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/"
+      ]
+    },
     {
       "at": "2026-11-04T04:22:50Z",
       "kind": "부분 점검",
