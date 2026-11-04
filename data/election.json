@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T14:32:00.304Z",
-  "observedAt": "2026-11-04T14:31:39.289Z",
+  "publishedAt": "2026-11-04T14:46:58.322Z",
+  "observedAt": "2026-11-04T14:46:39.017Z",
   "checkStatus": "partial",
-  "headline": "11/4 23:31KST: 일부 개표 증가·DDHQ 주요 판단 유지",
-  "body": "Texas·Maine·New Jersey 상원과 Texas 주지사 집계가 늘었지만 확인 가능한 당선 판단은 유지됐다. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R이다. 일부 원자료 및 공식 대조가 미완료이며 언론 판단은 공식 인증이 아니다.",
+  "headline": "11/4 23:46KST: 주지사 일부 집계 증가·주요 판단 유지",
+  "body": "Maine·California·Arkansas 주지사 집계가 늘었지만 확인 가능한 당선 판단과 주요 정당 합계는 유지됐다. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R이다. 일부 공식 대조는 실패했고 언론 판단은 공식 인증과 구분한다.",
   "unknown": "Arkansas 집계 감소 원인 및 공식 수치 대조, Oregon 주지사 DDHQ 원문, 주요 미판정 경합의 최신 공식 집계, 전국 법원·재검표·인증·주민투표.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 접근 실패. Arkansas 집계 감소 원인 및 주요 미판정 경합 공식 대조 미완료. 하원435개 개별·카운티 하위 및 전국 법원·재검표·인증·주민투표 전수 확인 미완료. 시장 수치는 확인하지 않았다. 별도 게시 제한: 선거 결과 탭의 스냅샷 저장이 거절되어 이전 저장 자료를 유지한다. 원자료 관찰 실패와 별개다.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 접근 실패, California 공식 결과 사이트 보안 오류 화면으로 수치 확인 불가. 주요 미판정 경합 공식 대조 및 하원435개·카운티 하위·전국 법원·재검표·인증·주민투표 전수 확인 미완료. 시장 수치는 확인하지 않았다. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 저장 자료를 유지한다. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-04T14:46:39.017Z",
+      "kind": "부분 관찰",
+      "title": "14:45 점검: 주지사 일부 집계 증가·판정 유지",
+      "text": "상원35·주지사36개 DDHQ 원문 중70개를 확인했다. Maine 주지사 Pingree367,371표·Charles246,336표, California Becerra4,991,891표·Hilton2,814,373표, Arkansas Sanders477,190표·Love341,645표로 집계가 증가했다. 확인 가능한 당선 판단과 DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R은 유지된다. 개표 증가를 새 당선 판단이나 공식 인증으로 취급하지 않는다.",
+      "evidence": "실제 조회11월4일14:44–14:46UTC/23:44–23:46KST. Maine 주지사 갱신09:30EST=14:30UTC·예상 집계89%, California09:36EST=14:36UTC·67%, Arkansas09:28EST=14:28UTC·95% 초과. Oregon 주지사 DDHQ 원문 실패. California 공식 사이트는 보안 오류 화면으로 수치 대조 불가. California 부유세 주민투표 미판정 보도는 검색 단서이며 공식 표수·분모를 확인하지 못했다. 전국 법원·재검표·인증 전수 검증은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arkansas-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T14:31:39.289Z",
       "kind": "부분 관찰",
