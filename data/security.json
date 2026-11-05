@@ -1,14 +1,24 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T17:12:29.465Z",
-  "observedAt": "2026-11-05T17:12:06.055Z",
+  "publishedAt": "2026-11-05T18:03:01.704Z",
+  "observedAt": "2026-11-05T18:02:28.337Z",
   "checkStatus": "partial",
-  "headline": "Deribit도 SignalPlus 연결 중단, Polygon 회수 제안",
-  "body": "Deribit은 SignalPlus 연결 API 키를 폐기했고 Binance의 기존 예방 조치와 함께 외부 플랫폼을 통한 거래·모니터링이 영향을 받는다. Polygon 포럼에는 Binance·Polymarket 피해 POL 약 7,049만 개의 회수 제안이 게시됐으나 승인과 실제 회수는 확인되지 않았다.",
-  "unknown": "SignalPlus의 침해 경로와 고객 피해, 완전 해소는 확인되지 않았다. Polygon 회수 제안의 승인·실행, Binance 자산별 실제 출금 재개, GitBook 질문 데이터 반출과 Chainalysis 복구도 미확인이다.",
-  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문은 이번 점검에서 열리지 않았다. SignalPlus 홈페이지는 자바스크립트 안내만 보여 복구 공지를 확인하지 못했다. Polygon 거버넌스 콜 결과, 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 확인하지 못했다.",
+  "headline": "SignalPlus, 실제 공격 인정과 전액 보상 약속",
+  "body": "SignalPlus는 실제 공격과 고객 손실 8만 2,000달러 미만을 발표하고 보상 착수 및 전액 보상을 약속했다. 탈취된 협력업체 연락처와 가짜 Teams 초대가 침입 경로였다는 회사 설명이며, 서비스 재개와 보상 완료는 확인되지 않았다.",
+  "unknown": "SignalPlus의 피해액·침입 경로에 대한 독립 검증, 보상 완료와 안전한 서비스 재개는 확인되지 않았다. Polygon 회수 제안의 승인·실행, Binance 자산별 출금 재개와 Chainalysis 복구도 미확인이다.",
+  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문은 이번 점검에서 열리지 않았다. Polygon 거버넌스 콜 결과, 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 확인하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T18:02:00Z",
+      "kind": "새 사실",
+      "title": "SignalPlus, 실제 공격과 8만 2,000달러 미만 손실 발표",
+      "text": "SignalPlus는 실제 공격을 당했으며 자체 평가한 고객 손실이 8만 2,000달러 미만이라고 밝혔다. 회사는 탈취된 협력업체의 Telegram 연락처를 사칭한 가짜 Microsoft Teams 초대가 침입 경로였다고 설명했다.\n\nSignalPlus는 보상을 시작했고 전액 보상하겠다고 약속했다. 피해액과 침입 경로는 독립 검증되지 않았으며, 보상 완료와 서비스 재개도 확인되지 않았다.",
+      "evidence": "한국시간 11월 6일 03:02에 SignalPlus 공식 X 본문을 직접 확인했다. 앞선 거래소의 예방적 키 폐기 안내와 달리 피해 업체가 공격을 인정한 발표이며 세부 내용은 회사 주장이다.",
+      "sources": [
+        "https://x.com/SignalPlus_Web3/status/2118334759697068490"
+      ]
+    },
     {
       "at": "2026-11-05T17:11:47Z",
       "kind": "참고",
