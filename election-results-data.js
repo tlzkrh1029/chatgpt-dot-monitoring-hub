@@ -231,5 +231,38 @@
     const seats = { D: h.totals.D, R: h.totals.R, other: h.totals.I + h.totals.O, uncalled: h.totals.uncalled };
     return { seats, need: { D: Math.max(0, h.majority - seats.D), R: Math.max(0, h.majority - seats.R) } };
   }
-  return Object.freeze({ PARTIES, STATUSES, SENATE_STATES, GOVERNOR_STATES, STATE_NAMES, TILE_POSITIONS, validateDataset, tally, senateSummary, houseSummary });
+  // What changed between two versions of the file, so a writer can check the scope of an
+  // update before committing it. Key order is ignored. A race whose only change is its
+  // note is reported separately: rewriting notes on races whose result did not change
+  // turns a small update into a rewrite of the whole file.
+  const TOP_FIELDS = Object.freeze(['provider', 'publishedAt', 'observedAt', 'checkStatus', 'note', 'sources']);
+  const RACE_FIELDS = Object.freeze(['status', 'special', 'winner', 'calledBy', 'calledAt', 'leader', 'candidates', 'reported', 'otherCalls', 'note']);
+  function same(a, b) {
+    if (a === b) return true;
+    if (a === null || b === null || typeof a !== 'object' || typeof b !== 'object') return false;
+    if (Array.isArray(a) !== Array.isArray(b)) return false;
+    if (Array.isArray(a)) return a.length === b.length && a.every((v, i) => same(v, b[i]));
+    const keys = Object.keys(a);
+    return keys.length === Object.keys(b).length && keys.every((k) => own(b, k) && same(a[k], b[k]));
+  }
+  function compareDatasets(before, after) {
+    const top = TOP_FIELDS.filter((k) => !same(before[k], after[k]));
+    const chambers = [];
+    for (const c of ['senate', 'house', 'governor']) {
+      for (const k of Object.keys(after.chambers[c])) if (!same(before.chambers[c][k], after.chambers[c][k])) chambers.push(`${c}.${k}`);
+    }
+    const races = [];
+    let unchanged = 0;
+    for (const office of ['senate', 'governor']) {
+      for (const state of office === 'senate' ? SENATE_STATES : GOVERNOR_STATES) {
+        const a = before.races[office][state];
+        const b = after.races[office][state];
+        const fields = RACE_FIELDS.filter((k) => !same(a[k], b[k]));
+        if (fields.length === 0) unchanged++;
+        else races.push({ office, state, fields, noteOnly: fields.length === 1 && fields[0] === 'note' });
+      }
+    }
+    return { top, chambers, races, unchanged, total: SENATE_STATES.length + GOVERNOR_STATES.length };
+  }
+  return Object.freeze({ PARTIES, STATUSES, SENATE_STATES, GOVERNOR_STATES, STATE_NAMES, TILE_POSITIONS, validateDataset, tally, senateSummary, houseSummary, compareDatasets });
 });

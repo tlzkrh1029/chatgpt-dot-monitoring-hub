@@ -9,7 +9,7 @@
 | 감시 작업 | 단독으로 수정할 파일 | 관찰 주기 | 화면의 지연 기준 |
 |---|---|---|---|
 | 거시·크립토 | data/macro.json | 매시간 | 90분 |
-| 미국 중간선거 | data/election.json, data/election-results.json | 매시간 | 90분 |
+| 미국 중간선거 | data/election.json(범주 파일), data/election-results.json(범주 파일이 아닌 스냅샷, 아래 [선거 결과 탭](#선거-결과-탭) 참고) | 매시간 | 90분 |
 | 크립토 보안 | data/security.json | 매시간 | 90분 |
 | X 계정 연구 | data/xr.json | KST 00/04/08/12/16/19시 | 5시간 |
 | 온체인 보안·자금흐름 | data/onchain.json | 매시간 | 90분 |
@@ -19,6 +19,8 @@
 data.json은 기존 공개 기록과 사용자 지정 감시 강도를 보존하는 기본 자료입니다. 감시 작업은 이 파일이나 index.html을 수정하지 않습니다. 각 작업은 자신의 범주 파일만 바꾸므로 동시 실행이 다른 범주를 덮어쓰지 않습니다. 공유 집계 파일 작성 서비스·새 자격 증명은 필요하지 않습니다.
 
 ## 범주 JSON 게시 계약 v1
+
+이 계약은 다섯 범주 파일에만 적용합니다. `data/election-results.json`과 `data/parallel.json`은 범주 파일이 아니며 각자의 별도 계약을 따릅니다.
 
 모든 최상위 필드가 필수이고 추가 필드는 거부합니다. 실제 예시는 다섯 범주 파일에 있습니다.
 
@@ -36,6 +38,8 @@ data.json은 기존 공개 기록과 사용자 지정 감시 강도를 보존하
 
 피드 항목 필수 필드는 at, kind, title, text입니다. kind는 비어 있지 않은 60자 이내, title과 text는 각각 비어 있지 않은 8,000자 이내 텍스트입니다. 선택 필드는 timeBasis, evidence, sources뿐입니다. evidence는 8,000자 이내 텍스트, sources는 공개 HTTPS URL 0–8개입니다. 항목 내부에 category를 넣지 않습니다.
 
+kind 어휘, 제목·본문·evidence와 요약 필드의 역할, 문장과 단락 규칙은 [docs/feed-writing-guide.md](docs/feed-writing-guide.md)에 있습니다. 이 규칙은 계약 검증과 별개이며 새로 쓰는 기록부터 적용합니다. 다섯 감시 작업의 지시문에 붙여 넣을 문안은 [docs/feed-writing-prompts.md](docs/feed-writing-prompts.md)에 있습니다. text와 evidence에서는 단락 사이에 빈 줄을 넣습니다. 빈 줄은 JSON 파일 원문에 역슬래시 표기 `\n\n`으로 적으며, 계약은 이 표기로 들어간 줄바꿈을 허용합니다. 문자열 안에 실제 줄바꿈을 그대로 넣으면 파일이 JSON으로 읽히지 않습니다.
+
 timeBasis는 생략 시 observation이며 at <= observedAt이어야 합니다. 이미 전달한 알림을 이관할 때는 notification으로 하고 당시 전달 시각을 at에 넣습니다. 화면은 이를 **알림 전달 시각**으로 표시합니다. 이 시각은 새 원문 확인을 뜻하지 않습니다. notification에서도 at <= publishedAt이어야 합니다.
 
 ## 공개 범위와 출처
@@ -47,6 +51,8 @@ timeBasis는 생략 시 observation이며 at <= observedAt이어야 합니다. �
 자동 필터는 내용이 공개 가능한지 보증하지 않습니다. 작성 작업은 링크가 실제 공개 근거인지 확인하고 개인 계정 정보가 문장에 섞이지 않도록 정제해야 합니다. 접근 여부를 확인하지 못하면 링크를 빼고 일반적인 확인 한계를 기록합니다.
 
 ## 성공·변화 없음·실패 처리
+
+아래 절차는 다섯 범주 파일에 적용합니다. `data/election-results.json`에는 1번과 4번의 기록 보존·병합 규칙을 적용하지 않습니다. 그 파일은 [선거 결과 탭](#선거-결과-탭) 절과 [docs/election-results-data.md](docs/election-results-data.md)의 스냅샷 교체 절차를 따릅니다.
 
 1. 자신의 범주 파일을 최신 SHA와 함께 읽고 기존 공개 기록을 보존합니다.
 2. 새 원문을 실제 점검한 경우에만 observedAt을 진행시킵니다. 변화가 없어도 실제 점검했다면 그 시각과 확인 범위를 기록할 수 있습니다.
@@ -70,6 +76,8 @@ npm test
 npm run validate
 ~~~
 
+`npm run lint:feed`는 범주별 최신 회차의 피드 기록과 요약 필드를 작성 규칙으로 점검하고, JSON으로 읽히지 않는 범주 파일도 알립니다. 경고만 출력하며 게시를 막지 않습니다.
+
 브라우저와 로컬 검증은 같은 public-data.js 계약을 사용합니다. 테스트는 성공 재수신, 시계 기반 지연, 통신/파싱/스키마 오류, 마지막 정상 자료 보존, 범주 격리, 시각 역행, 요청 중첩·시간 제한, 공개 URL 제한과 역사·설정 보존을 확인합니다.
 
 기존 main 브랜치 기반 GitHub Pages 배포를 사용합니다. 코드와 초기 자료를 한 커밋으로 게시하고 원격 SHA 및 실제 Pages 결과를 확인합니다. 이후 각 감시 파일 갱신으로 기존 Pages 배포가 수행됩니다. GitHub 배포·캐시 지연은 브라우저 폴링과 별개입니다. 병렬 타임라인 탭을 빼면 별도 예약 GitHub Actions, 외부 서비스, 새 비밀값은 추가하지 않습니다. 병렬 타임라인 탭은 전용 예약 워크플로(`.github/workflows/update-parallel-prices.yml`)로 Yahoo Finance와 Coin Metrics에서 시세를 수집하며, 이 작업도 새 비밀값 없이 기본 `GITHUB_TOKEN`만 씁니다(아래 "병렬 타임라인 탭" 참고).
@@ -84,6 +92,8 @@ npm run validate
 
 보안 피드는 단일 대상이 명확한 Binance, GitBook, Mercado Bitcoin, BTCPay, Chainalysis 기록을 대상별 관련 이력으로 접어 표시합니다. 같은 대상의 여러 사고를 하나의 사고로 확정하는 기능이 아닙니다. 여러 대상을 함께 다룬 종합 기록과 대상이 불명확한 기록은 별도로 남깁니다. 관련 이력을 펼치면 각 기록의 원문·정정·시각·근거·출처를 모두 볼 수 있습니다. 금액을 합산하거나 데이터를 삭제하지 않습니다. 펼침 상태와 포커스는 새 자료 수신 후에도 유지합니다.
 
+새 소식의 각 기록은 범주와 kind, 제목, 본문 순서로 표시합니다. evidence와 sources는 기관 이름을 보여 주는 한 줄로 접어 두고, 펼치면 확인 방법과 각 출처의 기관 이름, 주소를 표시합니다. 본문과 확인 방법은 작성자가 빈 줄로 나눈 부분을 각각 한 단락으로 표시하고, 빈 줄이 없는 긴 글과 지나치게 긴 단락은 `feed-text.js`가 문장 경계에서만 나눕니다. 인용부호와 괄호 안에서는 나누지 않으며, 글자는 바꾸거나 빼지 않습니다. kind가 '변화 없음'·'확인 제한'인 기록은 흐리게 표시하고, 같은 시각의 기록 가운데 맨 뒤에 두며, 대상별 관련 이력으로 묶지 않습니다. 같은 범주·같은 시각의 연속 기록은 시각과 범주 이름을 화면에서 반복하지 않으며 스크린 리더에는 그대로 전달합니다. 단이 나뉘는 ?view=feed 화면에서는 모든 기록에 시각과 범주를 표시합니다.
+
 ## 병렬 타임라인 탭
 
 `parallel.html`은 기존 상황판과 분리된 시장 병렬 타임라인입니다. 주식지수, AI·반도체 종목, 크립토, 달러·금의 네 패널이 한 날짜의 08:00–16:00 KST를 같은 15분 시간축으로 보여 줍니다. 분석 노트가 있는 날은 사건선과 함께 한 줄, 세부, 읽기, 볼 것, 스토리텔링, 판정을 표시합니다.
@@ -97,5 +107,7 @@ npm run validate
 `election-results.html`은 기존 상황판과 분리된 미국 중간선거 결과 화면입니다. 상원·하원 반원 의석도, 50개 주를 같은 크기 칸으로 놓은 타일 지도(상원·주지사 전환), 남은 미판정 경합의 격차 점 그래프와 목록을 보여 줍니다. 판정된 경합만 정당 색으로 칠하고, 앞선 후보는 승자로 표시하지 않습니다.
 
 전용 게시 파일은 `data/election-results.json`, 계약은 `election-results-data.js`, 화면은 `election-results-view.js`와 `election-results.css`입니다. 기존 다섯 범주 계약과 병렬 탭 계약은 바꾸지 않습니다. 미국 중간선거 감시 작업이 `data/election.json`과 같은 회차에 이 파일을 갱신하며, 판정 기준·필드·갱신 절차는 [docs/election-results-data.md](docs/election-results-data.md)에 있습니다. `npm test`와 `npm run validate`가 새 계약도 함께 점검합니다.
+
+`data/election-results.json`은 범주 파일이 아니라 지금 시점의 판정 상태를 담는 스냅샷입니다. 범주 계약 v1의 `category`·`feed` 필드가 없고, 기록 보존·최신 200개 병합·"정정은 기존 항목을 지우지 말고 별도 기록" 규칙을 적용하지 않습니다. 판정·득표·합계가 바뀐 경합의 값을 고쳐 쓰는 것이 정해진 갱신 방식입니다. 이전 상태는 Git 커밋 이력에 남으므로, 이렇게 고쳐 쓰는 것은 기존 데이터 손상이 아닙니다. 바뀌지 않은 경합은 한 글자도 바꾸지 않고, 점검 시각은 최상위 `observedAt`과 `note`에만 적습니다. 쓰기 전에는 `node scripts/validate-election-results.js data/election-results.json --compare <이전 파일>`로 바뀐 범위를 확인하고 그 요약을 커밋 메시지에 넣습니다.
 
 `?view=power`, `?view=map`, `?view=close`는 노션에 나눠 임베드할 때 쓰는 보기입니다. 기본 주소는 전체 화면입니다.

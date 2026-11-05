@@ -1,14 +1,943 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T11:08:53.387Z",
-  "observedAt": "2026-11-04T11:08:31Z",
+  "publishedAt": "2026-11-05T02:32:49.310Z",
+  "observedAt": "2026-11-05T02:32:27.244Z",
   "checkStatus": "partial",
-  "headline": "11/4 20:08KST: 주요 판단 유지, Kansas 공식 집계 대조",
-  "body": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. Kansas 주지사 비공식 공식집계546,587 대541,030이 DDHQ와 일치. 당선 판단·공식 인증은 별개이며, Nevada의 기존 보도와 DDHQ 미판정 차이를 보존한다.",
-  "unknown": "Oregon 주지사 직접 원문, Alaska 공식 집계, Nevada 공식 교차검증, Wallingford 재검표 실행·영향, 전국 법원·재검표·인증 진행 및 하원 이전 증가6석 개별 대조.",
-  "gap": "71개 상원·주지사 페이지 중 Oregon 주지사 원문 접근 실패. Alaska 공식502, 일부 AP·공식 공지 본문 접근 실패. 하원435개 및 카운티 페이지 전수 확인은 미완료. 관측값 불변은 개표 중단·전체 정상의 증거가 아니다. 시장 반응은 이번 회차 수치 확인하지 않았다.",
+  "headline": "DDHQ 하원 민주 251석과 공화 153석, 기존 판단 유지",
+  "body": "DDHQ 하원은 민주 251석과 공화 153석, 상원은 민주 54석과 공화 44석, 주지사는 민주 28곳과 공화 20곳으로 같다. Colorado 4구와 5구의 민주 후보 우세는 소폭 줄었지만 미판정 상태다. California 주지사 추가 집계에서도 기존 Becerra 판단은 유지됐다.",
+  "unknown": "앞선 하원 집계 표시 차이의 원인과 Texas 상원의 208,923표 감소 원인은 확인되지 않았다. 남은 표의 종류와 지역별 분포, 공식 인증 진행도 미확인이다.",
+  "gap": "Oregon 주지사 원문이 열리지 않았다. Alaska 공식 페이지는 502 오류였고 Mississippi 공식 목록에서 본선 수치를 확보하지 못했다. Arizona 공식은 앞선 403 이후 재시도하지 않았으며 Washington 공식 독립 대조도 미완료다. 하원 435개 전수와 전국 법정절차·주민투표·시장수치 확인은 미완료다. 선거 결과 탭은 저장되지 않아 이전 자료가 남아 있다.",
   "feed": [
+    {
+      "at": "2026-11-05T02:32:27.244Z",
+      "kind": "참고",
+      "title": "Colorado 4구와 5구 민주 후보 우세가 소폭 줄었다",
+      "text": "DDHQ 집계에서 Colorado 4구 Laubacher 후보는 174,963표, Boebert 후보는 171,711표로 격차가 3,405표에서 3,252표로 줄었다. Colorado 5구 Killin 후보와 Crank 후보의 격차도 13,251표에서 12,767표로 줄었다.\n\n두 경합 모두 민주 후보가 앞서지만 DDHQ는 아직 당선 판단을 내리지 않았다.",
+      "timeBasis": "observation",
+      "evidence": "11:30~11:32에 개별 경합 원문을 비교했다. 두 집계의 갱신 표시는 11:20(02:20 UTC, 미국 동부 11월 4일 21:20 EST)이다.\n\n공식 집계와 남은 표의 지역별 구성은 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-4-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-5-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:32:27.244Z",
+      "kind": "참고",
+      "title": "California 주지사 추가 집계에서도 기존 판단 유지",
+      "text": "DDHQ 집계에서 Becerra 후보는 5,186,216표, Hilton 후보는 2,893,517표를 얻었다. 총집계는 8,079,733표로 늘었으며 기존 Becerra 당선 판단은 유지됐다.",
+      "timeBasis": "observation",
+      "evidence": "11:31에 개별 원문을 읽었다. 자료 갱신 표시는 10:47(01:47 UTC, 미국 동부 11월 4일 20:47 EST)이며 공식 인증 결과는 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:32:27.244Z",
+      "kind": "변화 없음",
+      "title": "DDHQ 의석 합계와 주요 경합 판단 유지",
+      "text": "DDHQ 하원·상원·주지사 의석 합계와 Washington 3구, Arizona 1구의 기존 당선 판단 및 다른 확인 경합의 선두는 직전과 같다.",
+      "timeBasis": "observation",
+      "evidence": "11:30~11:32에 총괄 3개, 상원 35곳과 주지사 36곳 중 70곳, 하원 38곳을 확인했다. Oregon 주지사 원문과 일부 공식자료는 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:17:45.664Z",
+      "kind": "참고",
+      "title": "DDHQ 하원 집계가 민주 251석, 공화 153석으로 일치",
+      "text": "DDHQ 하원·상원·주지사 페이지에 표시된 하원 집계가 모두 민주 251석, 공화 153석으로 일치했다. 앞선 민주 250석과 251석의 표시 차이는 사라졌지만 원인은 밝혀지지 않았다.\n\nWashington 3구와 Arizona 1구의 기존 민주 후보 당선 판단은 유지됐다. 이번 일치는 공식 인증을 뜻하지 않는다.",
+      "timeBasis": "observation",
+      "evidence": "11:15~11:17에 총괄 3개, 상원 35곳과 주지사 36곳 중 70곳, 하원 38곳을 비교했다. 직전 11:02 기록의 페이지별 집계 차이가 해소됐으며 새로운 당선 판단은 없었다.\n\nOregon 주지사와 공식 집계 일부는 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:02:49.632Z",
+      "kind": "관찰",
+      "title": "11:02 KST Washington3·Arizona1 DDHQ 판단 식별, 하원250·251 차이 잔존",
+      "text": "11월5일02:00–02:02 UTC·11:00–11:02 KST 조회. DDHQ 하원 본문과 주지사 페이지 하원 집계는 민주251·공화153, 상원 페이지 하원 표시는 민주250·공화153으로 불일치가 남았다. 앞선 민주249 이후 추가된 시점의 개별 판단 두 건을 확인했다. Washington3 Marie Gluesenkamp Perez 민주 후보157007표 대John Braun129809표, DDHQ 판정11월4일20:16 EST·11월5일01:16 UTC·10:16 KST. Arizona1 Amish Shah 민주 후보167807표 대Jay Feely145313표, DDHQ 판정20:39 EST·01:39 UTC·10:39 KST. 두 판정은 공식 인증이 아니다. 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원35·주지사36개 중70개와 하원38개 고유 경합을 확인했고 기존 주요 미판정9개에서 새 선두 역전은 없었다.",
+      "timeBasis": "observation",
+      "evidence": "Washington3 원자료 갱신11월4일20:40 EST·11월5일01:40 UTC·10:40 KST, Arizona1 갱신20:39 EST·01:39 UTC·10:39 KST. 실제 두 원문 조회02:02 UTC경. 두 판단의 시각은249→251 집계 변화 구간과 부합하지만 총괄250 잔존 원인은 확인하지 못했다. Oregon 주지사 원문 실패, Alaska 공식502, Mississippi 공식 본선 수치 미확인. Arizona 공식 앞선403과 Washington 공식 독립 대조 미완료. 하원435개·미집계 표 분포·법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/washington-us-house-3-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-1-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T01:48:52.995Z",
+      "kind": "관찰",
+      "title": "10:48 KST 하원 민주250·251 표시 불일치, 추가 경합 미식별",
+      "text": "11월5일01:46–01:48 UTC·10:46–10:48 KST 조회. DDHQ 하원 본문과 상원 페이지 하원 집계는 민주250·공화153으로 직전 민주249보다1석 많다. 같은 시점 주지사 페이지의 하원 표시는 민주251·공화153으로 달라 단일 최신 합계로 확정하지 않는다. 재조회에서도 불일치 유지. 추가1~2석에 대응하는 개별 당선 판단은 아직 식별하지 못했다. 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원35·주지사36개 중70개와 하원17개 고유 경합을 확인했다. 기존 주요 하원9개의 판단·선두는 동일하고 Connecticut·New York·Rhode Island 주지사 및 Colorado 상원 추가 집계는 기존 판단 유지.",
+      "timeBasis": "observation",
+      "evidence": "하원·상원·주지사 총괄을01:46와01:48 UTC에 대조했다. 주지사 본문 갱신은11월4일20:43 EST·11월5일01:43 UTC·10:43 KST지만 상단 하원 숫자의 개별 갱신시각은 미확인이다. 하원 최근 판정 목록은 예전 항목만 보여 추가석을 식별하지 못했다. DDHQ 집계·언론 판단이며 공식 인증이 아니다. Oregon 주지사 실패, Alaska 공식502, Mississippi 공식 본선 수치 미확인. Arizona 앞선403 이후 이번 재시도 없음. 하원435개 전수·미집계 지역과 법정절차 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
+    {
+      "at": "2026-11-05T01:32:08.903Z",
+      "kind": "관찰",
+      "title": "10:32 KST 부분 확인: 기존 판정 유지, Arizona2 소폭 집계 변화",
+      "text": "11월5일01:30–01:32 UTC·10:30–10:32 KST 조회. DDHQ 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원35·주지사36개 중70개와 하원9개 비교에서 새 당선 판단·선두 역전은 확인하지 못했다. Arizona2 Crane143106·Nez140871표로 공화 우세2257→2235표, 미판정 유지. 총289019표로 증가했으나 남은 표 종류·지역은 미확인이다. Colorado3 공화5396표, Maine2 공화4067표, Alaska 상원 민주637표, Mississippi 상원 민주1852표, Kansas 주지사 민주7045표 우세는 동일하다. Arizona·Colorado·California 주지사 추가 집계는 기존 판단을 바꾸지 않았다. Texas 상원 총9885661표 및 앞선208923표 감소 원인 미확인 상태는 같다.",
+      "timeBasis": "observation",
+      "evidence": "Arizona2 갱신11월4일20:28 EST·11월5일01:28 UTC·10:28 KST. Arizona 주지사20:20 EST·01:20 UTC·10:20 KST, California 주지사20:11 EST·01:11 UTC·10:11 KST. DDHQ 판단은 공식 인증이 아니다. Oregon 주지사 원문 실패, Alaska 공식502, Mississippi 공식 본선 수치 미확인. Arizona 공식은 앞선403 이후 재시도하지 않아 독립 대조 미완료. 하원435개·미집계 표 분포·전국 법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T01:17:46.492Z",
+      "kind": "관찰",
+      "title": "10:17 KST 부분 확인: 의석·기존 판정과 주요 경합 우세 유지",
+      "text": "11월5일01:15–01:17 UTC·10:15–10:17 KST 조회. DDHQ 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원35·주지사36개 중70개와 하원9개 비교에서 새 당선 판단·선두 역전은 확인하지 못했다. Arizona2 공화2257표, Colorado3 공화5396표, Maine2 공화4067표, Alaska 상원 민주637표, Mississippi 상원 민주1852표, Kansas 주지사 민주7045표 우세는 동일하며 미판정이다. Kansas·Colorado·Rhode Island 상원 추가 집계는 기존 판단을 바꾸지 않았다. Texas 상원 총9885661표와 기존 판단은 같고 앞선208923표 감소 원인은 미확인이다.",
+      "timeBasis": "observation",
+      "evidence": "Colorado 상원 갱신11월4일19:57 EST·11월5일00:57 UTC·09:57 KST, Rhode Island 상원20:04 EST·01:04 UTC·10:04 KST. 총괄과 경합 페이지의 DDHQ 판단이며 공식 인증이 아니다. Oregon 주지사 원문 실패, Alaska 공식502, Mississippi 공식 목록에는2026 예비선거만 표시돼 본선 수치 미확인. Arizona 공식은 직전403 이후 이번 재시도하지 않았으며 독립 교차확인 미완료. 하원435개·남은 표 분포·전국 법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/rhode-island-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T01:01:57.317Z",
+      "kind": "관찰",
+      "title": "10:01 KST 부분 확인: Arizona2 공화 우세 확대, 미판정 유지",
+      "text": "11월5일01:00–01:01 UTC·10:00–10:01 KST 조회. DDHQ 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원35·주지사36개 중70개와 하원9개 비교에서 새 당선 판단·선두 역전은 확인하지 못했다. Arizona2 Crane141603·Nez139346표로 공화 우세962→2257표, 약0.79퍼센트포인트로 확대됐지만 미판정이다. 총285931표이며 남은 표 종류·지역은 미확인이다. Alaska 상원 Peltola102962·Sullivan102325표로 민주 우세626→637표, 미판정 유지. Kansas 주지사 민주7045표 우세는 동일하다. Arizona·Colorado·Maine·California 주지사 추가 집계도 기존 판단 유지. Texas 상원 앞선208923표 감소 원인은 미확인이다.",
+      "timeBasis": "observation",
+      "evidence": "Arizona2 원자료 갱신11월4일19:40 EST·11월5일00:40 UTC·09:40 KST, Alaska 상원19:26 EST·00:26 UTC·09:26 KST. DDHQ 당선 판단은 공식 인증이 아니다. Oregon 주지사 원문 실패, Alaska 공식502, Arizona 공식403으로 독립 대조 불가, Mississippi 공식 본선 수치 미확인. 하원435개·미집계 표 분포·전국 법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T00:47:04.755Z",
+      "kind": "관찰",
+      "title": "09:47 KST 부분 확인: 의석·판정 유지, Colorado3 격차 소폭 축소",
+      "text": "11월5일00:45–00:47 UTC·09:45–09:47 KST 조회. DDHQ 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원35·주지사36개 중70개와 하원9개 비교에서 새 당선 판단·선두 역전은 확인하지 못했다. Colorado3 Hurd160263·Romero154867표로 공화 우세5844→5396표, 미판정 유지. Alaska 주지사 Kreiss-Tomkins103837·Wilson61734·Bronson30003표, 총211337표로 추가 집계됐지만 미판정이며 선두를 당선자로 취급하지 않는다. Texas22 Nehls150166·Greene-Scott139611표, 기존 Nehls 판단 유지. Kansas·Colorado 상원과 Nevada 주지사 추가 집계도 기존 판단 유지. Arizona2 공화962표, Kansas 주지사 민주7045표, Mississippi 상원 민주1852표, Alaska 상원 민주626표 우세는 같다. Texas 상원 앞선208923표 감소 원인은 미확인이다.",
+      "timeBasis": "observation",
+      "evidence": "Colorado3 갱신11월4일19:20 EST·11월5일00:20 UTC·09:20 KST, Alaska 주지사19:26 EST·00:26 UTC·09:26 KST, Texas22 19:05 EST·00:05 UTC·09:05 KST. DDHQ 당선 판단은 공식 인증이 아니다. Oregon 주지사 실패, Alaska 공식502, Mississippi 본선 수치와 Arizona 실제 집계 미확인. 미집계 표 분포·전국 법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-22-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T00:31:59.212Z",
+      "kind": "관찰",
+      "title": "09:31 KST 부분 확인: 기존 판정 유지, Kansas·Arizona2 소폭 집계 변화",
+      "text": "11월5일00:30–00:31 UTC·09:30–09:31 KST 조회. DDHQ 원문 당명과 의석은 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20으로 동일하다. 상원35·주지사36개 중70개와 하원9개 비교에서 새 당선 판단·선두 역전은 확인하지 못했다. Kansas 주지사 Holscher549950·Masterson542905표로 민주 우세6449→7045표, Arizona2 Crane138635·Nez137673표로 공화 우세966→962표이며 모두 미판정이다. Colorado3 공화5844표, Maine2 공화4067표, Mississippi 상원 민주1852표, Alaska 상원 민주626표 우세는 동일하다. Maine 상원과 여러 주지사의 추가 집계는 기존 판단을 바꾸지 않았다. Texas 상원 총9885661표와 기존 판단은 같고 앞선208923표 감소 원인은 미확인이다.",
+      "timeBasis": "observation",
+      "evidence": "Kansas 주지사 갱신11월4일19:16 EST·11월5일00:16 UTC·09:16 KST, Arizona2 갱신19:11 EST·00:11 UTC·09:11 KST. DDHQ 당선 판단은 공식 인증이 아니다. Oregon 주지사 원문 실패, Alaska 공식502, Mississippi 본선 집계와 Arizona 실수치 미확인. 남은 표 종류·지역, 하원435개 및 전국 법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T00:17:18.431Z",
+      "kind": "관찰",
+      "title": "09:17 KST 부분 확인: 당명·의석 재대조, 기존 판정 유지",
+      "text": "11월5일00:15–00:17 UTC·09:15–09:17 KST 조회. DDHQ 총괄 원문의 Democrats와 Republicans 표기를 각 수치에 대조했다. 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20으로 직전과 같다. 상원35·주지사36개 중70개와 하원9개 비교에서 새 당선 판단·선두 역전은 확인하지 못했다. Colorado3 Hurd159892·Romero154048표로 공화 우세5013→5844표, 미판정 유지. Maine2 공화4067표, Arizona2 공화966표, Mississippi 상원 민주1852표, Alaska 상원 민주626표, Kansas 주지사 민주6449표 우세는 같다. Texas 상원 총9885636→9885661표로25표 증가했고 기존 Talarico 판단은 유지되지만 앞선208923표 감소 원인은 미확인이다.",
+      "timeBasis": "observation",
+      "evidence": "Colorado3와 Texas 상원 원자료 갱신은11월4일19:05 EST·11월5일00:05 UTC·09:05 KST. Maine2 갱신18:57 EST·23:57 UTC·08:57 KST. Colorado·Kansas·Massachusetts 상원과 Nevada 주지사 추가 집계도 기존 판단 유지. DDHQ 언론 판단이며 공식 인증이 아니다. Oregon 주지사 접근 실패, Alaska 공식502, Mississippi 본선 집계·Arizona 실수치 미확인. 미집계 표 종류·지역과 법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T00:02:18.228Z",
+      "kind": "관찰",
+      "title": "09:02 KST 부분 확인: 기존 판정 유지, Kansas 미판정 격차 소폭 확대",
+      "text": "11월5일 00:00–00:02 UTC·09:00–09:02 KST 조회. DDHQ 하원 민주249·공화153, 상원54·44, 주지사28·20은 직전과 같다. 상원35·주지사36개 원문 중70개와 하원9개를 비교했고 새 당선 판단·선두 역전은 확인하지 못했다. Kansas 주지사 Holscher548920·Masterson542471표로 민주 우세5863→6449표, 미판정 유지. Maine 상원 Jackson374381·Collins330173표로 기존 Jackson 판단 유지. Massachusetts 주지사·South Dakota 상원과 주지사의 추가 집계도 기존 판단을 바꾸지 않았다. Mississippi 상원1852표, Alaska 상원626표 민주 우세 및 Arizona2 공화966표 우세는 동일하다. Texas 상원 총9885636표와 기존 판단 유지, 앞선208923표 감소 원인은 여전히 미확인이다.",
+      "timeBasis": "observation",
+      "evidence": "Kansas 원자료 갱신은11월4일18:45 EST·23:45 UTC·11월5일08:45 KST, Maine 상원18:55 EST·23:55 UTC·08:55 KST. DDHQ 집계와 언론 당선 판단이며 공식 인증이 아니다. Oregon 주지사 원문 실패. Alaska 공식 조회시간 초과, Mississippi 공식 본선 수치와 Arizona 공식 수치는 확보하지 못했다. 남은 표 종류·지역과 전국 법정절차 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T23:47:52.640Z",
+      "kind": "부분 확인",
+      "timeBasis": "observation",
+      "title": "의석·주요 판정 유지, Mississippi 미판정 격차 소폭 축소",
+      "text": "11월5일 08:46–08:47 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 기존 당선 판단은 유지된다. Mississippi 상원 Colom 우세는1883→1852표로 소폭 좁혀졌지만 미판정이다. Arizona2 Crane966표·Colorado3 Hurd5013표·Minnesota1 Johnson321표 우세와 Texas22 Nehls 판단은 동일하다. 상원35·주지사36개 중70개와 하원9개 확인, Oregon 주지사 실패. Texas 상원 총9885636표는 같고 앞선208923표 감소 원인은 미확인이다.",
+      "evidence": "실제 조회23:46–23:47 UTC. Mississippi 상원 원자료 Nov4 18:38 EST=23:38 UTC=Nov5 08:38 KST, Colom466464·Hyde-Smith464612·Pinkins20030, 총951106. Nevada 주지사 원자료18:20 EST, Ford508245·Lombardo435387, 기존 Ford 판정 유지. Kansas·Colorado·Massachusetts·Oregon 상원과 Colorado 주지사 등의 집계가 갱신됐지만 새 당선 판단은 확인되지 않았다. 이전 개별 원문 전체와의 기계적 수치 대조는 이번 회차에 재현하지 못해 이전 공개 기록과 주요 경합 수치를 중심으로 비교했다. Alaska 공식 조회시간 초과, Mississippi 공식목록 본선 미표시, Arizona 공식 템플릿만 표시. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T23:32:23.868Z",
+      "kind": "부분 확인",
+      "title": "의석·판정 유지, Texas 상원 앞선 감소 원인 미확인",
+      "text": "11월5일 08:31–08:32 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 개별 당선 판단은 동일하다. 하원9개 표본의 득표·판정도 직전과 같다. Texas 상원 총9885636표와 기존 Talarico 당선 판단은 유지되며 앞선208923표 감소의 원인은 여전히 미확인이다. 상원35·주지사36개 중70개를 읽었고 Oregon 주지사는 실패했다. Montana 상원·Connecticut 및 Massachusetts 주지사의 집계 증가를 새 당선 판단으로 취급하지 않는다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회23:31–23:32 UTC. Montana 상원 원자료 Nov4 17:53 EST=22:53 UTC=Nov5 07:53 KST, 총473468표. Connecticut 주지사18:04 EST=23:04 UTC=08:04 KST, 총1257045표. Massachusetts 주지사18:14 EST=23:14 UTC=08:14 KST, 총2497958표. 모두 기존 판정 유지. Arizona2 Crane966표·Colorado3 Hurd5013표·Minnesota1 Johnson321표 우세는 미판정 상태를 유지한다. Alaska 공식502, Mississippi 공식목록 본선 미표시, Arizona 공식 템플릿만 표시. Texas 공식403은 이전 한계로 우회하지 않았다. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T23:16:31.857Z",
+      "kind": "부분 확인",
+      "title": "Texas 상원 표시 총득표 감소, 기존 당선 판단 유지",
+      "text": "11월5일 08:15–08:16 KST 조회. DDHQ Texas 상원 총득표가10094559→9885636으로208923표 감소했다. Talarico182571표·Paxton26252표·Brown100표 감소이며 원인은 확인되지 않았다. 기존 Talarico 당선 판단과 하원249·153, 상원54·44, 주지사28·20은 유지된다. Colorado3 Hurd 우세2002→5013표로 늘었지만 미판정이다. 상원35·주지사36개 중70개와 하원9개 확인, Oregon 주지사 실패.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회23:15–23:16 UTC. Texas 상원 원자료 Nov4 17:57 EST=22:57 UTC=Nov5 07:57 KST: Talarico5445165·Paxton4249944·Brown190527. 앞선 단일후보177059표 증가와 이번 감소를 모두 보존하며 실제 투표 취소·부정·당선판정 철회로 추정하지 않는다. 공개 검색에서도 이번 수치 수정 사유를 확인하지 못했다. Colorado3 자료17:53 EST=22:53 UTC=07:53 KST, Hurd153773·Romero148760. Kansas 주지사 Holscher5863표 우세, 미판정. Alaska 공식502, Mississippi 공식목록 본선 미표시, Arizona 공식 템플릿만 표시. Texas 공식403은 이전 한계로 우회하지 않았다. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T23:01:56.561Z",
+      "kind": "부분 확인",
+      "title": "의석·판정 유지, Kansas 주지사 격차 소폭 변동",
+      "text": "11월5일 08:00–08:01 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 개별 당선 판단은 동일하다. 하원9개 표본의 득표·판정도 직전과 같다. Kansas 주지사 Holscher 우세는5850→5869표로 소폭 늘었지만 미판정이다. 상원35·주지사36개 중70개를 읽었고 Oregon 주지사는 실패했다. Texas 상원의 앞선 단일 후보177059표 증가와 Massachusetts 주지사 앞선 수치 감소 원인은 여전히 독립 검증되지 않았다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회23:00–23:01 UTC. Kansas 주지사 원자료 Nov4 17:55 EST=22:55 UTC=Nov5 07:55 KST, Holscher547823·Masterson541954, 총1089777. Montana·Kansas 등 상원과 Georgia·Massachusetts 주지사의 득표·자료시각이 갱신됐지만 기존 판정은 유지됐다. 추가표의 지역·종류와 공식 집계 대조는 미완료다. Alaska 공식502, Mississippi 공식목록 본선 미표시, Arizona 공식 결과는 템플릿만 표시됐다. Texas 공식403은 이전 확인 한계이며 우회하지 않았다. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수는 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-22-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T22:47:18.018Z",
+      "kind": "부분 확인",
+      "title": "의석·하원 표본 판정 유지, Kansas 주지사 미판정",
+      "text": "11월5일 07:45–07:47 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 개별 당선 판단은 동일하다. 하원9개 표본의 득표·판정도 직전과 같다. Kansas 주지사 Holscher 우세는5585→5850표로 늘었지만 미판정이다. 상원35·주지사36개 중70개를 읽었고 Oregon 주지사는 실패했다. Texas 상원의 앞선 단일 후보177059표 증가와 Massachusetts 주지사 앞선 수치 감소 원인은 여전히 독립 검증되지 않았다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회22:45–22:47 UTC. Kansas 주지사 원자료 Nov4 17:33 EST=22:33 UTC=Nov5 07:33 KST, Holscher547512·Masterson541662, 총1089174. 추가표의 지역·종류와 공식 집계 대조는 미완료이므로 단순 격차 증가를 당선 판단으로 바꾸지 않는다. Colorado·New Hampshire·Massachusetts 등 기존 판정 경합의 득표와 일부 자료시각이 갱신됐지만 판정 변경은 확인되지 않았다. Alaska 공식502, Mississippi 공식목록 본선 미표시, Arizona 공식 결과는 템플릿만 표시됐다. Texas 공식403은 이전 확인 한계이며 우회하지 않았다. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수는 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-22-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T22:31:25.090Z",
+      "kind": "부분 확인",
+      "title": "의석·판정 유지, Arizona2 미판정 격차 소폭 축소",
+      "text": "11월5일 07:30–07:31 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 당선 판단은 동일하다. Arizona2 Crane우세991→966표, Minnesota1 Johnson우세322→321표로 소폭 좁혀졌지만 모두 미판정이다. Texas22 Nehls 당선 판단 유지. 상원35·주지사36개 중70개 및 하원9개를 읽었다. Tennessee 주지사는 다시 확인됐고 Oregon 주지사는 실패했다. Texas 상원의 앞선 단일 후보177059표 증가 원인은 여전히 독립 검증되지 않았다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회22:30–22:31 UTC. Arizona2 원자료 Nov4 17:17 EST=22:17 UTC=Nov5 07:17 KST, Crane138582·Nez137616. Minnesota1 자료17:24 EST=22:24 UTC=07:24 KST, Johnson163060·Finstad162739. Massachusetts 주지사는 총2485637로 증가했지만 이전1622표 감소 사유를 설명하는 근거는 확인하지 못했다. Alaska 공식502, Mississippi 공식목록 본선 미표시, Arizona 공식 결과는 템플릿만 표시됐다. Texas 공식403은 이전 확인 한계이며 우회하지 않았다. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수는 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-22-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T22:16:29.310Z",
+      "kind": "부분 확인",
+      "title": "의석·Arizona2 선두 유지, Texas 상원 수치 변동은 미검증",
+      "text": "11월5일 07:15–07:16 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20은 동일하다. Arizona2 Crane991표 우세와 미판정, Texas22 Nehls 기존 당선 판단은 유지된다. Texas 상원 Talarico 표시 득표만177059표 증가했고 다른 두 후보는 동일해, 추가 표의 지역·유형과 공식 근거를 확인하기 전 확정 판세 변화로 해석하지 않는다. 상원35·주지사36개 중69개 및 하원9개를 읽었다. Oregon 상원은 다시 읽혔으나 Oregon·Tennessee 주지사는 실패했다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회22:15–22:16 UTC. Texas 상원 자료 Nov4 17:03 EST=22:03 UTC=Nov5 07:03 KST: Talarico5627736, Paxton4276196, Brown190627, 총10094559. 직전 총9917500 대비177059 증가이며 DDHQ 기존 Talarico 판정은 동일하다. 공개 카운티 표는254개 중 첫25개만 노출되고 일부 항목이 가려져 추가표를 독립 검증하지 못했다. Kansas 주지사 Holscher우세5592→5585표, 미판정 유지. Alaska 공식502, Mississippi 공식목록 본선 미표시, Arizona 공식 결과는 템플릿만 표시. Texas 공식403은 이전 확인 한계이며 우회하지 않았다. 공식 인증·남은 표 분포·전국 법정절차·주민투표 전수는 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-22-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T22:02:26.873Z",
+      "kind": "부분 확인",
+      "title": "Arizona2 선두 역전·Texas22 Nehls 당선 판단 확인",
+      "text": "11월5일 07:00–07:02 KST 조회. DDHQ Arizona2는 민주 Nez86표 우세에서 공화 Crane991표 우세로 바뀌었지만 미판정이다. Texas22는 Trever Nehls 당선 판단을 개별 페이지에서 확인했다. 판정시각은11월4일15:52 EST=20:52 UTC=11월5일05:52 KST로, 앞서 관측한 하원 공화152→153 증가 구간에 부합한다. 하원249·153, 상원54·44, 주지사28·20은 유지된다. 공식 인증과 언론 판단은 별개다. 상원35·주지사36개 중69개, 하원22개를 읽었으며 Oregon 상원·주지사 조회는 실패했다.",
+      "timeBasis": "observation",
+      "evidence": "Arizona2 자료 Nov4 16:31 EST=21:31 UTC=Nov5 06:31 KST, Crane138579·Nez137588·Goodwin4847, 총281014. 실제 조회22:02:15 UTC. Texas22 Nehls150164·Greene-Scott139601, 총289765, DDHQ판정15:52 EST, 실제 조회22:02:21 UTC. 두 경합 공식 집계 독립 대조는 미완료이며 남은 표 분포도 미확인이다. Mississippi 상원 Colom 우세1864→1883표, 미판정 유지. Colorado3 Hurd1379→2002표 우세, 미판정 유지. Alaska 공식502, Mississippi 공식 목록에는2026년3월 예비선거만 표시됐다. 하원435개·전국 법정절차·주민투표 전수 및 시장 인과는 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-22-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T21:46:37.999Z",
+      "kind": "부분 확인",
+      "title": "하원249·153 유지, Massachusetts 주지사 수치 감소 기록",
+      "text": "11월5일 06:45–06:46 KST 조회. DDHQ 세 총괄 페이지의 하원 민주249·공화153, 상원54·44, 주지사28·20은 동일하다. 하원21개 표본에서도 이전 추가 공화1석의 새 판정을 식별하지 못했다. 상원35·주지사36개 중70개를 확인했고 Oregon 주지사는 실패했다. 확인한 당선 판단 변경은 없다. Massachusetts 주지사 표시 총득표는2475160→2473538로1622표 감소했다. Healey2표·James1620표 감소이며 원인은 미확인이다. 기존 Healey 당선 판단은 유지돼 판정 철회로 해석하지 않는다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회21:45–21:46 UTC. Massachusetts 주지사 원자료 Nov4 16:16 EST=21:16 UTC=Nov5 06:16 KST, Healey1541844·Minogue850539·James81155. 이전16:04 EST 표시와 비교한 것으로 공식 정정 사유는 확인하지 못했다. 미판정 Maine2 LePage 우세4089→4067표, 자료16:26 EST; Kansas 주지사 Holscher5610→5592표, 자료16:30 EST. Alaska 상원626표·Mississippi 상원1864표 격차와 미판정은 동일하다. Alaska 공식502, Mississippi 공식 목록에는2026년3월 예비선거만 표시돼 본선 대조 미완료. 공식 인증·하원435개·남은 표 분포·전국 법정절차·주민투표는 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/massachusetts-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T21:32:02.926Z",
+      "kind": "부분 확인",
+      "title": "하원249·153으로 총괄 표시 일치, 추가1석 개별 판정 미확인",
+      "text": "11월5일 06:30–06:32 KST 조회. DDHQ 하원·상원·주지사 세 페이지의 하원 표시는 민주249·공화153으로 일치해 이전 공화152·153 표시 불일치가 해소됐다. 추가 공화1석에 해당하는 개별 신규 판정은 이번 하원22개 표본에서 식별하지 못해 미확인으로 남긴다. 상원54·44와 주지사28·20, 읽은 개별 당선 판단은 유지된다. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 미판정 Maine2 LePage4089표, Kansas 주지사 Holscher5610표, Alaska 상원 Peltola626표, Mississippi 상원 Colom1864표 우세는 동일하다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회21:30–21:32 UTC. 주지사 총괄 갱신표시 Nov4 16:21 EST=21:21 UTC=Nov5 06:21 KST. Mississippi 상원은466382 대464518, 자료16:15 EST=21:15 UTC=06:15 KST로 득표가 늘었으나 격차1864표와 미판정 상태는 같다. 일부 기존 판정 경합의 득표·자료시각이 갱신됐지만 새 판정·철회는 확인되지 않았다. 합계 표시의 일치는 공식 인증이나 추가1석 개별 검증을 뜻하지 않는다. Alaska 공식502, Mississippi 공식 목록에는2026년3월 예비선거만 표시돼 본선 집계 대조 미완료. 하원435개·남은 표 분포·전국 법정절차·주민투표는 전수 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T21:17:03.913Z",
+      "kind": "부분 확인",
+      "title": "하원 공화152·153 불일치 지속, 새 판정 개별 대조 미완료",
+      "text": "11월5일 06:15–06:17 KST 조회. DDHQ 하원 본문·상원 교차표는 민주249·공화153, 주지사 교차표는 민주249·공화152로 직전 불일치가 유지된다. 하원21개 경합을 읽었으나 추가 공화1석에 대응하는 신규 판정은 식별하지 못했다. 상원54·44와 주지사28·20 및 읽은 기존 판정은 유지된다. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 미판정 Maine2 LePage 우세는3902→4089표, Kansas 주지사 Holscher 우세는5606→5610표로 변했다. 단순 집계 증가를 새 당선 판단으로 해석하지 않는다.",
+      "timeBasis": "observation",
+      "evidence": "실제 조회21:15–21:17 UTC. Maine2 원자료 Nov4 16:00 EST=21:00 UTC=Nov5 06:00 KST, LePage165631·Dunlap161542. Kansas 주지사 원자료16:03 EST=21:03 UTC=06:03 KST, Holscher546726·Masterson541116. Alaska·Mississippi 상원 미판정 상태 유지. 일부 판정 경합의 득표·자료시각도 갱신됐지만 판정 변경은 확인되지 않았다. Alaska 공식502, Mississippi 공식 목록에는2026년3월 예비선거만 표시됐다. 공식 인증·남은 표 분포·하원435개·전국 법정절차·주민투표 전수는 미확인. 다음에는 하원 추가1석의 개별 판정과 합계 불일치를 계속 확인한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T21:02:15.061Z",
+      "kind": "부분 확인",
+      "title": "하원 공화 152·153 표시 불일치, 추가 1석 개별 미확인",
+      "text": "11월5일 06:00–06:02 KST 조회. DDHQ 하원 본문과 상원 교차표는 민주249·공화153, 주지사 교차표는 민주249·공화152로 다르다. 직전249·152에서 공화1석 증가 표시가 있으나 이번 하원18개 표본에서 해당 새 판정을 식별하지 못했다. 상원54·44와 주지사28·20은 동일하다. 상원35·주지사36개를 요청해70개를 읽었고 Oregon 주지사는 실패했다. 읽은 경합의 신규 당선 판단·철회는 확인되지 않았다. Maine2 LePage3902표, Alaska 상원 Peltola626표, Mississippi 상원 Colom1864표, Kansas 주지사 Holscher5606표 우세는 미판정 상태를 유지한다.",
+      "timeBasis": "observation",
+      "evidence": "조회는 21:00–21:02 UTC. Maine·Michigan·Colorado·Illinois 상원과 Iowa·Michigan·Vermont·Illinois·Pennsylvania 주지사에서 득표 또는 자료시각 갱신을 확인했으나 기존 DDHQ 판정은 같다. 공식 인증과 언론 판단은 별개다. Alaska 공식 결과는502, Mississippi 공식 결과 목록에는2026년3월 예비선거만 표시돼 본선 집계를 대조하지 못했다. 하원435개와 남은 표 종류·지역·전국 법정절차·주민투표는 전수 확인하지 못했다. 다음에는 하원 추가1석 개별 판단과 합계 불일치, 미판정 경합 및 공식 집계를 대조한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T20:46:40.453Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계 유지, Maine2 미판정 격차 소폭 확대",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Maine2구 LePage164635 대 Dunlap160733로 공화3902표 우세, 직전3727표보다175표 늘었으나 미판정이다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5606표 우세도 미판정 유지. 확인 범위에서 새 중대 판단·선두 역전은 확인하지 못했다.",
+      "evidence": "실제조회11월4일20:45–20:46UTC·한국시간11월5일05:45–05:46. Maine2 자료15:10EST=20:10UTC·다음날05:10KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원8개 표본·총괄 목록 점검,435개 전수 아님. Massachusetts 상원과 Colorado·Massachusetts 주지사 집계 증가에도 기존 판단 유지. 자료표시15:11·15:29·15:14EST, UTC20:11·20:29·20:14, KST다음날05:11·05:29·05:14다. Kentucky 상원은 갱신시각만 바뀌고 표수 동일. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 공식 인증·남은 표 분포·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T20:31:50.281Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계 유지, Colorado3 미판정 격차 소폭 확대",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Colorado3구 Hurd147308 대 Romero145929로 공화1379표 우세, 직전1266표보다113표 늘었으나 미판정이다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5606표·Maine2구 공화3727표 우세도 미판정 유지. 확인 범위에서 새 중대 판단·선두 역전은 확인하지 못했다.",
+      "evidence": "실제조회11월4일20:30–20:31UTC·한국시간11월5일05:30–05:31. Colorado3 자료15:11EST=20:11UTC·다음날05:11KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원8개 표본·총괄 목록 점검,435개 전수 아님. Maine·Colorado·Illinois·New Jersey 상원과 Wisconsin·Connecticut·Maine·Minnesota·Nebraska·Vermont·Illinois·Maryland·Pennsylvania 주지사 집계 증가에도 기존 판단 유지. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 원자료 집계와 실제 조회시각을 구분하며 공식 인증·남은 표 분포·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T20:16:53.325Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계 유지, Kansas 주지사 소폭 집계 증가",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Kansas 주지사 Holscher546688 대 Masterson541082로 민주5606표 우세, 직전5584표보다22표 늘었지만 미판정이다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Maine2구 공화3727표 우세도 미판정 유지. 확인 범위에서 새 중대 판단·선두 역전은 확인하지 못했다.",
+      "evidence": "실제조회11월4일20:15–20:16UTC·한국시간11월5일05:15–05:16. Kansas 자료14:40EST=19:40UTC·다음날04:40KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원8개 표본·총괄 목록 점검,435개 전수 아님. Montana·Idaho·South Dakota 상원과 Massachusetts 주지사 표수 증가에도 판단 유지. 자료표시14:35·14:40·14:36·15:04EST, UTC19:35·19:40·19:36·20:04, KST다음날04:35·04:40·04:36·05:04다. Texas 상원·주지사와 South Carolina·California 주지사는 표시시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 공식 인증·남은 표 분포·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T20:02:14.720Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계·주요 미판정 경합 유지",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5584표·Maine2구 공화3727표 우세는 미판정 상태로 유지된다. NC05 민주99표·AZ02 민주86표·MN01 민주322표·Colorado3 공화1266표 우세도 미판정이다. 확인 범위에서 새 중대 판단·선두 역전은 확인하지 못했다.",
+      "evidence": "실제조회11월4일20:00–20:02UTC·한국시간11월5일05:00–05:02. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원8개 표본·총괄 목록 점검,435개 전수 아님. Maine·Minnesota·Massachusetts 상원 및 Pennsylvania·Idaho 주지사의 표수 증가에도 기존 판단 유지. 자료표시 각각14:27·14:38·14:58·14:37·14:39EST, UTC19:27·19:38·19:58·19:37·19:39, KST다음날04:27·04:38·04:58·04:37·04:39다. South Carolina 상원은 갱신시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 공식 인증·남은 표 분포·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/idaho-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T19:46:48.363Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계 유지, Maine2·Colorado3 미판정 집계 증가",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Maine2구 LePage164407 대 Dunlap160680로 공화3727표 우세, 직전3742표에서15표 줄었다. Colorado3구 Hurd147169 대 Romero145903로 공화1266표 우세, 앞선1211표보다55표 늘었다. 두 곳 모두 미판정이며 새 역전·당선 판단으로 취급하지 않는다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5584표 우세도 미판정 유지.",
+      "evidence": "실제조회11월4일19:45–19:46UTC·한국시간11월5일04:45–04:46. Maine2 자료14:27EST=19:27UTC·다음날04:27KST, Colorado3 14:03EST=19:03UTC·다음날04:03KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원8개 표본·총괄 목록 점검,435개 전수 아님. Kansas·Nebraska·North Carolina·Montana·New Jersey·Oklahoma 상원 및 Connecticut·Maine·Vermont·Hawaii·Massachusetts 주지사 집계 증가에도 기존 판단 유지. Montana 예상집계83%에서92%, Hawaii72%에서80%로 증가했으나 최종분모는 미확인. California 주지사는 표시시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 공식 인증·남은 표·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-3-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T19:32:21.841Z",
+      "kind": "부분 재확인",
+      "title": "의석 합계·주요 미판정 선두 유지, 일부 집계 증가",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R을 재확인했다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5584표·Maine2구 공화3742표 우세는 이전과 같고 미판정이다. NC05 민주99표·AZ02 민주86표·MN01 민주322표 우세도 미판정 유지. 확인 범위 내 새 지배권 판단·중대한 판정 변경·선두 역전은 확인하지 못했으며 전국 모든 사건의 부재를 뜻하지 않는다.",
+      "evidence": "실제조회11월4일19:30–19:32UTC·한국시간11월5일04:30–04:32. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원10개 표본·총괄 목록 점검,435개 전수 아님. New Hampshire·Massachusetts 상원과 Colorado·New York·Oklahoma 주지사는 표수 증가에도 기존 판단 유지. 자료표시 각각13:50·14:03·14:03·14:12·14:12EST, UTC는18:50·19:03·19:03·19:12·19:12, KST는다음날03:50·04:03·04:03·04:12·04:12다. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포·공식 인증·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T19:17:22.541Z",
+      "kind": "부분 재확인",
+      "title": "하원249·152 유지, 주요 미판정 경합 재확인",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R은 이전과 같다. Maine2구 LePage164206 대 Dunlap160464로 공화3742표 우세, 직전3716표보다26표 증가했으나 미판정이다. NC05 Hubbard139034 대 Foxx138935로 민주99표 우세도 미판정이며 이번 표본만으로 새 선두 역전이라 하지 않는다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5584표 우세 유지. 확인 범위에서 새 중대 판단 변화는 확인하지 못했다.",
+      "evidence": "실제조회11월4일19:15–19:17UTC·한국시간11월5일04:15–04:17. Maine2구13:40EST=18:40UTC·다음날03:40KST, NC05 14:00EST=19:00UTC·다음날04:00KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원10개 표본·총괄 목록 점검,435개 전수 아님. Colorado·Oregon·Oklahoma 상원 및 New Hampshire·Connecticut·Maine·Vermont 주지사 집계 증가에도 기존 판단 유지. Kansas 주지사는 양측1표씩 증가해 격차 동일. NC10은 표시시각만 바뀌고 표수 동일. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 공식 인증·남은 표 분포·전국 사건 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-5-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T19:02:33.421Z",
+      "kind": "부분 재확인",
+      "title": "하원249·152 및 NY21 판단 유지, 새 중대 변화 미확인",
+      "text": "DDHQ 하원249D·152R, 상원54D·44R, 주지사28D·20R을 재확인했다. NY21 Constantino의 앞선13:09EST 판단은 유지된다. Alaska 상원 민주626표·Mississippi 상원 민주1864표·Kansas 주지사 민주5584표·Maine2구 공화3716표 우세는 미판정 상태로 같았다. 확인 가능한 범위에서 새 지배권 판단·선두 역전·중대한 판정 변경을 확인하지 못했다. 전국 모든 사건이나 공식 인증의 변화가 없다는 의미는 아니다.",
+      "evidence": "실제조회11월4일19:00–19:02UTC·한국시간11월5일04:00–04:02. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원10개 표본·총괄 목록 점검,435개 전수 아님. Maine·New Hampshire·Massachusetts 상원과 Arizona·Oklahoma 주지사의 표수 증가에도 기존 판단 유지. 자료표시 각각13:40·13:33·13:27·13:43·13:55EST로 UTC는5시간, 한국시간은14시간을 더한 다음날 시각이다. Kentucky 상원은 갱신시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포·최종분모·공식 인증은 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-york-us-house-21-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T18:47:36.993Z",
+      "kind": "개별 판단·합계 대조",
+      "title": "하원249·152 일치, NY21 Constantino 판단 확인",
+      "text": "DDHQ 하원 본문과 다른 두 총괄의 하원 요약이249D·152R로 일치했다. 추가 공화1석은 New York21구 Anthony Constantino의 개별 판단으로 확인했다. 판단과 자료갱신은11월4일13:09EST=18:09UTC·한국시간11월5일03:09, Constantino138637 대 Gendebien133792,50.89% 대49.11%다. 앞선 개별 조회에서는 미판정이었으며 이번 판단 표시를 보완했다. 언론 판단이고 공식 인증은 아니다. 상원54D·44R·주지사28D·20R 유지.",
+      "evidence": "실제조회11월4일18:45–18:47UTC·한국시간11월5일03:45–03:47. Alaska 상원 Peltola102701 대 Sullivan102075, 민주626표 우세로 직전507표보다119표 증가했지만 미판정. 자료13:06EST=18:06UTC·다음날03:06KST. Kansas 주지사 민주5584표·Maine2구 공화3716표 우세 미판정. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원13개 표본·총괄 목록 점검,435개 전수 아님. Kansas·Oregon·South Dakota 상원 및 여러 주지사 집계 증가에도 기존 판단 유지. Alaska 주지사는 표시시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포·최종분모·공식 인증은 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-york-us-house-21-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T18:32:43.942Z",
+      "kind": "개표 관찰·합계 대조",
+      "title": "하원 공화151·152 표시 차이, 새 개별 판단 미확인",
+      "text": "DDHQ 하원 본문249D·151R과 상원·주지사 페이지의 하원 요약249D·152R이 다르다. 새 공화 추가1석 개별 판단은 미확인이므로 최신 합계를 확정하지 않는다. 앞선 TX38 Bonck 및 MI07·MI10 판단은 개별 재확인했다. 상원54D·44R·주지사28D·20R 유지. Mississippi 상원 Colom466351 대 Hyde-Smith464487로 민주1864표 우세, 직전1881표보다17표 줄었지만 미판정이다. Maine2구 공화3645표·Kansas 주지사 민주5575표 우세도 미판정 유지.",
+      "evidence": "실제조회11월4일18:31–18:32UTC·한국시간11월5일03:31–03:32. Mississippi 자료13:14EST=18:14UTC·다음날03:14KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원10개 개별 표본·총괄 목록 점검,435개 전수 아님. Maine 상원·주지사, Wisconsin 주지사 표수 증가에도 기존 판단 유지. Kentucky 상원·California 주지사·Arizona2구는 표시시각만 바뀌고 표수 동일. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포와 공식 인증은 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-38-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T18:17:39.946Z",
+      "kind": "개별 판단·누락 보완",
+      "title": "하원 공화 추가1석 TX38 DDHQ 판단 확인",
+      "text": "하원249D·151R 총괄은 유지되며 직전 미식별 공화 추가1석에 해당하는 Texas38구 Jon Bonck의 개별 DDHQ 판단을 확인했다. 판단과 자료갱신은11월4일12:29EST=17:29UTC·한국시간11월5일02:29다. Bonck157261 대 McDonough144397,51.54% 대47.33%이며 표시 예상집계95%초과다. 지금 새 발표나 공식 인증이 아니라 앞선 판단의 개별 근거 보완이다. 상원54D·44R·주지사28D·20R 유지. Maine2구 공화 우세는4278표에서3645표로 줄었지만 미판정이다.",
+      "evidence": "실제조회11월4일18:15–18:17UTC·한국시간11월5일03:15–03:17. Maine2구 LePage163726 대 Dunlap160081,자료13:01EST=18:01UTC·다음날03:01KST. Kansas 주지사 Holscher546633 대 Masterson541058,민주5575표 우세 미판정,자료12:50EST=17:50UTC. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원12개 개별 표본·총괄 목록 점검,435개 전수 아님. Kansas·Michigan·Massachusetts·Rhode Island·South Dakota 상원과 South Dakota 주지사 집계 증가에도 판단 유지. Illinois 상원은 표시시각만 변경. Alaska 공식 조회 실패, Mississippi 공식2026총선 수치 미확인. 남은 표 분포와 공식 인증은 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-house-38-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T18:01:59.551Z",
+      "kind": "개표 관찰·합계 대조",
+      "title": "하원249·151 표시 일치, 추가 공화1석 개별 판단 미식별",
+      "text": "DDHQ 하원 본문과 상원·주지사 요약이249D·151R로 일치해 직전150·151 차이는 사라졌다. 최신 공화 추가1석 개별 판단은 아직 식별하지 못했다. 이번 확인한 Nebraska1구 Mike Flood 판단은11월4일10:22EST=15:22UTC·다음날00:22KST의 과거 판단이므로 최신 합계 증가와 임의 연결하지 않는다. 상원54D·44R·주지사28D·20R 유지. Mississippi 상원 Colom466281 대 Hyde-Smith464400, 민주1881표 우세로 직전2000표보다119표 줄었으나 미판정이다.",
+      "evidence": "실제조회11월4일18:00–18:01UTC·한국시간11월5일03:00–03:01. Mississippi 자료12:32EST=17:32UTC·다음날02:32KST. Maine2구 공화4278표·Kansas 주지사 민주5551표 우세 미판정 유지. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원13개 개별 표본·총괄 목록 점검,435개 전수 아님. Maine 상원 및 Connecticut·Maine·Alabama·Hawaii·Massachusetts 주지사 표수 증가에도 기존 판단 유지. Kentucky 상원·Illinois 주지사는 표시시각만 바뀌고 표수 동일. Alaska 공식502, Mississippi 공식2026총선 수치 미확인. 모든 언론 판단은 공식 인증과 구분한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nebraska-us-house-1-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T17:47:32.135Z",
+      "kind": "개표 관찰·합계 대조",
+      "title": "하원 공화150·151 표시 차이, 추가 판단 미확인",
+      "text": "DDHQ 하원 본문은249D·151R, 상원·주지사 페이지의 하원 요약은249D·150R이다. 공화 추가1석의 개별 판단은 이번 표본과 호출목록에서 식별하지 못해 확정 변화로 단정하지 않는다. 기존 MI07·MI10 민주 판단은 앞선 기록으로 보존한다. 상원54D·44R·주지사28D·20R 유지. Maine2구 LePage162751 대 Dunlap158473로 공화4278표 우세, Kansas 주지사 Holscher546591 대 Masterson541040로 민주5551표 우세이며 둘 다 미판정이다.",
+      "evidence": "실제조회11월4일17:46–17:47UTC·한국시간11월5일02:46–02:47. Maine2구 갱신12:35EST=17:35UTC·다음날02:35KST, Kansas12:28EST=17:28UTC·다음날02:28KST. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. 하원11개 개별 표본·총괄 목록 점검,435개 전수 아님. Kansas·Nebraska·Massachusetts·Alabama 상원 및 Nebraska 주지사 표수 증가, 기존 판단 유지. Texas 주지사는 갱신시각만 변경. Alaska 공식502, Mississippi 공식2026총선 수치 미확인. 언론 판단과 공식 인증 및 미집계 표 분포는 구분한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T17:32:04.640Z",
+      "kind": "개별 판단·누락 보완",
+      "title": "하원 추가2석 MI07·MI10 DDHQ 판단 확인",
+      "text": "하원249D·150R 총괄은 유지되고 직전 미식별 추가2석에 해당하는 Michigan7구 William Lawrence와10구 Christina Hines의 개별 DDHQ 판단을 확인했다. 판단시각은11월4일11:47·11:48EST,16:47·16:48UTC, 한국시간11월5일01:47·01:48이다. Lawrence202657 대 Barrett189482, Hines188078 대 Bouchard162347. 지금 새로 발표된 판단이 아니라 이전 판단의 개별 근거 보완이며 공식 인증은 아니다. 상원54D·44R·주지사28D·20R 유지, Alaska·Mississippi 상원과 Alaska·Kansas 주지사는 미판정이다.",
+      "evidence": "실제조회11월4일17:30–17:32UTC·한국시간11월5일02:30–02:32. 상원35·주지사36개 중70개 본문 확인, Oregon 주지사 실패. 하원18개 개별 표본과 총괄 목록 점검,435개 전수 아님. MI07·MI10 자료갱신은 각각 판단시각과 동일, 예상집계95%초과의 정확한 최종분모·남은 표 분포는 미확인. Maine2구 공화4010표 우세 미판정 유지. Maine 상원·주지사, Arizona·Connecticut·Alabama 주지사 집계 증가에도 기존 판단 유지. Iowa 주지사는 시각만 바뀌고 표수 동일. Alaska 공식502, Mississippi 공식2026총선 수치 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-us-house-7-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-us-house-10-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T17:17:00.424Z",
+      "kind": "개표 관찰·합계 대조",
+      "title": "하원249·150 표시 일치, 추가2석 개별 판단 미확인",
+      "text": "DDHQ 하원 본문과 상원·주지사 요약이249D·150R로 일치해 직전247·249 표시 차이는 사라졌다. 추가2석의 개별 당선 판단은 이번 하원11개 표본과 최신 호출목록에서 식별하지 못했으므로 개별 확인 완료나 공식 확정으로 표현하지 않는다. 상원54D·44R, 주지사28D·20R 유지. Maine2구 LePage161822 대 Dunlap157812로 공화 우세4010표, 직전2963표보다 늘었으나 미판정이다. Mississippi 민주2000표·Alaska 상원 민주507표·Kansas 주지사 민주5557표 우세도 미판정 상태다.",
+      "evidence": "11월4일17:15–17:16UTC, 한국시간11월5일02:15–02:16 관찰. Maine2구 자료12:06EST=17:06UTC·다음날02:06KST, 표시92%의 최종분모와 남은 표 종류·지역 전수는 미확인. 상원35·주지사36개 원문 중70개 확인, Oregon 주지사 실패. Massachusetts·Alabama 상원 집계 증가에도 기존 판정 유지. Texas 상원·주지사 및 Kansas 주지사는 갱신 표시만 바뀌고 표수 동일. Alaska 공식 조회 시간초과, Mississippi 공식 페이지에서2026총선 수치 미확인. 언론 판단과 공식 인증을 구분한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T17:01:28.947Z",
+      "kind": "부분 관찰",
+      "title": "17:00 점검: 하원247·249석 표시 차이·개별 판단 유지",
+      "text": "DDHQ 하원 전용 본문은247D·150R인 반면 상원 페이지의 하원 요약은249D·150R로 달라 추가2석을 확인된 새 판단으로 다루지 않는다. 최근 개별 판단 목록도 이전과 같아 추가 경합은 미확인이다. 상원54D·44R·주지사28D·20R 및 확인 가능한 개별 판단은 유지됐다. Mississippi Colom465,606표·Hyde-Smith463,606표로 민주2,000표 우세·미판정이다. Maine 상원·주지사 등 일부 집계 증가도 새 판단과 구분한다.",
+      "evidence": "예정17:00UTC 이후 실제 조회11월4일17:00–17:01UTC/11월5일02:00–02:01KST. Mississippi 집계11:29EST=16:29UTC, Maine 상원11:40EST=16:40UTC·주지사11:41EST=16:41UTC. Iowa·Kansas 상원은 갱신시각만 바뀌고 수치 불변. Maine2구 공화2,963표 및 Alaska상원 민주507표 우세는 미판정 유지. 상원35·주지사36개 중70개 확인·Oregon 실패. 공식 인증·재검표·법원 전수 대조 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T16:46:28.640Z",
+      "kind": "부분 관찰",
+      "title": "16:45 점검: 합계·판단 유지·일부 집계 증가",
+      "text": "DDHQ 하원247D·150R, 상원54D·44R, 주지사28D·20R이 유지됐다. Massachusetts 상원 Markey1,493,048표·Deaton734,424표, Michigan 주지사 Benson2,596,504표·James2,082,745표로 집계가 늘었지만 기존 판단은 같다. Maine2구 LePage159,189표·Dunlap156,226표로 공화 우세가2,963표로 증가했으나 미판정이다. Alaska 상원 민주507표·Mississippi 민주1,985표 우세도 미판정 유지.",
+      "evidence": "실제 조회11월4일16:44–16:46UTC/11월5일01:44–01:46KST. Massachusetts 상원 집계11:35EST=16:35UTC·85%, Michigan 주지사11:19EST=16:19UTC·95%초과, Maine2구11:33EST=16:33UTC. Kentucky 상원은 시각만 바뀌고 수치 불변. 상원35·주지사36개 중70개 확인·Oregon 실패. Johnson 지도부 불출마 언론보도는 공식 미확인 단서로 구분. AP본문 접근 실패. 전국 법정절차·공식 인증 전수 대조 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/massachusetts-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://www.theguardian.com/us-news/live/2026/nov/04/midterm-elections-results-senate-house-michigan-maine-mississippi-latest-updates"
+      ]
+    },
+    {
+      "at": "2026-11-04T16:31:47.419Z",
+      "kind": "불일치 해소",
+      "title": "하원247D·150R 일치·민주 증가6석 개별 확인",
+      "text": "DDHQ 하원 전용 본문과 다른 페이지 요약이247D·150R로 일치했다. 새로 NC09 Richard Ojeda, NC14 LaKesha Womack, NC06 Cyril Jefferson, NJ02 Zack Mullock의 개별 당선 판단을 확인해 앞서 확인한 NC13·NV02와 함께 민주 증가6석을 대응했다. 이전244·247 불일치 기록은 보존하며 수정 원인을 추정하지 않는다. Mississippi 상원 Colom465,564표·Hyde-Smith463,579표로 민주 우세가745표에서1,985표로 늘었지만 미판정이다.",
+      "evidence": "실제 조회11월4일16:30–16:31UTC/11월5일01:30–01:31KST. NC09판단10:47EST=15:47UTC, NC14 10:50EST=15:50UTC, NC06 10:52EST=15:52UTC, NJ02 10:59EST=15:59UTC. Mississippi 집계11:14EST=16:14UTC. DDHQ 상원54D·44R·주지사28D·20R 유지. Alaska 상원507표·Maine2구2,384표 선두 격차 미판정 유지. 상원35·주지사36개 중70개 확인·Oregon 실패. 언론 당선 판단은 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-9-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-14-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-6-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-jersey-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T16:16:37.026Z",
+      "kind": "집계 정정·불일치",
+      "title": "하원 전용 본문244D·150R·다른 페이지247D 불일치",
+      "text": "DDHQ 하원 전용 본문이 직전247D·150R에서244D·150R로 바뀌었고 재조회도 같았다. 상원·주지사 페이지의 하원 요약은 여전히247D·150R이므로 공급원 내 합계 불일치다. 이전247석 기록을 보존하며 현재 확정 수치처럼 쓰지 않는다. 개별 NC13·NV02 당선 판단은 유지되고 NC09는 목록에만 판단이 있어 실제3석 판단 철회로 단정할 수 없다. 민주당 하원 지배권 판단은 유지된다.",
+      "evidence": "실제 조회11월4일16:14–16:16UTC/11월5일01:14–01:16KST. 하원 본문244석·35석 교체 표시를16:15 및16:16UTC에 확인했으나 수정시각·사유는 표시되지 않았다. 상원54D·44R, 주지사28D·20R과 Nevada Ford 판단 유지. Mississippi745표 민주우세·Alaska507표 민주우세·Maine2구 공화우세는1,615표에서2,384표로 증가했으나 미판정 유지. 상원35·주지사36개 중70개 확인, Oregon 주지사 실패. Maine·Michigan 주지사 집계 증가는 새 판단이 아니다. Maine2구 집계11:03EST=16:03UTC, LePage156,771표·Dunlap154,387표.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-9-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-13-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T16:02:36.477Z",
+      "kind": "언론 당선 판단",
+      "title": "Nevada 주지사 DDHQ 판단·하원 민주 의석 증가",
+      "text": "DDHQ가 Nevada 주지사 Aaron Ford 당선 판단을 새로 표시해 앞서 알려진 AP 판단에 합류했다. 주지사 합계28D·20R로 이전 불일치가 해소됐다. 하원 합계는247D·150R로 민주6석 증가했으며 NC13 Barringer와 NV02 Benitez-Thompson의 개별 판단을 확인했다. 나머지 증가분의 개별 대응은 미완료다. Mississippi 상원은 Colom463,166표·Hyde-Smith462,421표로 격차가2,169표에서745표로 줄었고 미판정이다. 공식 인증과 구분한다.",
+      "evidence": "실제 조회11월4일16:01–16:02UTC/11월5일01:01–01:02KST. Nevada 주지사 판단10:31EST=15:31UTC, NV02 판단10:35EST=15:35UTC, NC13 판단10:45EST=15:45UTC. 하원 목록 NC09 판단 표시는 개별 원문에 아직 없어 불일치로 남긴다. Mississippi 집계10:57EST=15:57UTC·95% 초과, 공식 대조 미완료. Alaska 상원Peltola507표 우세·Maine2구LePage1,615표 우세 미판정 유지. 상원35·주지사36개 중70개 확인·Oregon 실패. 상원 합계54D·44R 유지.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-13-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/north-carolina-us-house-9-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T15:46:04.840Z",
+      "kind": "부분 관찰",
+      "title": "15:45 점검: 하원 합계 갱신·주지사 합계 불일치",
+      "text": "Alaska 상원 Peltola507표 우세·미판정은 유지됐다. Maine 하원2구 LePage154,386표·Dunlap152,771표로 공화 후보 우세가865표에서1,615표로 늘었으나 미판정이다. DDHQ 하원 본문도241D·150R로 갱신돼 이전149·150석 불일치는 해소됐다. 추가 공화1석의 개별 판단은 확인하지 못했다. 상원54D·44R 유지. 주지사는 본문27D·20R과 하원 페이지 상단28D·20R이 달라 추가 승자를 확정하지 않는다.",
+      "evidence": "실제 조회11월4일15:44–15:46UTC/11월5일00:44–00:46KST. Maine2구 집계10:34EST=15:34UTC. Alaska 주지사103,610표49.15%로 증가했지만 미판정이며 집계10:18EST=15:18UTC. AK·KS·NV 주지사 개별 재조회에서도 새 당선 판단 없음. 주지사 본문 갱신10:27EST=15:27UTC. Maine 공식 결과 경로 접근 실패. 상원35·주지사36개 중70개 확인, Oregon 주지사 원문 실패. 언론 판단과 공식 인증은 별개다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T15:31:39.789Z",
+      "kind": "선두 변화",
+      "title": "Alaska 상원 Peltola 재역전·Maine 2구 공화 선두",
+      "text": "DDHQ Alaska 상원은 Peltola102,578표48.15%·Sullivan102,071표47.91%로 민주 후보가507표 앞선다. 이전 Sullivan1,796표 우세에서 다시 역전했지만 예상 집계70%·미판정이다. Maine 하원2구는 이전 목록 민주0.1%p 우세에서 LePage152,262표49.54%·Dunlap151,397표49.25%로 공화 후보865표 우세를 확인했다. 예상 집계87%·미판정이며 득표 분모에는 빈 표도 포함돼 있다. 어느 선두도 당선 판단·인증 결과가 아니다.",
+      "evidence": "실제 조회11월4일15:30–15:31UTC/11월5일00:30–00:31KST. Alaska 원자료10:18EST=15:18UTC/11월5일00:18KST, Maine2구09:49EST=14:49UTC/11월4일23:49KST. Alaska 공식 결과 재조회502, Maine2구 공식 대조 미완료. DDHQ 상원54D·44R·주지사27D·20R 유지. 하원 본문241D·149R과 다른 DDHQ 페이지 상단241D·150R이 달라 신규 공화 의석 증가를 확정하지 않는다. Oregon 주지사 원문 실패. 상원35·주지사36개 중70개 확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
+    {
+      "at": "2026-11-04T15:17:11.555Z",
+      "kind": "부분 관찰",
+      "title": "15:15 점검: 일부 집계 증가·주요 판단 유지",
+      "text": "상원35·주지사36개 DDHQ 원문 중70개를 확인했다. Texas 상원 Talarico5,450,662표·Paxton4,276,190표로 늘었다. Maine 주지사 Pingree369,885표·Charles249,315표, Michigan Benson2,580,197표·James2,064,130표, Pennsylvania Shapiro2,991,587표·Garrity1,905,702표로 증가했다. 확인 가능한 당선 판단과 DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R은 유지됐다.",
+      "evidence": "실제 조회11월4일15:15–15:17UTC/11월5일00:15–00:17KST. Texas 상원 집계10:11EST=15:11UTC, Maine 주지사09:49EST=14:49UTC, Michigan09:58EST=14:58UTC, Pennsylvania09:52EST=14:52UTC. California 주지사는 갱신시각만 바뀌고 수치는 같았다. Oregon 주지사 원문 실패. AZ05·MI04 미판정·표수 유지. 전국 공식 인증·재검표·법원·주민투표 전수 대조 미완료. 언론 판단은 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/pennsylvania-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T15:02:05.559Z",
+      "kind": "부분 관찰",
+      "title": "15:00 점검: 집계 증가·주요 판단 유지",
+      "text": "상원35·주지사36개 DDHQ 원문 중70개를 확인했다. Texas 상원 Talarico5,445,655표·Paxton4,274,547표, Maine Jackson357,745표·Collins308,279표, Michigan El-Sayed2,482,233표·Rogers2,146,137표로 증가했다. Texas 주지사 Hinojosa5,226,447표·Abbott4,523,251표로 증가했다. Arkansas 상원·Maryland 주지사도 소폭 증가했지만 확인 가능한 당선 판단과 주요 합계는 유지됐다.",
+      "evidence": "실제 조회11월4일15:00–15:02UTC/11월5일00:00–00:02KST. Texas 상원·주지사 집계09:30EST=14:30UTC, Maine 상원09:46EST=14:46UTC·예상90%, Michigan 상원09:55EST=14:55UTC. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. Alaska 공식 결과502, Oregon 주지사 DDHQ 실패. Mississippi의 언론별 수십 표 격차와 DDHQ2,169표 격차는 집계 시점·범위 차이를 해소하지 못했다. 언론 판단은 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T14:46:39.017Z",
+      "kind": "부분 관찰",
+      "title": "14:45 점검: 주지사 일부 집계 증가·판정 유지",
+      "text": "상원35·주지사36개 DDHQ 원문 중70개를 확인했다. Maine 주지사 Pingree367,371표·Charles246,336표, California Becerra4,991,891표·Hilton2,814,373표, Arkansas Sanders477,190표·Love341,645표로 집계가 증가했다. 확인 가능한 당선 판단과 DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R은 유지된다. 개표 증가를 새 당선 판단이나 공식 인증으로 취급하지 않는다.",
+      "evidence": "실제 조회11월4일14:44–14:46UTC/23:44–23:46KST. Maine 주지사 갱신09:30EST=14:30UTC·예상 집계89%, California09:36EST=14:36UTC·67%, Arkansas09:28EST=14:28UTC·95% 초과. Oregon 주지사 DDHQ 원문 실패. California 공식 사이트는 보안 오류 화면으로 수치 대조 불가. California 부유세 주민투표 미판정 보도는 검색 단서이며 공식 표수·분모를 확인하지 못했다. 전국 법원·재검표·인증 전수 검증은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arkansas-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T14:31:39.289Z",
+      "kind": "부분 관찰",
+      "title": "14:30 점검: 일부 개표 증가·당선 판단 유지",
+      "text": "상원35·주지사36개 DDHQ 원문 중70개를 확인했다. Texas 상원 Talarico5,403,211표·Paxton4,214,852표, Maine 상원 Jackson355,760표·Collins304,727표, New Jersey 상원 Booker1,781,641표·Murphy1,012,949표로 집계가 늘었다. Texas 주지사 Hinojosa5,185,873표·Abbott4,461,302표로 증가했다. 확인 가능한 기존 당선 판단과 하원241D·149R, 상원54D·44R, 주지사27D·20R은 유지된다.",
+      "evidence": "실제 조회11월4일14:30–14:31UTC/23:30–23:31KST. Texas 상원·주지사 집계09:10EST=14:10UTC, Maine 상원09:08EST=14:08UTC, New Jersey 상원08:53EST=13:53UTC. Maine 예상 집계율89%, New Jersey93%, Texas는95% 초과 표기이며 공식 확정 비율이 아니다. AZ05·MI04 미판정 및 표수 유지. Arkansas 이전 집계 감소는 추가 변화·공식 설명 미확인. Oregon 주지사 원문은 접근 실패했다. 언론 당선 판단은 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/new-jersey-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T14:16:28.005Z",
+      "kind": "부분 관찰",
+      "title": "14:15 점검: 판정 유지·Arkansas 집계 감소 기록",
+      "text": "상원35·주지사36개 DDHQ 원문 중70개를 확인했다. 주요 합계와 당선 판단은 유지됐다. Arkansas 상원에서 Wadlin 표가31,944에서30,155로1,789표 줄고 총계도888,184에서886,395로 줄었다. Cotton480,621표와 Shoffner375,619표는 같으며 비율은54.22%·42.38%로 변했다. 감소 원인은 확인하지 못했으며 부정행위나 공식 정정으로 단정하지 않는다. 기존 Cotton 당선 판단은 유지된다.",
+      "evidence": "실제 조회11월4일14:14–14:16UTC/23:14–23:16KST. Arkansas DDHQ 집계 갱신08:49EST=13:49UTC. 공식 선거당국이 연결한 집계 사이트는 본문이 표시되지 않아 독립 수치 대조 불가. Michigan 주지사는 갱신시각만08:34EST로 변경되고 수치는 같다. DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 유지. Oregon 주지사 DDHQ 원문 접근 실패. 언론 판단은 공식 인증과 구분한다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arkansas-us-senate-general-election",
+        "https://sos.arkansas.gov/elections/research/election-results",
+        "https://arkansas.tally-enr.com/"
+      ]
+    },
+    {
+      "at": "2026-11-04T14:01:54.867Z",
+      "kind": "부분 관찰",
+      "title": "14:00 점검: DDHQ 판단 유지·Maine 집계 증가",
+      "text": "상원35·주지사36개 DDHQ 개별 페이지를 재조회했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 접근 가능한 당선 판단은 유지됐다. Maine 상원 Jackson354,076표·Collins302,500표, 주지사 Pingree365,067표·Charles243,710표로 집계가 늘었지만 기존 당선 판단은 같다. Maryland 주지사 소폭 집계 증가도 판정 변화가 아니다. Alaska·Mississippi 상원과 Alaska·Kansas·Nevada 주지사는 DDHQ 미판정이다.",
+      "evidence": "실제 조회11월4일14:00–14:01UTC/23:00–23:01KST. Maine 상원 갱신08:44EST=13:44UTC, 주지사08:48EST=13:48UTC. Maryland 주지사08:30EST=13:30UTC. Michigan 상원은 갱신시각08:34EST만 바뀌고 수치는 같았다. AZ05·MI04 집계·미판정 유지. Mississippi 공식 목록에는11월 총선 링크가 없어 공식 수치 대조 불가. New Mexico 공식 조회403. 언론 당선 판단은 공식 인증이 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maryland-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:46:03.498Z",
+      "kind": "부분 관찰",
+      "title": "13:45 점검: DDHQ 수치·당선 판단 유지",
+      "text": "상원35·주지사36개 DDHQ 개별 페이지를 재조회했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 접근 가능한 개별 당선 판단·표 집계는 직전과 같다. Texas 상원 자료 갱신시각만 바뀌었고 표 수치는 같아 새 개표 진전으로 세지 않았다. 상원 Alaska·Mississippi 및 주지사 Alaska·Kansas·Nevada DDHQ 미판정을 유지한다.",
+      "evidence": "조회11월4일13:45UTC/22:45KST. Texas 상원 갱신08:11EST=13:11UTC, 주지사 총괄08:34EST=13:34UTC이며 합계 불변. Kansas Linwood 투표용지 부족 관련11월3일 보도와 다음날 Axios 후속 검색색인을 찾았으나 공식 원문·실제 누락표·최종 영향은 미확인이다. 새로 발생한 장애로 경보하지 않는다. Axios 원문 및 Alaska 공식 일정502로 확인 실패. 전국 법원·재검표·인증·주민투표·하원435개·카운티 하위·시장 수치 전수 검증은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://www.axios.com/local/kansas-city/2026/11/04/kansas-governor-race-holscher-masterson"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:31:57.338Z",
+      "kind": "부분 관찰",
+      "title": "13:30 점검: DDHQ 판단 유지, Maine 집계 증가",
+      "text": "상원35·주지사36개 DDHQ 개별 페이지를 재조회했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 접근 가능한 개별 당선 판단은 이전과 같다. Maine 상원 Jackson351,692표·Collins299,235표, 주지사 Pingree362,035표·Charles240,152표로 증가했지만 기존 판단은 유지됐다. Texas·Michigan 주지사는 갱신시각이 변했어도 표 수치는 같아 새 개표 진전으로 세지 않았다.",
+      "evidence": "조회11월4일13:31UTC/22:31KST. Maine 상원 집계08:15EST=13:15UTC, 주지사08:17EST=13:17UTC. Texas 주지사08:11EST=13:11UTC, Michigan08:25EST=13:25UTC 표시는 수치 불변. 주지사 총괄08:04EST=13:04UTC. Kansas 공식 본문과 Reuters 본문 접근 실패로 검색색인 내용을 새 독립 검증으로 다루지 않는다. 상원 Alaska·Mississippi 및 주지사 Alaska·Kansas·Nevada DDHQ 미판정 유지. 공식 인증·전국 법원·재검표·주민투표·하원435개·카운티 하위·시장 수치 전수 확인은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:17:04.542Z",
+      "kind": "부분 관찰",
+      "title": "13:15 점검: 주요 판단 유지·공식 집계 범위 확인",
+      "text": "DDHQ 상원35·주지사36개 페이지를 재조회했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R과 접근 가능한 개별 판단은 직전과 같다. California 주지사 집계는 Becerra4,991,593표·Hilton2,813,147표로 늘었으나 기존 판단은 유지된다. Mississippi 공식 결과 목록에는 이번 총선 집계가 표시되지 않아 상원 수치를 공식 대조하지 못했다. New Mexico 공식 비공식 결과는 보고 투표구2,204/2,204·투표726,684건을 표시하지만 모든 유효표 처리나 인증 완료를 뜻하지 않는다.",
+      "evidence": "실제 조회11월4일13:16–13:17UTC/22:16–22:17KST. California 및 주지사 총괄 갱신08:04EST=13:04UTC/22:04KST. New Mexico 공식 갱신04:56AM MT는 서머타임 종료 후11:56UTC/20:56KST다. Mississippi 목록의 자료 미표시는 개표 중단이나 사건 부재의 증거가 아니다. 상원 Alaska·Mississippi 및 주지사 Alaska·Kansas·Nevada DDHQ 미판정을 유지한다. 전국 재검표·법원·주민투표·하원435개·카운티 하위·시장 수치 전수 확인은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election",
+        "https://www.sos.ms.gov/elections-voting/election-results",
+        "https://electionresults.sos.nm.gov/"
+      ]
+    },
+    {
+      "at": "2026-11-04T13:02:13.236Z",
+      "kind": "부분 관찰",
+      "title": "13시 점검: 개별 당선 판단 유지, 일부 집계 증가",
+      "text": "DDHQ 상원35·주지사36개 개별 페이지를 재점검했고 Oregon 주지사만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R과 접근 가능한 개별 당선 판단은 직전과 같다. Michigan 상원·주지사, Texas·Maine·Hawaii 주지사는 표 집계가 증가했지만 모두 기존 판단을 유지한다. 상원 Alaska·Mississippi, 주지사 Alaska·Kansas·Nevada는 DDHQ 미판정이며 다른 언론 판단과 합치지 않는다.",
+      "evidence": "실제 조회11월4일13:01–13:02UTC/22:01–22:02KST. 증가한 집계 갱신은 Michigan07:48EST=12:48UTC, Texas07:28EST=12:28UTC, Maine07:39EST=12:39UTC, Hawaii07:42EST=12:42UTC다. DDHQ 주지사 총괄 갱신07:34EST=12:34UTC. Oregon 기존 ABC 판단은 DDHQ 확인으로 바꾸지 않았다. Hawaii 공식 결과 문서 접근 실패, Alaska 공식 결과502. 전국 재검표·법원·주민투표·하원435개·카운티 하위 전수 확인 및 시장 수치 확인은 미완료다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/hawaii-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T12:45:54.869Z",
+      "kind": "부분 관찰",
+      "title": "15분 점검: DDHQ 지배권·개별 판단 유지",
+      "text": "상원35·주지사36개 DDHQ 개별 경선을 재조회했고 Oregon 주지사 원문만 접근 실패했다. 하원241D·149R, 상원54D·44R, 주지사27D·20R과 접근 가능한 개별 당선 판단은 유지됐다. Texas 상원 Talarico5,400,801표·Paxton4,213,646표, Maine 상원 Jackson346,554표·Collins293,150표, California 주지사 Becerra4,982,724표·Hilton2,806,120표로 집계가 늘었으나 기존 당선 판단의 변화는 아니다. Alaska·Mississippi 상원과 Alaska·Kansas·Nevada 주지사 DDHQ 미판정을 유지하며 다른 언론 판단을 합치지 않는다.",
+      "evidence": "실제 조회11월4일12:44–12:45UTC/21:44–21:45KST. Texas 집계07:28EST=12:28UTC, Maine07:38EST=12:38UTC, California07:30EST=12:30UTC. 총괄 주지사 갱신07:34EST=12:34UTC. Oregon은 기존 ABC 판단을 DDHQ 확인으로 바꾸지 않았다. Alaska 공식 결과502, Kansas 공식 결과 본문 접근 실패. 순위선택 집계 일정은 공식 검색색인에 보이나 본문 확인 실패로 새 검증 완료 일정으로 다루지 않는다. 공식 인증·전국 재검표·법원·주민투표·하원435개·카운티 하위 전수 확인과 시장 수치 확인은 미완료.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T12:25:35Z",
+      "kind": "개표 관찰",
+      "title": "AZ05 관측 선두 변경·MI04 격차 축소, 당선 판단 없음",
+      "text": "DDHQ AZ05 하원은 앞선 목록의 민주+0.8에서 공화+2로 바뀌었다. 개별 페이지는 Lamb137,240표51.12% 대 Lee131,226표48.88%, 선두6,014표·합계268,466표·추정83%다. MI04는 Huizenga168,430표49.33% 대 McCann167,830표49.16%, 선두600표·합계341,428표·추정92%다. MI04의 직전 정확한 개별 관측인09:16UTC의3,511표 차이보다 줄었다. 두 경선 모두 미판정이며 공식 인증이 아니다.",
+      "evidence": "조회11월4일12:25:35UTC/21:25:35KST. AZ05 갱신06:13EST=11:13UTC/20:13KST, MI04 갱신06:07EST=11:07UTC/20:07KST. AZ05 2개·MI04 6개 카운티 목록을 확인했으나 남은 표 종류·정확한 최종 분모와 공식 독립 수치 대조는 미확인. 선두 변경 정확시각을 확정하지 않는다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-5-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/michigan-us-house-4-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-04T12:25:35Z",
+      "kind": "부분 관찰",
+      "title": "71개 상원·주지사 경선 재점검, 합계·당선 판단 유지",
+      "text": "DDHQ 하원241D·149R, 상원54D·44R, 주지사27D·20R 및 접근 가능한 개별 경선 당선 판단은 직전과 같다. 상원35·주지사36개 페이지를 모두 시도했으며 Oregon 주지사는 접근 실패했다. Alaska 상원1,796표, Mississippi 상원2,169표, Kansas 주지사5,557표의 관측 격차도 같다. Nevada는 Ford505,738표51.73% 대 Lombardo431,367표44.12%, 합계977,638표·선두74,371표로 늘었으나 DDHQ는 여전히 미판정이다. 기존 AP 색인·Guardian 승리 보도와 구분한다.",
+      "evidence": "조회12:23–12:25UTC/21:23–21:25KST. DDHQ 주지사 총괄 갱신07:11EST=12:11UTC, Nevada06:06EST=11:06UTC. Alaska·Mississippi·Kansas 원자료 갱신은 각각09:12·07:01·09:57UTC로 오래된 값을 새 개표로 취급하지 않는다. Kansas 공식 결과 이번 접근은 실패했고11:08UTC의 이전 공식 대조만 유효하다. Alaska 공식502, Nevada 공식 접근 제한을 우회하지 않았다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/nevada-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/alaska-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/mississippi-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T11:08:31Z",
       "kind": "부분 관찰",
