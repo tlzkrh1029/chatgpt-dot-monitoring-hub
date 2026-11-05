@@ -1,14 +1,36 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-05T02:47:46.033Z",
-  "observedAt": "2026-11-05T02:47:30.417Z",
+  "publishedAt": "2026-11-05T03:02:38.381Z",
+  "observedAt": "2026-11-05T03:02:18.554Z",
   "checkStatus": "partial",
   "headline": "DDHQ 의석 합계와 기존 당선 판단 유지",
-  "body": "DDHQ 하원은 민주 251석과 공화 153석, 상원은 민주 54석과 공화 44석, 주지사는 민주 28곳과 공화 20곳으로 같다. Colorado 주지사 추가 집계에서도 기존 Weiser 판단은 유지됐다. 확인한 다른 경합의 판단과 선두도 직전과 같다.",
+  "body": "DDHQ 하원은 민주 251석과 공화 153석, 상원은 민주 54석과 공화 44석, 주지사는 민주 28곳과 공화 20곳으로 같다. Colorado 상원과 Connecticut 주지사 추가 집계에서도 기존 당선 판단이 유지됐다. 확인한 하원 38곳의 수치와 판단은 직전과 같다.",
   "unknown": "앞선 하원 집계 표시 차이의 원인과 Texas 상원의 208,923표 감소 원인은 확인되지 않았다. 남은 표의 종류와 지역별 분포, 공식 인증 진행도 미확인이다.",
   "gap": "Oregon 주지사 원문이 열리지 않았다. Alaska 공식 페이지는 502 오류였고 Mississippi 공식 목록에서 본선 수치를 확보하지 못했다. Arizona 공식은 앞선 403 이후 재시도하지 않았으며 Washington 공식 독립 대조도 미완료다. 하원 435개 전수와 전국 법정절차·주민투표·시장수치 확인은 미완료다. 선거 결과 탭은 저장되지 않아 이전 자료가 남아 있다.",
   "feed": [
+    {
+      "at": "2026-11-05T03:02:18.554Z",
+      "kind": "참고",
+      "title": "Colorado 상원 추가 집계에서도 Hickenlooper 판단 유지",
+      "text": "DDHQ 집계에서 Hickenlooper 후보는 1,417,321표, Baisley 후보는 844,951표를 얻었다. 총집계는 2,364,850표로 늘었으며 기존 Hickenlooper 당선 판단은 유지됐다.",
+      "timeBasis": "observation",
+      "evidence": "12:00~12:02에 총괄 3개, 상원·주지사 71곳 중 70곳과 하원 38곳을 비교했다. Colorado 상원 갱신은 11:20(02:20 UTC, 미국 동부 11월 4일 21:20 EST)이다.\n\n공식 인증 결과는 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-senate-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T03:02:18.554Z",
+      "kind": "참고",
+      "title": "Connecticut 주지사 추가 집계에서도 Lamont 판단 유지",
+      "text": "DDHQ 집계에서 Lamont 후보는 764,558표, Fazio 후보는 524,815표를 얻었다. 총집계는 1,289,373표로 늘었으며 기존 Lamont 당선 판단은 유지됐다.",
+      "timeBasis": "observation",
+      "evidence": "12:01에 개별 원문을 비교했다. 자료 갱신은 11:16(02:16 UTC, 미국 동부 11월 4일 21:16 EST)이며 공식 인증 결과는 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/connecticut-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-05T02:47:30.417Z",
       "kind": "참고",
