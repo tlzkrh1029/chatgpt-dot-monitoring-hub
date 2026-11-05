@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-05T01:18:08.652Z",
-  "observedAt": "2026-11-05T01:17:46.492Z",
+  "publishedAt": "2026-11-05T01:32:29.302Z",
+  "observedAt": "2026-11-05T01:32:08.903Z",
   "checkStatus": "partial",
-  "headline": "10:17 KST 부분 확인: 의석·기존 판정 유지",
-  "body": "DDHQ 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20 유지. Arizona2 공화2257표, Colorado3 공화5396표, Alaska 상원 민주637표 우세와 미판정 상태는 같다. 상원35·주지사36개 중70개와 하원9개 비교에서 새 판정·선두 역전 미확인. Kansas·Colorado·Rhode Island 상원 추가 집계도 기존 판단 유지. Oregon 주지사 실패, 공식 교차확인 한계와 Texas 상원 앞선 표 감소 원인 미확인 상태 보존.",
+  "headline": "10:32 KST 부분 확인: 의석·기존 판정 유지",
+  "body": "DDHQ 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20 유지. Arizona2 공화 우세2257→2235표, 미판정 유지. 상원35·주지사36개 중70개와 하원9개 비교에서 새 판정·선두 역전 미확인. Arizona·Colorado·California 주지사 추가 집계도 기존 판단 유지. Oregon 주지사 실패와 공식 교차확인 한계, Texas 상원 앞선 표 감소 원인 미확인 상태 보존.",
   "unknown": "Texas 상원 표시득표 증가·감소의 원인과 공식 근거, Massachusetts 주지사 앞선 감소 원인, 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502, Mississippi 본선 집계 미확인과 Arizona 공식403. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-05T01:32:08.903Z",
+      "kind": "관찰",
+      "title": "10:32 KST 부분 확인: 기존 판정 유지, Arizona2 소폭 집계 변화",
+      "text": "11월5일01:30–01:32 UTC·10:30–10:32 KST 조회. DDHQ 하원 민주249·공화153, 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원35·주지사36개 중70개와 하원9개 비교에서 새 당선 판단·선두 역전은 확인하지 못했다. Arizona2 Crane143106·Nez140871표로 공화 우세2257→2235표, 미판정 유지. 총289019표로 증가했으나 남은 표 종류·지역은 미확인이다. Colorado3 공화5396표, Maine2 공화4067표, Alaska 상원 민주637표, Mississippi 상원 민주1852표, Kansas 주지사 민주7045표 우세는 동일하다. Arizona·Colorado·California 주지사 추가 집계는 기존 판단을 바꾸지 않았다. Texas 상원 총9885661표 및 앞선208923표 감소 원인 미확인 상태는 같다.",
+      "timeBasis": "observation",
+      "evidence": "Arizona2 갱신11월4일20:28 EST·11월5일01:28 UTC·10:28 KST. Arizona 주지사20:20 EST·01:20 UTC·10:20 KST, California 주지사20:11 EST·01:11 UTC·10:11 KST. DDHQ 판단은 공식 인증이 아니다. Oregon 주지사 원문 실패, Alaska 공식502, Mississippi 공식 본선 수치 미확인. Arizona 공식은 앞선403 이후 재시도하지 않아 독립 대조 미완료. 하원435개·미집계 표 분포·전국 법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-2-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-05T01:17:46.492Z",
       "kind": "관찰",
