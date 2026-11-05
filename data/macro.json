@@ -1,14 +1,59 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T05:02:43.367Z",
-  "observedAt": "2026-11-05T05:00:55Z",
+  "publishedAt": "2026-11-05T06:01:46.041Z",
+  "observedAt": "2026-11-05T06:00:39Z",
   "checkStatus": "partial",
-  "headline": "BTC는 시가 부근, 기존 서비스 제한 지속",
-  "body": "OKX의 13:33 BTC는 오전 9시 시가 대비 -0.01%, 13:36 ETH는 +0.25%다. CMC의 14:00 스테이블코인 표본은 50bp 이탈 기준에 미달했고, Coinbase EVMSEI와 Sonic 및 Circle Cronos의 기존 제한은 이어진다. FRB 수표 처리 장애는 해결로 표시됐다.",
-  "unknown": "Coinbase EVMSEI 송수신 제한의 원인과 복구 시점은 확인되지 않았다.",
-  "gap": "OKX 가격은 지연됐고 달러 지수는 이전 기록보다 오래된 자료를 반환했다. Cboe 상세 시각대, FRB 수표 장애의 시작과 영향 범위 및 실제 처리 복구, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
+  "headline": "Cardano xReserve 지연, 페그 이탈 기준 미달",
+  "body": "Circle은 Cardano 메인넷 xReserve API의 지연을 수정 중이다. CMC의 15:00 스테이블코인 표본은 50bp 이탈 기준에 미달했고, OKX의 14:35 BTC는 오전 9시 시가와 차이가 0.01% 미만이며 14:37 ETH는 시가 대비 0.09% 높았다.",
+  "unknown": "Circle xReserve의 영향 규모와 복구 완료, Coinbase 제한 경로의 재활성화 및 기존 보안 사건의 고객별 복구 결과는 확인되지 않았다.",
+  "gap": "OKX와 달러 지수는 지연 시세이며 Cboe 상세 시각대는 표시되지 않았다. FRB 수표 장애의 시작과 영향 범위 및 실제 처리 복구, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T06:00:39Z",
+      "kind": "참고",
+      "title": "BTC는 오전 9시 부근, ETH는 시가 소폭 상회",
+      "text": "OKX의 BTC는 14:35 체결가 80,512.1 USDT로 오전 9시 시가 80,508.1과 차이가 0.01% 미만이고, ETH는 14:37 체결가 2,426.83 USDT로 시가 2,424.53 대비 0.09% 높았다. CMC의 15:00 USD 집계는 BTC 80,315.52달러와 ETH 2,417.02달러다.",
+      "evidence": "한국시간 15:00에 OKX 동일 현물의 시가와 가격을 비교하고 CMC를 별도로 조회했다. 가격 기준 시각이 달라 현재 동시값으로 보지 않으며 새 급등급락 경계는 아직 정해지지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/"
+      ]
+    },
+    {
+      "at": "2026-11-05T06:00:39Z",
+      "kind": "참고",
+      "title": "USDT와 USDC, 페그 이탈 기준 미달",
+      "text": "CMC의 15:00 집계에서 USDT는 0.9989달러로 목표 가격보다 11.0bp 낮고, USDC는 0.9998달러로 1.8bp 낮았다. 이번 단일 표본은 50bp 이탈 기준에 미달했다.",
+      "evidence": "한국시간 15:00에 CMC 값을 직접 읽고 반올림 전 가격으로 이탈 폭을 계산했다. 관측 사이의 지속 상태는 확인하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T06:00:39Z",
+      "kind": "새 사실",
+      "title": "Circle, Cardano xReserve API 지연 공지",
+      "text": "Circle은 14:26에 Cardano 메인넷 xReserve API의 지연과 성능 저하를 공지하고 수정 적용 중이라고 밝혔다. Circle Mint와 Cardano CCTP 구성요소는 정상으로 표시됐다.",
+      "evidence": "한국시간 15:00에 공식 상태와 개별 사건 원문을 읽었다. 이 공지는 전면 상환 중단이나 침해를 확인한 내용이 아니며 실제 영향 규모와 복구 완료는 확인되지 않았다.",
+      "sources": [
+        "https://status.circle.com/incidents/v156h1rwdgfh",
+        "https://status.circle.com/"
+      ]
+    },
+    {
+      "at": "2026-11-05T06:00:39Z",
+      "kind": "참고",
+      "title": "달러 지수, 전일 비교 종가 아래",
+      "text": "DXY는 14:16 기준 101.25로 표시됐고, 비교 종가 101.57 대비 표시 등락률은 -0.32%였다. MarketWatch는 이 수치를 지연 시세로 표시했다.",
+      "evidence": "한국시간 15:00에 원문을 읽었다. 앞선 회차의 과거 자료 반환과 달리 자료 기준 시각은 진행됐지만 독립 시세 교차검증은 완료하지 못했다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/dxy"
+      ]
+    },
     {
       "at": "2026-11-05T05:00:55Z",
       "kind": "참고",
