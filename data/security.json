@@ -1,14 +1,24 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T15:23:45.590Z",
-  "observedAt": "2026-11-05T15:23:00Z",
+  "publishedAt": "2026-11-05T17:12:29.465Z",
+  "observedAt": "2026-11-05T17:12:06.055Z",
   "checkStatus": "partial",
   "headline": "Deribit도 SignalPlus 연결 중단, Polygon 회수 제안",
   "body": "Deribit은 SignalPlus 연결 API 키를 폐기했고 Binance의 기존 예방 조치와 함께 외부 플랫폼을 통한 거래·모니터링이 영향을 받는다. Polygon 포럼에는 Binance·Polymarket 피해 POL 약 7,049만 개의 회수 제안이 게시됐으나 승인과 실제 회수는 확인되지 않았다.",
   "unknown": "SignalPlus의 침해 경로와 고객 피해, 완전 해소는 확인되지 않았다. Polygon 회수 제안의 승인·실행, Binance 자산별 실제 출금 재개, GitBook 질문 데이터 반출과 Chainalysis 복구도 미확인이다.",
-  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문과 Deribit 상태 페이지는 이번 점검에서 열리지 않았다. Polygon 거버넌스 콜 결과, 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 확인하지 못했다.",
+  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문은 이번 점검에서 열리지 않았다. SignalPlus 홈페이지는 자바스크립트 안내만 보여 복구 공지를 확인하지 못했다. Polygon 거버넌스 콜 결과, 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 확인하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T17:11:47Z",
+      "kind": "참고",
+      "title": "Kraken, BRL PIX 출금 거절 조사",
+      "text": "Kraken은 브라질 헤알의 PIX 출금이 거절되고 있으며 결제 공급업체와 복구 작업 중이라고 공지했다. 범위는 BRL 국내 출금이며, 공지에는 해킹이나 자금 손실을 확인하는 내용이 없다.",
+      "evidence": "한국시간 11월 6일 02:11에 개별 공식 사건 페이지를 읽었다. 게시 시각은 01:03이며, 기존 9개 네트워크 입출금 지연과 별도 사건이다.",
+      "sources": [
+        "https://status.kraken.com/incidents/1mk59wfdjggk"
+      ]
+    },
     {
       "at": "2026-11-05T15:23:00Z",
       "kind": "새 사실",
