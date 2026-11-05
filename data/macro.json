@@ -1,14 +1,58 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T09:01:54.553Z",
-  "observedAt": "2026-11-05T09:01:24Z",
+  "publishedAt": "2026-11-05T10:30:25.528Z",
+  "observedAt": "2026-11-05T10:29:24Z",
   "checkStatus": "partial",
-  "headline": "BTC와 ETH 시가 부근, VIX 상승 표시",
-  "body": "OKX의 17:59 BTC는 오전 9시 시가 대비 -0.02%, 17:40 ETH는 +0.01%다. CMC의 18:00 스테이블코인 표본은 50bp 이탈 기준에 미달했고, Cboe의 11월 5일 VIX는 전일 종가보다 2.95% 높게 표시됐다.",
+  "headline": "BTC와 ETH 시가 하회, 페그 이탈 기준 미달",
+  "body": "OKX의 19:11 BTC는 오전 9시 시가 대비 -0.10%, 19:15 ETH는 -0.27%다. CMC의 19:28 스테이블코인 표본은 50bp 이탈 기준에 미달했고, Cboe의 11월 5일 VIX 표시는 앞선 17.10에서 16.90으로 낮아졌다.",
   "unknown": "Circle xReserve의 고객별 실제 처리 완료와 Coinbase 제한 경로의 재활성화, 기존 보안 사건의 고객별 복구 결과는 확인되지 않았다.",
-  "gap": "OKX와 달러 지수는 지연 시세이며 Cboe 상세 시각대는 표시되지 않았다. FRB 수표 장애의 시작과 영향 범위 및 실제 처리 복구, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
+  "gap": "FRED 미국 10년물 금리 페이지가 열리지 않았다. OKX와 달러 지수는 지연 시세이며 Cboe 상세 시각대는 표시되지 않았다. FRB 수표 장애의 시작과 영향 범위 및 실제 처리 복구, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T10:29:24Z",
+      "kind": "참고",
+      "title": "BTC와 ETH, 오전 9시 시가 하회",
+      "text": "OKX의 BTC는 19:11 체결가 80,429.1 USDT로 오전 9시 시가 80,508.1 대비 0.10% 낮았고, ETH는 19:15 체결가 2,418.05 USDT로 시가 2,424.53 대비 0.27% 낮았다. CMC의 19:28 USD 집계는 BTC 80,412.13달러와 ETH 2,417.00달러다.",
+      "evidence": "한국시간 19:28에 OKX 동일 현물의 시가와 가격을 비교하고 CMC를 별도로 조회했다. 가격 기준 시각이 달라 현재 동시값으로 보지 않으며 새 급등급락 경계는 아직 정해지지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/"
+      ]
+    },
+    {
+      "at": "2026-11-05T10:29:24Z",
+      "kind": "참고",
+      "title": "USDT와 USDC, 페그 이탈 기준 미달",
+      "text": "CMC의 19:28 집계에서 USDT는 0.9990달러로 목표 가격보다 9.6bp 낮고, USDC는 0.9998달러로 2.1bp 낮았다. 이번 단일 표본은 50bp 이탈 기준에 미달했다.",
+      "evidence": "한국시간 19:28에 CMC 값을 직접 읽고 반올림 전 가격으로 이탈 폭을 계산했다. 관측 사이의 지속 상태는 확인하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T10:29:24Z",
+      "kind": "참고",
+      "title": "VIX, 앞선 표시보다 하락",
+      "text": "Cboe의 11월 5일 VIX는 16.90으로 앞선 표시 17.10보다 낮아졌고 전일 종가 대비 등락률은 +1.75%다. 상세 기준 시각의 시간대가 없어 현재 동시 시세로 확인되지는 않았다.",
+      "evidence": "한국시간 19:29에 공식 원문을 읽었다. 원문은 자료 시각을 11월 5일 10:02로 표시하고 최소 20분 지연을 명시한다.",
+      "sources": [
+        "https://www.cboe.com/tradable-products/vix"
+      ]
+    },
+    {
+      "at": "2026-11-05T10:29:24Z",
+      "kind": "확인 제한",
+      "title": "미국 10년물 금리 자료 열람 제한",
+      "text": "FRED의 미국 10년물 금리 페이지가 열리지 않아 이번 회차의 갱신 여부를 확인하지 못했다.",
+      "evidence": "한국시간 19:29에 두 번 조회했으나 모두 502 오류를 반환했다. 앞서 확인한 11월 3일 관측값을 이번 조회의 새 수치로 쓰지 않았다.",
+      "sources": [
+        "https://fred.stlouisfed.org/series/DGS10"
+      ]
+    },
     {
       "at": "2026-11-05T09:01:24Z",
       "kind": "참고",
