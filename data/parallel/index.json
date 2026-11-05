@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 3,
+  "kind": "index",
+  "updatedAt": "2026-11-05T02:43:05Z",
+  "sessions": [
+    {
+      "date": "2026-11-05",
+      "title": null,
+      "final": false,
+      "seriesWithData": 19,
+      "updatedAt": "2026-11-05T02:43:05Z",
+      "hasNotes": false
+    },
+    {
+      "date": "2026-11-04",
+      "title": "미국 중간선거 개표 × 아시아 증시 × 크립토",
+      "final": true,
+      "seriesWithData": 19,
+      "updatedAt": "2026-11-04T13:14:22Z",
+      "hasNotes": true
+    }
+  ]
+}
