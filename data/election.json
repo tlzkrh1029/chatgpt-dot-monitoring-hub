@@ -1,14 +1,27 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-05T02:03:20.633Z",
-  "observedAt": "2026-11-05T02:02:49.632Z",
+  "publishedAt": "2026-11-05T02:18:13.500Z",
+  "observedAt": "2026-11-05T02:17:45.664Z",
   "checkStatus": "partial",
-  "headline": "11:02 KST Washington3·Arizona1 판단 식별, 하원250·251 차이 잔존",
-  "body": "DDHQ Washington3 Marie Gluesenkamp Perez·Arizona1 Amish Shah 민주 후보 당선 판단을 개별 원문에서 확인했다. 판정은 각각10:16·10:39 KST이며 공식 인증과 다르다. 하원 본문·주지사 페이지는 민주251·공화153, 상원 페이지 하원 표시는 민주250·공화153으로 차이가 남았다. 상원54·44, 주지사28·20 유지. 상원·주지사70개, 하원38개 고유 경합 확인.",
-  "unknown": "DDHQ 하원250·251 표시 차이의 원인과 각 총괄 갱신시각. Washington3·Arizona1 공식 독립 대조·인증, Texas 상원 앞선208923표 감소 원인. 미집계 표 분포와 Oregon 주지사 원문.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502, Mississippi 본선 집계 미확인과 Arizona 공식403. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다. DDHQ 하원 집계250·251 불일치 유지. Washington3·Arizona1 개별 판단은 식별했으나 공식 독립 대조 미완료.",
+  "headline": "DDHQ 하원 집계가 민주 251석, 공화 153석으로 일치",
+  "body": "DDHQ 총괄 3개 페이지의 하원 집계가 민주 251석, 공화 153석으로 일치했다. 상원은 민주 54석과 공화 44석, 주지사는 민주 28곳과 공화 20곳으로 같다. Washington 3구와 Arizona 1구의 기존 당선 판단도 유지됐다. 공식 인증 결과는 아니다.",
+  "unknown": "앞선 하원 집계 표시 차이의 원인과 Texas 상원의 208,923표 감소 원인은 확인되지 않았다. 남은 표의 종류와 지역별 분포, 공식 인증 진행도 미확인이다.",
+  "gap": "Oregon 주지사 원문이 열리지 않았다. Alaska 공식 페이지는 502 오류였고 Mississippi 공식 목록에서 본선 수치를 확보하지 못했다. Arizona 공식은 앞선 403 이후 재시도하지 않았으며 Washington 공식 독립 대조도 미완료다. 하원 435개 전수와 전국 법정절차·주민투표·시장수치 확인은 미완료다. 선거 결과 탭은 저장되지 않아 이전 자료가 남아 있다.",
   "feed": [
+    {
+      "at": "2026-11-05T02:17:45.664Z",
+      "kind": "참고",
+      "title": "DDHQ 하원 집계가 민주 251석, 공화 153석으로 일치",
+      "text": "DDHQ 하원·상원·주지사 페이지에 표시된 하원 집계가 모두 민주 251석, 공화 153석으로 일치했다. 앞선 민주 250석과 251석의 표시 차이는 사라졌지만 원인은 밝혀지지 않았다.\n\nWashington 3구와 Arizona 1구의 기존 민주 후보 당선 판단은 유지됐다. 이번 일치는 공식 인증을 뜻하지 않는다.",
+      "timeBasis": "observation",
+      "evidence": "11:15~11:17에 총괄 3개, 상원 35곳과 주지사 36곳 중 70곳, 하원 38곳을 비교했다. 직전 11:02 기록의 페이지별 집계 차이가 해소됐으며 새로운 당선 판단은 없었다.\n\nOregon 주지사와 공식 집계 일부는 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
     {
       "at": "2026-11-05T02:02:49.632Z",
       "kind": "관찰",
