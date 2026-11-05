@@ -1,14 +1,75 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T01:31:58.738Z",
-  "observedAt": "2026-11-05T01:31:20.034Z",
+  "publishedAt": "2026-11-05T02:22:42.332Z",
+  "observedAt": "2026-11-05T02:22:09.545Z",
   "checkStatus": "partial",
-  "headline": "새 09시 시가 확인 · 가격 지연·기존 운영 공시 대조",
-  "body": "OKX 새 날짜 기준 시가는 확보했지만 가격은27~30분 전 표본이다. Coinbase 이전 해결·Hedera와 ICP 지연은 기존 보안 기록과 같은 사건이다. FRB 상태 본문은 다시 읽혔으며 시장 자료의 시차는 유지됐다.",
-  "unknown": "현재 동시 일간 등락률·개별 Coinbase 송수신 성공·Pages 반영은 미확인이다. 새 급등급락 경계는 미설정이며 일봉 조건은 재판정하지 않았다.",
-  "gap": "OKX·달러 지연, Cboe 시각대·FRB 상태 갱신시각 미표시가 있다. 독립 종가·에너지·지정학·파생과 실제 Pages 반영 검증은 미완료다.",
+  "headline": "크립토 소폭 상승, Coinbase 두 자산 지연 해결 공시",
+  "body": "같은 거래소의 오전 9시 시가 대비 BTC와 ETH는 지연 표본에서 소폭 높았다. Coinbase의 Hedera와 ICP 송금 지연 해결 공시는 기존 보안 기록과 같다.",
+  "unknown": "Coinbase 고객별 실제 송금 처리 완료는 확인되지 않았다.",
+  "gap": "OKX와 달러 지수의 가격은 지연됐고 Cboe 상세 시각대와 FRB 갱신 시각은 표시되지 않았다. 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T02:22:09.545Z",
+      "kind": "참고",
+      "title": "BTC와 ETH, 오전 9시 시가 대비 소폭 상승",
+      "text": "OKX의 BTC는 11:01에 80,694.3 USDT로 오전 9시 시가 80,508.1 대비 0.23% 높았고, ETH는 11:05에 2,432.53 USDT로 시가 2,424.53 대비 0.33% 높았다. 두 가격은 조회 시점보다 각각 약 20분과 16분 앞선 값이다.\n\nCMC의 11:21 USD 집계는 BTC 80,630.36달러와 ETH 2,427.70달러다.",
+      "evidence": "한국시간 11:21에 OKX 동일 현물의 시가와 가격을 비교하고 CMC를 별도로 조회했다. OKX 원자료 시각은 02:01 UTC와 02:05 UTC이며 새 급등급락 경계는 아직 정해지지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:22:09.545Z",
+      "kind": "참고",
+      "title": "USDT와 USDC, 달러 페그 이탈 기준 미달",
+      "text": "CMC의 11:21 집계에서 USDT는 0.9991달러로 목표 가격보다 9.4bp 낮고, USDC는 0.9999달러로 1.0bp 낮았다. 이번 단일 표본은 50bp 이탈 기준에 미달했다.",
+      "evidence": "한국시간 11:21에 CMC 값을 직접 읽고 반올림 전 가격으로 이탈 폭을 계산했다. 관측 사이에도 같은 상태가 지속됐는지는 확인하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:22:09.545Z",
+      "kind": "참고",
+      "title": "달러 지수, 비교 종가가 바뀐 지연 표본",
+      "text": "DXY는 10:29에 101.34로 표시됐고, 새 비교 종가 101.57 대비 0.22% 낮았다. 조회 시점보다 약 52분 앞선 값이며 직전 기록의 비교 종가 101.87과 기준이 다르다.",
+      "evidence": "한국시간 11:21에 MarketWatch의 지연 표시를 읽었다. 원문은 11월 4일 20:29 EST이며 현재 동시 시장값으로 해석하지 않았다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/dxy"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:22:09.545Z",
+      "kind": "참고",
+      "title": "Coinbase, Hedera와 ICP 송금 지연 해결 공시",
+      "text": "Coinbase는 Hedera 송금 지연을 10:39에, Dfinity(ICP) 송금 지연을 10:38에 해결했다고 공시했다. 이는 고객별 실제 송금 성공의 독립 검증은 아니다.",
+      "evidence": "한국시간 11:21에 공식 상태 이력을 읽었다. 원문은 11월 4일 17:39와 17:38 PST이며 기존 보안 기록과 같은 사건으로 중복 알림을 제외했다.",
+      "sources": [
+        "https://status.coinbase.com/"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:22:09.545Z",
+      "kind": "변화 없음",
+      "title": "미국 마감 자료와 기존 서비스 공시 유지",
+      "text": "S&P 500과 VIX의 전일 자료, FRED 일간 금리, FRB와 GitHub 정상 표시, Coinbase 이전 완료와 Sonic 지연, Circle Cronos 부분 장애는 직전 기록과 같다.",
+      "evidence": "한국시간 11:21~11:22에 각 원문을 읽었다. FRED 값은 11월 3일 관측이며 FRB 갱신 시각과 Cboe 상세 시각대는 표시되지 않았다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/spx",
+        "https://www.cboe.com/tradable-products/vix",
+        "https://fred.stlouisfed.org/series/SOFR",
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        "https://fred.stlouisfed.org/series/DGS10",
+        "https://www.frbservices.org/service-status/",
+        "https://www.githubstatus.com/",
+        "https://status.circle.com/"
+      ]
+    },
     {
       "at": "2026-11-05T01:31:20.034Z",
       "kind": "가격·페그 부분 점검",
