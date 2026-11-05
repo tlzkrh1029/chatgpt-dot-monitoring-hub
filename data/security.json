@@ -1,14 +1,41 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T19:02:23.780Z",
-  "observedAt": "2026-11-05T19:01:00Z",
+  "publishedAt": "2026-11-05T20:22:18.149Z",
+  "observedAt": "2026-11-05T20:21:54.019Z",
   "checkStatus": "partial",
-  "headline": "SignalPlus, 실제 공격 인정과 전액 보상 약속",
-  "body": "SignalPlus는 실제 공격과 고객 손실 8만 2,000달러 미만을 발표하고 보상 착수 및 전액 보상을 약속했다. 탈취된 협력업체 연락처와 가짜 Teams 초대가 침입 경로였다는 회사 설명이며, 서비스 재개와 보상 완료는 확인되지 않았다.",
+  "headline": "SignalPlus 복구 예정, Coincall도 연동 키 폐기 권고",
+  "body": "SignalPlus는 보상과 서비스 복구를 예고했지만 완료는 확인되지 않았다. Coincall은 과거 SignalPlus 연동 이용자에게 관련 API 키 폐기와 재연결 보류를 권고했다. Kraken의 9개 네트워크 입출금 지연과 BRL PIX 출금 거절은 계속 공지돼 있다.",
   "unknown": "SignalPlus의 피해액·침입 경로에 대한 독립 검증, 보상 완료와 안전한 서비스 재개는 확인되지 않았다. Polygon 회수 제안의 승인·실행, Binance 자산별 출금 재개와 Chainalysis 복구도 미확인이다.",
-  "gap": "Binance 자산별 상태는 자료 없음으로 표시됐고 Update 8 본문은 조회 오류였다. SignalPlus 공개 답글은 로그인 안내까지만 확인했다. Polygon 복구 제안의 의결·실행 결과, 전체 사고 전수 확인 및 피해액·자금 회수의 독립 온체인 검증은 완료하지 않았다.",
+  "gap": "Binance 자산별 상태는 자료 없음으로 표시됐고 Update 8과 Coincall 개별 공지 페이지는 열리지 않았다. Coincall은 검색 수록 본문으로 확인했으며 최신 수정 여부는 확인하지 못했다. SignalPlus 공개 프로필은 전수 피드가 아니며 전체 답글과 미디어는 확인하지 못했다. Polygon 복구 제안의 의결·실행 결과, 전체 사고 전수 확인 및 피해액·자금 회수의 독립 온체인 검증은 완료하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T20:21:54.019Z",
+      "kind": "누락 보완",
+      "title": "Coincall, SignalPlus 연동 API 키 폐기 권고",
+      "text": "Coincall은 SignalPlus와 연결한 적이 있는 이용자에게 관련 API 키를 폐기하고 주문과 포지션을 확인하며 재연결을 보류하라고 권고했다. Coincall은 자사 시스템이 침해됐다는 정보는 없다고 설명했으며, 연결 키를 일괄 폐기했다고 밝힌 것은 아니다.",
+      "evidence": "05:21까지의 점검에서 공식 문서 검색 수록 본문을 확인했다. 게시 표시는 11월 5일 13:08이며 시간대가 없어 환산하지 않았다.\n\n개별 페이지는 열리지 않아 최신 수정 여부는 확인하지 못했다.",
+      "sources": [
+        "https://support.coincall.com/hc/en-us/articles/64006637184025-Security-Advisory-Important-Notice-Regarding-SignalPlus-API-Connections"
+      ]
+    },
+    {
+      "at": "2026-11-05T20:21:54.019Z",
+      "kind": "변화 없음",
+      "title": "SignalPlus·Kraken과 기존 보안 공지 유지",
+      "text": "SignalPlus, Kraken, GitBook, Chainalysis, Mercado Bitcoin, BTCPay, Polygon, Circle과 Solana의 확인한 공지 내용은 직전 기록과 같다.",
+      "evidence": "05:21까지 공식 공개 페이지와 SignalPlus 공개 X 본문을 이전 기록과 대조했다. 프로필은 전수 피드가 아니며, 개별 Kraken 사건 페이지는 열리지 않아 상태 페이지의 공지를 확인했다.",
+      "sources": [
+        "https://x.com/SignalPlus_Web3/status/2118334613374329154",
+        "https://status.kraken.com/",
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://blog.btcpayserver.org/btcpay-server-security-incident-2-4-1-and-earlier/",
+        "https://status.circle.com/",
+        "https://status.solana.com/"
+      ]
+    },
     {
       "at": "2026-11-05T19:01:00Z",
       "kind": "참고",
