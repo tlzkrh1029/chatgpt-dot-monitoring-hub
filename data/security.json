@@ -1,14 +1,31 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T00:07:40.821Z",
-  "observedAt": "2026-11-05T00:07:40.821Z",
+  "publishedAt": "2026-11-05T01:01:12.644Z",
+  "observedAt": "2026-11-05T01:01:12.644Z",
   "checkStatus": "partial",
-  "headline": "11/5 09:07 — Coinbase 수정 진행·송수신 복구 미확인",
-  "body": "Coinbase는 AERO·VELO 마이그레이션 문제를 식별해 수정 적용 중이라고 갱신했다. 송수신 재개 완료 공시는 아니며 기존 제한과 구분한다. GitBook 사후보고·정상 운영, Chainalysis 제품·로그인 중단과 재설정 불가, Mercado 유지보수 및 Binance 전체 증명 대기는 기존 내용이다.",
-  "unknown": "GitBook 고객별 실제 접근·유출·저장소 변경과 독립 보안 검증, Chainalysis 안전한 재개, Binance 전체 증명 완료·전면 출금, 기존 사건의 최종 손실·반환.",
-  "gap": "공식 공지·상태와 검색 수록 공식 자료를 부분 확인했다. Binance 직접 조회 한계와 Arkéa 직접 접근 제한은 유지한다. 전체 X 피드·모든 프로토콜 및 독립 온체인 재계산은 미완료다.",
+  "headline": "11/5 10:00 — Coinbase 이전 완료 공시·두 자산 송금 지연",
+  "body": "Coinbase는 AERO·VELO 이전 사건을 해결로 공시했다. 이전 기록의 수정 진행 상태에서 완료 공시로 변경됐으며 고객별 처리 완료를 독립 검증한 것은 아니다. Hedera와 Dfinity에는 별도 송금 지연이 새로 공시됐다. 매매와 법정화폐 입출금은 영향 없다는 회사 설명이며 신규 해킹으로 판단하지 않는다. Sonic 지연은 기존 상태다.",
+  "unknown": "Coinbase 고객별 처리 완료와 새 지연의 원인은 미확인이다. GitBook 실제 고객 데이터 접근·반출 범위, Chainalysis 안전한 재개, Binance 전체 증명 및 전면 출금 정상화, 최종 피해·반환 금액은 독립 검증되지 않았다.",
+  "gap": "공식 공지 일부와 제한된 검색을 점검했다. Binance 새 공시 본문은 이번에 확보하지 못했고 전체 증명 완료 여부는 미확인이다. 전 거래소·프로토콜, X 전수 피드 및 독립 온체인 검증은 수행하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T01:01:12.644Z",
+      "kind": "운영 복구·신규 지연",
+      "title": "Coinbase 이전 완료 공시·Hedera와 Dfinity 송금 지연",
+      "text": "Coinbase는 AERO·VELO 이전 사건을 해결로 공시했다. 이전 기록의 수정 진행 상태에서 완료 공시로 변경됐으며 고객별 처리 완료를 독립 검증한 것은 아니다. Hedera와 Dfinity에는 별도 송금 지연이 새로 공시됐다. 매매와 법정화폐 입출금은 영향 없다는 회사 설명이며 신규 해킹으로 판단하지 않는다. Sonic 지연은 기존 상태다.",
+      "evidence": "공식 완료 공시는11월4일16:01 PST, UTC11월5일00:01·한국시간09:01이다. Hedera는00:11 UTC·09:11 KST, Dfinity는00:15 UTC·09:15 KST에 조사 중으로 게시됐다. 실제 조회01:00 UTC·10:00 KST. GitBook 사후보고·정상 운영, Chainalysis 서비스 중단·비밀번호 재설정 불가, Mercado 유지보수와 Bitquery의 전일 분석은 같은 내용이다. 제한된 검색에서 추가 확정 침해·회수는 미확인이다.",
+      "sources": [
+        "https://status.coinbase.com/incidents/dcx1v2c47h3g",
+        "https://status.coinbase.com/incidents/3fy9f7rzjwf6",
+        "https://status.coinbase.com/incidents/t4x0q0rjmq25",
+        "https://status.coinbase.com/",
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.mercadobitcoin.com.br/",
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack"
+      ]
+    },
     {
       "at": "2026-11-05T00:07:40.821Z",
       "kind": "운영 진행·부분 점검",
