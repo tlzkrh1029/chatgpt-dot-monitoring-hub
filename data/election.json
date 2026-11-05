@@ -1,14 +1,25 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-05T02:32:49.310Z",
-  "observedAt": "2026-11-05T02:32:27.244Z",
+  "publishedAt": "2026-11-05T02:47:46.033Z",
+  "observedAt": "2026-11-05T02:47:30.417Z",
   "checkStatus": "partial",
-  "headline": "DDHQ 하원 민주 251석과 공화 153석, 기존 판단 유지",
-  "body": "DDHQ 하원은 민주 251석과 공화 153석, 상원은 민주 54석과 공화 44석, 주지사는 민주 28곳과 공화 20곳으로 같다. Colorado 4구와 5구의 민주 후보 우세는 소폭 줄었지만 미판정 상태다. California 주지사 추가 집계에서도 기존 Becerra 판단은 유지됐다.",
+  "headline": "DDHQ 의석 합계와 기존 당선 판단 유지",
+  "body": "DDHQ 하원은 민주 251석과 공화 153석, 상원은 민주 54석과 공화 44석, 주지사는 민주 28곳과 공화 20곳으로 같다. Colorado 주지사 추가 집계에서도 기존 Weiser 판단은 유지됐다. 확인한 다른 경합의 판단과 선두도 직전과 같다.",
   "unknown": "앞선 하원 집계 표시 차이의 원인과 Texas 상원의 208,923표 감소 원인은 확인되지 않았다. 남은 표의 종류와 지역별 분포, 공식 인증 진행도 미확인이다.",
   "gap": "Oregon 주지사 원문이 열리지 않았다. Alaska 공식 페이지는 502 오류였고 Mississippi 공식 목록에서 본선 수치를 확보하지 못했다. Arizona 공식은 앞선 403 이후 재시도하지 않았으며 Washington 공식 독립 대조도 미완료다. 하원 435개 전수와 전국 법정절차·주민투표·시장수치 확인은 미완료다. 선거 결과 탭은 저장되지 않아 이전 자료가 남아 있다.",
   "feed": [
+    {
+      "at": "2026-11-05T02:47:30.417Z",
+      "kind": "참고",
+      "title": "Colorado 주지사 추가 집계에서도 Weiser 판단 유지",
+      "text": "DDHQ 집계에서 Weiser 후보는 1,426,569표, Marx 후보는 796,821표를 얻었다. 총집계는 2,353,460표로 늘었으며 기존 Weiser 당선 판단은 유지됐다.",
+      "timeBasis": "observation",
+      "evidence": "11:45~11:47에 상원·주지사 71곳 중 70곳과 하원 38곳, 총괄 3개를 비교했다. Colorado 주지사 자료 갱신은 11:20(02:20 UTC, 미국 동부 11월 4일 21:20 EST)이다.\n\nDDHQ 판단이며 공식 인증은 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-governor-general-election"
+      ]
+    },
     {
       "at": "2026-11-05T02:32:27.244Z",
       "kind": "참고",
