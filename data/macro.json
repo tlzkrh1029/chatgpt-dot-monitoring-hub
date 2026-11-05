@@ -1,14 +1,58 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T04:11:15.422Z",
-  "observedAt": "2026-11-05T04:10:51.845Z",
+  "publishedAt": "2026-11-05T05:02:43.367Z",
+  "observedAt": "2026-11-05T05:00:55Z",
   "checkStatus": "partial",
-  "headline": "크립토는 오전 9시 시가 소폭 하회, EVMSEI 제한 지속",
-  "body": "OKX의 BTC와 ETH 체결가는 오전 9시 시가보다 소폭 낮았다. Coinbase EVMSEI 송수신 제한은 기존 보안 공시와 같은 상태다.",
+  "headline": "BTC는 시가 부근, 기존 서비스 제한 지속",
+  "body": "OKX의 13:33 BTC는 오전 9시 시가 대비 -0.01%, 13:36 ETH는 +0.25%다. CMC의 14:00 스테이블코인 표본은 50bp 이탈 기준에 미달했고, Coinbase EVMSEI와 Sonic 및 Circle Cronos의 기존 제한은 이어진다. FRB 수표 처리 장애는 해결로 표시됐다.",
   "unknown": "Coinbase EVMSEI 송수신 제한의 원인과 복구 시점은 확인되지 않았다.",
-  "gap": "OKX와 달러 지수의 가격은 지연됐고 Cboe 상세 시각대와 FRB 갱신 시각은 표시되지 않았다. 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
+  "gap": "OKX 가격은 지연됐고 달러 지수는 이전 기록보다 오래된 자료를 반환했다. Cboe 상세 시각대, FRB 수표 장애의 시작과 영향 범위 및 실제 처리 복구, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T05:00:55Z",
+      "kind": "참고",
+      "title": "BTC는 오전 9시 부근, ETH는 시가 상회",
+      "text": "OKX의 BTC는 13:33 체결가 80,499.9 USDT로 오전 9시 시가 80,508.1 대비 0.01% 낮았고, ETH는 13:36 체결가 2,430.52 USDT로 시가 2,424.53 대비 0.25% 높았다. CMC의 14:00 USD 집계는 BTC 80,443.79달러와 ETH 2,423.11달러다.",
+      "evidence": "한국시간 14:00에 OKX 동일 현물의 시가와 가격을 비교하고 CMC를 별도로 조회했다. 가격 기준 시각이 달라 현재 동시값으로 보지 않으며 새 급등급락 경계는 아직 정해지지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/"
+      ]
+    },
+    {
+      "at": "2026-11-05T05:00:55Z",
+      "kind": "참고",
+      "title": "USDT와 USDC, 페그 이탈 기준 미달",
+      "text": "CMC의 14:00 집계에서 USDT는 0.9989달러로 목표 가격보다 10.7bp 낮고, USDC는 0.9998달러로 1.9bp 낮았다. 이번 단일 표본은 50bp 이탈 기준에 미달했다.",
+      "evidence": "한국시간 14:00에 CMC 값을 직접 읽고 반올림 전 가격으로 이탈 폭을 계산했다. 관측 사이의 지속 상태는 확인하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T05:00:55Z",
+      "kind": "참고",
+      "title": "FRB 수표 처리 장애, 해결 표시",
+      "text": "FRB는 13:40에 수표 처리 장애를 해결 상태로 표시했다. Fedwire와 FedACH를 포함한 서비스 구성요소도 정상 운영으로 표시됐다.",
+      "evidence": "한국시간 14:00에 공식 상태를 읽었으며 원문 시각은 11월 4일 23:40 Eastern이다. 상세 링크가 같은 화면을 반환해 장애 시작과 영향 범위, 실제 처리 복구는 확인하지 못했다.",
+      "sources": [
+        "https://www.frbservices.org/service-status/"
+      ]
+    },
+    {
+      "at": "2026-11-05T05:00:55Z",
+      "kind": "확인 제한",
+      "title": "달러 지수, 이전 시점 자료 반환",
+      "text": "MarketWatch의 DXY는 12:12 기준 101.28을 반환해 앞선 기록의 12:36 자료보다 기준 시각이 뒤로 갔다. 이번 값을 새로운 시장 변화로 판단하지 않았다.",
+      "evidence": "한국시간 14:00에 원문 시각과 앞선 피드를 비교했다. 이전에 확인한 12:36 기준 101.26을 최신 검증값으로 유지한다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/dxy"
+      ]
+    },
     {
       "at": "2026-11-05T04:10:51.845Z",
       "kind": "참고",
