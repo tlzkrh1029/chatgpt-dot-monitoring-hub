@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T12:27:53.614Z",
-  "observedAt": "2026-11-05T12:27:53.614Z",
+  "publishedAt": "2026-11-05T13:22:59.689Z",
+  "observedAt": "2026-11-05T13:22:59.688Z",
   "checkStatus": "partial",
   "headline": "GitBook 질문 데이터 노출 범위 추가, Binance 재개 계획",
   "body": "GitBook은 방문자의 Assistant 질문을 접근 가능했던 데이터에 추가했다. Binance는 여섯 네트워크의 추가 자산 출금 재개 계획을 공시했지만 실제 완료는 미확인이다. Kraken 입출금 지연과 기존 보안 사건은 별도 기록으로 유지한다.",
   "unknown": "GitBook 질문 데이터의 실제 반출과 방문자 피해, Binance 자산별 출금 재개 및 전체 증명 완료는 확인되지 않았다. Chainalysis 고객별 피해와 복구, BitMart 피해 지갑의 일치도 미확인이다.",
-  "gap": "Binance 네트워크 상태표는 No Data로 표시됐다. Kraken 개별 사건 페이지는 조회 오류였고 공식 상태 홈에서 기존 공지만 확인했다. 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 수행하지 못했다.",
+  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문 재조회는 오류였다. Kraken은 공식 상태 홈과 거시 기록을 대조했다. 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 수행하지 못했다.",
   "feed": [
     {
       "at": "2026-11-05T12:27:53.614Z",
