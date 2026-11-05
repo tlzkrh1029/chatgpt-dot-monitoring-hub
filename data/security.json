@@ -1,14 +1,25 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T22:27:28.875Z",
-  "observedAt": "2026-11-05T22:27:15Z",
+  "publishedAt": "2026-11-05T23:14:48.662Z",
+  "observedAt": "2026-11-05T23:13:46Z",
   "checkStatus": "partial",
-  "headline": "SignalPlus 복구 예정, Coincall도 연동 키 폐기 권고",
-  "body": "SignalPlus는 보상과 서비스 복구를 예고했지만 완료는 확인되지 않았다. Coincall은 과거 SignalPlus 연동 이용자에게 관련 API 키 폐기와 재연결 보류를 권고했다. Kraken의 9개 네트워크 입출금 지연과 BRL PIX 출금 거절은 계속 공지돼 있다.",
+  "headline": "edgeX의 USDC 처리 중단, 기존 보안 사건 복구는 진행 중",
+  "body": "Circle은 edgeX 메인넷 장애로 해당 네트워크의 CCTP와 USDC 처리가 중단됐다고 밝혔다. Kraken의 네트워크 입출금 지연과 BRL PIX 출금 거절은 유지되고 있다. SignalPlus 보상 완료와 안전한 서비스 재개는 확인되지 않았다.",
   "unknown": "SignalPlus의 피해액·침입 경로에 대한 독립 검증, 보상 완료와 안전한 서비스 재개는 확인되지 않았다. Polygon 회수 제안의 승인·실행, Binance 자산별 출금 재개와 Chainalysis 복구도 미확인이다.",
-  "gap": "Coincall 개별 공지와 Binance Update 8 페이지는 이번 점검에서 열리지 않아 최신 수정 여부를 확인하지 못했다. SignalPlus 최신 전체 게시물과 답글, Binance 자산별 출금 상태, Polygon 회수 제안의 의결·실행 결과는 확인하지 못했다. 전체 사고 전수 확인과 피해액·자금 회수의 독립 온체인 검증은 완료하지 않았다.",
+  "gap": "SignalPlus 최신 전체 게시물과 답글, Coincall 공지의 최신 수정 여부, Binance 자산별 출금 상태와 Update 8 후속 내용, Polygon 회수 제안의 의결·실행 결과는 이번 점검에서 확인하지 못했다. 전체 사고 전수 확인과 피해액·자금 회수의 독립 온체인 검증은 완료하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T23:13:46Z",
+      "kind": "참고",
+      "title": "Circle, edgeX 메인넷 장애로 USDC 처리 중단",
+      "text": "Circle은 07:32 공지에서 edgeX 메인넷 장애로 해당 네트워크의 CCTP 발행·소각과 USDC 발행·상환이 중단됐다고 밝혔다. 다른 네트워크를 포함한 USDC 전체 상환 중단이나 보안 침해를 확인한 공지는 아니다.",
+      "evidence": "08:13까지 Circle 상태 페이지와 연결된 개별 사건 원문을 읽었다. 원문 공지 시각은 11월 5일 22:32 UTC이며 조사 상태가 유지됐다.",
+      "sources": [
+        "https://status.circle.com/incidents/1l8nqgycwscv",
+        "https://status.circle.com/"
+      ]
+    },
     {
       "at": "2026-11-05T20:21:54.019Z",
       "kind": "누락 보완",
