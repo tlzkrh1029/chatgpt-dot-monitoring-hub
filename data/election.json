@@ -1,14 +1,30 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-04T23:48:16.308Z",
-  "observedAt": "2026-11-04T23:47:52.640Z",
+  "publishedAt": "2026-11-05T00:02:44.078Z",
+  "observedAt": "2026-11-05T00:02:18.228Z",
   "checkStatus": "partial",
-  "headline": "08:47 KST 부분 확인: 의석·판정 유지",
-  "body": "11월5일 08:46–08:47 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 기존 당선 판단은 유지된다. Mississippi 상원 Colom 우세는1883→1852표로 소폭 좁혀졌지만 미판정이다. Arizona2 Crane966표·Colorado3 Hurd5013표·Minnesota1 Johnson321표 우세와 Texas22 Nehls 판단은 동일하다. 상원35·주지사36개 중70개와 하원9개 확인, Oregon 주지사 실패. Texas 상원 총9885636표는 같고 앞선208923표 감소 원인은 미확인이다.",
+  "headline": "09:02 KST 부분 확인: 의석·판정 유지",
+  "body": "11월5일09:00–09:02 KST 조회. DDHQ 하원249·153, 상원54·44, 주지사28·20과 확인한 기존 당선 판단은 유지된다. Kansas 주지사 민주 우세5863→6449표로 소폭 확대됐지만 미판정이다. Mississippi 상원1852표·Alaska 상원626표 민주 우세, Arizona2 공화966표 우세는 같다. 상원35·주지사36개 중70개와 하원9개 비교, Oregon 주지사 실패. Texas 상원 총9885636표와 앞선208923표 감소 원인 미확인 상태를 보존한다.",
   "unknown": "Texas 상원 표시득표 증가·감소의 원인과 공식 근거, Massachusetts 주지사 앞선 감소 원인, 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문.",
   "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식 조회시간 초과, Mississippi 본선 집계와 Arizona 결과 미확인. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다.",
   "feed": [
+    {
+      "at": "2026-11-05T00:02:18.228Z",
+      "kind": "관찰",
+      "title": "09:02 KST 부분 확인: 기존 판정 유지, Kansas 미판정 격차 소폭 확대",
+      "text": "11월5일 00:00–00:02 UTC·09:00–09:02 KST 조회. DDHQ 하원 민주249·공화153, 상원54·44, 주지사28·20은 직전과 같다. 상원35·주지사36개 원문 중70개와 하원9개를 비교했고 새 당선 판단·선두 역전은 확인하지 못했다. Kansas 주지사 Holscher548920·Masterson542471표로 민주 우세5863→6449표, 미판정 유지. Maine 상원 Jackson374381·Collins330173표로 기존 Jackson 판단 유지. Massachusetts 주지사·South Dakota 상원과 주지사의 추가 집계도 기존 판단을 바꾸지 않았다. Mississippi 상원1852표, Alaska 상원626표 민주 우세 및 Arizona2 공화966표 우세는 동일하다. Texas 상원 총9885636표와 기존 판단 유지, 앞선208923표 감소 원인은 여전히 미확인이다.",
+      "timeBasis": "observation",
+      "evidence": "Kansas 원자료 갱신은11월4일18:45 EST·23:45 UTC·11월5일08:45 KST, Maine 상원18:55 EST·23:55 UTC·08:55 KST. DDHQ 집계와 언론 당선 판단이며 공식 인증이 아니다. Oregon 주지사 원문 실패. Alaska 공식 조회시간 초과, Mississippi 공식 본선 수치와 Arizona 공식 수치는 확보하지 못했다. 남은 표 종류·지역과 전국 법정절차 전수는 미확인이다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/kansas-governor-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/maine-us-senate-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/texas-us-senate-general-election"
+      ]
+    },
     {
       "at": "2026-11-04T23:47:52.640Z",
       "kind": "부분 확인",
