@@ -1,14 +1,25 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T13:22:59.689Z",
-  "observedAt": "2026-11-05T13:22:59.688Z",
+  "publishedAt": "2026-11-05T14:05:21.453Z",
+  "observedAt": "2026-11-05T14:03:00Z",
   "checkStatus": "partial",
-  "headline": "GitBook 질문 데이터 노출 범위 추가, Binance 재개 계획",
-  "body": "GitBook은 방문자의 Assistant 질문을 접근 가능했던 데이터에 추가했다. Binance는 여섯 네트워크의 추가 자산 출금 재개 계획을 공시했지만 실제 완료는 미확인이다. Kraken 입출금 지연과 기존 보안 사건은 별도 기록으로 유지한다.",
-  "unknown": "GitBook 질문 데이터의 실제 반출과 방문자 피해, Binance 자산별 출금 재개 및 전체 증명 완료는 확인되지 않았다. Chainalysis 고객별 피해와 복구, BitMart 피해 지갑의 일치도 미확인이다.",
-  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문 재조회는 오류였다. Kraken은 공식 상태 홈과 거시 기록을 대조했다. 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 수행하지 못했다.",
+  "headline": "Binance, SignalPlus 연결 키 제거와 재연결 대기 권고",
+  "body": "Binance는 SignalPlus의 잠재 보안 문제에 대응해 연결 API 키 전체를 제거하고 사용자에게 주문 점검과 재연결 대기를 권고했다. 자체 시스템과 자금은 안전하다는 회사 설명이며, 기존 핫월렛 사고의 출금 재개 계획과는 별개 사건이다.",
+  "unknown": "SignalPlus의 침해 경로와 고객 피해, 문제 해결 여부는 확인되지 않았다. Binance의 자산별 실제 출금 재개, GitBook 질문 데이터 반출과 Chainalysis 고객별 피해·복구도 미확인이다.",
+  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문은 이번 점검에서 열리지 않았다. Deribit의 관련 조치는 보도만 확인했으며 공식 발표는 확인하지 못했다. 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 수행하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T14:03:00Z",
+      "kind": "새 사실",
+      "title": "Binance, SignalPlus에 연결된 API 키 전체 제거",
+      "text": "Binance는 SignalPlus의 잠재 보안 문제 통보를 받고 연결된 API 키 전체를 예방적으로 제거했다고 밝혔다. Binance 시스템에는 영향이 없고 자금은 안전하다는 것이 회사의 설명이다.\n\n회사는 포지션과 미체결 주문을 Binance에서 직접 확인하고, SignalPlus가 완전한 해결을 확인하기 전에는 재연결을 기다리며 IP 허용목록을 사용하라고 권고했다. 실제 침해 경로와 고객 피해는 확인되지 않았다.",
+      "evidence": "한국시간 23:03에 Binance 공식 X 본문을 직접 확인하고 Decrypt 보도와 대조했다. 표시된 7:51 PM은 시간대가 없어 환산하지 않았으며 첨부 이미지는 확인하지 못했다.",
+      "sources": [
+        "https://x.com/binance/status/2118295116716589383",
+        "https://decrypt.co/382599/binance-cuts-off-signalplus-api-keys-over-potential-security-issue-at-trading-platform"
+      ]
+    },
     {
       "at": "2026-11-05T12:27:53.614Z",
       "kind": "새 사실",
