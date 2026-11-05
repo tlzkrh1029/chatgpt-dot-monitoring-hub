@@ -41,6 +41,25 @@
   // double quotes toggle; ’ closes only an open ‘, since it is also an apostrophe.
   const PAIRS = Object.freeze({ '“': '”', '‘': '’', '「': '」', '『': '』', '(': ')', '[': ']' });
 
+  // Share quote/bracket tracking between sentence ends and soft line wraps.
+  // Explicit blank lines still take priority over an unfinished quotation.
+  function quoteState() {
+    const open = [];
+    let straight = false, single = false;
+    return {
+      get inside() { return open.length > 0 || straight || single; },
+      track(s, k) {
+        const ch = s[k];
+        if (ch === '"') straight = !straight;
+        else if (ch === '\'') {
+          if (!single && /[\s(\[“‘"]/.test(k ? s[k - 1] : ' ') && s[k + 1] && s[k + 1] !== ' ') single = true;
+          else if (single && !/[A-Za-z0-9]/.test(s[k + 1] || '')) single = false;
+        } else if (PAIRS[ch]) open.push(PAIRS[ch]);
+        else if (open.length && ch === open[open.length - 1]) open.pop();
+      },
+    };
+  }
+
   function width(s) {
     let w = 0;
     for (const ch of s) {
@@ -71,29 +90,18 @@
   // or bracket. One linear pass, so long runs of punctuation cannot stall it.
   function splitSentences(s) {
     const out = [];
-    const open = []; // closers expected for the quotes and brackets now open
-    let straight = false; // inside an ASCII "…" quote
-    let single = false;   // inside an ASCII '…' quote
+    const quotes = quoteState();
     let start = 0;
     // An ASCII ' opens a quote at the start of a word and closes it unless a Latin
     // letter or digit follows, so apostrophes such as "Binance's" are ignored.
-    const track = k => {
-      const ch = s[k];
-      if (ch === '"') straight = !straight;
-      else if (ch === '\'') {
-        if (!single && /[\s(\[“‘"]/.test(k ? s[k - 1] : ' ') && s[k + 1] && s[k + 1] !== ' ') single = true;
-        else if (single && !/[A-Za-z0-9]/.test(s[k + 1] || '')) single = false;
-      } else if (PAIRS[ch]) open.push(PAIRS[ch]);
-      else if (open.length && ch === open[open.length - 1]) open.pop();
-    };
     for (let i = 0; i < s.length; i++) {
       const ch = s[i];
-      if (ch !== '.' && ch !== '?' && ch !== '!') { track(i); continue; }
+      if (ch !== '.' && ch !== '?' && ch !== '!') { quotes.track(s, i); continue; }
       let end = i;
       let periodsOnly = true;
       while (end < s.length && '.?!'.includes(s[end])) { if (s[end] !== '.') periodsOnly = false; end++; }
-      while (end < s.length && CLOSER_SET.has(s[end])) track(end++);
-      const boundary = s[end] === ' ' && !open.length && !straight && !single;
+      while (end < s.length && CLOSER_SET.has(s[end])) quotes.track(s, end++);
+      const boundary = s[end] === ' ' && !quotes.inside;
       i = end - 1;
       if (!boundary) continue;
       if (periodsOnly) {
@@ -240,15 +248,17 @@
   }
 
   // Writer-authored blocks. A blank line always ends a paragraph; a single newline
-  // does too after terminal punctuation or before a list item. Any other single
-  // newline is a soft wrap inside a sentence and becomes a space.
+  // does too after terminal punctuation or before a list item, outside quotes
+  // and brackets. Any other single newline is a soft wrap and becomes a space.
   function writerBlocks(raw) {
     const blocks = [];
     for (const chunk of raw.split(/\n[ \t\f\v]*\n\s*/)) {
       let cur = '';
+      const quotes = quoteState();
       for (const line of chunk.split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean)) {
-        if (cur && (LINE_END.test(cur) || LIST_ITEM.test(line))) { blocks.push(cur); cur = line; }
+        if (cur && !quotes.inside && (LINE_END.test(cur) || LIST_ITEM.test(line))) { blocks.push(cur); cur = line; }
         else cur = cur ? `${cur} ${line}` : line;
+        for (let i = 0; i < line.length; i++) quotes.track(line, i);
       }
       if (cur) blocks.push(cur);
     }

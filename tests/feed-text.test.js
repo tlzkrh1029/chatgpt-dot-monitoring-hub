@@ -97,6 +97,23 @@ test('dotted dates and case names are not sentence ends', () => {
     ['원고 측은 Purcell v. Gonzalez 판결을 근거로 들었다.', '주정부는 반박했다.']);
 });
 
+test('single line wraps inside quotes and brackets stay within the same paragraph', () => {
+  const wrapped = [
+    'Binance는 “출금이 지연됐다.\n사용자 자금은 안전하다.”라고 밝혔다.',
+    '공지는 "출금이 지연됐다.\n자금은 안전하다."라고 밝혔다.',
+    "공지는 '출금이 지연됐다.\n자금은 안전하다.'라고 밝혔다.",
+    '공지(조회가 늦었다.\n원문은 같았다.)를 다시 확인했다.',
+    '공지는 “대상은 다음과 같다:\n- 출금 서비스”라고 밝혔다.',
+  ];
+  for (const input of wrapped) {
+    assert.deepEqual(T.paragraphs(input), [input.replace('\n', ' ')]);
+    assert.equal(T.sentences(input).length, 1);
+  }
+  // A deliberate blank line remains an authored paragraph boundary.
+  assert.deepEqual(T.paragraphs('공지는 “첫 문장이다.\n\n둘째 문장이다.”라고 밝혔다.'),
+    ['공지는 “첫 문장이다.', '둘째 문장이다.”라고 밝혔다.']);
+});
+
 test('a single soft-wrapped block is split like the same text without the newline', () => {
   const soft = 'Kansas 주정부의 비공식 집계에서 Holscher 후보는 546,587표, Masterson 후보는 541,030표를 얻었다. DDHQ의 Kansas 집계는 18:57에 갱신된 값이며 두 후보의 격차 5,557표는 직전 기록과 같다. Kansas의 투표구 4,168곳이 모두 보고됐지만\n공식 인증까지 끝났다는 뜻은 아니다.';
   const parts = T.paragraphs(soft);
