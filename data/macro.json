@@ -1,14 +1,102 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T19:25:33.038Z",
-  "observedAt": "2026-11-05T19:24:47Z",
+  "publishedAt": "2026-11-05T20:33:31.875Z",
+  "observedAt": "2026-11-05T20:31:05Z",
   "checkStatus": "partial",
-  "headline": "미국 주가·변동성 악화 근거 보강, 크립토는 앞선 집계 부근",
-  "body": "시각이 명시된 미국 주가 하락과 변동성 상승 자료가 추가 확인됐다. BTC와 ETH의 CMC 가격은 앞선 집계 부근이고 Kraken의 두 입출금 장애는 해소되지 않았다.",
+  "headline": "미국 주가 하락과 높은 변동성 지속, 크립토는 앞선 가격 부근",
+  "body": "S&P 500은 전일 대비 하락하고 VIX는 높은 수준이며 지연 표본에서는 앞선 값보다 스트레스가 일부 줄었다. BTC와 ETH는 앞선 CMC 가격 부근이고 USDT와 USDC의 단일 표본 페그 이탈은 50bp 미만이다. Kraken의 두 입출금 장애는 기존 상태다.",
   "unknown": "시장 하락의 원인과 지속성, Kraken 장애의 공통 원인은 미확인이다. SignalPlus의 피해액과 침입 경로는 회사 설명이며 독립 검증과 보상 완료는 확인되지 않았다.",
-  "gap": "주가·변동성·달러 자료는 서로 다른 시점이며 Cboe 표시 시각의 시간대는 없다. 최신 신용·에너지·파생시장 전반과 독립 일간 지표 검증은 미완료다. 상황판의 직전 Pages 배포는 시간 초과로 실패했고 이후 배포 완료는 확인되지 않았다.",
+  "gap": "시장 자료는 서로 다른 시점이며 OKX와 미국 시세는 지연됐고 Cboe 표시 시각의 시간대는 없다. 급등·급락의 일간 백분율 경계는 미설정이며 사용자 일봉 조건은 재판정하지 않았다. 파생 자료의 단위 모순, 최신 지정학·금융전산 사고와 독립 온체인 검증은 미완료다. FRB 서비스 상태의 현재 본문은 확인하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T20:31:05Z",
+      "kind": "참고",
+      "title": "BTC와 ETH, 오전 9시보다 낮은 가격 유지",
+      "text": "OKX 현물 BTC-USDT는 11월 5일 오전 9시 시가 80,508.1에서 05:00 자료 기준 마지막 가격 76,320.1 USDT로 5.20% 내렸고, ETH-USDT는 같은 기준 시가 2,424.53에서 05:00 자료 기준 마지막 가격 2,260.87 USDT로 6.75% 내렸다.\n\nCMC의 05:30 집계는 BTC 75,939.26달러와 ETH 2,245.00달러이며, USDT는 1달러보다 17.3bp, USDC는 2.1bp 낮다.",
+      "evidence": "05:30에 CMC와 OKX를 읽었다. OKX ticker 생성은 05:00인 약 29분 전 자료로 마지막 체결 시각은 미확인이며 CMC USD와 OKX USDT는 동일 시점·동일 피드가 아니다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/",
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T20:31:05Z",
+      "kind": "참고",
+      "title": "S&P 500, 앞선 집계보다 낙폭 일부 축소",
+      "text": "MarketWatch의 04:37 S&P 500은 7,387.29로 전일 종가보다 3.92% 낮았다. 앞선 03:04 집계의 4.17% 하락보다 낙폭이 줄었지만 장중 자료다.",
+      "evidence": "05:30에 원문을 읽었고 원문 기준은 11월 5일 14:37 EST다. 독립 동시 시세와 종가는 확인하지 않았다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/spx"
+      ]
+    },
+    {
+      "at": "2026-11-05T20:31:05Z",
+      "kind": "참고",
+      "title": "VIX, 전일 대비 높은 수준 유지",
+      "text": "MarketWatch의 03:48 지연 VIX는 26.39로 전일 종가보다 58.88% 높았다. Cboe 화면은 24.87로 앞선 표시보다 낮아졌지만 두 수치의 동시 비교는 확인되지 않았다.",
+      "evidence": "05:30에 두 원문을 읽었다. MarketWatch 기준은 11월 5일 12:48 CST이며 Cboe는 8:02 PM으로 시간대 표시가 없고 최소 20분 지연이다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/vix",
+        "https://www.cboe.com/tradable-products/vix"
+      ]
+    },
+    {
+      "at": "2026-11-05T20:31:05Z",
+      "kind": "참고",
+      "title": "달러 지수, 전일 종가 수준으로 상승",
+      "text": "MarketWatch의 04:31 지연 달러 지수는 101.57로 전일 종가와 같았다. 앞선 02:49 집계 101.41보다 높아졌다.",
+      "evidence": "05:30에 원문을 읽었고 기준 시각은 11월 5일 14:31 EST다. 주가·변동성 수치와 같은 시점은 아니다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/dxy"
+      ]
+    },
+    {
+      "at": "2026-11-05T20:31:05Z",
+      "kind": "참고",
+      "title": "미국 10년물 금리, 전일 종가보다 하락",
+      "text": "MarketWatch의 04:08 미국 10년물 금리는 4.83%로 전일 종가 4.89%보다 5.6bp 낮았다. 이 수치는 일간 고정만기 국채 통계가 아닌 장중 채권 시세다.",
+      "evidence": "05:30에 원문을 읽었고 기준 시각은 11월 5일 14:08 EST다. 변화량은 원문의 반올림 전 금리로 계산했다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/bond/tmubmusd10y?countrycode=bx"
+      ]
+    },
+    {
+      "at": "2026-11-05T20:31:05Z",
+      "kind": "참고",
+      "title": "미국 하이일드 스프레드, 전일 관측보다 축소",
+      "text": "FRED의 11월 4일 하이일드 옵션조정 스프레드는 332bp로 11월 3일보다 8bp 낮아졌다. 전일 일간 종가 자료이므로 오늘 주가 하락 이후 신용시장 회복을 확인한 값은 아니다.",
+      "evidence": "05:30에 FRED 원문을 읽었다. 원문 갱신은 11월 5일 09:08 CST인 11월 6일 00:08이며 지표는 ICE BofA US High Yield Index OAS다.",
+      "sources": [
+        "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+      ]
+    },
+    {
+      "at": "2026-11-05T20:31:05Z",
+      "kind": "참고",
+      "title": "WTI 선물, 전일 정산가보다 상승",
+      "text": "MarketWatch의 03:38 WTI 최근월 선물은 배럴당 90.61달러로 전일 정산가 88.12달러보다 2.83% 높았다. 이 값은 지연 시세이며 현재 체결가나 최종 정산가가 아니다.",
+      "evidence": "05:30에 원문을 읽었다. 원문 기준은 11월 5일 13:38 EST이며 독립 동시 원유 가격과 새 지정학 사건의 인과는 확인하지 않았다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/future/cl.1"
+      ]
+    },
+    {
+      "at": "2026-11-05T20:31:05Z",
+      "kind": "변화 없음",
+      "title": "Kraken과 Circle, SOFR의 기존 상태 유지",
+      "text": "Kraken의 두 입출금 장애, Circle의 발행·상환과 Cronos 상태, FRED SOFR는 직전 확인 내용과 같다.",
+      "evidence": "05:30에 공식 상태 페이지와 FRED 원문을 읽었다. 서비스 표시는 실제 개별 입출금·상환 처리의 독립 검증이 아니다.",
+      "sources": [
+        "https://status.kraken.com/",
+        "https://status.circle.com/",
+        "https://fred.stlouisfed.org/series/SOFR"
+      ]
+    },
     {
       "at": "2026-11-05T19:24:47Z",
       "kind": "누락 보완",
