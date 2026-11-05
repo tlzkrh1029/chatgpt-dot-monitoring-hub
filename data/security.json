@@ -1,14 +1,34 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T14:05:21.453Z",
-  "observedAt": "2026-11-05T14:03:00Z",
+  "publishedAt": "2026-11-05T15:23:45.590Z",
+  "observedAt": "2026-11-05T15:23:00Z",
   "checkStatus": "partial",
-  "headline": "Binance, SignalPlus 연결 키 제거와 재연결 대기 권고",
-  "body": "Binance는 SignalPlus의 잠재 보안 문제에 대응해 연결 API 키 전체를 제거하고 사용자에게 주문 점검과 재연결 대기를 권고했다. 자체 시스템과 자금은 안전하다는 회사 설명이며, 기존 핫월렛 사고의 출금 재개 계획과는 별개 사건이다.",
-  "unknown": "SignalPlus의 침해 경로와 고객 피해, 문제 해결 여부는 확인되지 않았다. Binance의 자산별 실제 출금 재개, GitBook 질문 데이터 반출과 Chainalysis 고객별 피해·복구도 미확인이다.",
-  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문은 이번 점검에서 열리지 않았다. Deribit의 관련 조치는 보도만 확인했으며 공식 발표는 확인하지 못했다. 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 수행하지 못했다.",
+  "headline": "Deribit도 SignalPlus 연결 중단, Polygon 회수 제안",
+  "body": "Deribit은 SignalPlus 연결 API 키를 폐기했고 Binance의 기존 예방 조치와 함께 외부 플랫폼을 통한 거래·모니터링이 영향을 받는다. Polygon 포럼에는 Binance·Polymarket 피해 POL 약 7,049만 개의 회수 제안이 게시됐으나 승인과 실제 회수는 확인되지 않았다.",
+  "unknown": "SignalPlus의 침해 경로와 고객 피해, 완전 해소는 확인되지 않았다. Polygon 회수 제안의 승인·실행, Binance 자산별 실제 출금 재개, GitBook 질문 데이터 반출과 Chainalysis 복구도 미확인이다.",
+  "gap": "Binance 네트워크 상태표는 No Data로 표시됐고 Update 8 본문과 Deribit 상태 페이지는 이번 점검에서 열리지 않았다. Polygon 거버넌스 콜 결과, 전 거래소·프로토콜과 X 전체 피드, 독립 온체인 재계산은 확인하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T15:23:00Z",
+      "kind": "새 사실",
+      "title": "Deribit도 SignalPlus 연결 API 키 폐기",
+      "text": "Deribit은 SignalPlus의 잠재 보안 우려를 통보받고 연결된 고객 API 키를 모두 예방적으로 폐기했다고 밝혔다. 이 조치로 SignalPlus를 통한 거래와 모니터링, 자동화가 중단된다.\n\n회사는 자체 시스템과 데이터에는 영향이 없다고 설명하며 주문과 포지션을 직접 확인하고 공식 안내 전까지 재연결을 기다리라고 권고했다. 실제 침해와 고객 손실은 확인되지 않았다.",
+      "evidence": "한국시간 11월 6일 00:23에 Deribit 공식 X 본문을 직접 확인했다. 공지 표시 시각의 시간대는 확인되지 않았으며 시스템 무영향은 회사의 설명이다.",
+      "sources": [
+        "https://x.com/DeribitOfficial/status/2118317739441873354"
+      ]
+    },
+    {
+      "at": "2026-11-05T15:22:21Z",
+      "kind": "새 사실",
+      "title": "Polygon 포럼에 Binance·Polymarket 피해 POL 회수 제안",
+      "text": "Polygon 포럼에 차단 주소 다섯 곳의 약 7,049만 POL을 Binance와 Polymarket의 회수 주소로 옮기는 하드포크 제안이 게시됐다. 제안서 기준 Binance 관련 물량은 약 4,663만 POL, Polymarket 관련 물량은 약 2,386만 POL이다.\n\n거버넌스 승인과 실행 블록은 정해지지 않았으며 실제 회수가 완료된 것은 아니다.",
+      "evidence": "한국시간 11월 6일 00:22에 제안 원문을 읽었다. 게시 표시인 11월 4일 17:08은 시간대가 없고, 11월 5일 14:30 UTC 발표 계획의 실제 진행 결과와 주소별 잔액은 독립 확인하지 못했다.",
+      "sources": [
+        "https://forum.polygon.technology/t/pip-proposal-recovery-of-funds-held-in-blocked-addresses-following-the-polymarket-and-binance-incidents/22497"
+      ]
+    },
     {
       "at": "2026-11-05T14:03:00Z",
       "kind": "새 사실",
