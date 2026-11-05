@@ -1,14 +1,37 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T02:01:15.587Z",
-  "observedAt": "2026-11-05T02:00:57.622Z",
+  "publishedAt": "2026-11-05T03:25:24.352Z",
+  "observedAt": "2026-11-05T03:25:06.342Z",
   "checkStatus": "partial",
-  "headline": "11/5 11:00 — Coinbase 두 자산 송금 지연 해결 공시",
-  "body": "Coinbase는 Hedera와 Dfinity(ICP)의 송금 지연 사건을 해결로 공시했다. 고객별 실제 처리 완료의 독립 검증은 아니며 Sonic 지연은 기존 조사 상태다. AERO·VELO 이전 완료 공시도 유지된다. GitBook 사후보고·정상 운영, Chainalysis 제품 중단·비밀번호 재설정 불가, Mercado 유지보수 및 기존 Bitquery 분석은 같은 내용이다.",
-  "unknown": "Coinbase 고객별 처리 완료와 새 지연의 원인은 미확인이다. GitBook 실제 고객 데이터 접근·반출 범위, Chainalysis 안전한 재개, Binance 전체 증명 및 전면 출금 정상화, 최종 피해·반환 금액은 독립 검증되지 않았다.",
-  "gap": "공식 공지 일부와 제한된 검색을 점검했다. Coinbase 개별 사건 페이지는 실패했으나 공식 상태 이력에서 해결을 확인했다. Binance 최신 공시 본문 및 전체 증명 완료는 미확인이다. 전 거래소·프로토콜, X 전수 피드 및 독립 온체인 검증은 수행하지 못했다.",
+  "headline": "Coinbase EVMSEI 송수신 제한, 기존 보안 사건 지속",
+  "body": "Coinbase는 EVMSEI 일부 사용자의 송수신 불가를 공지했다. 기존 Sonic 지연은 지속되며 Hedera와 Dfinity의 해결 공시는 유지된다. GitBook 사후보고, Chainalysis 서비스 중단과 Mercado 유지보수는 기존 상태다.",
+  "unknown": "EVMSEI 제한 원인과 복구 시점은 아직 공지되지 않았다. GitBook의 실제 고객 데이터 반출 범위, Chainalysis의 안전한 재개, Binance 전체 증명과 전면 정상화는 확인되지 않았다.",
+  "gap": "Binance 최신 공시 본문은 이번 검색에서 확보하지 못했다. 전 거래소·프로토콜, X 전체 피드와 독립 온체인 검증은 수행하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T03:25:06.342Z",
+      "kind": "새 사실",
+      "title": "Coinbase, EVMSEI 송수신 제한 공지",
+      "text": "Coinbase는 12:05에 일부 사용자가 EVMSEI를 보내거나 받을 수 없다고 공지하고 조사에 들어갔다. 매매와 법정화폐 입출금에는 영향이 없다고 밝혔다.\n\n침해나 자금 손실 여부를 확인하는 내용은 공지에 없다.",
+      "evidence": "한국시간 12:24~12:25에 공식 상태 페이지와 개별 사건 원문을 읽었다. 공지 시각은 11월 4일 19:05 PST, 즉 11월 5일 03:05 UTC다.\n\n서비스 제한을 해킹으로 분류하지 않았다.",
+      "sources": [
+        "https://status.coinbase.com/incidents/5pgqt8s63hkf",
+        "https://status.coinbase.com/"
+      ]
+    },
+    {
+      "at": "2026-11-05T03:25:06.342Z",
+      "kind": "변화 없음",
+      "title": "GitBook·Chainalysis·Mercado 기존 공지 유지",
+      "text": "GitBook 사후보고, Chainalysis 서비스 중단 안내와 Mercado 유지보수 표시는 직전 기록과 같다.",
+      "evidence": "한국시간 12:24에 각 공식 공개 페이지를 읽고 이전 기록과 대조했다. 개별 고객의 처리 완료나 실제 피해 확대는 독립 검증하지 않았다.",
+      "sources": [
+        "https://www.gitbook.com/status/security-incident-2026-11-03",
+        "https://www.chainalysis.com/blog/security-incident-october-30/",
+        "https://status.mercadobitcoin.com.br/"
+      ]
+    },
     {
       "at": "2026-11-05T02:00:57.622Z",
       "kind": "운영 복구·부분 점검",
