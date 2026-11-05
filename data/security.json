@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T10:08:49.692Z",
-  "observedAt": "2026-11-05T10:08:49.692Z",
+  "publishedAt": "2026-11-05T11:00:33.403Z",
+  "observedAt": "2026-11-05T11:00:33.402Z",
   "checkStatus": "partial",
   "headline": "Mercado·BitMart 과거 유출 분석 범위 수정",
   "body": "Bitquery는 Mercado 피해 범위에 Base를 추가하고 BitMart 연계 추정 유출액을 42만 4,000달러로 수정했다. 과거 이동의 집계 보완이며 새로운 시간대의 유출 확정은 아니다. Chainalysis 복구 계획과 Coinbase EVMSEI 제한은 이어진다.",
