@@ -27,14 +27,25 @@ test('writer line breaks win: blank lines, a newline after a sentence end, and l
   for (const empty of ['', ' \n\n ', undefined, null]) assert.deepEqual(T.paragraphs(empty), []);
 });
 
-test('short texts stay one paragraph and no paragraph is a fragment', () => {
+test('short texts stay one paragraph and automatic splits never leave a fragment', () => {
   assert.deepEqual(T.paragraphs('한 문장뿐이다.'), ['한 문장뿐이다.']);
   const short = '공식 운영 변화는 없었다. VIX 지연값은 하락했다. 페그 이탈은 기준에 못 미쳤다.';
   assert.deepEqual(T.paragraphs(short), [short]);
-  for (const value of publishedTexts()) {
+  // Only automatic splits must avoid fragments; a writer may keep a short paragraph on purpose.
+  for (const value of publishedTexts().filter(text => !/\n/.test(text))) {
     const parts = T.paragraphs(value);
     if (parts.length > 1) for (const part of parts) assert.ok(T.width(part) >= 40, part);
   }
+});
+
+test('a short paragraph the writer set apart with a blank line is kept', () => {
+  const written = 'DDHQ 집계에서 Colorado 4구 Laubacher 후보는 174,963표, Boebert 후보는 171,711표로 격차가 3,405표에서 3,252표로 줄었다. '
+    + 'Colorado 5구 Killin 후보와 Crank 후보의 격차도 13,251표에서 12,767표로 줄었다.\n\n'
+    + '두 경합 모두 민주 후보가 앞서지만 DDHQ는 아직 당선 판단을 내리지 않았다.';
+  const parts = T.paragraphs(written);
+  assert.equal(parts.length, 2);
+  assert.equal(parts[1], '두 경합 모두 민주 후보가 앞서지만 DDHQ는 아직 당선 판단을 내리지 않았다.');
+  assert.ok(T.width(parts[1]) < 40);
 });
 
 test('every published text and evidence note survives splitting unchanged, and splitting is idempotent', () => {
