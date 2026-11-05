@@ -1,6 +1,6 @@
 # 선거 결과 탭 게시 계약 v1
 
-`election-results.html`은 `data/election-results.json` 한 파일만 읽어 상원·하원 의석, 주별 결과 지도, 남은 접전을 그립니다. 이 계약은 기존 다섯 범주 계약(`public-data.js`)과 병렬 탭 계약(`parallel-data.js`)을 바꾸지 않는 독립 계약입니다. 검증 코드는 `election-results-data.js`에 있고, 브라우저와 `npm run validate`가 같은 코드를 씁니다.
+`election-results.html`은 `data/election-results.json` 한 파일만 읽어 상원·하원 의석, 주별 결과 지도, 남은 접전을 그립니다. 이 계약은 기존 다섯 범주 계약(`public-data.js`)과 병렬 탭 계약(`parallel-core.js`)을 바꾸지 않는 독립 계약입니다. 검증 코드는 `election-results-data.js`에 있고, 브라우저와 `npm run validate`가 같은 코드를 씁니다.
 
 ## 작성 주체와 주기
 

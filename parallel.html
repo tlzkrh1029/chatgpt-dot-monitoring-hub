@@ -1,49 +1,122 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>시장·선거 병렬 타임라인 | 지금 상황판</title>
-  <link rel="stylesheet" href="parallel.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>병렬 타임라인 | 지금 상황판</title>
+<script>
+// Apply the saved theme before the first paint. Default is dark; storage may be blocked.
+(function () {
+  try {
+    var saved = localStorage.getItem('parallel-theme');
+    if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
+  } catch (e) { /* keep the default theme */ }
+})();
+</script>
+<link rel="stylesheet" href="parallel.css">
 </head>
 <body>
-<main class="page">
-  <header class="top">
-    <div><p class="eyebrow">공개 자료 모니터링 허브 / 독립 탭</p><h1>시장·선거 병렬 타임라인</h1><p class="sub">같은 시간축에서 네 시장의 움직임을 비교합니다.</p></div>
-    <a href="./" class="back">기존 상황판으로</a>
-  </header>
-  <nav class="page-tabs" aria-label="상황판 화면"><a href="./">기존 상황판</a><a href="parallel.html" aria-current="page">병렬 타임라인</a><a href="election-results.html">선거 결과</a></nav>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<div class="page">
 
-  <section class="notice" aria-labelledby="coverage-title"><h2 id="coverage-title">시계열 공급 확인 중</h2><p id="coverage-text">자료의 실제 시각과 공개 이용 조건을 확인하기 전에는 시세를 표시하지 않습니다.</p></section>
-  <div class="toolbar">
-    <div><span class="label">게시자료 확인 간격</span><select id="poll-minutes" aria-label="게시자료 확인 간격"><option value="5">5분</option><option value="10" selected>10분</option><option value="15">15분</option></select><button id="refresh" type="button">지금 확인</button></div>
-    <p class="hint">파일 재수신과 실제 시세 갱신은 별개입니다. 백그라운드 수집 주기를 바꾸지 않습니다.</p>
+<header class="top">
+  <div class="top-title">
+    <p class="kicker">공개 자료 모니터링 허브 / 독립 탭</p>
+    <h1 id="title">시장 병렬 타임라인</h1>
+    <p class="sub" id="meta">자료를 불러오는 중입니다.</p>
+    <p class="sub chart-sub" id="subtitle" hidden></p>
   </div>
-  <p id="fetch-status" class="status" role="status" aria-live="polite">게시자료를 확인하는 중입니다.</p>
+  <div class="toolbar">
+    <select class="select" id="date-select" aria-label="날짜 선택" disabled><option>날짜 불러오는 중</option></select>
+    <p class="pill" id="status" role="status" aria-live="polite" aria-atomic="true" data-state="loading">불러오는 중</p>
+    <div class="tool-buttons">
+      <button type="button" class="btn" id="theme-toggle" aria-pressed="false">밝은 화면</button>
+      <button type="button" class="btn" id="png-light" disabled>PNG 저장</button>
+      <button type="button" class="btn" id="png-dark" disabled>어두운 PNG</button>
+    </div>
+    <p class="tool-note" id="tool-note" role="status" aria-live="polite"></p>
+  </div>
+</header>
 
-  <section class="panel chart-section" aria-labelledby="chart-title">
-    <div class="section-head"><div><p class="eyebrow" id="dataset-mode">공개 데이터</p><h2 id="chart-title">공통 시간축 · 네 패널</h2><p id="chart-period" class="hint"></p></div><span class="badge">선 그래프 · 등락률 %</span></div>
-    <p id="chart-note" class="hint">계열별 기준과 마지막 값의 시각을 확인하세요. 빈 구간을 보간하지 않습니다. 마지막 값의 회색 점선은 라벨 연결선이며 시세 궤적이 아닙니다.</p>
-    <div id="chart-scroll" class="chart-scroll" tabindex="0" aria-label="병렬 차트. 작은 화면에서는 가로로 스크롤할 수 있습니다."><div id="chart"></div></div>
-    <p id="event-note" class="hint"></p>
+<nav class="page-tabs" aria-label="상황판 화면"><a href="./">기존 상황판</a><a href="parallel.html" aria-current="page">병렬 타임라인</a><a href="election-results.html">선거 결과</a></nav>
+
+<main class="main" id="main" tabindex="-1">
+  <noscript><p class="notice">이 화면은 자바스크립트가 켜져 있어야 표시됩니다.</p></noscript>
+  <p class="notice notice-pending" id="pending" hidden></p>
+  <p class="notice" id="no-notes" hidden>이 날짜의 분석 노트가 없습니다.</p>
+
+  <section class="card headline" id="headline-sec" aria-labelledby="h-headline" hidden>
+    <h2 id="h-headline">한 줄</h2>
+    <p class="headline-text" id="headline"></p>
   </section>
 
-  <section class="panel" id="provider-section" aria-labelledby="provider-title" hidden><div class="section-head"><h2 id="provider-title">시세 출처와 계산 기준</h2><span class="hint">복합 기준가격 · 정확한 15분 표본 · 08:00 KST 대비</span></div><div id="provider-details"></div></section>
+  <section class="card chart-card" aria-labelledby="h-chart">
+    <h2 class="sr-only" id="h-chart">병렬 차트</h2>
+    <figure class="chart-fig">
+      <div class="chart-box" id="chart-box">
+        <div class="chart" id="chart"><p class="chart-empty">자료를 불러오는 중입니다.</p></div>
+        <div class="chart-slider" id="chart-slider" role="slider" tabindex="-1" aria-label="병렬 차트: 시각별 값 보기" aria-describedby="chart-help"
+          aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="자료 없음" hidden></div>
+        <div class="tip" id="tip" aria-hidden="true" hidden></div>
+      </div>
+      <figcaption class="caption"><span id="chart-caption"></span><span class="hint" id="chart-help">차트 위에 올리거나 누르면 그 시각의 값이 나옵니다. 차트에 초점을 두고 ← → 키로 15분씩, Home·End 키로 처음과 끝으로 이동합니다.</span></figcaption>
+    </figure>
+    <p class="sr-only" id="chart-live" aria-live="polite"></p>
+  </section>
 
-  <section class="panel" aria-labelledby="series-title"><div class="section-head"><h2 id="series-title">계열별 자료 상태</h2><span class="hint">시각은 KST · 원자료 시각과 확인 시각 구분</span></div><div class="table-scroll"><table><thead><tr><th scope="col">계열 / 기준</th><th scope="col">공급·거래 상태</th><th scope="col">마지막 관측값</th><th scope="col">원자료 / 확인 시각</th><th scope="col">공백·이용 조건</th></tr></thead><tbody id="series-table"></tbody></table></div></section>
+  <div class="duo" id="duo" hidden>
+    <section class="card" id="obs-sec" aria-labelledby="h-obs">
+      <h2 id="h-obs">차트에서 바로 보이는 것</h2>
+      <ul class="obs" id="obs"></ul>
+    </section>
+    <section class="card" id="table-sec" aria-labelledby="h-table">
+      <div class="card-head">
+        <h2 id="h-table">시간표</h2>
+        <div class="seg" id="panel-seg" role="group" aria-label="시간표 패널"></div>
+      </div>
+      <div class="table-tools">
+        <p class="basis" id="table-basis"></p>
+        <div class="seg seg-unit" id="unit-seg" role="group" aria-label="시간표 값">
+          <button type="button" data-unit="pct" aria-pressed="true" aria-label="등락률(%)">%</button>
+          <button type="button" data-unit="price" aria-pressed="false">가격</button>
+        </div>
+      </div>
+      <div class="table-wrap" id="table"></div>
+    </section>
+  </div>
 
-  <section class="panel" aria-labelledby="events-title"><div class="section-head"><h2 id="events-title">선거 사건과 시각 근거</h2><span class="hint">예측 · 언론 당선 판단 · 공식 인증을 구분</span></div><p class="hint">원출처로 실제 시각이 확인된 사건만 차트의 수직 점선으로 표시합니다. 함께 움직였다는 사실만으로 인과를 확정하지 않습니다.</p><ol id="events" class="event-list"></ol></section>
+  <section id="sections-sec" aria-labelledby="h-sections" hidden>
+    <h2 class="sr-only" id="h-sections">세부와 읽기</h2>
+    <div class="cards" id="sections"></div>
+  </section>
 
-  <section class="panel" aria-labelledby="story-title"><div class="section-head"><h2 id="story-title">시간순 이야기</h2><span class="hint">이야기 → 출처 → 해석 → 판정 → 다음 관찰점</span></div><div id="stories"></div></section>
+  <section class="card" id="watch-sec" aria-labelledby="h-watch" hidden>
+    <h2 id="h-watch">볼 것</h2>
+    <ul class="watch" id="watch"></ul>
+  </section>
 
-  <details class="panel import-panel"><summary>역사적 참조 CSV를 이 브라우저에서 열기</summary><p class="hint">참조는 독립 검증되지 않은 역사적 자료입니다. 선택한 파일과 숫자는 서버로 전송하지 않으며 공개 데이터에 합치지 않습니다. 사건 CSV의 시각은 차트 사건선으로 사용하지 않습니다.</p><form id="reference-form"><label>시장 CSV <input type="file" id="prices-file" accept=".csv,text/csv" required></label><label>사건 CSV <input type="file" id="events-file" accept=".csv,text/csv" required></label><div><button type="submit">로컬 참조 보기</button><button type="button" id="clear-reference" hidden>공개 자료로 돌아가기</button></div></form><p id="import-status" class="status" role="status" aria-live="polite"></p></details>
+  <section class="card" id="story-sec" aria-labelledby="h-story" hidden>
+    <h2 id="h-story">스토리텔링</h2>
+    <div class="story" id="story"></div>
+  </section>
 
-  <footer><p>15분 기준 격자를 사용하며 실제 관측 시각은 다를 수 있습니다. 자료는 등락률 선 그래프이며 OHLC가 아닙니다. 각 선의 비교 기준·거래시간·지연은 서로 다를 수 있습니다.</p><p>Coin Metrics 연결 계열은 거래소 체결가가 아닌 복합 기준가격입니다. 브라우저 확인 간격, 수집 실행 주기, 1분 원자료 시각과 15분 차트 표본은 서로 다릅니다.</p></footer>
+  <section class="verdict" id="verdict-sec" aria-labelledby="h-verdict" hidden>
+    <h2 id="h-verdict">판정</h2>
+    <p id="verdict"></p>
+  </section>
+
+  <section class="card" id="events-sec" aria-labelledby="h-events" hidden>
+    <h2 id="h-events">사건 목록</h2>
+    <ol class="events" id="events"></ol>
+  </section>
 </main>
-<script src="public-data.js"></script>
-<script src="parallel-data.js"></script>
-<script src="parallel-refresh.js"></script>
-<script src="parallel-view.js"></script>
+
+<footer class="foot" id="foot"></footer>
+
+</div>
+<script src="parallel-core.js" defer></script>
+<script src="parallel-chart.js" defer></script>
+<script src="parallel-view.js" defer></script>
 </body>
 </html>
