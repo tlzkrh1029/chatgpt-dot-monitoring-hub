@@ -1,14 +1,50 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-05T02:18:13.500Z",
-  "observedAt": "2026-11-05T02:17:45.664Z",
+  "publishedAt": "2026-11-05T02:32:49.310Z",
+  "observedAt": "2026-11-05T02:32:27.244Z",
   "checkStatus": "partial",
-  "headline": "DDHQ 하원 집계가 민주 251석, 공화 153석으로 일치",
-  "body": "DDHQ 총괄 3개 페이지의 하원 집계가 민주 251석, 공화 153석으로 일치했다. 상원은 민주 54석과 공화 44석, 주지사는 민주 28곳과 공화 20곳으로 같다. Washington 3구와 Arizona 1구의 기존 당선 판단도 유지됐다. 공식 인증 결과는 아니다.",
+  "headline": "DDHQ 하원 민주 251석과 공화 153석, 기존 판단 유지",
+  "body": "DDHQ 하원은 민주 251석과 공화 153석, 상원은 민주 54석과 공화 44석, 주지사는 민주 28곳과 공화 20곳으로 같다. Colorado 4구와 5구의 민주 후보 우세는 소폭 줄었지만 미판정 상태다. California 주지사 추가 집계에서도 기존 Becerra 판단은 유지됐다.",
   "unknown": "앞선 하원 집계 표시 차이의 원인과 Texas 상원의 208,923표 감소 원인은 확인되지 않았다. 남은 표의 종류와 지역별 분포, 공식 인증 진행도 미확인이다.",
   "gap": "Oregon 주지사 원문이 열리지 않았다. Alaska 공식 페이지는 502 오류였고 Mississippi 공식 목록에서 본선 수치를 확보하지 못했다. Arizona 공식은 앞선 403 이후 재시도하지 않았으며 Washington 공식 독립 대조도 미완료다. 하원 435개 전수와 전국 법정절차·주민투표·시장수치 확인은 미완료다. 선거 결과 탭은 저장되지 않아 이전 자료가 남아 있다.",
   "feed": [
+    {
+      "at": "2026-11-05T02:32:27.244Z",
+      "kind": "참고",
+      "title": "Colorado 4구와 5구 민주 후보 우세가 소폭 줄었다",
+      "text": "DDHQ 집계에서 Colorado 4구 Laubacher 후보는 174,963표, Boebert 후보는 171,711표로 격차가 3,405표에서 3,252표로 줄었다. Colorado 5구 Killin 후보와 Crank 후보의 격차도 13,251표에서 12,767표로 줄었다.\n\n두 경합 모두 민주 후보가 앞서지만 DDHQ는 아직 당선 판단을 내리지 않았다.",
+      "timeBasis": "observation",
+      "evidence": "11:30~11:32에 개별 경합 원문을 비교했다. 두 집계의 갱신 표시는 11:20(02:20 UTC, 미국 동부 11월 4일 21:20 EST)이다.\n\n공식 집계와 남은 표의 지역별 구성은 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-4-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/colorado-us-house-5-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:32:27.244Z",
+      "kind": "참고",
+      "title": "California 주지사 추가 집계에서도 기존 판단 유지",
+      "text": "DDHQ 집계에서 Becerra 후보는 5,186,216표, Hilton 후보는 2,893,517표를 얻었다. 총집계는 8,079,733표로 늘었으며 기존 Becerra 당선 판단은 유지됐다.",
+      "timeBasis": "observation",
+      "evidence": "11:31에 개별 원문을 읽었다. 자료 갱신 표시는 10:47(01:47 UTC, 미국 동부 11월 4일 20:47 EST)이며 공식 인증 결과는 아니다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/races/2026-11-03/california-governor-general-election"
+      ]
+    },
+    {
+      "at": "2026-11-05T02:32:27.244Z",
+      "kind": "변화 없음",
+      "title": "DDHQ 의석 합계와 주요 경합 판단 유지",
+      "text": "DDHQ 하원·상원·주지사 의석 합계와 Washington 3구, Arizona 1구의 기존 당선 판단 및 다른 확인 경합의 선두는 직전과 같다.",
+      "timeBasis": "observation",
+      "evidence": "11:30~11:32에 총괄 3개, 상원 35곳과 주지사 36곳 중 70곳, 하원 38곳을 확인했다. Oregon 주지사 원문과 일부 공식자료는 확인하지 못했다.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor"
+      ]
+    },
     {
       "at": "2026-11-05T02:17:45.664Z",
       "kind": "참고",
