@@ -1,14 +1,48 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T07:01:58.679Z",
-  "observedAt": "2026-11-05T07:01:01Z",
+  "publishedAt": "2026-11-05T08:02:29.217Z",
+  "observedAt": "2026-11-05T08:02:08Z",
   "checkStatus": "partial",
-  "headline": "Cardano xReserve 해결 공시, 페그 이탈 기준 미달",
-  "body": "Circle은 15:21에 Cardano 메인넷 xReserve API 장애 해결을 공시했다. CMC의 16:00 스테이블코인 표본은 50bp 이탈 기준에 미달했고, OKX의 15:35 BTC는 오전 9시 시가 대비 -0.01%, 15:38 ETH는 +0.09%다.",
+  "headline": "BTC와 ETH 시가 하회, 페그 이탈 기준 미달",
+  "body": "OKX의 16:35 BTC는 오전 9시 시가 대비 -0.10%, 16:39 ETH는 -0.32%다. CMC의 17:00 스테이블코인 표본은 50bp 이탈 기준에 미달했으며 Circle Cardano xReserve의 해결 공시는 유지됐다.",
   "unknown": "Circle xReserve의 고객별 실제 처리 완료와 Coinbase 제한 경로의 재활성화, 기존 보안 사건의 고객별 복구 결과는 확인되지 않았다.",
   "gap": "OKX와 달러 지수는 지연 시세이며 Cboe 상세 시각대는 표시되지 않았다. FRB 수표 장애의 시작과 영향 범위 및 실제 처리 복구, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T08:02:08Z",
+      "kind": "참고",
+      "title": "BTC와 ETH, 오전 9시 시가 하회",
+      "text": "OKX의 BTC는 16:35 체결가 80,424.3 USDT로 오전 9시 시가 80,508.1 대비 0.10% 낮았고, ETH는 16:39 체결가 2,416.77 USDT로 시가 2,424.53 대비 0.32% 낮았다. CMC의 17:00 USD 집계는 BTC 80,286.99달러와 ETH 2,413.38달러다.",
+      "evidence": "한국시간 17:00에 OKX 동일 현물의 시가와 가격을 비교하고 CMC를 별도로 조회했다. 가격 기준 시각이 달라 현재 동시값으로 보지 않으며 새 급등급락 경계는 아직 정해지지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/"
+      ]
+    },
+    {
+      "at": "2026-11-05T08:02:08Z",
+      "kind": "참고",
+      "title": "USDT와 USDC, 페그 이탈 기준 미달",
+      "text": "CMC의 17:00 집계에서 USDT는 0.9992달러로 목표 가격보다 8.3bp 낮고, USDC는 1.0001달러로 0.6bp 높았다. 이번 단일 표본은 50bp 이탈 기준에 미달했다.",
+      "evidence": "한국시간 17:00에 CMC 값을 직접 읽고 반올림 전 가격으로 이탈 폭을 계산했다. 관측 사이의 지속 상태는 확인하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T08:02:08Z",
+      "kind": "참고",
+      "title": "달러 지수, 전일 비교 종가 아래",
+      "text": "DXY는 16:14 기준 101.29로 표시됐고, 비교 종가 101.57 대비 표시 등락률은 -0.28%였다. MarketWatch는 이 수치를 지연 시세로 표시했다.",
+      "evidence": "한국시간 17:00에 원문을 읽었다. 원문 시각은 02:14 EST이며 독립 시세 교차검증은 완료하지 못했다.",
+      "sources": [
+        "https://www.marketwatch.com/investing/index/dxy"
+      ]
+    },
     {
       "at": "2026-11-05T07:01:01Z",
       "kind": "참고",
