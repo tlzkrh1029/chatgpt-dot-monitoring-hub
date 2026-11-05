@@ -1,14 +1,58 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T16:02:39.213Z",
-  "observedAt": "2026-11-05T16:01:30Z",
+  "publishedAt": "2026-11-05T17:30:59.269Z",
+  "observedAt": "2026-11-05T17:29:32Z",
   "checkStatus": "partial",
-  "headline": "BTC와 ETH 하락 폭 확대, VIX 급등 표시",
-  "body": "OKX의 00:37 BTC는 11월 5일 오전 9시 대비 -4.81%, 00:56 ETH는 -7.11%다. CMC의 01:00 가격도 앞선 회차보다 낮아졌으며 스테이블코인 표본은 50bp 이탈 기준에 미달했다. VIX 공식 급등 표시는 독립 시세 검증이 남아 있다.",
-  "unknown": "Kraken 장애의 정확한 영향 범위와 공통 원인 및 해소 여부, Circle xReserve의 고객별 실제 처리 완료와 Coinbase 제한 경로의 재활성화는 확인되지 않았다.",
-  "gap": "독립 주가지수·달러·VIX 시세 페이지와 Coinbase 공개 시세 API가 열리지 않았다. OKX와 CMC 자료 시각은 다르고 Cboe 상세 시각대는 표시되지 않았다. SignalPlus의 해소, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
+  "headline": "영란은행 금리 인상, 크립토 하락과 VIX 상승 표시",
+  "body": "영란은행은 에너지발 물가 압력을 이유로 기준금리를 4.00%로 올렸다. BTC와 ETH는 오전 9시 대비 하락 상태이며 CMC 가격은 앞선 집계 부근이다. Kraken의 9개 네트워크 지연과 별도 BRL PIX 출금 거절은 해소되지 않았다.",
+  "unknown": "긴축과 에너지 비용이 미국 증시·크립토 가격에 미친 인과와 하락의 지속성은 미확인이다. SignalPlus 보안 우려 해소, 거래소별 실제 출금 처리와 Kraken 장애의 공통 원인은 확인되지 않았다.",
+  "gap": "VIX 표시 시각의 시간대와 독립 동시 시세, 최신 주가지수·달러 시세는 확인하지 못했다. Yahoo 시세는 429 오류였고 Reuters·WSJ 기사 본문은 열리지 않았다. 최신 신용·에너지·파생시장 전반과 독립 일간 지표 검증은 완료하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T17:29:32Z",
+      "kind": "새 사실",
+      "title": "영란은행, 기준금리 4%로 인상",
+      "text": "영란은행은 기준금리를 0.25%포인트 올려 4.00%로 결정했고 표결은 8대 1이었다. 에너지 가격 상승에 따른 물가 압력을 이유로 제시했으며, 향후 금리 경로가 미리 정해진 것은 아니라고 밝혔다.",
+      "evidence": "한국시간 11월 6일 02:29에 공식 결정문을 읽었다. 회의 종료일은 11월 4일, 발표일은 11월 5일이며 정확한 발표 시각은 표시되지 않았다.",
+      "sources": [
+        "https://www.bankofengland.co.uk/monetary-policy-summary-and-minutes/2026/november-2026"
+      ]
+    },
+    {
+      "at": "2026-11-05T17:29:32Z",
+      "kind": "참고",
+      "title": "BTC와 ETH, 오전 9시 대비 하락 상태",
+      "text": "OKX 현물 BTC의 02:22 체결가는 75,979.0 USDT로 11월 5일 오전 9시 시가 대비 -5.63%, ETH의 02:26 체결가는 2,255.35 USDT로 -6.98%다.\n\nCMC의 02:28 집계는 BTC 75,911.42달러와 ETH 2,252.77달러로 앞서 확인한 01:00 집계 부근이다. 서로 다른 시각과 호가 통화의 가격이므로 정확한 동시값이나 독립적인 일간 등락률 검증은 아니다.",
+      "evidence": "한국시간 02:28에 OKX 동일 현물의 시가와 체결가를 비교하고 CMC를 직접 읽었다. OKX 자료는 조회보다 약 6분과 2분 전 값이며 새 일간 임계값은 정해지지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/"
+      ]
+    },
+    {
+      "at": "2026-11-05T17:29:32Z",
+      "kind": "참고",
+      "title": "USDT와 USDC, 페그 이탈 기준 미달",
+      "text": "CMC의 02:28 집계에서 USDT는 0.9986달러로 목표 가격보다 14.2bp 낮고, USDC는 0.9997달러로 2.8bp 낮았다. 이번 단일 표본은 50bp 이탈 기준에 미달했다.",
+      "evidence": "한국시간 02:28에 직접 읽은 반올림 전 USD 가격으로 계산했다. 관측 사이의 지속 상태와 발행사별 실제 상환 처리는 확인하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T17:29:32Z",
+      "kind": "참고",
+      "title": "VIX, 전일 대비 45.82% 상승 표시",
+      "text": "Cboe 공식 화면의 VIX는 24.22로 전일 종가 16.61보다 45.82% 높게 표시됐다. 앞선 조회의 23.69보다 높지만 표시 시각의 시간대와 독립 시세가 확인되지 않아 동시 시장값으로 확정하지 않았다.",
+      "evidence": "한국시간 02:28에 읽었다. 원문은 11월 5일 5:20 PM과 최소 20분 지연을 표시했으며 시간대는 없고, Yahoo 시세 조회는 429 오류였다.",
+      "sources": [
+        "https://www.cboe.com/tradable-products/vix"
+      ]
+    },
     {
       "at": "2026-11-05T16:01:30Z",
       "kind": "새 사실",
