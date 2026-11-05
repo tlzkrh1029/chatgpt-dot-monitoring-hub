@@ -1,14 +1,35 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T09:00:36.160Z",
-  "observedAt": "2026-11-05T09:00:36.160Z",
+  "publishedAt": "2026-11-05T10:08:49.692Z",
+  "observedAt": "2026-11-05T10:08:49.692Z",
   "checkStatus": "partial",
-  "headline": "Chainalysis 전체 사용자 인증 정보 노출 공지",
-  "body": "Chainalysis는 전체 사용자의 비밀번호 해시와 활성 토큰 노출을 밝혔으며 무단 접근된 것으로 보이는 KYT 계정 고객에게 통지하고 있다. KYT와 주소 스크리닝 복구는 계획 단계다. Coinbase EVMSEI 제한과 기존 보안 사건은 이어진다.",
-  "unknown": "Chainalysis의 고객별 접근 피해와 안전한 복구 시점은 확인되지 않았다. GitBook의 실제 고객 데이터 반출 범위, EVMSEI 복구 시점과 Binance의 전체 증명 완료도 확인되지 않았다.",
+  "headline": "Mercado·BitMart 과거 유출 분석 범위 수정",
+  "body": "Bitquery는 Mercado 피해 범위에 Base를 추가하고 BitMart 연계 추정 유출액을 42만 4,000달러로 수정했다. 과거 이동의 집계 보완이며 새로운 시간대의 유출 확정은 아니다. Chainalysis 복구 계획과 Coinbase EVMSEI 제한은 이어진다.",
+  "unknown": "BitMart 창업자 발언의 공식 원문과 피해 지갑의 일치, 공통 공급업체 여부는 확인되지 않았다. Chainalysis의 고객별 피해와 복구, GitBook의 실제 반출 범위, Binance의 전체 증명 완료도 미확인이다.",
   "gap": "Binance 최신 공시 본문은 이번 검색에서 확보하지 못했다. 전 거래소·프로토콜, X 전체 피드와 독립 온체인 검증은 수행하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T10:08:49.692Z",
+      "kind": "정정",
+      "title": "Bitquery, Mercado 피해 범위에 Base 입금주소 추가",
+      "text": "Bitquery는 Mercado Bitcoin 피해 집계 범위를 10개에서 11개 체인으로 수정하고, Base의 입금주소 308개에서 약 1만 6,000달러가 빠져나간 과거 이동을 추가했다. 전체 유출액 4,860만 달러와 동결액 1,180만 달러의 반올림 집계는 유지했다.",
+      "evidence": "한국시간 19:08에 수정 본문과 방법론을 읽었다. 추가 이동은 11월 3일 02:43~02:46의 과거 사건이며 이번 시간대의 새 유출이 아니다. \n\n최신 보유 잔액은 다시 조회하지 않았다고 출처가 명시했다.",
+      "sources": [
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack"
+      ]
+    },
+    {
+      "at": "2026-11-05T10:08:49.692Z",
+      "kind": "정정",
+      "title": "Bitquery, BitMart 연계 추정 유출액을 42만 4,000달러로 수정",
+      "text": "Bitquery는 BitMart 연계 지갑의 과거 유출 추정액을 39만 1,000달러에서 42만 4,000달러로 수정했다. Arbitrum 입금주소 1,320개와 작은 체인 다섯 곳을 추가했으며, 일부 지갑의 거래소 귀속은 분석상의 추정이다.\n\nBitMart 창업자의 침해 인정은 11월 3일 발언을 인용한 보도로 확인됐지만 공식 원문과 피해 지갑의 일치는 확인되지 않았다.",
+      "evidence": "한국시간 19:08에 Bitquery와 연결 보도를 대조했다. 추가 체인은 11월 3일 가격으로 평가됐고 opBNB 송신자는 출처도 조회하지 못했다. \n\n공통 공급업체 침해는 가설이며 독립 온체인 재계산은 하지 않았다.",
+      "sources": [
+        "https://www.bitquery.io/investigations/mercado-bitcoin-hack",
+        "https://coincentral.com/bitmart-founder-blames-staff-shortage-after-second-hack-linked-to-mercado-bitcoin-attackers"
+      ]
+    },
     {
       "at": "2026-11-05T05:30:05.142Z",
       "kind": "새 사실",
