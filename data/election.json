@@ -1,14 +1,29 @@
 {
   "schemaVersion": 1,
   "category": "election",
-  "publishedAt": "2026-11-05T01:49:20.210Z",
-  "observedAt": "2026-11-05T01:48:52.995Z",
+  "publishedAt": "2026-11-05T02:03:20.633Z",
+  "observedAt": "2026-11-05T02:02:49.632Z",
   "checkStatus": "partial",
-  "headline": "10:48 KST 하원 민주250·251 불일치, 추가 경합 미식별",
-  "body": "DDHQ 하원 본문·상원 페이지 하원 집계는 민주250·공화153으로 직전 민주249에서 증가했다. 주지사 페이지 하원 표시는 민주251·공화153으로 달라 단일 합계를 확정하지 않는다. 재조회에서도 불일치, 추가1~2석 개별 판단은 미식별이다. 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원·주지사70개와 하원17개 고유 경합 확인, 기존 주요 하원9개 새 판단·선두 역전 미확인.",
-  "unknown": "DDHQ 하원250·251 집계 차이의 원인·추가 의석 개별 경합·각 갱신시각. Texas 상원 앞선208923표 감소 원인과 공식 근거. 미판정 경합 공식대조·남은 표 분포, Oregon 주지사 원문.",
-  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502, Mississippi 본선 집계 미확인과 Arizona 공식403. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다. DDHQ 하원 집계250·251 불일치 및 추가 의석 개별 판단 미식별.",
+  "headline": "11:02 KST Washington3·Arizona1 판단 식별, 하원250·251 차이 잔존",
+  "body": "DDHQ Washington3 Marie Gluesenkamp Perez·Arizona1 Amish Shah 민주 후보 당선 판단을 개별 원문에서 확인했다. 판정은 각각10:16·10:39 KST이며 공식 인증과 다르다. 하원 본문·주지사 페이지는 민주251·공화153, 상원 페이지 하원 표시는 민주250·공화153으로 차이가 남았다. 상원54·44, 주지사28·20 유지. 상원·주지사70개, 하원38개 고유 경합 확인.",
+  "unknown": "DDHQ 하원250·251 표시 차이의 원인과 각 총괄 갱신시각. Washington3·Arizona1 공식 독립 대조·인증, Texas 상원 앞선208923표 감소 원인. 미집계 표 분포와 Oregon 주지사 원문.",
+  "gap": "원자료 확인 제한: Oregon 주지사 DDHQ 실패, Alaska 공식502, Mississippi 본선 집계 미확인과 Arizona 공식403. 공식 집계·하원435개·하위지역·전국 법정절차·주민투표 전수와 시장수치 확인 미완료. 별도 게시 제한: 선거 결과 탭 스냅샷 저장 거절로 이전 자료 유지. 원자료 관찰 실패와 별개다. DDHQ 하원 집계250·251 불일치 유지. Washington3·Arizona1 개별 판단은 식별했으나 공식 독립 대조 미완료.",
   "feed": [
+    {
+      "at": "2026-11-05T02:02:49.632Z",
+      "kind": "관찰",
+      "title": "11:02 KST Washington3·Arizona1 DDHQ 판단 식별, 하원250·251 차이 잔존",
+      "text": "11월5일02:00–02:02 UTC·11:00–11:02 KST 조회. DDHQ 하원 본문과 주지사 페이지 하원 집계는 민주251·공화153, 상원 페이지 하원 표시는 민주250·공화153으로 불일치가 남았다. 앞선 민주249 이후 추가된 시점의 개별 판단 두 건을 확인했다. Washington3 Marie Gluesenkamp Perez 민주 후보157007표 대John Braun129809표, DDHQ 판정11월4일20:16 EST·11월5일01:16 UTC·10:16 KST. Arizona1 Amish Shah 민주 후보167807표 대Jay Feely145313표, DDHQ 판정20:39 EST·01:39 UTC·10:39 KST. 두 판정은 공식 인증이 아니다. 상원 민주54·공화44, 주지사 민주28·공화20 유지. 상원35·주지사36개 중70개와 하원38개 고유 경합을 확인했고 기존 주요 미판정9개에서 새 선두 역전은 없었다.",
+      "timeBasis": "observation",
+      "evidence": "Washington3 원자료 갱신11월4일20:40 EST·11월5일01:40 UTC·10:40 KST, Arizona1 갱신20:39 EST·01:39 UTC·10:39 KST. 실제 두 원문 조회02:02 UTC경. 두 판단의 시각은249→251 집계 변화 구간과 부합하지만 총괄250 잔존 원인은 확인하지 못했다. Oregon 주지사 원문 실패, Alaska 공식502, Mississippi 공식 본선 수치 미확인. Arizona 공식 앞선403과 Washington 공식 독립 대조 미완료. 하원435개·미집계 표 분포·법정절차 전수 미확인.",
+      "sources": [
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/house",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/senate",
+        "https://votes.decisiondeskhq.com/balance-of-power/2026/governor",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/washington-us-house-3-general-election",
+        "https://votes.decisiondeskhq.com/races/2026-11-03/arizona-us-house-1-general-election"
+      ]
+    },
     {
       "at": "2026-11-05T01:48:52.995Z",
       "kind": "관찰",
