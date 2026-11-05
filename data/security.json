@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T03:25:24.352Z",
-  "observedAt": "2026-11-05T03:25:06.342Z",
+  "publishedAt": "2026-11-05T04:12:29.204Z",
+  "observedAt": "2026-11-05T04:12:21.543Z",
   "checkStatus": "partial",
   "headline": "Coinbase EVMSEI 송수신 제한, 기존 보안 사건 지속",
   "body": "Coinbase는 EVMSEI 일부 사용자의 송수신 불가를 공지했다. 기존 Sonic 지연은 지속되며 Hedera와 Dfinity의 해결 공시는 유지된다. GitBook 사후보고, Chainalysis 서비스 중단과 Mercado 유지보수는 기존 상태다.",
