@@ -1,14 +1,48 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T15:02:36.253Z",
-  "observedAt": "2026-11-05T15:01:45Z",
+  "publishedAt": "2026-11-05T16:02:39.213Z",
+  "observedAt": "2026-11-05T16:01:30Z",
   "checkStatus": "partial",
-  "headline": "BTC와 ETH 하락 폭 확대, Kraken 입출금 지연 유지",
-  "body": "OKX의 11월 5일 23:30 BTC는 같은 날 오전 9시 대비 -1.18%, 23:55 ETH는 -3.01%다. CMC의 00:00 집계 가격은 이보다 낮지만 자료 시각과 호가 통화가 다르며, 스테이블코인 표본은 50bp 이탈 기준에 미달했다. Kraken의 여러 네트워크 입출금 지연은 유지된다.",
+  "headline": "BTC와 ETH 하락 폭 확대, VIX 급등 표시",
+  "body": "OKX의 00:37 BTC는 11월 5일 오전 9시 대비 -4.81%, 00:56 ETH는 -7.11%다. CMC의 01:00 가격도 앞선 회차보다 낮아졌으며 스테이블코인 표본은 50bp 이탈 기준에 미달했다. VIX 공식 급등 표시는 독립 시세 검증이 남아 있다.",
   "unknown": "Kraken 장애의 정확한 영향 범위와 공통 원인 및 해소 여부, Circle xReserve의 고객별 실제 처리 완료와 Coinbase 제한 경로의 재활성화는 확인되지 않았다.",
-  "gap": "달러 지수와 S&P 500 시세 페이지가 열리지 않았다. OKX와 CMC 자료 시각은 다르고 Cboe 상세 시각대는 표시되지 않았다. SignalPlus의 해소와 Deribit 관련 보도의 공식 원문, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
+  "gap": "독립 주가지수·달러·VIX 시세 페이지와 Coinbase 공개 시세 API가 열리지 않았다. OKX와 CMC 자료 시각은 다르고 Cboe 상세 시각대는 표시되지 않았다. SignalPlus의 해소, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T16:01:30Z",
+      "kind": "새 사실",
+      "title": "BTC와 ETH, 오전 9시 대비 하락 폭 크게 확대",
+      "text": "OKX 현물 BTC의 00:37 체결가는 76,639.0 USDT로 11월 5일 오전 9시 시가 대비 -4.81%, ETH의 00:56 체결가는 2,252.10 USDT로 -7.11%다.\n\nCMC의 01:00 USD 집계도 BTC 75,946.29달러와 ETH 2,249.37달러로 앞선 회차보다 낮아졌다. 정확한 동시 시세나 독립적인 일간 등락률 검증은 아니다.",
+      "evidence": "한국시간 01:00에 동일 OKX 현물의 시가와 비교하고 CMC를 별도로 조회했다. 자료 시각과 호가 통화가 다르며 새 일간 임계값과 하락의 원인·지속성은 확정하지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/"
+      ]
+    },
+    {
+      "at": "2026-11-05T16:01:30Z",
+      "kind": "참고",
+      "title": "USDT와 USDC, 페그 이탈 기준 미달",
+      "text": "CMC의 01:00 집계에서 USDT는 0.9993달러로 목표 가격보다 7.1bp 낮고, USDC는 1.0004달러로 4.1bp 높았다. 이번 단일 표본은 50bp 이탈 기준에 미달했다.",
+      "evidence": "한국시간 01:00에 CMC 값을 직접 읽고 반올림 전 가격으로 이탈 폭을 계산했다. 관측 사이의 지속 상태는 확인하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T16:01:30Z",
+      "kind": "참고",
+      "title": "VIX 공식 표시 급등, 독립 시세 검증 필요",
+      "text": "Cboe의 11월 5일 VIX 표시는 23.69로 앞선 17.58보다 높아졌고 전일 종가 대비 등락률은 +42.62%다. 상세 기준 시각의 시간대와 독립 시세 대조가 확보되지 않아 현재 동시값으로 확정할 수 없다.",
+      "evidence": "한국시간 01:00에 공식 원문을 읽었다. 원문은 자료 시각을 11월 5일 15:35로 표시하고 최소 20분 지연을 명시하며 다른 시세 페이지는 열리지 않았다.",
+      "sources": [
+        "https://www.cboe.com/tradable-products/vix"
+      ]
+    },
     {
       "at": "2026-11-05T15:01:45Z",
       "kind": "참고",
