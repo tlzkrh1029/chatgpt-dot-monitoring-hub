@@ -1,14 +1,24 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T04:12:29.204Z",
-  "observedAt": "2026-11-05T04:12:21.543Z",
+  "publishedAt": "2026-11-05T05:30:31.418Z",
+  "observedAt": "2026-11-05T05:30:05.142Z",
   "checkStatus": "partial",
-  "headline": "Coinbase EVMSEI 송수신 제한, 기존 보안 사건 지속",
-  "body": "Coinbase는 EVMSEI 일부 사용자의 송수신 불가를 공지했다. 기존 Sonic 지연은 지속되며 Hedera와 Dfinity의 해결 공시는 유지된다. GitBook 사후보고, Chainalysis 서비스 중단과 Mercado 유지보수는 기존 상태다.",
-  "unknown": "EVMSEI 제한 원인과 복구 시점은 아직 공지되지 않았다. GitBook의 실제 고객 데이터 반출 범위, Chainalysis의 안전한 재개, Binance 전체 증명과 전면 정상화는 확인되지 않았다.",
+  "headline": "Chainalysis 전체 사용자 인증 정보 노출 공지",
+  "body": "Chainalysis는 전체 사용자의 비밀번호 해시와 활성 토큰 노출을 밝혔으며 무단 접근된 것으로 보이는 KYT 계정 고객에게 통지하고 있다. KYT와 주소 스크리닝 복구는 계획 단계다. Coinbase EVMSEI 제한과 기존 보안 사건은 이어진다.",
+  "unknown": "Chainalysis의 고객별 접근 피해와 안전한 복구 시점은 확인되지 않았다. GitBook의 실제 고객 데이터 반출 범위, EVMSEI 복구 시점과 Binance의 전체 증명 완료도 확인되지 않았다.",
   "gap": "Binance 최신 공시 본문은 이번 검색에서 확보하지 못했다. 전 거래소·프로토콜, X 전체 피드와 독립 온체인 검증은 수행하지 못했다.",
   "feed": [
+    {
+      "at": "2026-11-05T05:30:05.142Z",
+      "kind": "새 사실",
+      "title": "Chainalysis, 전체 사용자 인증 정보 노출과 KYT 무단 접근 통지",
+      "text": "Chainalysis는 전체 사용자의 이름·사용자명과 비밀번호 해시, 활성 토큰이 악성 행위자에게 노출됐다고 밝혔다. 무단 접근된 것으로 보이는 KYT 계정의 고객에게 직접 통지하고 있다.\n\n회사는 조사 데이터 접근이나 귀속 데이터 변조 증거는 없다고 설명했다. KYT와 주소 스크리닝의 복구는 계획 단계이며, 신뢰 IP 허용목록을 거친 비밀번호 재설정과 필요한 API 키 교체를 예고했다.",
+      "evidence": "한국시간 14:30에 공식 공지의 새 항목을 읽었다. 표시 시각은 11월 4일 23:00 EST, 즉 11월 5일 13:00이며 실제 본문 반영 시각은 확인되지 않았다.\n\n앞선 일부 비밀번호 노출 안내보다 범위가 넓어졌고, 고객별 접근 피해는 독립 검증하지 않았다.",
+      "sources": [
+        "https://www.chainalysis.com/blog/security-incident-october-30/"
+      ]
+    },
     {
       "at": "2026-11-05T03:25:06.342Z",
       "kind": "새 사실",
