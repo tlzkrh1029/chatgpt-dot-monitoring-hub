@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "category": "security",
-  "publishedAt": "2026-11-05T08:00:47.566Z",
-  "observedAt": "2026-11-05T08:00:47.565Z",
+  "publishedAt": "2026-11-05T09:00:36.160Z",
+  "observedAt": "2026-11-05T09:00:36.160Z",
   "checkStatus": "partial",
   "headline": "Chainalysis 전체 사용자 인증 정보 노출 공지",
   "body": "Chainalysis는 전체 사용자의 비밀번호 해시와 활성 토큰 노출을 밝혔으며 무단 접근된 것으로 보이는 KYT 계정 고객에게 통지하고 있다. KYT와 주소 스크리닝 복구는 계획 단계다. Coinbase EVMSEI 제한과 기존 보안 사건은 이어진다.",
