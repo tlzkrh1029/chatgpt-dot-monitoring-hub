@@ -1,14 +1,58 @@
 {
   "schemaVersion": 1,
   "category": "macro",
-  "publishedAt": "2026-11-05T11:21:47.337Z",
-  "observedAt": "2026-11-05T11:20:13Z",
+  "publishedAt": "2026-11-05T12:02:39.848Z",
+  "observedAt": "2026-11-05T12:02:02Z",
   "checkStatus": "partial",
-  "headline": "BTC와 ETH 시가 하회, 페그 이탈 기준 미달",
-  "body": "OKX의 20:00 BTC는 오전 9시 시가 대비 -0.28%, 20:16 ETH는 -0.21%다. CMC의 20:19 스테이블코인 표본은 50bp 이탈 기준에 미달했고, Cboe의 11월 5일 VIX 표시는 앞선 16.90에서 16.82로 낮아졌다.",
-  "unknown": "Circle xReserve의 고객별 실제 처리 완료와 Coinbase 제한 경로의 재활성화, 기존 보안 사건의 고객별 복구 결과는 확인되지 않았다.",
+  "headline": "Kraken 여러 네트워크 입출금 지연, 페그 이탈 기준 미달",
+  "body": "Kraken은 여러 네트워크의 입출금 지연을 공지했고 후속 해소 공지는 없다. OKX의 21:00 BTC는 오전 9시 대비 -0.21%, 20:59 ETH는 -0.16%이며 CMC의 21:00 스테이블코인 표본은 50bp 이탈 기준에 미달했다.",
+  "unknown": "Kraken 장애의 정확한 영향 범위와 공통 원인 및 해소 여부, Circle xReserve의 고객별 실제 처리 완료와 Coinbase 제한 경로의 재활성화는 확인되지 않았다.",
   "gap": "달러 지수와 S&P 500 시세 페이지가 열리지 않았다. OKX 자료 시각은 자산별로 다르고 Cboe 상세 시각대는 표시되지 않았다. FRB 수표 장애의 시작과 영향 범위 및 실제 처리 복구, 독립 종가와 에너지·지정학·파생의 최신 확인은 미완료이며 일봉 조건은 재판정하지 않았다.",
   "feed": [
+    {
+      "at": "2026-11-05T12:02:02Z",
+      "kind": "새 사실",
+      "title": "Kraken, 여러 네트워크 입출금 지연 공지",
+      "text": "Kraken은 19:19에 Ink, Optimism, Unichain, Shape, Gensyn, Fraxtal, Katana, X Layer, Base의 자금 게이트웨이 문제로 입출금이 지연될 수 있다고 공지했다. 다른 자금 경로는 정상이라고 설명하며 현재 상태는 원인 식별 단계다.\n\n공지 본문의 9개 네트워크와 하단 구성요소의 Sonic 표기가 달라 정확한 영향 범위는 확인이 필요하다.",
+      "evidence": "한국시간 21:02에 공식 개별 사건 원문을 읽었으며 후속 해소 공지는 없었다. 회사의 운영 장애 공지이며 해킹이나 손실, 체인 자체 중단으로 확인된 것은 아니다.",
+      "sources": [
+        "https://status.kraken.com/incidents/lq19kjjg863l"
+      ]
+    },
+    {
+      "at": "2026-11-05T12:02:02Z",
+      "kind": "참고",
+      "title": "BTC와 ETH, 오전 9시 시가 하회",
+      "text": "OKX 현물 BTC의 21:00 체결가는 80,335.1 USDT로 오전 9시 시가 대비 -0.21%, ETH의 20:59 체결가는 2,420.72 USDT로 -0.16%다.\n\nCMC의 21:00 USD 집계는 BTC 80,301.90달러와 ETH 2,418.21달러다.",
+      "evidence": "한국시간 21:00에 OKX 동일 현물의 시가와 가격을 비교하고 CMC를 별도로 조회했다. 자료 시각과 호가 통화가 달라 동시값으로 보지 않으며 새 급등급락 경계는 아직 정해지지 않았다.",
+      "sources": [
+        "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT",
+        "https://www.okx.com/api/v5/market/ticker?instId=ETH-USDT",
+        "https://coinmarketcap.com/currencies/bitcoin/",
+        "https://coinmarketcap.com/currencies/ethereum/"
+      ]
+    },
+    {
+      "at": "2026-11-05T12:02:02Z",
+      "kind": "참고",
+      "title": "USDT와 USDC, 페그 이탈 기준 미달",
+      "text": "CMC의 21:00 집계에서 USDT는 0.9989달러로 목표 가격보다 11.4bp 낮고, USDC는 0.9998달러로 1.5bp 낮았다. 이번 단일 표본은 50bp 이탈 기준에 미달했다.",
+      "evidence": "한국시간 21:00에 CMC 값을 직접 읽고 반올림 전 가격으로 이탈 폭을 계산했다. 관측 사이의 지속 상태는 확인하지 않았다.",
+      "sources": [
+        "https://coinmarketcap.com/currencies/tether/",
+        "https://coinmarketcap.com/currencies/usd-coin/"
+      ]
+    },
+    {
+      "at": "2026-11-05T12:02:02Z",
+      "kind": "참고",
+      "title": "VIX, 앞선 표시보다 하락",
+      "text": "Cboe의 11월 5일 VIX는 16.79로 앞선 표시 16.82보다 낮아졌고 전일 종가 대비 등락률은 +1.08%다. 상세 기준 시각의 시간대가 없어 현재 동시 시세로 확인되지는 않았다.",
+      "evidence": "한국시간 21:00에 공식 원문을 읽었다. 원문은 자료 시각을 11월 5일 11:32로 표시하고 최소 20분 지연을 명시한다.",
+      "sources": [
+        "https://www.cboe.com/tradable-products/vix"
+      ]
+    },
     {
       "at": "2026-11-05T11:20:13Z",
       "kind": "참고",
