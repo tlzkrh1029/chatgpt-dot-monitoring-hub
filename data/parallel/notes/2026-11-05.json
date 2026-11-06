@@ -4,7 +4,7 @@
   "date": "2026-11-05",
   "title": "아시아는 버텼고, 미국이 팔자 크립토가 80분 만에 따라갔다",
   "subtitle": "분석일 11/5 09:00~11/6 09:00 KST · CP1 16:00 / CP2 23:30 / CP3 06:00 / CP4 09:00 · 차트는 08:00~16:00 구간",
-  "asOf": "2026-11-06T02:40:00Z",
+  "asOf": "2026-11-06T02:50:00Z",
   "author": "Claude",
   "display": {
     "start": "08:00",
@@ -116,16 +116,30 @@
   ],
   "story": [
     {
-      "text": "09시, 코스피는 5,580으로 1.8% 낮게 열렸고 10시 16분 매도 사이드카가 걸렸다. 외국인은 11시 20분까지 1조 7천억, 마감까지 3조 3,928억을 팔았고 개인이 2조 2,722억을 받았다. 삼성전자 −7.57%, SK하이닉스 −9.46%, 어드반테스트 −14.71%. 국내 보도는 '블루웨이브 AI 규제 공포'와 'AI 인프라 투자 속도 조절·HBM 고점 부담'을 원인으로 적었다. 같은 시간 항셍은 +3.6%였고, BTC는 80,188~80,796달러 사이를 벗어나지 않았다. 16시 기준 BTC +0.16%, ETH +0.22%, ZEC +2.27%.",
+      "text": "09시, 코스피는 5,580으로 1.8% 낮게 열렸고 10시 16분 매도 사이드카가 걸렸다. 외국인은 11시 20분까지 1조 7천억, 마감까지 3조 3,928억을 팔았고 개인이 2조 2,722억을 받았다.",
       "sources": [
         {
           "label": "파이낸셜뉴스 오후시황(사이드카 10:16, 외국인 수급)",
           "url": "https://www.fnnews.com/news/202611051448316164"
-        },
+        }
+      ]
+    },
+    {
+      "text": "삼성전자 −7.57%, SK하이닉스 −9.46%, 어드반테스트 −14.71%. 국내 보도는 '블루웨이브 AI 규제 공포'와 'AI 인프라 투자 속도 조절·HBM 고점 부담'을 원인으로 적었다. 지수가 아니라 반도체가 빠진 날이다. 같은 코스피 안에서 셀트리온 +7.5%, 기아 +4.7%, KB금융 +3.4%가 올랐다.",
+      "sources": [
         {
           "label": "BusinessKorea 마감시황(종가·수급·원인)",
           "url": "https://www.businesskorea.co.kr/news/articleView.html?idxno=280605"
         },
+        {
+          "label": "파이낸셜뉴스(상승 종목)",
+          "url": "https://www.fnnews.com/news/202611051448316164"
+        }
+      ]
+    },
+    {
+      "text": "같은 시간 항셍은 +3.6%였고, BTC는 80,188~80,796달러 사이를 벗어나지 않았다. 16시 기준 BTC +0.16%, ETH +0.22%, ZEC +2.27%. 아시아가 7시간 동안 반도체를 던지는 동안 크립토는 움직이지 않았다.",
+      "sources": [
         {
           "label": "11/5 세션 자료(Yahoo 15분봉)",
           "url": "https://github.com/tlzkrh1029/chatgpt-dot-monitoring-hub/blob/main/data/parallel/sessions/2026-11-05.json"
@@ -137,16 +151,8 @@
       ]
     },
     {
-      "text": "16시부터 23시 30분까지는 아무 일도 없었다. 나스닥 선물은 09시 대비 −1.15%, S&P 선물 −0.23%, VIX 17. BTC는 16시 9분 80,675에서 23시 21분 79,258까지 완만하게 흘렀고 ZEC는 +0.55%로 아직 출발점 위였다. 23시 3분 바이낸스가 SignalPlus 연결 API 키를 예방 폐기한다고 공지했지만 가격 반응은 없었다. 23시 34분 미국이 열렸을 때 다우는 +0.6%, S&P −0.3%, 나스닥 −1%였다.",
+      "text": "16시부터 23시 30분까지는 아무 일도 없었다. 나스닥 선물은 09시 대비 −1.15%, S&P 선물 −0.23%, VIX 17. BTC는 16시 9분 80,675에서 23시 21분 79,258까지 완만하게 흘렀고 ZEC는 +0.55%로 아직 출발점 위였다.",
       "sources": [
-        {
-          "label": "Yahoo Finance 라이브(개장 09:34 ET)",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-november-5-dow-sp-500-nasdaq-plunge-chip-stocks-melt-down-193726491.html"
-        },
-        {
-          "label": "바이낸스 공지(SignalPlus)",
-          "url": "https://x.com/binance/status/2118295116716589383"
-        },
         {
           "label": "Yahoo NQ=F·ES=F·^VIX 15분봉 / Coin Metrics 1분",
           "url": "https://finance.yahoo.com/"
@@ -154,33 +160,82 @@
       ]
     },
     {
-      "text": "0시 35분, 나스닥이 −4%로 가속했다. 엔비디아 −6%, 마이크론 −12%, AMD −13%. BTC는 23시 31분 79,466에서 0시 53분 75,522까지 80분 동안 5.0% 내렸고 0시 42분 76,000을 깼다. 1시 17분 VIX가 +65%로 27.45, 4시 3분 나스닥이 200일선 아래로, 6시 1분 마감: S&P 500 −4.36%, 나스닥 −5.52%(조정 진입), 다우 −3.44%, 엔비디아 −9.35%, 필라델피아 반도체 −12%, 매그니피센트7 시총 −1조 달러. CNBC는 '중간선거 결과 뒤 데이터센터 증설이 늦어질 것이라는 우려'를, 노무라의 McElligott는 '헤지펀드가 2026년 수익을 확정하는 급격한 청산'을 꼽았다. 두 설명은 양립한다. 달러/원은 1,345에서 1,356으로 약해졌고 금은 +1.4%에서 +0.8%로 밀렸다.",
+      "text": "23시 3분 바이낸스가 SignalPlus 연결 API 키를 예방 폐기한다고 공지했지만 가격 반응은 없었다. 23시 34분 미국이 열렸을 때 다우는 +0.6%, S&P −0.3%, 나스닥 −1%였다. 선행 매도는 없었다. 경고라고 할 만한 건 개장 9분 전의 BTC 저점 79,258 하나뿐이었다.",
+      "sources": [
+        {
+          "label": "바이낸스 공지(SignalPlus)",
+          "url": "https://x.com/binance/status/2118295116716589383"
+        },
+        {
+          "label": "Yahoo Finance 라이브(개장 09:34 ET)",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-november-5-dow-sp-500-nasdaq-plunge-chip-stocks-melt-down-193726491.html"
+        }
+      ]
+    },
+    {
+      "text": "0시 35분, 나스닥이 −4%로 가속했다. 엔비디아 −6%, 마이크론 −12%, AMD −13%. BTC는 23시 31분 79,466에서 0시 53분 75,522까지 80분 동안 5.0% 내렸고 0시 42분 76,000을 깼다.",
       "sources": [
         {
           "label": "Yahoo Finance 라이브(시각별)",
           "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-november-5-dow-sp-500-nasdaq-plunge-chip-stocks-melt-down-193726491.html"
         },
         {
+          "label": "Coin Metrics 1분",
+          "url": "https://coinmetrics.io/community-network-data/"
+        }
+      ]
+    },
+    {
+      "text": "1시 17분 VIX가 +65%로 27.45. 4시 3분 나스닥이 200일선 아래로. 6시 1분 마감: S&P 500 −4.36%, 나스닥 −5.52%(조정 진입), 다우 −3.44%, 엔비디아 −9.35%, 필라델피아 반도체 −12%, 매그니피센트7 시총 −1조 달러. 11개 업종이 전부 내렸다.",
+      "sources": [
+        {
           "label": "CNBC 매그니피센트7 −1조 달러",
           "url": "https://www.cnbc.com/2026/11/05/stock-market-selloff-ai-fears.html"
         },
         {
-          "label": "Washington Post(선거 뒤 상승분 반납)",
-          "url": "https://www.washingtonpost.com/business/2026/11/05/us-stocks-slide-wiping-out-post-midterm-gains/"
-        },
-        {
-          "label": "Yahoo ^GSPC·NVDA·SPY·QQQ·KRW=X·GC=F 15분봉 / Coin Metrics 1분",
+          "label": "Yahoo ^GSPC·NVDA·SPY·QQQ 15분봉",
           "url": "https://finance.yahoo.com/"
         }
       ]
     },
     {
-      "text": "6시부터 9시까지 BTC는 75,164~76,085 사이에서 머물렀고 9시 75,971로 하루를 −5.55%에 닫았다. ETH −7.75%, HYPE −8.60%(8시 18분 신저점). ZEC만 6시 22분 저점 1,235에서 1,279로 3.5% 되올라 −1.29%, XMR −3.64%. 11/4에 '미국이 다시 팔면 내일 아시아는 2차 하락'이라고 적었던 조건문은 성립했고, 11/6 9시 50분 코스피는 4,923(−8.6%)이었다.",
+      "text": "원인은 둘로 갈렸다. CNBC는 '중간선거 결과 뒤 데이터센터 증설이 늦어질 것이라는 우려'를, 노무라의 McElligott는 '헤지펀드가 2026년 수익을 확정하는 급격한 청산'을 꼽았다. 두 설명은 양립한다. 전자는 반도체 −12%의 집중을, 후자는 금·크립토·전 업종의 동반 하락을 설명한다.",
+      "sources": [
+        {
+          "label": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/05/stock-market-selloff-ai-fears.html"
+        },
+        {
+          "label": "Yahoo Finance 라이브(노무라 인용 15:06 ET)",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-november-5-dow-sp-500-nasdaq-plunge-chip-stocks-melt-down-193726491.html"
+        },
+        {
+          "label": "Washington Post(선거 뒤 상승분 반납)",
+          "url": "https://www.washingtonpost.com/business/2026/11/05/us-stocks-slide-wiping-out-post-midterm-gains/"
+        }
+      ]
+    },
+    {
+      "text": "달러/원은 1,345에서 1,356으로 약해졌고 금은 +1.4%에서 +0.8%로 밀렸다. 11/4와 반대다. 그날은 주식이 팔려도 원화가 강했고 금이 올랐다. 이번에는 둘 다 아니었다. 위험회피 자금이 갈 곳이 없었다.",
+      "sources": [
+        {
+          "label": "Yahoo KRW=X·GC=F·DX-Y.NYB 15분봉",
+          "url": "https://finance.yahoo.com/"
+        }
+      ]
+    },
+    {
+      "text": "6시부터 9시까지 BTC는 75,164~76,085 사이에서 머물렀고 9시 75,971로 하루를 −5.55%에 닫았다. ETH −7.75%, HYPE −8.60%(8시 18분 신저점). ZEC만 6시 22분 저점 1,235에서 1,279로 3.5% 되올라 −1.29%, XMR −3.64%.",
       "sources": [
         {
           "label": "Coin Metrics 1분 기준가(06:00~09:00)",
           "url": "https://coinmetrics.io/community-network-data/"
-        },
+        }
+      ]
+    },
+    {
+      "text": "11/4에 '미국이 다시 팔면 내일 아시아는 2차 하락'이라고 적었던 조건문은 성립했다. 11/6 9시 50분 코스피는 4,923(−8.6%)이었다.",
+      "sources": [
         {
           "label": "11/4 노트 판정",
           "url": "https://github.com/tlzkrh1029/chatgpt-dot-monitoring-hub/blob/main/data/parallel/notes/2026-11-04.json"
@@ -192,15 +247,11 @@
       ]
     },
     {
-      "text": "왜 80분이었나. 바이낸스 무기한 미결제약정은 23시 94,910 BTC에서 01시 91,617 BTC로 3.5% 줄었다. 약 6억 달러어치 포지션이 2시간 안에 사라진 것이고, CoinGlass 집계로 그 24시간 청산은 10억 8천만 달러, 88%가 롱이었다. 테이커 매수/매도 비율은 23시 0.78로 매도가 공격적이었고, 현물에서도 00시대 거래량이 전날의 1.7배에 매수 비중 39%였다. 레버리지만 털린 게 아니라 현물도 팔렸다. 그리고 01시부터 가격이 76,000에 멈춘 채 미결제가 95,000대로 복원됐는데, 같은 시간 계정 롱/숏 비율이 1.39에서 2.93으로 뛰었다. 소액 계정이 하락을 사며 롱으로 몰린 것이다. 11/4에는 미결제가 거의 안 변했고 BTC는 2시간 45분 만에 92%를 되찾았다. 11/5에는 개인 롱이 바닥을 받쳤고, 그래서 숏커버라는 반등 연료가 없었다. 회복이 없는 이유다. 그리고 아시아를 무시한 이유는 간단하다. 바이낸스 BTC 현물 거래량이 아시아 7시간에 3,264 BTC, 미국 7시간에 14,814 BTC다. 가격을 정하는 주문은 미국 시간에 나온다.",
+      "text": "왜 80분이었나. 바이낸스 무기한 미결제약정은 23시 94,910 BTC에서 01시 91,617 BTC로 3.5% 줄었다. 약 6억 달러어치 포지션이 2시간 안에 사라진 것이고, CoinGlass 집계로 그 24시간 청산은 10억 8천만 달러, 88%가 롱이었다.",
       "sources": [
         {
-          "label": "Binance Futures openInterestHist·globalLongShortAccountRatio·takerlongshortRatio (1h)",
+          "label": "Binance Futures openInterestHist (1h)",
           "url": "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=1h&limit=48"
-        },
-        {
-          "label": "Binance spot klines BTCUSDT 1h (거래량·테이커 매수)",
-          "url": "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=48"
         },
         {
           "label": "crypto.news / CoinGlass 24h 청산 집계",
@@ -209,6 +260,28 @@
         {
           "label": "TokenPost 1시간 롱 청산 5.5억+",
           "url": "https://www.tokenpost.com/news/investing/49442"
+        }
+      ]
+    },
+    {
+      "text": "레버리지만 털린 게 아니다. 테이커 매수/매도 비율은 23시 0.78로 매도가 공격적이었고, 현물에서도 00시대 거래량이 전날의 1.7배에 매수 비중 39%였다. 현물도 팔렸다. 11/4의 '롱 청산이지 코인이 팔린 게 아니다'를 11/5에는 쓸 수 없다.",
+      "sources": [
+        {
+          "label": "Binance takerlongshortRatio (1h)",
+          "url": "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=1h&limit=48"
+        },
+        {
+          "label": "Binance spot klines BTCUSDT 1h (거래량·테이커 매수)",
+          "url": "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=48"
+        }
+      ]
+    },
+    {
+      "text": "왜 안 돌아왔나. 01시부터 가격이 76,000에 멈춘 채 미결제가 95,000대로 복원됐는데, 같은 시간 계정 롱/숏 비율이 1.39에서 2.93으로 뛰었다. 소액 계정이 하락을 사며 롱으로 몰린 것이다. 11/4에는 미결제가 거의 안 변했고 BTC는 2시간 45분 만에 92%를 되찾았다. 11/5에는 개인 롱이 바닥을 받쳤고, 그래서 숏커버라는 반등 연료가 없었다.",
+      "sources": [
+        {
+          "label": "Binance globalLongShortAccountRatio (1h)",
+          "url": "https://fapi.binance.com/futures/data/openInterestHist?symbol=BTCUSDT&period=1h&limit=48"
         },
         {
           "label": "CoinMarketCap 파생 지표(BTC 24h 청산)",
@@ -217,25 +290,48 @@
       ]
     },
     {
-      "text": "그래서 어떻게 읽나. 11/5 하루의 교훈은 '크립토는 아시아를 안 보고 미국을 본다'이다. 아시아 급락 7시간 동안 BTC가 정지해 있었던 것은 크립토가 선거 규제에 둔감해서가 아니라, 가격을 움직이는 주문과 레버리지가 미국 시간에 있기 때문이다. 미국 개장 80분 만에 BTC가 나스닥과 같은 기울기로 내렸고, 그 뒤로 둘 다 회복하지 않았다. 11/4와 달라진 것은 셋이다. 원화가 주식과 같이 약해졌고(외국인 이탈의 신호), 금이 위험회피 자금을 받지 못했고, 하락에 현물 매도와 개인 롱 유입이 섞여 바닥이 늦어졌다. 11/4와 같은 것은 크립토 안의 순서다. ZEC·XMR이 가장 덜 빠지고 HYPE가 가장 많이 빠졌다. 이틀 연속이면 우연으로 보기 어렵다. 원인은 하나로 못 박지 않는다. '선거 뒤 데이터센터 규제·증설 둔화'는 반도체 −12%의 집중을, '헤지펀드의 연간 수익 확정 매도'는 금·크립토·11개 업종 전부의 동반 하락을 설명한다. BTC는 두 번째 설명 쪽에 더 가깝다. IBIT를 쥔 매크로 펀드에게 BTC는 엔비디아와 같은 장부의 '장군'이다.",
+      "text": "왜 아시아를 무시했나. 바이낸스 BTC 현물 거래량이 아시아 7시간에 3,264 BTC, 미국 7시간에 14,814 BTC다. 가격을 정하는 주문은 미국 시간에 나온다. 아시아 급락은 크립토에 '소식'이었고 미국 급락은 '주문'이었다.",
+      "sources": [
+        {
+          "label": "Binance spot klines BTCUSDT 1h",
+          "url": "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=48"
+        }
+      ]
+    },
+    {
+      "text": "그래서 어떻게 읽나. 11/5 하루의 교훈은 '크립토는 아시아를 안 보고 미국을 본다'이다. 아시아 급락 7시간 동안 BTC가 정지해 있었던 것은 크립토가 선거 규제에 둔감해서가 아니라, 가격을 움직이는 주문과 레버리지가 미국 시간에 있기 때문이다. 미국 개장 80분 만에 BTC가 나스닥과 같은 기울기로 내렸고, 그 뒤로 둘 다 회복하지 않았다.",
       "sources": [
         {
           "label": "이 노트의 사실표(CP0~CP4)",
           "url": "https://github.com/tlzkrh1029/chatgpt-dot-monitoring-hub/tree/main/data/parallel"
-        },
+        }
+      ]
+    },
+    {
+      "text": "11/4와 달라진 것은 셋이다. 원화가 주식과 같이 약해졌고(외국인 이탈의 신호), 금이 위험회피 자금을 받지 못했고, 하락에 현물 매도와 개인 롱 유입이 섞여 바닥이 늦어졌다. 11/4와 같은 것은 크립토 안의 순서다. ZEC·XMR이 가장 덜 빠지고 HYPE가 가장 많이 빠졌다. 이틀 연속이면 우연으로 보기 어렵다.",
+      "sources": [
         {
           "label": "11/4 노트(크립토 순서 비교)",
           "url": "https://github.com/tlzkrh1029/chatgpt-dot-monitoring-hub/blob/main/data/parallel/notes/2026-11-04.json"
-        },
+        }
+      ]
+    },
+    {
+      "text": "원인은 하나로 못 박지 않는다. '선거 뒤 데이터센터 규제·증설 둔화'는 반도체 −12%의 집중을, '헤지펀드의 연간 수익 확정 매도'는 금·크립토·11개 업종 전부의 동반 하락을 설명한다. BTC는 두 번째 설명 쪽에 더 가깝다. IBIT를 쥔 매크로 펀드에게 BTC는 엔비디아와 같은 장부의 '장군'이다.",
+      "sources": [
         {
           "label": "Yahoo Finance 라이브(노무라 McElligott 인용 15:06 ET)",
           "url": "https://finance.yahoo.com/markets/live/stock-market-today-thursday-november-5-dow-sp-500-nasdaq-plunge-chip-stocks-melt-down-193726491.html"
+        },
+        {
+          "label": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/05/stock-market-selloff-ai-fears.html"
         }
       ]
     }
   ],
   "verdict": "**선거 충격 2일차는 아시아가 아니라 미국에서 터졌고, 크립토는 미국을 따라갔다.** 09:00→09:00 기준 BTC −5.55%, ETH −7.75%, HYPE −8.60%, ZEC −1.29%, XMR −3.64%, 나스닥100 선물 −6.69%. 아시아 급락→크립토 전염은 없었고(거래가 없었다), 미국 급락→크립토 전염은 80분 만에 끝났다(미결제 −3.5%, 롱 청산 88%, 현물 매도 동반). 회복이 없는 이유는 개인 롱이 바닥을 받쳐 숏커버 연료가 없기 때문이다. 다음 분석일(11/6)은 아시아 2차 하락으로 시작했다(코스피 09:50 −8.6%). 볼 것은 BTC 75,000, 바이낸스 롱/숏 2.9의 해소, 11/5 ETF 유출, HYPE 상대약세 유지, 11/6 미국이 반등하는지다.",
-  "footnote": "작성 Claude(claude-room). 사실표는 Coin Metrics Community ReferenceRateUSD 1분 자료(CC BY-NC 4.0)와 Yahoo Finance 15분봉을 11/6 09:50 KST에 직접 받아 만들었다. 크립토는 CP 정각 1분 값, 그 외는 CP 직전 15분봉 종가(VIX·10년물은 미국 거래시간만 있어 CP0·CP1은 11/5 06:15·05:05 값). 09:00 대비 %는 CP0 값으로 계산했고 차트(08:00 대비)와 기준이 다르다. 미국 지수 종가는 Yahoo 일봉과 일치 확인. 외국인 수급·사이드카 시각은 보도 기준. 원인 서술은 보도 인용이며 검증하지 않았다. 청산은 CoinGlass(crypto.news 전재, 04:02 KST 24h)와 CMC(11/6 11:20 KST 24h) 두 집계를 병기했고 창이 달라 수치가 다르다. 미결제·롱숏·테이커·현물 거래량은 바이낸스 BTCUSDT 단일 거래소 값이다. 11/5 미국 거래일 ETF 흐름은 미공개(Farside 403)로 이월. 반론 항목의 Dot 인용은 Dot의 11/5 노트(notes-archive/2026-11-05.dot.json), GPT 인용은 11/4 채널 대화 기준. 1차 작성 11/6 09:50, 레버리지·대조군·반론 보강 11:40 KST.",
+  "footnote": "작성 Claude(claude-room). 사실표는 Coin Metrics Community ReferenceRateUSD 1분 자료(CC BY-NC 4.0)와 Yahoo Finance 15분봉을 11/6 09:50 KST에 직접 받아 만들었다. 크립토는 CP 정각 1분 값, 그 외는 CP 직전 15분봉 종가(VIX·10년물은 미국 거래시간만 있어 CP0·CP1은 11/5 06:15·05:05 값). 09:00 대비 %는 CP0 값으로 계산했고 차트(08:00 대비)와 기준이 다르다. 미국 지수 종가는 Yahoo 일봉과 일치 확인. 외국인 수급·사이드카 시각은 보도 기준. 원인 서술은 보도 인용이며 검증하지 않았다. 청산은 CoinGlass(crypto.news 전재, 04:02 KST 24h)와 CMC(11/6 11:20 KST 24h) 두 집계를 병기했고 창이 달라 수치가 다르다. 미결제·롱숏·테이커·현물 거래량은 바이낸스 BTCUSDT 단일 거래소 값이다. 11/5 미국 거래일 ETF 흐름은 미공개(Farside 403)로 이월. 반론 항목의 Dot 인용은 Dot의 11/5 노트(notes-archive/2026-11-05.dot.json), GPT 인용은 11/4 채널 대화 기준. 1차 작성 11/6 09:50, 레버리지·대조군·반론 보강 11:40, 스토리텔링 단락 분할(6→18) 11:50 KST.",
   "events": [
     {
       "id": "sidecar-kospi",
