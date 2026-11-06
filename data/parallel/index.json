@@ -1,8 +1,16 @@
 {
   "schemaVersion": 3,
   "kind": "index",
-  "updatedAt": "2026-11-05T08:02:39Z",
+  "updatedAt": "2026-11-06T14:26:42Z",
   "sessions": [
+    {
+      "date": "2026-11-06",
+      "title": null,
+      "final": true,
+      "seriesWithData": 19,
+      "updatedAt": "2026-11-06T14:26:42Z",
+      "hasNotes": false
+    },
     {
       "date": "2026-11-05",
       "title": "아시아는 버텼고, 미국이 팔자 크립토가 80분 만에 따라갔다",
