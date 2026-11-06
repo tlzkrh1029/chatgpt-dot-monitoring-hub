@@ -505,12 +505,14 @@
       const at = C.toMs(p.at);
       if (!Number.isFinite(at)) return;
       const end = C.toMs(p.end);
-      cards.push({ id: stlId(p.id) || `stl-${i}`, part: p.part, at, end: Number.isFinite(end) && end > at ? end : null,
+      cards.push({ src: p, id: stlId(p.id) || `stl-${i}`, part: p.part, at, end: Number.isFinite(end) && end > at ? end : null,
         text: p.text, sources: (Array.isArray(p.sources) ? p.sources : []).filter((x) => x && isText(x.label)),
         links: (Array.isArray(p.links) ? p.links : []).filter((l) => l && stlId(l.to) && STL_LINK_KINDS.includes(l.kind))
           .map((l) => ({ to: l.to, kind: l.kind, note: isText(l.note) ? l.note : '' })) });
     });
     if (!cards.length) return null;
+    const onTimeline = new Set(cards.map((c) => c.src));
+    const rest = list.filter((p) => p && isText(p.text) && !onTimeline.has(p));
     const ids = new Set(cards.map((c) => c.id));
     const links = [];
     for (const c of cards) for (const l of c.links) if (ids.has(l.to) && l.to !== c.id) links.push({ from: c.id, to: l.to, kind: l.kind, note: l.note });
@@ -523,7 +525,7 @@
     }).filter(Boolean).sort((a, b) => a.at - b.at);
     const hasRails = bands.some((b) => b.left.length || b.right.length);
     const names = notes && notes.rails && typeof notes.rails === 'object' ? notes.rails : {};
-    return { cards: cards.slice().sort((a, b) => a.at - b.at), links, bands,
+    return { cards: cards.slice().sort((a, b) => a.at - b.at), rest, links, bands,
       rails: hasRails ? { left: isText(names.left) ? names.left : '', right: isText(names.right) ? names.right : '' } : null };
   }
 
@@ -552,6 +554,19 @@
     const y = (t) => sortedBands.reduce((v, b) => (t >= b ? v + STL_BAND_PX : v), raw(t));
     const yBand = (b) => sortedBands.reduce((v, x) => (b > x ? v + STL_BAND_PX : v), raw(b));
     return { y, yBand, folds, top: t0, end: pts[pts.length - 1] };
+  }
+
+  /** One story paragraph with its source line (shared by the paragraph list, the timeline tail and the tabs). */
+  function paraHtml(p) {
+    const sources = (Array.isArray(p.sources) ? p.sources : []).filter((x) => x && isText(x.label));
+    const src = sources.length ? `<p class="src">출처: ${sources.map((x) => link(x.url, esc(x.label))).join(' · ')}</p>` : '';
+    return `<div class="para"><p>${inline(p.text)}</p>${src}</div>`;
+  }
+
+  /** The paragraphs that are not on the timeline (cross-market reading, verdict-like paragraphs), full width under it. */
+  function timelineRestHtml(m) {
+    if (!m.rest.length) return '';
+    return `<div class="stl-rest"><h3 class="stl-resthd">교차 읽기</h3>${m.rest.map(paraHtml).join('')}</div>`;
   }
 
   /** Static skeleton of the timeline; positions are applied by layoutStoryTimeline in the browser. */
@@ -583,7 +598,50 @@
     const legend = '<p class="stl-legend">세로 = 시각(6시간 넘는 빈 구간은 접음) · 가로 = 시장 · 띠 = 체크포인트 종합'
       + (m.links.length ? ' · 실선 → 전염, 점선 ⇢✕ 무반응, 회색 ↔ 대조' : '') + '</p>';
     return `<div class="stl" data-cols="${cols.length}" data-rails="${m.rails ? '1' : '0'}"><div class="stl-head">${head}</div>`
-      + `<div class="stl-body">${body}${bands}${links}</div>${legend}</div>`;
+      + `<div class="stl-body">${body}${bands}${links}</div>${legend}${timelineRestHtml(m)}</div>`;
+  }
+
+  const STL_NEAR_MS = 3 * HOUR; // a "same time" chip points at the nearest card of another market within this
+
+  /**
+   * Narrow-screen form of the timeline (시안 C): tabs 아시아 / 크립토 / 미국 / 교차, each a list of that market's cards in
+   * time order; every card ends with chips to the nearest card (within 3 h) of each other market, which switch the tab
+   * and scroll there. `active` picks the open tab (default: the first market that has cards).
+   */
+  function storyTabsHtml(notes, refDate, active) {
+    const m = storyTimelineModel(notes);
+    if (!m) return '';
+    const parts = STL_PARTS.filter((p) => m.cards.some((c) => c.part === p));
+    const tabs = parts.map((p) => ({ key: p, label: STL_PART_LABELS[p] })).concat(m.rest.length ? [{ key: 'rest', label: '교차 읽기' }] : []);
+    const open = tabs.some((t) => t.key === active) ? active : tabs[0].key;
+    const nearest = (card, part) => {
+      let best = null;
+      for (const c of m.cards) {
+        if (c.part !== part) continue;
+        const d = Math.abs(c.at - card.at);
+        if (d <= STL_NEAR_MS && (!best || d < best.d)) best = { c, d };
+      }
+      return best ? best.c : null;
+    };
+    const head = `<div class="stl-tabbar" role="tablist">${tabs.map((t) => `<button type="button" role="tab" class="stl-tab stl-tab-${esc(t.key)}" data-stl-tab="${esc(t.key)}" aria-selected="${t.key === open}">${esc(t.label)}</button>`).join('')}</div>`;
+    const panels = tabs.map((t) => {
+      let inner;
+      if (t.key === 'rest') inner = m.rest.map(paraHtml).join('');
+      else {
+        inner = m.cards.filter((c) => c.part === t.key).map((c) => {
+          const when = c.end ? `${clock(c.at, refDate)}–${clock(c.end, refDate)}` : clock(c.at, refDate);
+          const src = c.sources.length ? `<p class="src">출처: ${c.sources.map((x) => link(x.url, esc(x.label))).join(' · ')}</p>` : '';
+          const chips = STL_PARTS.filter((p) => p !== t.key).map((p) => {
+            const n = nearest(c, p);
+            return n ? `<button type="button" class="stl-chip stl-chip-${p}" data-stl-goto="${esc(n.id)}" data-stl-part="${p}">${esc(STL_PART_LABELS[p])} ${esc(clock(n.at, refDate))} ▸</button>` : '';
+          }).join('');
+          return `<article class="stl-card stl-${t.key}" id="stl-${esc(c.id)}"><p><span class="stl-t">${esc(when)}</span>${inline(c.text)}</p>${src}`
+            + `${chips ? `<p class="stl-xref">같은 시각 ${chips}</p>` : ''}</article>`;
+        }).join('');
+      }
+      return `<div class="stl-panel" role="tabpanel" data-stl-panel="${esc(t.key)}"${t.key === open ? '' : ' hidden'}>${inner}</div>`;
+    }).join('');
+    return `<div class="stl stl-tabs">${head}${panels}</div>`;
   }
 
   /**
@@ -659,6 +717,7 @@
     // links
     const old = body.querySelector('svg.stl-links');
     if (old) old.remove();
+    for (const n of body.querySelectorAll('.stl-lbl')) n.remove();
     const specs = Array.from(body.querySelectorAll('.stl-link'));
     if (specs.length && win && win.document) {
       const d = win.document;
@@ -690,24 +749,23 @@
         svg.appendChild(path);
         const note = spec.getAttribute('data-note');
         if (note) {
-          const g = d.createElementNS(SVG_NS, 'g');
-          const rect = d.createElementNS(SVG_NS, 'rect');
-          const text = d.createElementNS(SVG_NS, 'text');
-          text.setAttribute('x', ax + (bx - ax) * 0.4);
-          text.setAttribute('y', (ay + by) / 2 - 8);
-          text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('class', 'stl-lbl');
-          text.textContent = note;
-          g.appendChild(rect);
-          g.appendChild(text);
-          svg.appendChild(g);
-          const tb = text.getBBox();
-          rect.setAttribute('x', tb.x - 6);
-          rect.setAttribute('y', tb.y - 3);
-          rect.setAttribute('width', tb.width + 12);
-          rect.setAttribute('height', tb.height + 6);
-          rect.setAttribute('rx', 4);
-          rect.setAttribute('class', 'stl-lblbg');
+          const pill = d.createElement('span');
+          pill.className = 'stl-lbl';
+          pill.textContent = note;
+          body.appendChild(pill);
+          const w = pill.offsetWidth;
+          const hh = pill.offsetHeight;
+          let x = Math.max(0, mx - w / 2);
+          let y = (ay + by) / 2 - hh / 2;
+          const taken = Array.from(body.querySelectorAll('.stl-rchip, .stl-lbl')).filter((n) => n !== pill).map((n) => n.getBoundingClientRect());
+          const clash = (top) => taken.some((r) => {
+            const rx = (r.left - br.left) / zoom;
+            const ry = (r.top - br.top) / zoom;
+            return x < rx + r.width / zoom && x + w > rx && top < ry + r.height / zoom && top + hh > ry;
+          });
+          for (let k = 0; k < 6 && clash(y); k++) y += hh + 4;
+          pill.style.left = `${x}px`;
+          pill.style.top = `${y}px`;
         }
       }
       body.appendChild(svg);
@@ -1107,6 +1165,7 @@
       date: dateParam(win.location.search),
       pending: null, // newest session date while the default view shows an older final session
       storyTimeline: false, // the story section currently shows the three-market timeline
+      storyTab: null, // open tab of the narrow-screen story tabs
       error: '',
       failures: 0,
       seq: 0,
@@ -1435,8 +1494,9 @@
     /** Story: the time-scaled three-market timeline when the notes are tagged for it and the page is wide enough, else the paragraph list. */
     function renderStory(n, s) {
       const wide = Math.floor(el.box.clientWidth || 0) >= STL_MIN_WIDTH;
-      const html = (wide && s ? storyTimelineHtml(n, s.date) : '') || storyHtml(n);
-      const timeline = wide && !!(s && storyTimelineHtml(n, s.date));
+      const tagged = !!(s && storyTimelineModel(n));
+      const html = (tagged ? (wide ? storyTimelineHtml(n, s.date) : storyTabsHtml(n, s.date, state.storyTab)) : '') || storyHtml(n);
+      const timeline = wide && tagged;
       el.storySec.classList.toggle('stl-wide', timeline);
       const changed = setHtml(el.story, html);
       el.storySec.hidden = !html;
@@ -1770,6 +1830,24 @@
     el.pngLight.addEventListener('click', () => exportPng('light', el.pngLight));
     el.pngDark.addEventListener('click', () => exportPng('dark', el.pngDark));
 
+    // ------------------------------------------------ story tabs (narrow screens)
+
+    el.story.addEventListener('click', (ev) => {
+      const t = ev.target && ev.target.closest ? ev.target.closest('[data-stl-tab], [data-stl-goto]') : null;
+      if (!t || !el.story.contains(t)) return;
+      const key = t.getAttribute('data-stl-tab') || t.getAttribute('data-stl-part');
+      const tabs = el.story.querySelector('.stl-tabs');
+      if (!tabs || !key) return;
+      state.storyTab = key;
+      for (const b of tabs.querySelectorAll('[data-stl-tab]')) b.setAttribute('aria-selected', String(b.getAttribute('data-stl-tab') === key));
+      for (const p of tabs.querySelectorAll('[data-stl-panel]')) p.hidden = p.getAttribute('data-stl-panel') !== key;
+      const goto = t.getAttribute('data-stl-goto');
+      if (goto) {
+        const card = el.story.querySelector(`#stl-${CSS.escape(goto)}`);
+        if (card && typeof card.scrollIntoView === 'function') card.scrollIntoView({ block: 'center' });
+      }
+    });
+
     // ------------------------------------------------ resize
 
     let resizeTimer = null;
@@ -1803,7 +1881,7 @@
     notesNotice, pngFileName, pngFooter,
     shortDate, longDate, safeUrl,
     headlineHtml, insightsHtml, sectionsHtml, watchHtml, storyHtml, verdictHtml, eventsHtml,
-    storyTimelineModel, storyTimelineHtml, timelineScale, layoutStoryTimeline,
+    storyTimelineModel, storyTimelineHtml, storyTabsHtml, timelineScale, layoutStoryTimeline,
     timetableHtml, tableBasisText, captionText, baselineNotes, providerNames, footerHtml,
     panelSeries, colorSlots, plotBounds, timeToX, xToTime, snapTime, latestTime, sliderValues, cursorMarks,
     tooltipHtml, readoutText, svgSize,
