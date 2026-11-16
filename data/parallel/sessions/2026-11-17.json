@@ -1,0 +1,413 @@
+{
+  "schemaVersion": 3,
+  "kind": "session",
+  "date": "2026-11-17",
+  "timezone": "Asia/Seoul",
+  "window": {
+    "start": "2026-11-16T23:00:00Z",
+    "end": "2026-11-17T07:00:00Z"
+  },
+  "intervalMinutes": 15,
+  "generatedAt": "2026-11-16T23:25:16Z",
+  "final": false,
+  "series": [
+    {
+      "id": "kospi",
+      "panel": "indices",
+      "label": "코스피",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 5290.53,
+        "label": "11/13 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "^KS11"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:03Z",
+      "points": []
+    },
+    {
+      "id": "nikkei",
+      "panel": "indices",
+      "label": "니케이225",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 61142.35,
+        "label": "11/13 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "^N225"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:04Z",
+      "points": []
+    },
+    {
+      "id": "taiex",
+      "panel": "indices",
+      "label": "대만 가권",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 43675.12,
+        "label": "11/13 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "^TWII"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:06Z",
+      "points": []
+    },
+    {
+      "id": "hsi",
+      "panel": "indices",
+      "label": "항셍",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 23637.6,
+        "label": "11/13 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "^HSI"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:07Z",
+      "points": []
+    },
+    {
+      "id": "nq",
+      "panel": "indices",
+      "label": "나스닥100 선물",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 27310.25,
+        "label": "08:00 KST 시가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "NQ=F"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:08Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 27310.25, 0],
+        ["2026-11-16T23:15:00Z", 27309.5, -0.003],
+        ["2026-11-16T23:15:07Z", 27314.5, 0.016]
+      ]
+    },
+    {
+      "id": "skhynix",
+      "panel": "ai",
+      "label": "SK하이닉스",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 1120000,
+        "label": "11/16 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "000660.KS"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:09Z",
+      "points": []
+    },
+    {
+      "id": "samsung",
+      "panel": "ai",
+      "label": "삼성전자",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 196800,
+        "label": "11/16 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "005930.KS"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:10Z",
+      "points": []
+    },
+    {
+      "id": "tsmc",
+      "panel": "ai",
+      "label": "TSMC",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 2215,
+        "label": "11/16 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "2330.TW"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:11Z",
+      "points": []
+    },
+    {
+      "id": "softbank",
+      "panel": "ai",
+      "label": "소프트뱅크",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 3416,
+        "label": "11/16 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "9984.T"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:12Z",
+      "points": []
+    },
+    {
+      "id": "advantest",
+      "panel": "ai",
+      "label": "어드반테스트",
+      "basis": "prevClose",
+      "baseline": {
+        "value": 27205,
+        "label": "11/16 종가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "6857.T"
+      },
+      "status": "missing",
+      "note": "자료 없음(휴장 또는 개장 전)",
+      "fetchedAt": "2026-11-16T23:25:13Z",
+      "points": []
+    },
+    {
+      "id": "btc",
+      "panel": "crypto",
+      "label": "BTC",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 65256.53,
+        "label": "08:00 KST"
+      },
+      "source": {
+        "provider": "coinmetrics",
+        "symbol": "btc"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:03Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 65256.53, 0],
+        ["2026-11-16T23:15:00Z", 65232.66, -0.037],
+        ["2026-11-16T23:25:00Z", 65149.29, -0.164]
+      ]
+    },
+    {
+      "id": "eth",
+      "panel": "crypto",
+      "label": "ETH",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 1826.48,
+        "label": "08:00 KST"
+      },
+      "source": {
+        "provider": "coinmetrics",
+        "symbol": "eth"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:03Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 1826.48, 0],
+        ["2026-11-16T23:15:00Z", 1827.75, 0.07],
+        ["2026-11-16T23:25:00Z", 1822.99, -0.191]
+      ]
+    },
+    {
+      "id": "hype",
+      "panel": "crypto",
+      "label": "HYPE",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 70.09,
+        "label": "08:00 KST"
+      },
+      "source": {
+        "provider": "coinmetrics",
+        "symbol": "hype"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:03Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 70.09, 0],
+        ["2026-11-16T23:15:00Z", 70.5, 0.585],
+        ["2026-11-16T23:25:00Z", 70.30722775, 0.31]
+      ]
+    },
+    {
+      "id": "zec",
+      "panel": "crypto",
+      "label": "ZEC",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 911.81,
+        "label": "08:00 KST"
+      },
+      "source": {
+        "provider": "coinmetrics",
+        "symbol": "zec"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:03Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 911.81, 0],
+        ["2026-11-16T23:15:00Z", 913.11342, 0.143],
+        ["2026-11-16T23:25:00Z", 907.2275982, -0.503]
+      ]
+    },
+    {
+      "id": "xmr",
+      "panel": "crypto",
+      "label": "XMR",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 498.0561453,
+        "label": "08:00 KST"
+      },
+      "source": {
+        "provider": "coinmetrics",
+        "symbol": "xmr"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:03Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 498.0561453, 0],
+        ["2026-11-16T23:15:00Z", 498.0264453, -0.006],
+        ["2026-11-16T23:25:00Z", 493.6267497, -0.889]
+      ]
+    },
+    {
+      "id": "dxy",
+      "panel": "fx",
+      "label": "달러지수",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 103.591,
+        "label": "08:00 KST"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "DX-Y.NYB"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:15Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 103.591, 0],
+        ["2026-11-16T23:04:59Z", 103.586, -0.005]
+      ]
+    },
+    {
+      "id": "usdkrw",
+      "panel": "fx",
+      "label": "달러/원",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 1335.85,
+        "label": "08:00 KST"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "KRW=X"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:15Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 1335.85, 0],
+        ["2026-11-16T23:15:00Z", 1335.95, 0.007],
+        ["2026-11-16T23:24:57Z", 1335.51, -0.025]
+      ]
+    },
+    {
+      "id": "usdjpy",
+      "panel": "fx",
+      "label": "달러/엔",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 159.397,
+        "label": "08:00 KST"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "JPY=X"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:16Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 159.397, 0],
+        ["2026-11-16T23:15:00Z", 159.464, 0.042],
+        ["2026-11-16T23:25:02Z", 159.451, 0.034],
+        ["2026-11-16T23:25:13Z", 159.459, 0.039]
+      ]
+    },
+    {
+      "id": "gold",
+      "panel": "fx",
+      "label": "금 선물",
+      "basis": "windowStart",
+      "baseline": {
+        "value": 3859.5,
+        "label": "08:00 KST 시가"
+      },
+      "source": {
+        "provider": "yahoo",
+        "symbol": "GC=F"
+      },
+      "status": "ok",
+      "note": "",
+      "fetchedAt": "2026-11-16T23:25:16Z",
+      "points": [
+        ["2026-11-16T23:00:00Z", 3859.5, 0],
+        ["2026-11-16T23:15:00Z", 3855.3, -0.109],
+        ["2026-11-16T23:15:02Z", 3855.4, -0.106]
+      ]
+    }
+  ],
+  "providers": [
+    {
+      "id": "yahoo",
+      "label": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/",
+      "note": "15분봉 · 개인 비상업 열람용 · 거래소별 지연 가능"
+    },
+    {
+      "id": "coinmetrics",
+      "label": "Coin Metrics Community",
+      "url": "https://coinmetrics.io/community-network-data/",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/",
+      "note": "ReferenceRateUSD 1분 기준가격의 15분 시각 표본"
+    }
+  ]
+}
