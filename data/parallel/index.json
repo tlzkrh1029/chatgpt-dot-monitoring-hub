@@ -1,8 +1,16 @@
 {
   "schemaVersion": 3,
   "kind": "index",
-  "updatedAt": "2026-11-13T14:51:12Z",
+  "updatedAt": "2026-11-16T02:41:28Z",
   "sessions": [
+    {
+      "date": "2026-11-16",
+      "title": null,
+      "final": false,
+      "seriesWithData": 19,
+      "updatedAt": "2026-11-16T02:41:28Z",
+      "hasNotes": false
+    },
     {
       "date": "2026-11-13",
       "title": null,
