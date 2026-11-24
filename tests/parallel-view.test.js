@@ -577,7 +577,7 @@ test('the stylesheet keeps pinch-zoom on the chart, prices in the narrow tooltip
 test('parallel.html wires the hub tabs, landmarks, every id the view needs and the scripts in order', () => {
   const html = read('parallel.html');
   assert.ok(html.includes('<nav class="page-tabs" aria-label="상황판 화면"><a href="./">기존 상황판</a>'
-    + '<a href="parallel.html" aria-current="page">병렬 타임라인</a><a href="election-results.html">선거 결과</a></nav>'));
+    + '<a href="parallel.html" aria-current="page">병렬 타임라인</a></nav>'));
   assert.deepEqual([...html.matchAll(/<script src="([^"]+)"( defer)?><\/script>/g)].map((m) => [m[1], !!m[2]]),
     [['parallel-core.js', true], ['parallel-chart.js', true], ['parallel-view.js', true]]);
   assert.match(html, /<html lang="ko" data-theme="dark">/);

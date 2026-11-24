@@ -1,5 +1,5 @@
 /* Parallel timeline tab (병렬 타임라인 v3).
- * Tokens follow the hub (index.html, election-results.css). Default dark; light via html[data-theme="light"].
+ * Tokens follow the hub (index.html). Default dark; light via html[data-theme="light"].
  * --s0..--s4 must match ParallelCore.COLORS (dark / light) so swatches match the chart lines.
  */
 :root {

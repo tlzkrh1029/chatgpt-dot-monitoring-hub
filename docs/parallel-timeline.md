@@ -429,7 +429,7 @@ npm run validate
 
 - `npm run test:parallel`(`node --test tests/parallel-*.test.js`)은 이 탭의 테스트만 실행합니다. 계산(`parallel-core.js`), 차트, 화면과 그 동작, 수집기, 워크플로와 운영 스크립트, Pages 확인 테스트가 들어 있습니다. 수집기, 점검 모드, Pages 확인 테스트는 `tests/fixtures/parallel/`의 작은 합성 자료와 가짜 응답만 쓰고, 실제 제공자나 GitHub에는 요청하지 않습니다. 워크플로는 이 테스트를 `PARALLEL_SKIP_LIVE_DATA_TESTS=1`과 함께 실행해, 저장소의 실제 자료 파일을 읽는 테스트를 건너뜁니다.
 - `node scripts/validate-parallel.js [--notes=warn] [폴더]`는 `data/parallel/`(또는 준 폴더)의 index, 세션, 노트를 검사합니다. 파일 이름과 `date`가 같은지, index가 세션 파일을 빠짐없이 나열하는지도 확인합니다. 종료 코드는 정상이면 0, 오류가 있으면 1, 사용법 오류면 2입니다. `--notes=warn`을 주면 노트의 오류를 경고로만 알립니다.
-- `npm test`는 `tests/*.test.js` 전체를 실행하고, `npm run validate`는 기존 상황판의 `data.json`과 다섯 범주 파일, 병렬 타임라인의 자료(노트까지 엄격하게), 선거 결과 파일을 차례로 검사합니다. 이 두 명령은 이 탭의 워크플로가 실행하지 않으므로, 다른 탭의 자료나 테스트가 시세 게시를 막지 않습니다.
+- `npm test`는 `tests/*.test.js` 전체를 실행하고, `npm run validate`는 기존 상황판의 `data.json`과 다섯 범주 파일, 병렬 타임라인의 자료(노트까지 엄격하게)를 차례로 검사합니다. 이 두 명령은 이 탭의 워크플로가 실행하지 않으므로, 다른 탭의 자료나 테스트가 시세 게시를 막지 않습니다.
 - 노트 하나만 빠르게 확인하려면 다음을 실행합니다.
 
 ~~~sh
