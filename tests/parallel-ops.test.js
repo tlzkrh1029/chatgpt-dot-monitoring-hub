@@ -410,7 +410,7 @@ test('dispatch inputs: force and replace_window default to false; notes pushes t
   assert.equal(on.workflow_dispatch.inputs.replace_window.default, false);
   assert.deepEqual(on.workflow_dispatch.inputs.mode.options, ['collect', 'probe']);
   assert.deepEqual(on.push.branches, ['main']);
-  for (const p of ['data/*.json', 'data/parallel/notes/**', 'scripts/collect-parallel.js', 'parallel-core.js']) assert.ok(on.push.paths.includes(p), p);
+  for (const p of ['data/macro.json', 'data/parallel/notes/**', 'scripts/collect-parallel.js', 'parallel-core.js']) assert.ok(on.push.paths.includes(p), p);
   assert.deepEqual(on.schedule.map((s) => s.cron), ['7,22,37,52 23 * * 0-4', '7,22,37,52 0-7 * * 1-5', '17 8,10,13 * * 1-5']);
 });
 

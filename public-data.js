@@ -12,11 +12,7 @@
   const MINUTE = 60 * 1000;
   const CLOCK_SKEW_MS = 5 * MINUTE;
   const CATEGORY_CONFIG = Object.freeze({
-    macro: Object.freeze({ name: '거시·크립토', color: '#F2555A', staleAfterMs: 90 * MINUTE }),
-    election: Object.freeze({ name: '미국 중간선거', color: '#5B9BFF', staleAfterMs: 90 * MINUTE }),
-    security: Object.freeze({ name: '크립토 보안·해킹', legacyName: '크립토 보안', color: '#F0B429', staleAfterMs: 90 * MINUTE }),
-    xr: Object.freeze({ name: 'X 계정 연구', color: '#B197FC', staleAfterMs: 300 * MINUTE }),
-    onchain: Object.freeze({ name: '온체인 보안·자금흐름 추적', color: '#50C4AE', staleAfterMs: 90 * MINUTE })
+    macro: Object.freeze({ name: '거시·크립토', color: '#F2555A', staleAfterMs: 90 * MINUTE })
   });
   const KEYS = Object.freeze(Object.keys(CATEGORY_CONFIG));
   const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
@@ -111,8 +107,8 @@
     date(raw.setting.at, 'data.setting.at', now);
     list(raw.warnings, 'data.warnings', 50);
     raw.warnings.forEach((w, i) => text(w, `data.warnings[${i}]`));
-    list(raw.categories, 'data.categories', 5);
-    if (raw.categories.length !== 5) fail('data.categories', 'all five categories are required');
+    list(raw.categories, 'data.categories', KEYS.length);
+    if (raw.categories.length !== KEYS.length) fail('data.categories', 'all configured categories are required');
     const seen = new Set();
     const observed = new Map();
     raw.categories.forEach((c, i) => {
