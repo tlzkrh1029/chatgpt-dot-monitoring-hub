@@ -67,7 +67,7 @@ test('manual refresh reports real HTTP success, partial outages, parse errors an
     const snapshot = await pending;
     passes++;
     const actual = requests.slice(before);
-    assert.equal(actual.length, 6, 'each real HTTP pass must request the base and all five independent files');
+    assert.equal(actual.length, 2, 'each pass requests only the base and active macro file');
     assert.deepEqual(actual.map(request => request.path).sort(), [...paths].sort());
     assert.ok(actual.every(request => request.query), 'real requests must carry a cache-busting nonce');
     assert.equal(new Set(actual.map(request => request.query)).size, 1);
@@ -86,28 +86,27 @@ test('manual refresh reports real HTTP success, partial outages, parse errors an
   }
 
   assert.ok(documents.slice(1).some(document => document.checkStatus === 'partial'), 'current fixtures retain their genuine source-check caveats');
-  const initial = await click('success', 'warning', '5/5');
+  const initial = await click('success', 'warning', '1/1');
   assert.match(status.textContent, /부분 확인/);
   assert.ok(initial.data.feed.length);
   const original = structuredClone(initial.data);
 
   failures.set('/data/macro.json', { status: 503, body: '{"error":"temporary outage"}' });
-  const oneFailed = await click('failure', 'warning', '4/5');
+  const oneFailed = await click('failure', 'error', '0/1');
   assert.ok(oneFailed.statuses.macro.error);
   assert.equal(oneFailed.baseError, '');
   assert.match(status.textContent, /마지막 정상/);
   assert.deepEqual(oneFailed.data, original);
 
   failures.clear();
-  failures.set('/data/xr.json', { status: 200, body: '{ malformed JSON' });
-  const malformed = await click('failure', 'warning', '4/5');
-  assert.ok(malformed.statuses.xr.error);
-  assert.equal(malformed.statuses.macro.error, '');
+  failures.set('/data/macro.json', { status: 200, body: '{ malformed JSON' });
+  const malformed = await click('failure', 'error', '0/1');
+  assert.ok(malformed.statuses.macro.error);
   assert.deepEqual(malformed.data, original);
 
   failures.clear();
   for (const file of paths) failures.set(file, { status: 503, body: '{"error":"temporary outage"}' });
-  const allFailed = await click('failure', 'error', '0/5');
+  const allFailed = await click('failure', 'error', '0/1');
   assert.ok(allFailed.baseError);
   assert.ok(keys.every(key => allFailed.statuses[key].error));
   assert.match(status.textContent, /마지막 정상/);
@@ -115,18 +114,18 @@ test('manual refresh reports real HTTP success, partial outages, parse errors an
 
   failures.clear();
   failures.set('/data.json', { status: 503, body: '{"error":"temporary outage"}' });
-  const baseFailed = await click('failure', 'warning', '5/5');
+  const baseFailed = await click('failure', 'warning', '1/1');
   assert.ok(baseFailed.baseError);
   assert.ok(keys.every(key => !baseFailed.statuses[key].error));
   assert.match(status.textContent, /기본 자료 수신 실패/);
   assert.deepEqual(baseFailed.data, original);
 
   failures.clear();
-  const recovered = await click('success', 'warning', '5/5');
+  const recovered = await click('success', 'warning', '1/1');
   assert.equal(recovered.baseError, '');
   assert.ok(keys.every(key => !recovered.statuses[key].error));
   assert.deepEqual(recovered.data, original, 'receive attempts must never advance source observation times or alter history');
   assert.equal(passes, 6);
-  assert.equal(requests.length, 36);
+  assert.equal(requests.length, 12);
   assert.equal(published.length, passes);
 });

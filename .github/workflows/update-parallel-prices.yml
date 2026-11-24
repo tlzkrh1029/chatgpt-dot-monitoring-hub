@@ -18,7 +18,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'data/*.json'              # heartbeat: the hub's other writers push these during the day
+      - 'data/macro.json'           # heartbeat from the active hub publisher
       - 'data/parallel/notes/**'   # analyst notes: refresh the index titles and the data branch's notes mirror
       - '.github/workflows/update-parallel-prices.yml'
       - 'scripts/collect-parallel.js'

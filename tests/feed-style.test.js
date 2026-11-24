@@ -116,7 +116,7 @@ test('summary fields stay single paragraphs and unreadable files are reported, n
   const path = require('node:path');
   const { main } = require('../scripts/lint-feed-style.js');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-feed-'));
-  for (const key of ['macro', 'election', 'security', 'xr', 'onchain'])
+  for (const key of ['macro'])
     fs.writeFileSync(path.join(dir, `${key}.json`), JSON.stringify({ headline: '상황 유지', body: '변화가 없다.', feed: [] }));
   fs.writeFileSync(path.join(dir, 'macro.json'), '{ "feed": [ { "text": "첫 단락이다.\n둘째 단락이다." } ] }');
   const lines = [];

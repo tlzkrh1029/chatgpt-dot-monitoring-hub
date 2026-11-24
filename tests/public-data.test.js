@@ -22,36 +22,6 @@ test('existing snapshot validates with canonical labels and validation returns a
   result.categories[0].body = 'Changed outside the source';
   assert.notEqual(result.categories[0].body, original.categories[0].body);
 });
-test('legacy and renamed security metadata normalize without changing keys, alert setting or historical articles', () => {
-  const canonicalName = '크립토 보안·해킹';
-  for (const name of ['크립토 보안', canonicalName]) {
-    const input = copy(original);
-    input.categories.find((c) => c.key === 'security').name = name;
-    const before = copy(input);
-    const result = M.validateData(input, { now: NOW });
-    const security = result.categories.find((c) => c.key === 'security');
-    assert.equal(security.name, canonicalName);
-    assert.equal(security.key, 'security');
-    assert.equal(security.color, before.categories.find((c) => c.key === 'security').color);
-    assert.deepEqual(result.setting, before.setting);
-    assert.deepEqual(result.feed, before.feed);
-    assert.deepEqual(result.gaps, before.gaps);
-    assert.deepEqual(input, before);
-    const composed = M.composeData(input, []);
-    assert.equal(composed.categories.find((c) => c.key === 'security').name, canonicalName);
-    assert.deepEqual(composed.setting, before.setting);
-    for (const record of before.feed) {
-      const preserved = composed.feed.find((item) => item.at === record.at && item.category === record.category && item.title === record.title && item.text === record.text);
-      assert.deepEqual(preserved, record);
-    }
-  }
-  const invalidName = copy(original);
-  invalidName.categories.find((c) => c.key === 'security').name = 'Unapproved security label';
-  assert.throws(() => M.validateData(invalidName, { now: NOW }), /category identity/);
-  const invalidColor = copy(original);
-  invalidColor.categories.find((c) => c.key === 'security').color = '#000000';
-  assert.throws(() => M.validateData(invalidColor, { now: NOW }), /category identity/);
-});
 test('unknown fields, missing or duplicate categories and cross-category records are rejected', () => {
   const mutate = [
     (d) => { d.privateNotes = 'unrecognized'; },
@@ -137,7 +107,7 @@ test('prose rejects private links, contact details and credential-like material 
 });
 test('category envelopes require owned categories, strict fields, status gaps and safe chronology', () => {
   assert.doesNotThrow(() => M.validateCategory(envelope(), 'macro', { now: NOW }));
-  assert.throws(() => M.validateCategory(envelope(), 'election', { now: NOW }), /owned category/);
+  assert.throws(() => M.validateCategory(envelope(), 'election', { now: NOW }), /unknown category/);
   const changes = [
     (u) => { u.setting = original.setting; },
     (u) => { u.feed[0].category = 'security'; },
@@ -188,18 +158,17 @@ test('regressing evidence checks and duplicate writers fail instead of clobberin
   assert.throws(() => M.composeData(original, [older]), /regress/);
   assert.throws(() => M.composeData(original, [envelope(), envelope()]), /duplicate/);
 });
-test('staleness advances with wall time even when publication advances and X uses its configured cadence', () => {
+test('staleness advances with wall time even when publication advances using the configured cadence', () => {
   const updates = Object.keys(M.CATEGORY_CONFIG).map((key) => envelope(key));
   const result = M.composeData(original, updates);
   const fresh = M.freshness(result, '2026-11-04T10:00:00Z');
   assert.equal(fresh.allFresh, true);
   assert.deepEqual(fresh.staleKeys, []);
   const afterTwoHours = M.freshness(result, '2026-11-04T11:00:00Z');
-  assert.deepEqual(afterTwoHours.staleKeys, ['macro', 'election', 'security', 'onchain']);
-  assert.equal(afterTwoHours.categories.find((c) => c.key === 'xr').stale, false);
+  assert.deepEqual(afterTwoHours.staleKeys, ['macro']);
   const afterSixHours = M.freshness(result, '2026-11-04T15:00:00Z');
-  assert.equal(afterSixHours.staleKeys.length, 5);
+  assert.equal(afterSixHours.staleKeys.length, 1);
   result.generatedAt = '2026-11-04T15:00:00Z';
-  assert.equal(M.freshness(result, '2026-11-04T15:00:00Z').staleKeys.length, 5);
+  assert.equal(M.freshness(result, '2026-11-04T15:00:00Z').staleKeys.length, 1);
   assert.equal(M.freshness(result, '2026-11-04T08:59:00Z').categories[0].ageMs, 0);
 });

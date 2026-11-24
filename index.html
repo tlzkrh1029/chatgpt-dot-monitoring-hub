@@ -200,7 +200,7 @@ h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 700; letter-spac
   .item { grid-template-columns: 52px minmax(0, 1fr); gap: 10px; }
   .chip { padding: 0 12px; font-size: 13px; }
 }
-@media(min-width:1200px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
 
 /* Embed views (?view=status | feed | checks). Without ?view= the full page is unchanged. */
 html[data-view] .page { padding-top: 16px; padding-bottom: 20px; }
@@ -338,9 +338,7 @@ html[data-view] .page-tabs { display:none; }
     <li>공개 자료만 사용하고, 관측 시각과 조회 시각을 구분해서 기록합니다.</li>
     <li>회사의 주장과 독립적으로 검증한 사실을 나눠서 적습니다.</li>
     <li>출금 중단은 해킹 확정이 아니며, 복구 예정과 실제 복구를 구분합니다.</li>
-    <li>네 범주의 공개 요약과 기존 기록을 함께 표시하며, 보안의 사건·복구와 자금 추적은 각각의 관찰 시각으로 구분합니다.</li>
-    <li>보안의 관련 기록은 함께 접어 표시합니다. 기록을 삭제하거나 피해·회수 금액을 합산하지 않으며, 여러 사건을 다룬 종합 관찰은 별도로 표시합니다.</li>
-    <li>X 계정 연구는 목적에 맞춰 고른 표본이며, 모든 게시물을 수집한 결과가 아닙니다.</li>
+    <li>거시·크립토의 공개 요약과 실제 관찰 시각, 출처 및 확인 한계를 표시합니다.</li>
   </ul>
   <p id="rules-link" hidden></p>
 </details>
@@ -350,7 +348,7 @@ html[data-view] .page-tabs { display:none; }
 </div>
 </div>
 
-<script src="public-data.js?v=20261104-security-label"></script>
+<script src="public-data.js?v=20261125-macro"></script>
 <script src="refresh-client.js"></script>
 <script src="manual-refresh.js?v=20261104-refresh-outcome"></script>
 <script src="display-data.js?v=20261105-record-order"></script>
@@ -464,7 +462,7 @@ html[data-view] .page-tabs { display:none; }
         return MonitorView.subtype(c.key) ? `${group.name} / ${MonitorView.subtype(c.key)}` : group.name;
       });
       if (delayed.length) lines.push(`지연·부분 확인·수신 실패: ${delayed.join(', ')}. 범주별 실제 관찰 시각을 확인해 주세요.`);
-      else lines.push('네 범주의 다섯 감시 모두 설정한 관찰 주기 안에 있습니다.');
+      else lines.push('거시·크립토 감시는 설정한 관찰 주기 안에 있습니다.');
       if (state.baseError) lines.push(state.baseError);
       if (state.lastLoadedAt) lines.push(`브라우저 정상 수신 ${longDate(state.lastLoadedAt)} KST. 원문 점검·배포 완료 시각과 다릅니다.`);
       if (state.lastFetchAt) lines.push(`최근 파일 확인 시도 ${longDate(state.lastFetchAt)} KST.`);
